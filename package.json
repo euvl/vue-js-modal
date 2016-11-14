@@ -1,19 +1,23 @@
 {
   "name": "vue-modal",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
+  "version": "0.0.1",
+  "description": "A Vue.js simple modal dialog component",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": true,
-  "scripts": {
-    "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
-    "lint": "eslint --ext .js,.vue src"
+  "license": "MIT",
+  "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/euvl/vue-modal.git"
   },
-  "dependencies": {
-    "babel-runtime": "^6.18.0",
-    "vue": "^2.0.1"
+  "scripts": {
+    "dev": "node examples/server.js",
+    "build": "node build/build.js",
+    "lint": "eslint --fix --ext .js,.vue src"
   },
   "devDependencies": {
+    "vue": "^2.0.1",
+    "babel-runtime": "^6.18.0",
     "autoprefixer": "^6.4.0",
     "babel-core": "^6.0.0",
     "babel-eslint": "^7.0.0",
