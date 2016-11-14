@@ -1,6 +1,5 @@
 module.exports = {
   root: true,
-  fix: true,
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module'
@@ -12,7 +11,7 @@ module.exports = {
   'settings': {
     'import/resolver': {
       'webpack': {
-        'config': 'build/webpack.base.conf.js'
+        'config': './webpack.base.config.js'
       }
     }
   },

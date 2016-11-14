@@ -15,7 +15,7 @@
 </template>
 <script>
   import Vue from 'vue';
-  import VueModal from './index';
+  import VueModal from './modal';
 
   const props = {
     name: {

@@ -1,22 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <button @click="showModal">Show modal</button>
+    <h1>Test page</h1>
+    <button @click="showModal('basic')">Show basic modal</button>
     <transition name="fade">
-      <modal name="hello">Hello!</modal>
+      <modal name="basic">Hello! Im basic modal!</modal>
     </transition>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello';
-
 export default {
   name: 'app',
   methods: {
-    showModal() {
-      this.$modal.toggle('hello', false);
-    },
+    showModal(name) => this.$modal.show(name),
   },
 };
 </script>

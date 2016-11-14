@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App';
-import VueModal from './VueModal/index';
+import VueModal from '../src/index';
 
 Vue.use(VueModal);
 
