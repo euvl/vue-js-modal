@@ -13,6 +13,7 @@
     </transition>
   </div>
 </template>
+
 <script>
   import Vue from 'vue';
   import VueModal from './modal';
@@ -107,6 +108,7 @@
     },
   };
 </script>
+
 <style>
   .vue-modal-overlay {
     position: fixed;

@@ -15,13 +15,17 @@ const VueModal = {
         const opts = typeof state === 'object' && typeof params === 'undefined'
           ? state
           : params;
-        VueModal.event.$emit('toggle', name, state);
+
+        VueModal.event
+          .$emit('toggle', name, state);
       },
       show(name, params = {}) {
-        VueModal.event.$emit('toggle', name, true);
+        VueModal.event
+          .$emit('toggle', name, true);
       },
       hide(name, params = {}) {
-        VueModal.event.$emit('toggle', name, false);
+        VueModal.event
+          .$emit('toggle', name, false);
       },
     };
 
