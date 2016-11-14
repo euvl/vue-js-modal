@@ -5,7 +5,7 @@
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": true,
   "license": "MIT",
-  "main": "./src/index.js",
+  "main": "./dist/vue-modal.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/euvl/vue-modal.git"
