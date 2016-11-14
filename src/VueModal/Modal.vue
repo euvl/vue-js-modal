@@ -131,7 +131,7 @@
     position: absolute;
     background: white;
     position: relative;
-    width: 900px;
+    text-align: left;
 
     left: 50%;
     top: 20%;
