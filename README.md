@@ -11,7 +11,7 @@ main.js:
 ```js
 import Vue from 'vue';
 import App from './App';
-import VueModal from '../src/index';
+import VueModal from 'vue-modal';
 
 Vue.use(VueModal);
 
