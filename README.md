@@ -1,7 +1,18 @@
-##nice-vue-components
+##ue.js modal
 
-A collection of vue components
+####Simple to use vue.js modal
 
-* Beeper
-* Notification
-* Modal
+```
+import 'vue-modal';
+```
+
+```
+<modal name="hello-world">
+  hello, world!
+</modal>
+
+...
+methods: {
+  this.$modal.show('hello-word');
+}
+```

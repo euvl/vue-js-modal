@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
-  "main": "./components/index.js",
+  "main": "./Modal/index.js",
   "scripts": {
     "examples": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
   },
