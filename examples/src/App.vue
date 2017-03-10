@@ -1,9 +1,15 @@
 <template>
   <div id="app">
     <h2>Vue.js Modal</h2>
+
+    <pre>
+      npm install --save vue-js-modal
+    </pre>
     <modal name="example-modal"
                 transition="nice-modal-fade"
-                :delay="200"
+                :min-width="200"
+                :min-height="200"
+                :delay="100"
                 :adaptive="adaptive"
                 :resizable="resizable">
       <div style="height: 100%; box-sizing: border-box; padding: 10px; font-size: 13px; overflow: auto">
@@ -87,7 +93,14 @@ export default {
 body {
   margin: 0;
   padding: 50px;
+  cursor: default;
   box-sizing: border-box;
+}
+
+pre {
+  color: #595959;
+  background-color: #f3f3f3;
+  border: 1px solid #eee;
 }
 
 #app {
@@ -99,6 +112,25 @@ body {
 
 h1, h2 {
   font-weight: normal;
+}
+
+button {
+  outline: none;
+  background: white;
+  border: 0;
+  padding: 6px 18px;
+  cursor: pointer;
+  border-radius: 3px;
+
+  background: white;
+
+  color: #4db3ff;
+  border: 1px solid #4db3ff;
+
+  &:hover {
+    color: #20a0ff;
+    border: 1px solid #20a0ff;
+  }
 }
 
 </style>

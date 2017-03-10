@@ -10,7 +10,10 @@
              v-on:mousedown.stop
              ref="modal">
           <slot></slot>
-          <resizer v-if="resizable" @resize="resize"/>
+          <resizer v-if="resizable"
+                   :min-width="minWidth"
+                   :min-height="minHeight"
+                   @resize="resize"/>
         </div>
       </transition>
     </div>
@@ -118,8 +121,8 @@
     computed: {
       position() {
         return {
-          left: (this.window.width - this.modal.width) / 2,
-          top: (this.window.height - this.modal.height) / 2
+          left: Math.max((this.window.width - this.modal.width) / 2, 0),
+          top: Math.max((this.window.height - this.modal.height) / 2, 0)
         }
       },
       modalClass() {
@@ -140,13 +143,17 @@
         this.window.height = window.innerHeight;
 
         if (this.adaptive) {
-          this.modal.width = this.window.width > this.width
+          var width = this.window.width > this.width
             ? this.width
             : this.window.width
 
-          this.modal.height = this.window.height > this.height
+          /*this.modal.height*/
+          var height = this.window.height > this.height
             ? this.height
             : this.window.height;
+
+          this.modal.width = width;//Math.max(width, this.minWidth);
+          this.modal.height = height;//Math.max(height, this.minHeight);
         }
       },
       genEventObject(params) {
@@ -224,7 +231,7 @@
   }
 
   .nice-modal-fade-enter-active, .nice-modal-fade-leave-active {
-    transition: all 0.5s;
+    transition: all 0.4s;
   }
 
   .nice-modal-fade-enter, .nice-modal-fade-leave-active {

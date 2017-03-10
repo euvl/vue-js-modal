@@ -5,13 +5,18 @@
 <script>
 export default {
   name: 'Resizer',
+  props: {
+    minHeight: {
+      type: Number,
+      default: 0
+    },
+    minWidth: {
+      type: Number,
+      default: 0
+    }},
   data() {
     return {
       clicked: false,
-      min: {
-        height: 50,
-        width: 0
-      },
       size: {}
     }
   },
@@ -19,13 +24,11 @@ export default {
     this.$el.addEventListener('mousedown', this.start, false);
   },
   methods: {
-    start(event) {
+    start() {
       this.clicked = true;
 
       window.addEventListener('mousemove', this.mousemove, false);
       window.addEventListener('mouseup', this.stop, false);
-
-      event.stopPropagation();
     },
     stop() {
       this.clicked = false;
@@ -44,24 +47,19 @@ export default {
     resize(event) {
       var el = this.$el.parentElement;
 
-      if (event.clientX < window.innerWidth / 2) {
-        return;
-      }
-
       if (el) {
         var width = event.clientX - el.offsetLeft;
         var height = event.clientY - el.offsetTop;
 
-        if (height < this.min.height) {
-          height = this.min.height;
+        if (height < this.minHeight) {
+          height = this.minHeight;
         }
 
-        if (width < this.min.width) {
-          width = this.min.width;
+        if (width < this.minWidth) {
+          width = this.minWidth;
         }
 
         this.size = {width, height};
-
         el.style.width = width + 'px';
         el.style.height = height + 'px';
 
