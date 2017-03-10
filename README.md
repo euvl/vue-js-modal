@@ -2,9 +2,6 @@
 
 ####Simple to use vue.js modal
 
-![](http://i.imgur.com/1lnYmFj.png)
-
-
 ####Install:
 
 Include plugin in your main.js file.
@@ -28,3 +25,8 @@ methods: {
 ####Props: 
 
 //todo
+
+####Screenshot:
+
+![](http://i.imgur.com/1lnYmFj.png)
+
