@@ -4,8 +4,8 @@
     <modal name="example-modal"
                 transition="nice-modal-fade"
                 :delay="200"
-                :adaptive="resizable"
-                :resizable="adaptive">
+                :adaptive="adaptive"
+                :resizable="resizable">
       <div style="height: 100%; box-sizing: border-box; padding: 10px; font-size: 13px; overflow: auto">
           Appropriately exploit professional infrastructures rather than unique
           growth strategies. Assertively build leveraged growth strategies
