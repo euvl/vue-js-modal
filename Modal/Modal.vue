@@ -143,13 +143,12 @@
         this.window.height = window.innerHeight;
 
         if (this.adaptive) {
-          var width = this.window.width > this.width
-            ? this.width
+          var width = this.window.width > this.modal.width
+            ? this.modal.width
             : this.window.width
 
-          /*this.modal.height*/
-          var height = this.window.height > this.height
-            ? this.height
+          var height = this.window.height > this.modal.height
+            ? this.modal.height
             : this.window.height;
 
           this.modal.width = width;//Math.max(width, this.minWidth);
@@ -167,6 +166,7 @@
       },
       resize(event) {
         this.modal.width = event.size.width;
+        this.modal.height = event.size.height;
 
         let resizeEvent = this.genEventObject({
           size: this.modal

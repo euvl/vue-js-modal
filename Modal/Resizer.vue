@@ -24,11 +24,14 @@ export default {
     this.$el.addEventListener('mousedown', this.start, false);
   },
   methods: {
-    start() {
+    start(event) {
       this.clicked = true;
 
       window.addEventListener('mousemove', this.mousemove, false);
       window.addEventListener('mouseup', this.stop, false);
+
+      event.stopPropagation();
+      event.preventDefault();
     },
     stop() {
       this.clicked = false;
@@ -51,12 +54,21 @@ export default {
         var width = event.clientX - el.offsetLeft;
         var height = event.clientY - el.offsetTop;
 
+
+        if (width < this.minWidth) {
+          width = this.minWidth;
+        }
+
+        if (width > window.innerWidth) {
+          width = window.innerWidth;
+        }
+
         if (height < this.minHeight) {
           height = this.minHeight;
         }
 
-        if (width < this.minWidth) {
-          width = this.minWidth;
+        if (height > window.innerHeight) {
+          height = window.innerHeight;
         }
 
         this.size = {width, height};
