@@ -20,7 +20,7 @@ const VueModal = {
       get: () => $modal
     });
 
-    Vue.component('nice-modal', Modal);
+    Vue.component('modal', Modal);
     return null;
   },
 };

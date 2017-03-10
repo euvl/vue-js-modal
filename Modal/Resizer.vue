@@ -3,7 +3,6 @@
   </div>
 </template>
 <script>
-import util from '../util';
 export default {
   name: 'Resizer',
   data() {
@@ -26,7 +25,7 @@ export default {
       window.addEventListener('mousemove', this.mousemove, false);
       window.addEventListener('mouseup', this.stop, false);
 
-      util.stopEvent(event);
+      event.stopPropagation();
     },
     stop() {
       this.clicked = false;
@@ -54,10 +53,15 @@ export default {
         var height = event.clientY - el.offsetTop;
 
         if (height < this.min.height) {
-          return;
+          height = this.min.height;
+        }
+
+        if (width < this.min.width) {
+          width = this.min.width;
         }
 
         this.size = {width, height};
+
         el.style.width = width + 'px';
         el.style.height = height + 'px';
 

@@ -1,25 +1,11 @@
 <template>
   <div id="app">
-    <h2>
-      Beeper
-      <nice-beep class="inline-beep" color="#23d813" :frequency="1200"/>
-    </h2>
-    <div>
-      tl;dr
-    </div>
-
-    <h2>Notifications</h2>
-    <nice-notifications name="example-1" animation="fade"/>
-    <nice-notifications position="bottom left"/>
-    <button @click="notifyExample0">Example 1</button>
-    <button @click="notifyExample1">Example 2</button>
-
-    <h2>Modals</h2>
-    <nice-modal name="example-modal"
+    <h2>Vue.js Modal</h2>
+    <modal name="example-modal"
                 transition="nice-modal-fade"
                 :delay="200"
-                :adaptive="true"
-                :resizable="true">
+                :adaptive="resizable"
+                :resizable="adaptive">
       <div style="height: 100%; box-sizing: border-box; padding: 10px; font-size: 13px; overflow: auto">
           Appropriately exploit professional infrastructures rather than unique
           growth strategies. Assertively build leveraged growth strategies
@@ -39,39 +25,58 @@
           sources through equity invested mindshare. Globally redefine unique
           best practices for.
       </div>
-    </nice-modal>
-    <button @click="modalExample0">Example 1</button>
+    </modal>
+
+    <table>
+      <tr>
+        <td style="width: 20%">Modes:</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>Simple</b></td>
+        <td>Yet another boring modal :)</td>
+      </tr>
+      <tr>
+        <td><b>Adaptive</b></td>
+        <td>Tries to adjust to the page size</td>
+      </tr>
+      <tr>
+        <td><b>Resizable</b></td>
+        <td>
+        Has a small arrow on the bottom-right corner
+        (customizable) that you can drag to change the size of the modal
+        </td>
+      </tr>
+      <tr>
+        <td><b>Mixed</b></td>
+        <td>
+        Is resizable, but if the size of the screen is changed
+        modal will return to its initial size as well as it will try to adapt to
+        the page size
+        </td>
+      </tr>
+    </table>
+
+    <button @click="show(false, false)">Simple</button>
+    <button @click="show(true, false)">Resizable</button>
+    <button @click="show(false, true)">Adaptive</button>
+    <button @click="show(true, true)">Mixed</button>
   </div>
 </template>
 
 <script>
-const ID = ((i) => () => i++)(0);
-
 export default {
   name: 'app',
+  data() {
+    return {
+      resizable: false,
+      adaptive: false
+    }
+  },
   methods: {
-    notifyExample0() {
-      this.$notify({
-        type: 'error',
-        group: 'example-1',
-        title: 'Error message',
-        text: 'This is error message #' + ID()
-      });
-    },
-    notifyExample1() {
-      this.$notify({
-        type: 'warn',
-        duration: 10000,
-        title: 'Warning message',
-        text:
-          `
-          Warning #${ID()} <br>
-          Notification will dissapear in 10 sec<br>
-          Rendering <b>HTML</b>
-          `
-      });
-    },
-    modalExample0() {
+    show(resizable, adaptive) {
+      this.resizable = resizable;
+      this.adaptive = adaptive;
       this.$modal.show('example-modal');
     }
   }
@@ -94,11 +99,6 @@ body {
 
 h1, h2 {
   font-weight: normal;
-}
-
-.inline-beep {
-  display: inline-block;
-  position: relative !important;
 }
 
 </style>
