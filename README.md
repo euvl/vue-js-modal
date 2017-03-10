@@ -28,5 +28,5 @@ methods: {
 
 ####Screenshot:
 
-![](http://i.imgur.com/1lnYmFj.png)
+![](http://i.imgur.com/mN1MBJ3.gif)
 
