@@ -1,7 +1,7 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
   "main": "./Modal/index.js",
@@ -24,8 +24,5 @@
     "vue-template-compiler": "^2.1.0",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
-  },
-  "dependencies": {
-    "velocity-animate": "^1.4.2"
   }
 }
