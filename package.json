@@ -1,7 +1,7 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
   "main": "./Modal/index.js",
