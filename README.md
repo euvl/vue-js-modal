@@ -2,7 +2,7 @@
 
 <h5>Simple to use vue.js modal plgin without any external dependencies</h5>
 
-<h3>How to:</h3>
+<h3>How to use</h3>
 
 Include plugin in your main.js file.
 ```javsacript
@@ -41,6 +41,17 @@ methods: {
 | height    | false | Number           | 300         | |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
+
+<h3>Events</h3>
+
+| Name         | Description |
+| ---          | |
+| before-open  | |
+| open         | |
+| before-close | |
+| close        | |
+
+<h3>Screenshots</h3>
 
 ![](http://i.imgur.com/mN1MBJ3.gif)
 
