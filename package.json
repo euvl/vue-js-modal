@@ -1,10 +1,23 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
   "main": "./Modal/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/euvl/vue-js-modal.git"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "modal"
+  ],
+  "bugs": {
+    "url": "https://github.com/euvl/vue-js-modal/issues"
+  },
+  "license": "MIT",
   "scripts": {
     "examples": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
   },
