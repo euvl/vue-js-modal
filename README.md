@@ -2,6 +2,8 @@
 
 <h5>Simple to use vue.js modal plgin without any external dependencies</h5>
 
+p.s. if you find any bugs, have any suggestions or just want to discuss Trump's policies, feel free to create an issue :D 
+
 <h3>How to use</h3>
 
 Include plugin in your main.js file.
