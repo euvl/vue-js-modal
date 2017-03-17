@@ -8,7 +8,7 @@ p.s. if you find any bugs, have any suggestions or just want to discuss Trump's 
 
 Include plugin in your main.js file.
 ```javsacript
-import 'vue-modal';
+import 'vue-js-modal';
 ```
 
 Create modal
