@@ -57,3 +57,9 @@ methods: {
 
 ![](http://i.imgur.com/mN1MBJ3.gif)
 
+
+Example: 
+```
+npm run examples
+```
+Will be served at http://localhost:8000/examples
