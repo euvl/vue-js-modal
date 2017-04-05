@@ -1,12 +1,12 @@
-<h1>Vue.js modal</h1>
+# Vue.js modal
 
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 
-<h5>Simple to use vue.js modal plgin without any external dependencies</h5>
+##### Simple to use vue.js modal plugin without any external dependencies
 
 Demo: http://vue-js-modal.yev.io/
 
-<h3>How to use</h3>
+### How to use
 
 Include plugin in your main.js file.
 ```javsacript
@@ -33,7 +33,7 @@ methods: {
 }
 ```
 
-<h3>Properties</h3>
+### Properties
 
 | Name      | Required | Type          | Default     | Description |
 | ---       | ---      | ---           | ---         | ---         |
@@ -48,7 +48,7 @@ methods: {
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
 
-<h3>Events</h3>
+### Events
 
 | Name         | Description |
 | ---          | --- |
@@ -57,7 +57,7 @@ methods: {
 | before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closisng and ask user to correct mistakes if text is not valid)
 | close        | Emits right before modal is destoyed |
 
-<h3>Screenshots</h3>
+### Screenshots
 
 ![](http://i.imgur.com/mN1MBJ3.gif)
 
