@@ -9748,7 +9748,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var VueModal = {
+var ModalPlugin = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -9758,10 +9758,10 @@ var VueModal = {
 
     var $modal = {
       show: function show(name, params) {
-        VueModal.event.$emit('toggle', name, true, params);
+        ModalPlugin.event.$emit('toggle', name, true, params);
       },
       hide: function hide(name, params) {
-        VueModal.event.$emit('toggle', name, false, params);
+        ModalPlugin.event.$emit('toggle', name, false, params);
       }
     };
 
@@ -9776,9 +9776,9 @@ var VueModal = {
   }
 };
 
-__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(VueModal);
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(ModalPlugin);
 
-/* harmony default export */ __webpack_exports__["default"] = VueModal;
+/* harmony default export */ __webpack_exports__["default"] = ModalPlugin;
 
 /***/ }),
 /* 5 */
@@ -10030,7 +10030,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //

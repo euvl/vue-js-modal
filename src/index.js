@@ -25,4 +25,6 @@ const ModalPlugin = {
   },
 }
 
+Vue.use(ModalPlugin)
+
 export default ModalPlugin
