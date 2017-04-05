@@ -5,10 +5,10 @@
          @mousedown.stop="toggle(false)">
       <transition :name="transition">
         <div v-if="visibility.modal"
-             v-bind:class="modalClass"
-             v-bind:style="modalStyle"
-             v-on:mousedown.stop
-             ref="modal">
+             ref="modal"
+             :class="modalClass"
+             :style="modalStyle"
+             @mousedown.stop>
           <slot></slot>
           <resizer v-if="resizable"
                    :min-width="minWidth"
@@ -20,9 +20,9 @@
   </transition>
 </template>
 <script>
-  import Vue from 'vue';
-  import Modal from './index';
-  import Resizer from './Resizer.vue';
+  import Vue      from 'vue'
+  import Modal    from './index'
+  import Resizer  from './Resizer.vue'
 
   export default {
     name: 'Modal',
@@ -94,26 +94,26 @@
       visible(value) {
         if (this.delay > 0) {
           if (value) {
-            this.visibility.overlay = true;
-            setTimeout(() => this.visibility.modal = true, this.delay);
+            this.visibility.overlay = true
+            setTimeout(() => this.visibility.modal = true, this.delay)
           } else {
-            this.visibility.modal = false;
-            setTimeout(() => this.visibility.overlay = false, this.delay);
+            this.visibility.modal = false
+            setTimeout(() => this.visibility.overlay = false, this.delay)
           }
         } else {
-          this.visibility.overlay = value;
-          Vue.nextTick(() => this.visibility.modal = value);
+          this.visibility.overlay = value
+          Vue.nextTick(() => this.visibility.modal = value)
         }
       },
     },
     created() {
       Modal.event.$on('toggle', (name, state, params) => {
         if (name === this.name) {
-          this.toggle(!this.visible, params);
+          this.toggle(!this.visible, params)
         }
       });
 
-      window.addEventListener('resize', this.onWindowResize);
+      window.addEventListener('resize', this.onWindowResize)
     },
     beforeMount() {
       this.onWindowResize();
@@ -121,12 +121,12 @@
     computed: {
       position() {
         return {
-          left: Math.max((this.window.width - this.modal.width) / 2, 0),
-          top: Math.max((this.window.height - this.modal.height) / 2, 0)
+          left: Math.max(0.5 * (this.window.width - this.modal.width), 0),
+          top: Math.max(0.5 * (this.window.height - this.modal.height), 0)
         }
       },
       modalClass() {
-        return ['modal', this.classes];
+        return ['modal', this.classes]
       },
       modalStyle() {
         return {
@@ -139,8 +139,8 @@
     },
     methods: {
       onWindowResize() {
-        this.window.width = window.innerWidth;
-        this.window.height = window.innerHeight;
+        this.window.width = window.innerWidth
+        this.window.height = window.innerHeight
 
         if (this.adaptive) {
           var width = this.window.width > this.modal.width
@@ -149,10 +149,10 @@
 
           var height = this.window.height > this.modal.height
             ? this.modal.height
-            : this.window.height;
+            : this.window.height
 
-          this.modal.width = width;//Math.max(width, this.minWidth);
-          this.modal.height = height;//Math.max(height, this.minHeight);
+          this.modal.width = width // Math.max(width, this.minWidth);
+          this.modal.height = height // Math.max(height, this.minHeight);
         }
       },
       genEventObject(params) {
@@ -165,38 +165,38 @@
           params || {});
       },
       resize(event) {
-        this.modal.width = event.size.width;
-        this.modal.height = event.size.height;
+        this.modal.width = event.size.width
+        this.modal.height = event.size.height
 
         let resizeEvent = this.genEventObject({
           size: this.modal
         });
 
-        this.$emit('resize', resizeEvent);
+        this.$emit('resize', resizeEvent)
       },
       toggle(state, params) {
-        const beforeEventName = this.visible ? 'before-close' : 'before-open';
-        const afterEventName = this.visible ? 'closed' : 'opened';
+        const beforeEventName = this.visible ? 'before-close' : 'before-open'
+        const afterEventName = this.visible ? 'closed' : 'opened'
 
-        let stopEventExecution = false;
+        let stopEventExecution = false
 
         const beforeEvent = this.genEventObject({
           stop: () => stopEventExecution = false,
           state,
           params
-        });
+        })
 
-        this.$emit(beforeEventName, beforeEvent);
+        this.$emit(beforeEventName, beforeEvent)
 
         if (!stopEventExecution) {
-          this.visible = !!state;
+          this.visible = !!state
 
           const afterEvent = this.genEventObject({
             state,
             params
-          });
+          })
 
-          this.$emit(afterEventName, afterEvent);
+          this.$emit(afterEventName, afterEvent)
         }
       },
     },

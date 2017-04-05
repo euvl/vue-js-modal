@@ -134,9 +134,9 @@ export default {
   },
   methods: {
     show(resizable, adaptive) {
-      this.resizable = resizable;
-      this.adaptive = adaptive;
-      this.$modal.show('example-modal');
+      this.resizable = resizable
+      this.adaptive = adaptive
+      this.$modal.show('example-modal')
     }
   }
 }

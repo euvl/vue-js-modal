@@ -1,10 +1,9 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.0.3",
+  "version": "1.0.10",
   "author": "euvl <yev.vlasenko@gmail.com>",
-  "private": false,
-  "main": "./Modal/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/euvl/vue-js-modal.git"
@@ -17,10 +16,11 @@
   "bugs": {
     "url": "https://github.com/euvl/vue-js-modal/issues"
   },
-  "license": "MIT",
   "scripts": {
-    "examples": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
+  "license": "MIT",
   "devDependencies": {
     "vue": "^2.1.10",
     "babel-core": "^6.0.0",
@@ -37,5 +37,8 @@
     "vue-template-compiler": "^2.1.0",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
+  },
+  "dependencies": {
+    "vue": "^2.2.6"
   }
 }

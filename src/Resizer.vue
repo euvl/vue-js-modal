@@ -1,6 +1,5 @@
 <template>
-  <div :class="{'vue-modal-resizer': true, 'clicked': clicked}">
-  </div>
+  <div :class="className"></div>
 </template>
 <script>
 export default {
@@ -21,23 +20,28 @@ export default {
     }
   },
   mounted() {
-    this.$el.addEventListener('mousedown', this.start, false);
+    this.$el.addEventListener('mousedown', this.start, false)
+  },
+  computed: {
+    className () {
+      return {'vue-modal-resizer': true, 'clicked': this.clicked}
+    }
   },
   methods: {
     start(event) {
-      this.clicked = true;
+      this.clicked = true
 
-      window.addEventListener('mousemove', this.mousemove, false);
-      window.addEventListener('mouseup', this.stop, false);
+      window.addEventListener('mousemove', this.mousemove, false)
+      window.addEventListener('mouseup', this.stop, false)
 
-      event.stopPropagation();
-      event.preventDefault();
+      event.stopPropagation()
+      event.preventDefault()
     },
     stop() {
-      this.clicked = false;
+      this.clicked = false
 
-      window.removeEventListener('mousemove', this.mousemove, false);
-      window.removeEventListener('mouseup', this.stop, false);
+      window.removeEventListener('mousemove', this.mousemove, false)
+      window.removeEventListener('mouseup', this.stop, false)
 
       this.$emit('resize-stop', {
         element: this.$el.parentElement,
@@ -45,40 +49,39 @@ export default {
       });
     },
     mousemove(event) {
-      this.resize(event);
+      this.resize(event)
     },
     resize(event) {
-      var el = this.$el.parentElement;
+      var el = this.$el.parentElement
 
       if (el) {
-        var width = event.clientX - el.offsetLeft;
-        var height = event.clientY - el.offsetTop;
-
+        var width = event.clientX - el.offsetLeft
+        var height = event.clientY - el.offsetTop
 
         if (width < this.minWidth) {
-          width = this.minWidth;
+          width = this.minWidth
         }
 
         if (width > window.innerWidth) {
-          width = window.innerWidth;
+          width = window.innerWidth
         }
 
         if (height < this.minHeight) {
-          height = this.minHeight;
+          height = this.minHeight
         }
 
         if (height > window.innerHeight) {
-          height = window.innerHeight;
+          height = window.innerHeight
         }
 
-        this.size = {width, height};
-        el.style.width = width + 'px';
-        el.style.height = height + 'px';
+        this.size = {width, height}
+        el.style.width = width + 'px'
+        el.style.height = height + 'px'
 
         this.$emit('resize', {
           element: el,
           size: this.size
-        });
+        })
       }
     }
   }
