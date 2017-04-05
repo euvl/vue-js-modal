@@ -65,6 +65,14 @@
       minHeight: {
         type: Number,
         default: 0
+      },
+      pivotX: {
+        type: Number,
+        default: 0.5
+      },
+      pivotY: {
+        type: Number,
+        default: 0.5
       }
     },
     components: {
@@ -91,22 +99,28 @@
       };
     },
     watch: {
-      visible(value) {
+      visible (value) {
         if (this.delay > 0) {
           if (value) {
             this.visibility.overlay = true
-            setTimeout(() => this.visibility.modal = true, this.delay)
+            setTimeout(() => {
+              this.visibility.modal = true
+            }, this.delay)
           } else {
             this.visibility.modal = false
-            setTimeout(() => this.visibility.overlay = false, this.delay)
+            setTimeout(() => {
+              this.visibility.overlay = false
+            }, this.delay)
           }
         } else {
           this.visibility.overlay = value
-          Vue.nextTick(() => this.visibility.modal = value)
+          this.$nextTick(() => {
+            this.visibility.modal = value
+          })
         }
       },
     },
-    created() {
+    created () {
       Modal.event.$on('toggle', (name, state, params) => {
         if (name === this.name) {
           this.toggle(!this.visible, params)
@@ -115,14 +129,17 @@
 
       window.addEventListener('resize', this.onWindowResize)
     },
-    beforeMount() {
-      this.onWindowResize();
+    beforeDestroy () {
+      window.removeEventListener('resize', this.onWindowResize)
+    },
+    beforeMount () {
+      this.onWindowResize()
     },
     computed: {
       position() {
         return {
-          left: Math.max(0.5 * (this.window.width - this.modal.width), 0),
-          top: Math.max(0.5 * (this.window.height - this.modal.height), 0)
+          left: Math.max(this.pivotX * (this.window.width - this.modal.width), 0),
+          top: Math.max(this.pivotY * (this.window.height - this.modal.height), 0)
         }
       },
       modalClass() {
@@ -143,19 +160,15 @@
         this.window.height = window.innerHeight
 
         if (this.adaptive) {
-          var width = this.window.width > this.modal.width
-            ? this.modal.width
-            : this.window.width
-
-          var height = this.window.height > this.modal.height
-            ? this.modal.height
-            : this.window.height
+          let width = Math.min(this.window.width, this.modal.width)
+          let height = Math.min(this.window.height, this.modal.height)
 
           this.modal.width = width // Math.max(width, this.minWidth);
           this.modal.height = height // Math.max(height, this.minHeight);
         }
       },
       genEventObject(params) {
+        //todo: clean this up
         return Vue.util.extend(
           {
             name: this.name,
@@ -168,9 +181,8 @@
         this.modal.width = event.size.width
         this.modal.height = event.size.height
 
-        let resizeEvent = this.genEventObject({
-          size: this.modal
-        });
+        let { size } = this.modal
+        let resizeEvent = this.genEventObject({ size });
 
         this.$emit('resize', resizeEvent)
       },
@@ -180,22 +192,15 @@
 
         let stopEventExecution = false
 
-        const beforeEvent = this.genEventObject({
-          stop: () => stopEventExecution = false,
-          state,
-          params
-        })
+        const stop = () => { stopEventExecution = false }
+        const beforeEvent = this.genEventObject({ stop, state, params })
 
         this.$emit(beforeEventName, beforeEvent)
 
         if (!stopEventExecution) {
           this.visible = !!state
 
-          const afterEvent = this.genEventObject({
-            state,
-            params
-          })
-
+          const afterEvent = this.genEventObject({ state, params })
           this.$emit(afterEventName, afterEvent)
         }
       },

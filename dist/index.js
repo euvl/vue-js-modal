@@ -560,6 +560,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     minHeight: {
       type: Number,
       default: 0
+    },
+    pivotX: {
+      type: Number,
+      default: 0.5
+    },
+    pivotY: {
+      type: Number,
+      default: 0.5
     }
   },
   components: {
@@ -594,18 +602,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (value) {
           this.visibility.overlay = true;
           setTimeout(function () {
-            return _this.visibility.modal = true;
+            _this.visibility.modal = true;
           }, this.delay);
         } else {
           this.visibility.modal = false;
           setTimeout(function () {
-            return _this.visibility.overlay = false;
+            _this.visibility.overlay = false;
           }, this.delay);
         }
       } else {
         this.visibility.overlay = value;
-        __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].nextTick(function () {
-          return _this.visibility.modal = value;
+        this.$nextTick(function () {
+          _this.visibility.modal = value;
         });
       }
     }
@@ -621,6 +629,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     window.addEventListener('resize', this.onWindowResize);
   },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener('resize', this.onWindowResize);
+  },
   beforeMount: function beforeMount() {
     this.onWindowResize();
   },
@@ -628,8 +639,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     position: function position() {
       return {
-        left: Math.max(0.5 * (this.window.width - this.modal.width), 0),
-        top: Math.max(0.5 * (this.window.height - this.modal.height), 0)
+        left: Math.max(this.pivotX * (this.window.width - this.modal.width), 0),
+        top: Math.max(this.pivotY * (this.window.height - this.modal.height), 0)
       };
     },
     modalClass: function modalClass() {
@@ -650,15 +661,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.window.height = window.innerHeight;
 
       if (this.adaptive) {
-        var width = this.window.width > this.modal.width ? this.modal.width : this.window.width;
-
-        var height = this.window.height > this.modal.height ? this.modal.height : this.window.height;
+        var width = Math.min(this.window.width, this.modal.width);
+        var height = Math.min(this.window.height, this.modal.height);
 
         this.modal.width = width; // Math.max(width, this.minWidth);
         this.modal.height = height; // Math.max(height, this.minHeight);
       }
     },
     genEventObject: function genEventObject(params) {
+      //todo: clean this up
       return __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].util.extend({
         name: this.name,
         ref: this.$refs.modal,
@@ -669,9 +680,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.modal.width = event.size.width;
       this.modal.height = event.size.height;
 
-      var resizeEvent = this.genEventObject({
-        size: this.modal
-      });
+      var size = this.modal.size;
+
+      var resizeEvent = this.genEventObject({ size: size });
 
       this.$emit('resize', resizeEvent);
     },
@@ -681,24 +692,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var stopEventExecution = false;
 
-      var beforeEvent = this.genEventObject({
-        stop: function stop() {
-          return stopEventExecution = false;
-        },
-        state: state,
-        params: params
-      });
+      var stop = function stop() {
+        stopEventExecution = false;
+      };
+      var beforeEvent = this.genEventObject({ stop: stop, state: state, params: params });
 
       this.$emit(beforeEventName, beforeEvent);
 
       if (!stopEventExecution) {
         this.visible = !!state;
 
-        var afterEvent = this.genEventObject({
-          state: state,
-          params: params
-        });
-
+        var afterEvent = this.genEventObject({ state: state, params: params });
         this.$emit(afterEventName, afterEvent);
       }
     }

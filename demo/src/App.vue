@@ -11,8 +11,12 @@
 
   <h2>Vue.js Modal</h2>
 
-  <pre>
+  <pre style="line-height: 1.5;">
     npm install --save vue-js-modal
+
+    ...
+    import vmodal from 'vue-js-modal'
+    Vue.use(vmodal)
   </pre>
 
   <table>
@@ -92,7 +96,7 @@ export default {
       props: {
         name: {
           required: true,
-          type: [String, Number],
+          type: String,
         },
         delay: {
           type: Number,

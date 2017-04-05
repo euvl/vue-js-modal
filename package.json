@@ -1,7 +1,7 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "main": "dist/index.js",
   "repository": {
@@ -23,7 +23,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-preset-latest": "^6.0.0",
-    "vue": "^2.1.10",
+    "vue": "^2.2.6",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.0.0",
