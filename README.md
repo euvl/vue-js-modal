@@ -1,5 +1,7 @@
 <h1>Vue.js modal</h1>
 
+[![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
+
 <h5>Simple to use vue.js modal plgin without any external dependencies</h5>
 
 Demo: http://vue-js-modal.yev.io/
