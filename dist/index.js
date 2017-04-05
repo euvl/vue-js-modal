@@ -73,11 +73,922 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = options.computed || (options.computed = {})
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(14)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = { css: css, media: media, sourceMap: sourceMap }
+    if (!newStyles[id]) {
+      part.id = parentId + ':0'
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      part.id = parentId + ':' + newStyles[id].parts.length
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+  var hasSSR = styleElement != null
+
+  // if in production mode and style is already provided by SSR,
+  // simply do nothing.
+  if (hasSSR && isProduction) {
+    return noop
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = styleElement || createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (!hasSSR) {
+    update(obj)
+  }
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Modal_vue__);
+
+
+var ModalPlugin = {
+  install: function install(Vue) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    if (!this.hasOwnProperty("event")) {
+      this.event = new Vue();
+    }
+
+    var $modal = {
+      show: function show(name, params) {
+        ModalPlugin.event.$emit('toggle', name, true, params);
+      },
+      hide: function hide(name, params) {
+        ModalPlugin.event.$emit('toggle', name, false, params);
+      }
+    };
+
+    Object.defineProperty(Vue.prototype, '$modal', {
+      get: function get() {
+        return $modal;
+      }
+    });
+
+    Vue.component('modal', __WEBPACK_IMPORTED_MODULE_0__Modal_vue___default.a);
+    return null;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = ModalPlugin;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(12)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(5),
+  /* template */
+  __webpack_require__(10),
+  /* scopeId */
+  "data-v-40dd3b1e",
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Resizer_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+  name: 'Modal',
+  props: {
+    name: {
+      required: true,
+      type: [String, Number]
+    },
+    delay: {
+      type: Number,
+      default: 0
+    },
+    resizable: {
+      type: Boolean,
+      default: false
+    },
+    adaptive: {
+      type: Boolean,
+      default: false
+    },
+    transition: {
+      type: String
+    },
+    classes: {
+      type: [String, Array],
+      default: 'nice-modal'
+    },
+    width: {
+      type: Number,
+      default: 600
+    },
+    height: {
+      type: Number,
+      default: 300
+    },
+    minWidth: {
+      type: Number,
+      default: 0
+    },
+    minHeight: {
+      type: Number,
+      default: 0
+    }
+  },
+  components: {
+    Resizer: __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default.a
+  },
+  data: function data() {
+    return {
+      visible: false,
+
+      visibility: {
+        modal: false,
+        overlay: false
+      },
+
+      modal: {
+        width: this.width,
+        height: this.height
+      },
+
+      window: {
+        width: window.innerWidth,
+        height: window.innerWidth
+      }
+    };
+  },
+
+  watch: {
+    visible: function visible(value) {
+      var _this = this;
+
+      if (this.delay > 0) {
+        if (value) {
+          this.visibility.overlay = true;
+          setTimeout(function () {
+            return _this.visibility.modal = true;
+          }, this.delay);
+        } else {
+          this.visibility.modal = false;
+          setTimeout(function () {
+            return _this.visibility.overlay = false;
+          }, this.delay);
+        }
+      } else {
+        this.visibility.overlay = value;
+        __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].nextTick(function () {
+          return _this.visibility.modal = value;
+        });
+      }
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    __WEBPACK_IMPORTED_MODULE_1__index__["default"].event.$on('toggle', function (name, state, params) {
+      if (name === _this2.name) {
+        _this2.toggle(!_this2.visible, params);
+      }
+    });
+
+    window.addEventListener('resize', this.onWindowResize);
+  },
+  beforeMount: function beforeMount() {
+    this.onWindowResize();
+  },
+
+  computed: {
+    position: function position() {
+      return {
+        left: Math.max(0.5 * (this.window.width - this.modal.width), 0),
+        top: Math.max(0.5 * (this.window.height - this.modal.height), 0)
+      };
+    },
+    modalClass: function modalClass() {
+      return ['modal', this.classes];
+    },
+    modalStyle: function modalStyle() {
+      return {
+        top: this.position.top + 'px',
+        left: this.position.left + 'px',
+        width: this.modal.width + 'px',
+        height: this.modal.height + 'px'
+      };
+    }
+  },
+  methods: {
+    onWindowResize: function onWindowResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+
+      if (this.adaptive) {
+        var width = this.window.width > this.modal.width ? this.modal.width : this.window.width;
+
+        var height = this.window.height > this.modal.height ? this.modal.height : this.window.height;
+
+        this.modal.width = width; // Math.max(width, this.minWidth);
+        this.modal.height = height; // Math.max(height, this.minHeight);
+      }
+    },
+    genEventObject: function genEventObject(params) {
+      return __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].util.extend({
+        name: this.name,
+        ref: this.$refs.modal,
+        timestamp: Date.now()
+      }, params || {});
+    },
+    resize: function resize(event) {
+      this.modal.width = event.size.width;
+      this.modal.height = event.size.height;
+
+      var resizeEvent = this.genEventObject({
+        size: this.modal
+      });
+
+      this.$emit('resize', resizeEvent);
+    },
+    toggle: function toggle(state, params) {
+      var beforeEventName = this.visible ? 'before-close' : 'before-open';
+      var afterEventName = this.visible ? 'closed' : 'opened';
+
+      var stopEventExecution = false;
+
+      var beforeEvent = this.genEventObject({
+        stop: function stop() {
+          return stopEventExecution = false;
+        },
+        state: state,
+        params: params
+      });
+
+      this.$emit(beforeEventName, beforeEvent);
+
+      if (!stopEventExecution) {
+        this.visible = !!state;
+
+        var afterEvent = this.genEventObject({
+          state: state,
+          params: params
+        });
+
+        this.$emit(afterEventName, afterEvent);
+      }
+    }
+  }
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+  name: 'Resizer',
+  props: {
+    minHeight: {
+      type: Number,
+      default: 0
+    },
+    minWidth: {
+      type: Number,
+      default: 0
+    } },
+  data: function data() {
+    return {
+      clicked: false,
+      size: {}
+    };
+  },
+  mounted: function mounted() {
+    this.$el.addEventListener('mousedown', this.start, false);
+  },
+
+  computed: {
+    className: function className() {
+      return { 'vue-modal-resizer': true, 'clicked': this.clicked };
+    }
+  },
+  methods: {
+    start: function start(event) {
+      this.clicked = true;
+
+      window.addEventListener('mousemove', this.mousemove, false);
+      window.addEventListener('mouseup', this.stop, false);
+
+      event.stopPropagation();
+      event.preventDefault();
+    },
+    stop: function stop() {
+      this.clicked = false;
+
+      window.removeEventListener('mousemove', this.mousemove, false);
+      window.removeEventListener('mouseup', this.stop, false);
+
+      this.$emit('resize-stop', {
+        element: this.$el.parentElement,
+        size: this.size
+      });
+    },
+    mousemove: function mousemove(event) {
+      this.resize(event);
+    },
+    resize: function resize(event) {
+      var el = this.$el.parentElement;
+
+      if (el) {
+        var width = event.clientX - el.offsetLeft;
+        var height = event.clientY - el.offsetTop;
+
+        if (width < this.minWidth) {
+          width = this.minWidth;
+        }
+
+        if (width > window.innerWidth) {
+          width = window.innerWidth;
+        }
+
+        if (height < this.minHeight) {
+          height = this.minHeight;
+        }
+
+        if (height > window.innerHeight) {
+          height = window.innerHeight;
+        }
+
+        this.size = { width: width, height: height };
+        el.style.width = width + 'px';
+        el.style.height = height + 'px';
+
+        this.$emit('resize', {
+          element: el,
+          size: this.size
+        });
+      }
+    }
+  }
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, ".vue-modal-resizer{overflow:hidden;width:12px;height:12px;right:0;bottom:0;z-index:9999999;cursor:se-resize}.vue-modal-resizer,.vue-modal-resizer:after{display:block;position:absolute;background:transparent}.vue-modal-resizer:after{content:\"\";left:0;top:0;width:0;height:0;border-bottom:10px solid #ddd;border-left:10px solid transparent}.vue-modal-resizer.clicked:after{border-bottom:10px solid #369be9}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(13)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(6),
+  /* template */
+  __webpack_require__(11),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('transition', {
+    attrs: {
+      "name": "overlay-fade"
+    }
+  }, [(_vm.visibility.overlay) ? _c('div', {
+    staticClass: "nice-modal-overlay",
+    on: {
+      "mousedown": function($event) {
+        $event.stopPropagation();
+        _vm.toggle(false)
+      }
+    }
+  }, [_c('transition', {
+    attrs: {
+      "name": _vm.transition
+    }
+  }, [(_vm.visibility.modal) ? _c('div', {
+    ref: "modal",
+    class: _vm.modalClass,
+    style: (_vm.modalStyle),
+    on: {
+      "mousedown": function($event) {
+        $event.stopPropagation();
+      }
+    }
+  }, [_vm._t("default"), _vm._v(" "), (_vm.resizable) ? _c('resizer', {
+    attrs: {
+      "min-width": _vm.minWidth,
+      "min-height": _vm.minHeight
+    },
+    on: {
+      "resize": _vm.resize
+    }
+  }) : _vm._e()], 2) : _vm._e()])], 1) : _vm._e()])
+},staticRenderFns: []}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    class: _vm.className
+  })
+},staticRenderFns: []}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(7);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("3bb0039f", content, true);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
+     var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(8);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("c392065e", content, true);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue", function() {
+     var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9390,921 +10301,6 @@ Vue$3.compile = compileToFunctions;
 /* harmony default export */ __webpack_exports__["a"] = Vue$3;
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(16)))
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function() {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for(var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if(item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  scopeId,
-  cssModules
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  // inject cssModules
-  if (cssModules) {
-    var computed = options.computed || (options.computed = {})
-    Object.keys(cssModules).forEach(function (key) {
-      var module = cssModules[key]
-      computed[key] = function () { return module }
-    })
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(15)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction) {
-  isProduction = _isProduction
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = { css: css, media: media, sourceMap: sourceMap }
-    if (!newStyles[id]) {
-      part.id = parentId + ':0'
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      part.id = parentId + ':' + newStyles[id].parts.length
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
-  var hasSSR = styleElement != null
-
-  // if in production mode and style is already provided by SSR,
-  // simply do nothing.
-  if (hasSSR && isProduction) {
-    return noop
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = styleElement || createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (!hasSSR) {
-    update(obj)
-  }
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Modal_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Modal_vue__);
-
-
-
-var ModalPlugin = {
-  install: function install(Vue) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    if (!this.hasOwnProperty("event")) {
-      this.event = new Vue();
-    }
-
-    var $modal = {
-      show: function show(name, params) {
-        ModalPlugin.event.$emit('toggle', name, true, params);
-      },
-      hide: function hide(name, params) {
-        ModalPlugin.event.$emit('toggle', name, false, params);
-      }
-    };
-
-    Object.defineProperty(Vue.prototype, '$modal', {
-      get: function get() {
-        return $modal;
-      }
-    });
-
-    Vue.component('modal', __WEBPACK_IMPORTED_MODULE_1__Modal_vue___default.a);
-    return null;
-  }
-};
-
-__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(ModalPlugin);
-
-/* harmony default export */ __webpack_exports__["default"] = ModalPlugin;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(13)
-
-var Component = __webpack_require__(2)(
-  /* script */
-  __webpack_require__(6),
-  /* template */
-  __webpack_require__(11),
-  /* scopeId */
-  "data-v-40dd3b1e",
-  /* cssModules */
-  null
-)
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Resizer_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = {
-  name: 'Modal',
-  props: {
-    name: {
-      required: true,
-      type: [String, Number]
-    },
-    delay: {
-      type: Number,
-      default: 0
-    },
-    resizable: {
-      type: Boolean,
-      default: false
-    },
-    adaptive: {
-      type: Boolean,
-      default: false
-    },
-    transition: {
-      type: String
-    },
-    classes: {
-      type: [String, Array],
-      default: 'nice-modal'
-    },
-    width: {
-      type: Number,
-      default: 600
-    },
-    height: {
-      type: Number,
-      default: 300
-    },
-    minWidth: {
-      type: Number,
-      default: 0
-    },
-    minHeight: {
-      type: Number,
-      default: 0
-    }
-  },
-  components: {
-    Resizer: __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default.a
-  },
-  data: function data() {
-    return {
-      visible: false,
-
-      visibility: {
-        modal: false,
-        overlay: false
-      },
-
-      modal: {
-        width: this.width,
-        height: this.height
-      },
-
-      window: {
-        width: window.innerWidth,
-        height: window.innerWidth
-      }
-    };
-  },
-
-  watch: {
-    visible: function visible(value) {
-      var _this = this;
-
-      if (this.delay > 0) {
-        if (value) {
-          this.visibility.overlay = true;
-          setTimeout(function () {
-            return _this.visibility.modal = true;
-          }, this.delay);
-        } else {
-          this.visibility.modal = false;
-          setTimeout(function () {
-            return _this.visibility.overlay = false;
-          }, this.delay);
-        }
-      } else {
-        this.visibility.overlay = value;
-        __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].nextTick(function () {
-          return _this.visibility.modal = value;
-        });
-      }
-    }
-  },
-  created: function created() {
-    var _this2 = this;
-
-    __WEBPACK_IMPORTED_MODULE_1__index__["default"].event.$on('toggle', function (name, state, params) {
-      if (name === _this2.name) {
-        _this2.toggle(!_this2.visible, params);
-      }
-    });
-
-    window.addEventListener('resize', this.onWindowResize);
-  },
-  beforeMount: function beforeMount() {
-    this.onWindowResize();
-  },
-
-  computed: {
-    position: function position() {
-      return {
-        left: Math.max(0.5 * (this.window.width - this.modal.width), 0),
-        top: Math.max(0.5 * (this.window.height - this.modal.height), 0)
-      };
-    },
-    modalClass: function modalClass() {
-      return ['modal', this.classes];
-    },
-    modalStyle: function modalStyle() {
-      return {
-        top: this.position.top + 'px',
-        left: this.position.left + 'px',
-        width: this.modal.width + 'px',
-        height: this.modal.height + 'px'
-      };
-    }
-  },
-  methods: {
-    onWindowResize: function onWindowResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
-
-      if (this.adaptive) {
-        var width = this.window.width > this.modal.width ? this.modal.width : this.window.width;
-
-        var height = this.window.height > this.modal.height ? this.modal.height : this.window.height;
-
-        this.modal.width = width; // Math.max(width, this.minWidth);
-        this.modal.height = height; // Math.max(height, this.minHeight);
-      }
-    },
-    genEventObject: function genEventObject(params) {
-      return __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].util.extend({
-        name: this.name,
-        ref: this.$refs.modal,
-        timestamp: Date.now()
-      }, params || {});
-    },
-    resize: function resize(event) {
-      this.modal.width = event.size.width;
-      this.modal.height = event.size.height;
-
-      var resizeEvent = this.genEventObject({
-        size: this.modal
-      });
-
-      this.$emit('resize', resizeEvent);
-    },
-    toggle: function toggle(state, params) {
-      var beforeEventName = this.visible ? 'before-close' : 'before-open';
-      var afterEventName = this.visible ? 'closed' : 'opened';
-
-      var stopEventExecution = false;
-
-      var beforeEvent = this.genEventObject({
-        stop: function stop() {
-          return stopEventExecution = false;
-        },
-        state: state,
-        params: params
-      });
-
-      this.$emit(beforeEventName, beforeEvent);
-
-      if (!stopEventExecution) {
-        this.visible = !!state;
-
-        var afterEvent = this.genEventObject({
-          state: state,
-          params: params
-        });
-
-        this.$emit(afterEventName, afterEvent);
-      }
-    }
-  }
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-  name: 'Resizer',
-  props: {
-    minHeight: {
-      type: Number,
-      default: 0
-    },
-    minWidth: {
-      type: Number,
-      default: 0
-    } },
-  data: function data() {
-    return {
-      clicked: false,
-      size: {}
-    };
-  },
-  mounted: function mounted() {
-    this.$el.addEventListener('mousedown', this.start, false);
-  },
-
-  computed: {
-    className: function className() {
-      return { 'vue-modal-resizer': true, 'clicked': this.clicked };
-    }
-  },
-  methods: {
-    start: function start(event) {
-      this.clicked = true;
-
-      window.addEventListener('mousemove', this.mousemove, false);
-      window.addEventListener('mouseup', this.stop, false);
-
-      event.stopPropagation();
-      event.preventDefault();
-    },
-    stop: function stop() {
-      this.clicked = false;
-
-      window.removeEventListener('mousemove', this.mousemove, false);
-      window.removeEventListener('mouseup', this.stop, false);
-
-      this.$emit('resize-stop', {
-        element: this.$el.parentElement,
-        size: this.size
-      });
-    },
-    mousemove: function mousemove(event) {
-      this.resize(event);
-    },
-    resize: function resize(event) {
-      var el = this.$el.parentElement;
-
-      if (el) {
-        var width = event.clientX - el.offsetLeft;
-        var height = event.clientY - el.offsetTop;
-
-        if (width < this.minWidth) {
-          width = this.minWidth;
-        }
-
-        if (width > window.innerWidth) {
-          width = window.innerWidth;
-        }
-
-        if (height < this.minHeight) {
-          height = this.minHeight;
-        }
-
-        if (height > window.innerHeight) {
-          height = window.innerHeight;
-        }
-
-        this.size = { width: width, height: height };
-        el.style.width = width + 'px';
-        el.style.height = height + 'px';
-
-        this.$emit('resize', {
-          element: el,
-          size: this.size
-        });
-      }
-    }
-  }
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)();
-// imports
-
-
-// module
-exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
-
-// exports
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)();
-// imports
-
-
-// module
-exports.push([module.i, ".vue-modal-resizer{overflow:hidden;width:12px;height:12px;right:0;bottom:0;z-index:9999999;cursor:se-resize}.vue-modal-resizer,.vue-modal-resizer:after{display:block;position:absolute;background:transparent}.vue-modal-resizer:after{content:\"\";left:0;top:0;width:0;height:0;border-bottom:10px solid #ddd;border-left:10px solid transparent}.vue-modal-resizer.clicked:after{border-bottom:10px solid #369be9}", ""]);
-
-// exports
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(14)
-
-var Component = __webpack_require__(2)(
-  /* script */
-  __webpack_require__(7),
-  /* template */
-  __webpack_require__(12),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('transition', {
-    attrs: {
-      "name": "overlay-fade"
-    }
-  }, [(_vm.visibility.overlay) ? _c('div', {
-    staticClass: "nice-modal-overlay",
-    on: {
-      "mousedown": function($event) {
-        $event.stopPropagation();
-        _vm.toggle(false)
-      }
-    }
-  }, [_c('transition', {
-    attrs: {
-      "name": _vm.transition
-    }
-  }, [(_vm.visibility.modal) ? _c('div', {
-    ref: "modal",
-    class: _vm.modalClass,
-    style: (_vm.modalStyle),
-    on: {
-      "mousedown": function($event) {
-        $event.stopPropagation();
-      }
-    }
-  }, [_vm._t("default"), _vm._v(" "), (_vm.resizable) ? _c('resizer', {
-    attrs: {
-      "min-width": _vm.minWidth,
-      "min-height": _vm.minHeight
-    },
-    on: {
-      "resize": _vm.resize
-    }
-  }) : _vm._e()], 2) : _vm._e()])], 1) : _vm._e()])
-},staticRenderFns: []}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    class: _vm.className
-  })
-},staticRenderFns: []}
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(8);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("3bb0039f", content, true);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
-     var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(9);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("c392065e", content, true);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue", function() {
-     var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
 
 /***/ }),
 /* 16 */

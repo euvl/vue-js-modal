@@ -1,4 +1,3 @@
-import Vue    from 'vue'
 import Modal  from './Modal.vue'
 
 const ModalPlugin = {
@@ -22,9 +21,7 @@ const ModalPlugin = {
 
     Vue.component('modal', Modal)
     return null
-  },
+  }
 }
-
-Vue.use(ModalPlugin)
 
 export default ModalPlugin
