@@ -24,7 +24,7 @@ Create modal
 Call it from anywhere in the app
 ```javascript
 methods: {
-  show() { 
+  show() {
     this.$modal.show('hello-word');
   },
   hide () {
@@ -62,8 +62,8 @@ methods: {
 ![](http://i.imgur.com/mN1MBJ3.gif)
 
 
-Example: 
+Example:
 ```
-npm run examples
+cd demo
+npm run dev
 ```
-Will be served at http://localhost:8000/examples
