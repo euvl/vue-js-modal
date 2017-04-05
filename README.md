@@ -59,8 +59,7 @@ methods: {
 
 ### Screenshots
 
-![](http://i.imgur.com/mN1MBJ3.gif)
-
+![](http://i.imgur.com/Ur9lI4e.gif)
 
 Example:
 ```
