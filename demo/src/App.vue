@@ -193,5 +193,11 @@ button {
 table.props {
   width: 100%;
   text-align: left;
+  border-collapse: collapse;
+
+  td, th {
+    border: 1px solid #eee;
+    padding: 4px 8px;
+  }
 }
 </style>
