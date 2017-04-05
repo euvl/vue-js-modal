@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "vue": "^2.0.0",
-    "vue-js-modal": "^1.0.12"
+    "vue-js-modal": "^1.0.13"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
