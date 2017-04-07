@@ -10,6 +10,7 @@ const ModalPlugin = {
       show(name, params) {
         ModalPlugin.event.$emit('toggle', name, true, params)
       },
+
       hide(name, params) {
         ModalPlugin.event.$emit('toggle', name, false, params)
       }

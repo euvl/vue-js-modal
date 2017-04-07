@@ -1,6 +1,7 @@
 <template>
   <transition name="overlay-fade">
     <div v-if="visibility.overlay"
+         ref="overlay"
          class="nice-modal-overlay"
          @mousedown.stop="toggle(false)">
       <transition :name="transition">
@@ -43,20 +44,16 @@
         type: Boolean,
         default: false
       },
+      draggable: {
+        type: [Boolean, String],
+        default: false
+      },
       transition: {
         type: String,
       },
       classes: {
         type: [String, Array],
         default: 'nice-modal',
-      },
-      width: {
-        type: Number,
-        default: 600
-      },
-      height: {
-        type: Number,
-        default: 300
       },
       minWidth: {
         type: Number,
@@ -65,6 +62,14 @@
       minHeight: {
         type: Number,
         default: 0
+      },
+      width: {
+        type: Number,
+        default: 600
+      },
+      height: {
+        type: Number,
+        default: 300
       },
       pivotX: {
         type: Number,
@@ -95,29 +100,41 @@
         window: {
           width: window.innerWidth,
           height: window.innerWidth
-        }
+        },
+
+        draggableElement: false
       };
     },
     watch: {
       visible (value) {
-        if (this.delay > 0) {
-          if (value) {
-            this.visibility.overlay = true
-            setTimeout(() => {
-              this.visibility.modal = true
-            }, this.delay)
-          } else {
-            this.visibility.modal = false
-            setTimeout(() => {
-              this.visibility.overlay = false
-            }, this.delay)
-          }
+        // if (this.delay > 0) {
+        if (value) {
+          this.visibility.overlay = true
+
+          setTimeout(() => {
+            this.visibility.modal = true
+            this.$nextTick(() => {
+              this.addDraggableListeners()
+            })
+          }, this.delay)
         } else {
-          this.visibility.overlay = value
-          this.$nextTick(() => {
-            this.visibility.modal = value
-          })
+          this.visibility.modal = false
+
+          setTimeout(() => {
+            this.visibility.overlay = false
+            this.$nextTick(() => {
+              this.removeDraggableListeners()
+            })
+          }, this.delay)
+
+          // this.removeDraggableHandlers()
         }
+        //  } else {
+        //    this.visibility.overlay = value
+        //    this.$nextTick(() => {
+        //      this.visibility.modal = value
+        //    })
+        //  }
       },
     },
     created () {
@@ -152,7 +169,7 @@
           width: this.modal.width + 'px',
           height: this.modal.height + 'px'
         }
-      }
+      },
     },
     methods: {
       onWindowResize() {
@@ -204,7 +221,36 @@
           this.$emit(afterEventName, afterEvent)
         }
       },
-    },
+
+      getDraggableElement () {
+        var selector = typeof this.draggable !== 'string'
+          ? '.modal'
+          : this.draggable
+
+        if (selector) {
+          var handler = this.$refs.overlay.querySelector(selector)
+          if (handler) {
+            return handler
+          }
+        }
+      },
+
+      addDraggableListeners () {
+        if (!this.draggable) {
+          return;
+        }
+
+        let dragger = this.getDraggableElement()
+
+        if (dragger) {
+          console.log(dragger)
+        }
+      },
+
+      removeDraggableListeners () {
+        console.log('removing draggable handlers')
+      }
+    }
   };
 </script>
 <style lang="scss" scoped>
@@ -250,6 +296,8 @@
     border-radius: 3px;
     box-shadow: 0 20px 60px -2px rgba(27, 33, 58, .4);
     padding: 0;
+
+    //background: yellow !important;
 
     &.nice-modal-fullscreen {
       width: 100vw;

@@ -1,6 +1,13 @@
 <template>
 <div id="app">
-  <modal name="example-modal" transition="nice-modal-fade" :min-width="200" :min-height="200" :delay="100" :adaptive="adaptive" :resizable="resizable">
+  <modal name="example-modal"
+         transition="nice-modal-fade"
+         :min-width="200"
+         :min-height="200"
+         :delay="100"
+         :adaptive="adaptive"
+         :resizable="resizable"
+         :draggable="draggable">
     <div style="height: 100%; box-sizing: border-box; padding: 10px; font-size: 13px; overflow: auto">
       Appropriately exploit professional infrastructures rather than unique growth strategies. Assertively build leveraged growth strategies vis-a-vis multimedia based vortals. Progressively simplify cross-platform value through interactive imperatives. Objectively
       implement enabled web services after plug-and-play ROI. Distinctively impact inexpensive schemas before installed base imperatives. Holisticly benchmark pandemic process improvements without wireless experiences. Efficiently create worldwide partnerships
@@ -47,10 +54,11 @@
   </table>
 
   <div style="margin-top: 20px; margin-bottom: 20px;">
-    <button @click="show(false, false)">Simple</button>
-    <button @click="show(true, false)">Resizable</button>
+    <button @click="show()">Simple</button>
+    <button @click="show(true)">Resizable</button>
     <button @click="show(false, true)">Adaptive</button>
     <button @click="show(true, true)">Mixed</button>
+    <button @click="show(false, false, true)">Draggable (under development)</button>
   </div>
 
   <table class="props">
@@ -92,6 +100,7 @@ export default {
     return {
       resizable: false,
       adaptive: false,
+      draggable: false,
 
       props: {
         name: {
@@ -137,10 +146,18 @@ export default {
     }
   },
   methods: {
-    show(resizable, adaptive) {
+    show(resizable = false, adaptive = false, draggable = false) {
       this.resizable = resizable
       this.adaptive = adaptive
-      this.$modal.show('example-modal')
+      this.draggable = draggable
+
+      /*
+        $nextTick is required because the data model with new
+        "resizable, adaptive, draggable" values is not updated yet.. eh
+      */
+      this.$nextTick(() => {
+        this.$modal.show('example-modal')
+      })
     }
   }
 }

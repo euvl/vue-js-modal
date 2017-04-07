@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["VueJsToggleButton"] = factory();
+		exports["VueJsModal"] = factory();
 	else
-		root["VueJsToggleButton"] = factory();
+		root["VueJsModal"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -514,6 +514,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -538,20 +539,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       type: Boolean,
       default: false
     },
+    draggable: {
+      type: [Boolean, String],
+      default: false
+    },
     transition: {
       type: String
     },
     classes: {
       type: [String, Array],
       default: 'nice-modal'
-    },
-    width: {
-      type: Number,
-      default: 600
-    },
-    height: {
-      type: Number,
-      default: 300
     },
     minWidth: {
       type: Number,
@@ -560,6 +557,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     minHeight: {
       type: Number,
       default: 0
+    },
+    width: {
+      type: Number,
+      default: 600
+    },
+    height: {
+      type: Number,
+      default: 300
     },
     pivotX: {
       type: Number,
@@ -590,7 +595,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window: {
         width: window.innerWidth,
         height: window.innerWidth
-      }
+      },
+
+      draggableElement: false
     };
   },
 
@@ -598,24 +605,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     visible: function visible(value) {
       var _this = this;
 
-      if (this.delay > 0) {
-        if (value) {
-          this.visibility.overlay = true;
-          setTimeout(function () {
-            _this.visibility.modal = true;
-          }, this.delay);
-        } else {
-          this.visibility.modal = false;
-          setTimeout(function () {
-            _this.visibility.overlay = false;
-          }, this.delay);
-        }
+      // if (this.delay > 0) {
+      if (value) {
+        this.visibility.overlay = true;
+
+        setTimeout(function () {
+          _this.visibility.modal = true;
+          _this.$nextTick(function () {
+            _this.addDraggableListeners();
+          });
+        }, this.delay);
       } else {
-        this.visibility.overlay = value;
-        this.$nextTick(function () {
-          _this.visibility.modal = value;
-        });
+        this.visibility.modal = false;
+
+        setTimeout(function () {
+          _this.visibility.overlay = false;
+          _this.$nextTick(function () {
+            _this.removeDraggableListeners();
+          });
+        }, this.delay);
+
+        // this.removeDraggableHandlers()
       }
+      //  } else {
+      //    this.visibility.overlay = value
+      //    this.$nextTick(() => {
+      //      this.visibility.modal = value
+      //    })
+      //  }
     }
   },
   created: function created() {
@@ -705,6 +722,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var afterEvent = this.genEventObject({ state: state, params: params });
         this.$emit(afterEventName, afterEvent);
       }
+    },
+    getDraggableElement: function getDraggableElement() {
+      var selector = typeof this.draggable !== 'string' ? '.modal' : this.draggable;
+
+      if (selector) {
+        var handler = this.$refs.overlay.querySelector(selector);
+        if (handler) {
+          return handler;
+        }
+      }
+    },
+    addDraggableListeners: function addDraggableListeners() {
+      if (!this.draggable) {
+        return;
+      }
+
+      var dragger = this.getDraggableElement();
+
+      if (dragger) {
+        console.log(dragger);
+      }
+    },
+    removeDraggableListeners: function removeDraggableListeners() {
+      console.log('removing draggable handlers');
     }
   }
 };
@@ -814,7 +855,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
+exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0;background:#ff0!important}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
 
 // exports
 
@@ -865,6 +906,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "overlay-fade"
     }
   }, [(_vm.visibility.overlay) ? _c('div', {
+    ref: "overlay",
     staticClass: "nice-modal-overlay",
     on: {
       "mousedown": function($event) {
