@@ -83,13 +83,18 @@
     components: {
       Resizer
     },
-    data() {
+    data () {
       return {
         visible: false,
 
         visibility: {
           modal: false,
           overlay: false
+        },
+
+        shift: {
+          left: 0,
+          top: 0
         },
 
         modal: {
@@ -107,7 +112,6 @@
     },
     watch: {
       visible (value) {
-        // if (this.delay > 0) {
         if (value) {
           this.visibility.overlay = true
 
@@ -126,16 +130,8 @@
               this.removeDraggableListeners()
             })
           }, this.delay)
-
-          // this.removeDraggableHandlers()
         }
-        //  } else {
-        //    this.visibility.overlay = value
-        //    this.$nextTick(() => {
-        //      this.visibility.modal = value
-        //    })
-        //  }
-      },
+      }
     },
     created () {
       Modal.event.$on('toggle', (name, state, params) => {
@@ -153,48 +149,49 @@
       this.onWindowResize()
     },
     computed: {
-      position() {
+      position () {
         return {
-          left: Math.max(this.pivotX * (this.window.width - this.modal.width), 0),
-          top: Math.max(this.pivotY * (this.window.height - this.modal.height), 0)
+          left: Math.max(this.shift.left + this.pivotX *
+            (this.window.width - this.modal.width), 0),
+          top: Math.max(this.shift.top + this.pivotY *
+            (this.window.height - this.modal.height), 0)
         }
       },
-      modalClass() {
+      modalClass () {
         return ['modal', this.classes]
       },
-      modalStyle() {
+      modalStyle () {
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
           width: this.modal.width + 'px',
           height: this.modal.height + 'px'
         }
-      },
+      }
     },
     methods: {
-      onWindowResize() {
+      onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
 
         if (this.adaptive) {
           let width = Math.min(this.window.width, this.modal.width)
           let height = Math.min(this.window.height, this.modal.height)
-
-          this.modal.width = width // Math.max(width, this.minWidth);
-          this.modal.height = height // Math.max(height, this.minHeight);
+          // Math.max(width, this.minWidth);
+          this.modal.width = width
+          // Math.max(height, this.minHeight);
+          this.modal.height = height
         }
       },
-      genEventObject(params) {
+      genEventObject (params) {
         //todo: clean this up
-        return Vue.util.extend(
-          {
-            name: this.name,
-            ref: this.$refs.modal,
-            timestamp: Date.now()
-          },
-          params || {});
+        return Vue.util.extend({
+          name: this.name,
+          ref: this.$refs.modal,
+          timestamp: Date.now()
+        }, params || {});
       },
-      resize(event) {
+      resize (event) {
         this.modal.width = event.size.width
         this.modal.height = event.size.height
 
@@ -203,7 +200,7 @@
 
         this.$emit('resize', resizeEvent)
       },
-      toggle(state, params) {
+      toggle (state, params) {
         const beforeEventName = this.visible ? 'before-close' : 'before-open'
         const afterEventName = this.visible ? 'closed' : 'opened'
 
@@ -243,6 +240,41 @@
         let dragger = this.getDraggableElement()
 
         if (dragger) {
+          let startX = 0
+          let startY = 0
+          //let shiftX = 0
+          //let shiftY = 0
+
+          let mousedown = (event) => {
+            document.addEventListener('mousemove', mousemove)
+            document.addEventListener('mouseup', mouseup)
+
+            startX = event.clientX;
+            startY = event.clientY;
+
+            event.preventDefault()
+          }
+
+          let mousemove = (event) => {
+            this.shift.left = event.clientX - startX
+            this.shift.top = event.clientY - startY
+
+            console.log(this.shift)
+
+            event.preventDefault()
+          }
+
+          let mouseup = (event) => {
+            dragger.removeEventListener('mousedown', mousedown)
+            document.removeEventListener('mousemove', mousemove)
+            document.removeEventListener('mouseup', mouseup)
+            // this.shiftX = shiftX
+            // this.shiftY = shiftY
+            // console.log(shiftX, shiftY)
+            event.preventDefault()
+          }
+
+          dragger.addEventListener('mousedown', mousedown)
           console.log(dragger)
         }
       },
