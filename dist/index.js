@@ -587,6 +587,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         overlay: false
       },
 
+      shift: {
+        left: 0,
+        top: 0
+      },
+
       modal: {
         width: this.width,
         height: this.height
@@ -605,7 +610,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     visible: function visible(value) {
       var _this = this;
 
-      // if (this.delay > 0) {
       if (value) {
         this.visibility.overlay = true;
 
@@ -624,15 +628,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.removeDraggableListeners();
           });
         }, this.delay);
-
-        // this.removeDraggableHandlers()
       }
-      //  } else {
-      //    this.visibility.overlay = value
-      //    this.$nextTick(() => {
-      //      this.visibility.modal = value
-      //    })
-      //  }
     }
   },
   created: function created() {
@@ -656,8 +652,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     position: function position() {
       return {
-        left: Math.max(this.pivotX * (this.window.width - this.modal.width), 0),
-        top: Math.max(this.pivotY * (this.window.height - this.modal.height), 0)
+        left: Math.max(this.shift.left + this.pivotX * (this.window.width - this.modal.width), 0),
+        top: Math.max(this.shift.top + this.pivotY * (this.window.height - this.modal.height), 0)
       };
     },
     modalClass: function modalClass() {
@@ -680,9 +676,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (this.adaptive) {
         var width = Math.min(this.window.width, this.modal.width);
         var height = Math.min(this.window.height, this.modal.height);
-
-        this.modal.width = width; // Math.max(width, this.minWidth);
-        this.modal.height = height; // Math.max(height, this.minHeight);
+        // Math.max(width, this.minWidth);
+        this.modal.width = width;
+        // Math.max(height, this.minHeight);
+        this.modal.height = height;
       }
     },
     genEventObject: function genEventObject(params) {
@@ -734,6 +731,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     addDraggableListeners: function addDraggableListeners() {
+      var _this3 = this;
+
       if (!this.draggable) {
         return;
       }
@@ -741,7 +740,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var dragger = this.getDraggableElement();
 
       if (dragger) {
-        console.log(dragger);
+        (function () {
+          var startX = 0;
+          var startY = 0;
+
+          var left = 0;
+          var top = 0;
+
+          var mousedown = function mousedown(event) {
+
+            left = _this3.position.left;
+            top = _this3.position.top;
+
+            document.addEventListener('mousemove', mousemove);
+            document.addEventListener('mouseup', mouseup);
+
+            startX = event.clientX;
+            startY = event.clientY;
+
+            event.preventDefault();
+          };
+
+          var mousemove = function mousemove(event) {
+            _this3.shift.left = event.clientX - startX;
+            _this3.shift.top = event.clientY - startY;
+
+            console.log(_this3.shift);
+
+            event.preventDefault();
+          };
+
+          var mouseup = function mouseup(event) {
+            //dragger.removeEventListener('mousedown', mousedown)
+            document.removeEventListener('mousemove', mousemove);
+            document.removeEventListener('mouseup', mouseup);
+            // this.shiftX = shiftX
+            // this.shiftY = shiftY
+            // console.log(shiftX, shiftY)
+            event.preventDefault();
+          };
+
+          dragger.addEventListener('mousedown', mousedown);
+          console.log(dragger);
+        })();
       }
     },
     removeDraggableListeners: function removeDraggableListeners() {
@@ -855,7 +896,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0;background:#ff0!important}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
+exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
 
 // exports
 

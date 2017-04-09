@@ -61,88 +61,23 @@
     <button @click="show(false, false, true)">Draggable (under development)</button>
   </div>
 
-  <table class="props">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(prop, name) in props">
-        <td>
-          {{name}}
-        </td>
-        <td>
-          <template v-if="Array.isArray(prop.type)">
-            <span v-for="type in prop.type">
-              {{type.name}} /
-            </span>
-          </template>
-          <template v-else>
-            <span>{{prop.type.name}}</span>
-          </template>
-        </td>
-        <td>
-          {{prop.default}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <props-table />
+
 </div>
 </template>
 
 <script>
+import PropsTable from './PropsTable.vue'
+//<props-table/>
+
 export default {
   name: 'app',
+  components: {PropsTable},
   data() {
     return {
       resizable: false,
       adaptive: false,
       draggable: false,
-
-      props: {
-        name: {
-          required: true,
-          type: String,
-        },
-        delay: {
-          type: Number,
-          default: 0,
-        },
-        resizable: {
-          type: Boolean,
-          default: false
-        },
-        adaptive: {
-          type: Boolean,
-          default: false
-        },
-        transition: {
-          type: String,
-        },
-        classes: {
-          type: [String, Array],
-          default: 'nice-modal',
-        },
-        width: {
-          type: Number,
-          default: 600
-        },
-        height: {
-          type: Number,
-          default: 300
-        },
-        minWidth: {
-          type: Number,
-          default: 0
-        },
-        minHeight: {
-          type: Number,
-          default: 0
-        }
-      }
     }
   },
   methods: {
@@ -205,16 +140,5 @@ button {
         color: #20a0ff;
         border: 1px solid #20a0ff;
     }
-}
-
-table.props {
-  width: 100%;
-  text-align: left;
-  border-collapse: collapse;
-
-  td, th {
-    border: 1px solid #eee;
-    padding: 4px 8px;
-  }
 }
 </style>

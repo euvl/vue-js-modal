@@ -24,7 +24,7 @@ Create modal
 Call it from anywhere in the app
 ```javascript
 methods: {
-  show() {
+  show () {
     this.$modal.show('hello-word');
   },
   hide () {

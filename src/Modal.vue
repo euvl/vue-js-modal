@@ -149,12 +149,18 @@
       this.onWindowResize()
     },
     computed: {
-      position () {
+      center () {
         return {
-          left: Math.max(this.shift.left + this.pivotX *
-            (this.window.width - this.modal.width), 0),
-          top: Math.max(this.shift.top + this.pivotY *
-            (this.window.height - this.modal.height), 0)
+          x: 0.5 * this.window.width
+          y: 0.5 * this.window.height
+        }
+      },
+      position () {
+        let left = 0.5 * this.window.width - this.modal.width
+        let top = 0.5 * this.window.height - this.modal.height
+        return {
+          left: Math.max(/*this.shift.left + */ this.pivotX * (this.window.width - this.modal.width), 0),
+          top: Math.max(/*this.shift.top + */ this.pivotY * (this.window.height - this.modal.height), 0)
         }
       },
       modalClass () {
@@ -175,12 +181,8 @@
         this.window.height = window.innerHeight
 
         if (this.adaptive) {
-          let width = Math.min(this.window.width, this.modal.width)
-          let height = Math.min(this.window.height, this.modal.height)
-          // Math.max(width, this.minWidth);
-          this.modal.width = width
-          // Math.max(height, this.minHeight);
-          this.modal.height = height
+          this.modal.width = Math.min(this.window.width, this.modal.width)
+          this.modal.height = Math.min(this.window.height, this.modal.height)
         }
       },
       genEventObject (params) {
@@ -242,10 +244,15 @@
         if (dragger) {
           let startX = 0
           let startY = 0
-          //let shiftX = 0
-          //let shiftY = 0
+
+          let left = 0
+          let top = 0
 
           let mousedown = (event) => {
+
+            // left = this.position.left
+            // top = this.position.top
+
             document.addEventListener('mousemove', mousemove)
             document.addEventListener('mouseup', mouseup)
 
@@ -265,7 +272,7 @@
           }
 
           let mouseup = (event) => {
-            dragger.removeEventListener('mousedown', mousedown)
+            //dragger.removeEventListener('mousedown', mousedown)
             document.removeEventListener('mousemove', mousemove)
             document.removeEventListener('mouseup', mouseup)
             // this.shiftX = shiftX
