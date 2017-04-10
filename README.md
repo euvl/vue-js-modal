@@ -47,6 +47,8 @@ methods: {
 | height    | false | Number           | 300         | |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
+| pivotX    | false | Number (0 - 1.0) | 0.5         | |
+| pivotY    | false | Number (0 - 1.0) | 0.5         | | 
 
 ### Events
 
