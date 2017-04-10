@@ -73,11 +73,27 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return inRange; });
+var inRange = function inRange(from, to, value) {
+  if (value > to) {
+    return to;
+  }
+  if (value < from) {
+    return from;
+  }
+  return value;
+};
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 /*
@@ -133,7 +149,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = function normalizeComponent (
@@ -186,7 +202,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -205,7 +221,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(14)
+var listToStyles = __webpack_require__(15)
 
 /*
 type StyleObject = {
@@ -422,12 +438,12 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Modal_vue__);
 
 
@@ -462,18 +478,18 @@ var ModalPlugin = {
 /* harmony default export */ __webpack_exports__["default"] = ModalPlugin;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(12)
+__webpack_require__(13)
 
-var Component = __webpack_require__(1)(
+var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(5),
+  __webpack_require__(6),
   /* template */
-  __webpack_require__(10),
+  __webpack_require__(11),
   /* scopeId */
   "data-v-40dd3b1e",
   /* cssModules */
@@ -484,15 +500,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Resizer_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(0);
 //
 //
 //
@@ -515,6 +532,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -651,9 +669,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     position: function position() {
+      var window = this.window,
+          modal = this.modal,
+          shift = this.shift;
+
+      var maxLeft = window.width - modal.width;
+      var maxTop = window.height - modal.height;
+
+      var left = shift.left + this.pivotX * (window.width - modal.width);
+      var top = shift.top + this.pivotY * (window.height - modal.height);
+
       return {
-        left: Math.max(this.shift.left + this.pivotX * (this.window.width - this.modal.width), 0),
-        top: Math.max(this.shift.top + this.pivotY * (this.window.height - this.modal.height), 0)
+        left: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxLeft, left),
+        top: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxTop, top)
       };
     },
     modalClass: function modalClass() {
@@ -674,16 +702,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.window.height = window.innerHeight;
 
       if (this.adaptive) {
-        var width = Math.min(this.window.width, this.modal.width);
-        var height = Math.min(this.window.height, this.modal.height);
-        // Math.max(width, this.minWidth);
-        this.modal.width = width;
-        // Math.max(height, this.minHeight);
-        this.modal.height = height;
+        this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
+        this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
       }
     },
     genEventObject: function genEventObject(params) {
-      //todo: clean this up
+      //todo: clean this up (change to ...)
       return __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].util.extend({
         name: this.name,
         ref: this.$refs.modal,
@@ -714,9 +738,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$emit(beforeEventName, beforeEvent);
 
       if (!stopEventExecution) {
-        this.visible = !!state;
-
         var afterEvent = this.genEventObject({ state: state, params: params });
+
+        this.visible = !!state;
         this.$emit(afterEventName, afterEvent);
       }
     },
@@ -743,45 +767,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         (function () {
           var startX = 0;
           var startY = 0;
-
-          var left = 0;
-          var top = 0;
+          var cachedShiftX = 0;
+          var cachedShiftY = 0;
 
           var mousedown = function mousedown(event) {
-
-            left = _this3.position.left;
-            top = _this3.position.top;
-
             document.addEventListener('mousemove', mousemove);
             document.addEventListener('mouseup', mouseup);
 
             startX = event.clientX;
             startY = event.clientY;
-
+            cachedShiftX = _this3.shift.left;
+            cachedShiftY = _this3.shift.top;
             event.preventDefault();
           };
 
           var mousemove = function mousemove(event) {
-            _this3.shift.left = event.clientX - startX;
-            _this3.shift.top = event.clientY - startY;
-
-            console.log(_this3.shift);
-
+            _this3.shift.left = cachedShiftX + event.clientX - startX;
+            _this3.shift.top = cachedShiftY + event.clientY - startY;
             event.preventDefault();
           };
 
           var mouseup = function mouseup(event) {
-            //dragger.removeEventListener('mousedown', mousedown)
             document.removeEventListener('mousemove', mousemove);
             document.removeEventListener('mouseup', mouseup);
-            // this.shiftX = shiftX
-            // this.shiftY = shiftY
-            // console.log(shiftX, shiftY)
             event.preventDefault();
           };
 
           dragger.addEventListener('mousedown', mousedown);
-          console.log(dragger);
         })();
       }
     },
@@ -792,14 +804,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(0);
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = {
   name: 'Resizer',
@@ -858,21 +873,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var width = event.clientX - el.offsetLeft;
         var height = event.clientY - el.offsetTop;
 
-        if (width < this.minWidth) {
-          width = this.minWidth;
-        }
-
-        if (width > window.innerWidth) {
-          width = window.innerWidth;
-        }
-
-        if (height < this.minHeight) {
-          height = this.minHeight;
-        }
-
-        if (height > window.innerHeight) {
-          height = window.innerHeight;
-        }
+        width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* inRange */])(this.minWidth, window.innerWidth, width);
+        height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* inRange */])(this.minHeight, window.innerHeight, height);
 
         this.size = { width: width, height: height };
         el.style.width = width + 'px';
@@ -888,10 +890,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)();
+exports = module.exports = __webpack_require__(1)();
 // imports
 
 
@@ -902,10 +904,10 @@ exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;lef
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)();
+exports = module.exports = __webpack_require__(1)();
 // imports
 
 
@@ -916,18 +918,18 @@ exports.push([module.i, ".vue-modal-resizer{overflow:hidden;width:12px;height:12
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(13)
+__webpack_require__(14)
 
-var Component = __webpack_require__(1)(
+var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(6),
+  __webpack_require__(7),
   /* template */
-  __webpack_require__(11),
+  __webpack_require__(12),
   /* scopeId */
   null,
   /* cssModules */
@@ -938,7 +940,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -980,7 +982,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: []}
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -990,17 +992,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: []}
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(7);
+var content = __webpack_require__(8);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("3bb0039f", content, true);
+var update = __webpack_require__(3)("3bb0039f", content, true);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -1016,17 +1018,17 @@ if(false) {
 }
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(8);
+var content = __webpack_require__(9);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("c392065e", content, true);
+var update = __webpack_require__(3)("c392065e", content, true);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -1042,7 +1044,7 @@ if(false) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /**
@@ -1075,7 +1077,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10387,10 +10389,10 @@ Vue$3.compile = compileToFunctions;
 
 /* harmony default export */ __webpack_exports__["a"] = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(17)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 var g;
