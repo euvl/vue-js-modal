@@ -10,7 +10,7 @@
              :class="modalClass"
              :style="modalStyle"
              @mousedown.stop>
-          <slot></slot>
+          <slot/>
           <resizer v-if="resizable"
                    :min-width="minWidth"
                    :min-height="minHeight"
@@ -21,9 +21,10 @@
   </transition>
 </template>
 <script>
-  import Vue      from 'vue'
-  import Modal    from './index'
-  import Resizer  from './Resizer.vue'
+  import Vue         from 'vue'
+  import Modal       from './index'
+  import Resizer     from './Resizer.vue'
+  import { inRange } from './util'
 
   export default {
     name: 'Modal',
@@ -83,13 +84,18 @@
     components: {
       Resizer
     },
-    data() {
+    data () {
       return {
         visible: false,
 
         visibility: {
           modal: false,
           overlay: false
+        },
+
+        shift: {
+          left: 0,
+          top: 0
         },
 
         modal: {
@@ -107,7 +113,6 @@
     },
     watch: {
       visible (value) {
-        // if (this.delay > 0) {
         if (value) {
           this.visibility.overlay = true
 
@@ -126,16 +131,8 @@
               this.removeDraggableListeners()
             })
           }, this.delay)
-
-          // this.removeDraggableHandlers()
         }
-        //  } else {
-        //    this.visibility.overlay = value
-        //    this.$nextTick(() => {
-        //      this.visibility.modal = value
-        //    })
-        //  }
-      },
+      }
     },
     created () {
       Modal.event.$on('toggle', (name, state, params) => {
@@ -153,57 +150,59 @@
       this.onWindowResize()
     },
     computed: {
-      position() {
+      position () {
+        const { window, modal, shift } = this
+        const maxLeft = window.width - modal.width
+        const maxTop = window.height - modal.height
+
+        const left = shift.left + this.pivotX * (window.width - modal.width)
+        const top = shift.top + this.pivotY * (window.height - modal.height)
+
         return {
-          left: Math.max(this.pivotX * (this.window.width - this.modal.width), 0),
-          top: Math.max(this.pivotY * (this.window.height - this.modal.height), 0)
+          left: inRange(0, maxLeft, left),
+          top: inRange(0, maxTop, top)
         }
       },
-      modalClass() {
+      modalClass () {
         return ['modal', this.classes]
       },
-      modalStyle() {
+      modalStyle () {
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
           width: this.modal.width + 'px',
           height: this.modal.height + 'px'
         }
-      },
+      }
     },
     methods: {
-      onWindowResize() {
+      onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
 
         if (this.adaptive) {
-          let width = Math.min(this.window.width, this.modal.width)
-          let height = Math.min(this.window.height, this.modal.height)
-
-          this.modal.width = width // Math.max(width, this.minWidth);
-          this.modal.height = height // Math.max(height, this.minHeight);
+          this.modal.width = inRange(0, this.window.width, this.modal.width)
+          this.modal.height = inRange(0, this.window.height, this.modal.height)
         }
       },
-      genEventObject(params) {
-        //todo: clean this up
-        return Vue.util.extend(
-          {
-            name: this.name,
-            ref: this.$refs.modal,
-            timestamp: Date.now()
-          },
-          params || {});
+      genEventObject (params) {
+        //todo: clean this up (change to ...)
+        return Vue.util.extend({
+          name: this.name,
+          ref: this.$refs.modal,
+          timestamp: Date.now()
+        }, params || {});
       },
-      resize(event) {
+      resize (event) {
         this.modal.width = event.size.width
         this.modal.height = event.size.height
 
-        let { size } = this.modal
-        let resizeEvent = this.genEventObject({ size });
+        const { size } = this.modal
+        const resizeEvent = this.genEventObject({ size });
 
         this.$emit('resize', resizeEvent)
       },
-      toggle(state, params) {
+      toggle (state, params) {
         const beforeEventName = this.visible ? 'before-close' : 'before-open'
         const afterEventName = this.visible ? 'closed' : 'opened'
 
@@ -215,9 +214,9 @@
         this.$emit(beforeEventName, beforeEvent)
 
         if (!stopEventExecution) {
-          this.visible = !!state
-
           const afterEvent = this.genEventObject({ state, params })
+
+          this.visible = !!state
           this.$emit(afterEventName, afterEvent)
         }
       },
@@ -243,7 +242,35 @@
         let dragger = this.getDraggableElement()
 
         if (dragger) {
-          console.log(dragger)
+          let startX = 0
+          let startY = 0
+          let cachedShiftX = 0
+          let cachedShiftY = 0
+
+          let mousedown = (event) => {
+            document.addEventListener('mousemove', mousemove)
+            document.addEventListener('mouseup', mouseup)
+
+            startX = event.clientX
+            startY = event.clientY
+            cachedShiftX = this.shift.left
+            cachedShiftY = this.shift.top
+            event.preventDefault()
+          }
+
+          let mousemove = (event) => {
+            this.shift.left = cachedShiftX + event.clientX - startX
+            this.shift.top = cachedShiftY + event.clientY - startY
+            event.preventDefault()
+          }
+
+          let mouseup = (event) => {
+            document.removeEventListener('mousemove', mousemove)
+            document.removeEventListener('mouseup', mouseup)
+            event.preventDefault()
+          }
+
+          dragger.addEventListener('mousedown', mousedown)
         }
       },
 
