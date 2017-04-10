@@ -16,7 +16,10 @@
     </div>
   </modal>
 
-  <h2>Vue.js Modal</h2>
+  <h2>Vue.js Modal
+    <a href="https://github.com/euvl/vue-js-modal/blob/master/README.md" target="readme">Readme</a>
+    <a href="https://github.com/euvl/vue-js-modal/issues" target="issues">Issues</a>
+  </h2>
 
   <pre style="line-height: 1.5;">
     npm install --save vue-js-modal
@@ -48,21 +51,20 @@
     <tr>
       <td><b>Mixed</b></td>
       <td>
-        Is resizable, but if the size of the screen is changed modal will return to its initial size as well as it will try to adapt to the page size
+        Is resizable, but if the size of the screen is changed - modal will return to its initial size as well as it will try to adapt to the page size
       </td>
     </tr>
   </table>
 
   <div style="margin-top: 20px; margin-bottom: 20px;">
-    <button @click="show()">Simple</button>
-    <button @click="show(true)">Resizable</button>
-    <button @click="show(false, true)">Adaptive</button>
-    <button @click="show(true, true)">Mixed</button>
-    <button @click="show(false, false, true)">Draggable (under development)</button>
+    <button @click="show(false, false, false)">Simple</button>
+    <button @click="show(true, false, false)">Resizable</button>
+    <button @click="show(false, true, false)">Adaptive</button>
+    <button @click="show(true, true, false)">Mixed</button>
+    <button @click="show(false, false, true)">Draggable</button>
   </div>
 
   <props-table />
-
 </div>
 </template>
 
@@ -100,45 +102,53 @@ export default {
 
 <style lang="scss">
 body {
-    margin: 0;
-    padding: 50px;
-    cursor: default;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 50px;
+  cursor: default;
+  box-sizing: border-box;
 }
 
 pre {
-    color: #595959;
-    background-color: #f3f3f3;
-    border: 1px solid #eee;
+  color: #595959;
+  background-color: #f3f3f3;
+  border: 1px solid #eee;
 }
 
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
 }
 
 h1,
 h2 {
-    font-weight: normal;
+  font-weight: normal;
+
+  a {
+    font-size: 12px;
+  }
+}
+
+a {
+  color: inherit;
 }
 
 button {
-    outline: none;
-    background: white;
-    border: 0;
-    padding: 6px 18px;
-    cursor: pointer;
-    border-radius: 3px;
+  outline: none;
+  background: white;
+  border: 0;
+  padding: 6px 18px;
+  cursor: pointer;
+  border-radius: 3px;
 
-    background: white;
+  background: white;
 
-    color: #4db3ff;
-    border: 1px solid #4db3ff;
-    &:hover {
-        color: #20a0ff;
-        border: 1px solid #20a0ff;
-    }
+  color: #4db3ff;
+  border: 1px solid #4db3ff;
+  &:hover {
+    color: #20a0ff;
+    border: 1px solid #20a0ff;
+  }
 }
 </style>

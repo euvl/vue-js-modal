@@ -78,32 +78,32 @@ export default {
 </script>
 <style lang="scss">
 .vue-modal-resizer {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 0;
+  bottom: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: se-resize;
+
+  &:after {
     display: block;
-    overflow: hidden;
     position: absolute;
-    width: 12px;
-    height: 12px;
-    right: 0;
-    bottom: 0;
-    z-index: 9999999;
+    content: '';
     background: transparent;
-    cursor: se-resize;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid #ddd;
+    border-left: 10px solid transparent;
+  }
 
-    &:after {
-      display: block;
-      position: absolute;
-      content: '';
-      background: transparent;
-      left: 0;
-      top: 0;
-    	width: 0;
-    	height: 0;
-    	border-bottom: 10px solid #ddd;
-    	border-left: 10px solid transparent;
-    }
-
-    &.clicked:after {
-      border-bottom: 10px solid #369BE9;
-    }
+  &.clicked:after {
+    border-bottom: 10px solid #369BE9;
+  }
 }
 </style>
