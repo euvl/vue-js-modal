@@ -10,7 +10,7 @@
              :class="modalClass"
              :style="modalStyle"
              @mousedown.stop>
-          <slot></slot>
+          <slot/>
           <resizer v-if="resizable"
                    :min-width="minWidth"
                    :min-height="minHeight"
@@ -21,9 +21,10 @@
   </transition>
 </template>
 <script>
-  import Vue      from 'vue'
-  import Modal    from './index'
-  import Resizer  from './Resizer.vue'
+  import Vue         from 'vue'
+  import Modal       from './index'
+  import Resizer     from './Resizer.vue'
+  import { inRange } from './util'
 
   export default {
     name: 'Modal',
@@ -149,18 +150,17 @@
       this.onWindowResize()
     },
     computed: {
-      center () {
-        return {
-          x: 0.5 * this.window.width
-          y: 0.5 * this.window.height
-        }
-      },
       position () {
-        let left = 0.5 * this.window.width - this.modal.width
-        let top = 0.5 * this.window.height - this.modal.height
+        const { window, modal, shift } = this
+        const maxLeft = window.width - modal.width
+        const maxTop = window.height - modal.height
+
+        const left = shift.left + this.pivotX * (window.width - modal.width)
+        const top = shift.top + this.pivotY * (window.height - modal.height)
+
         return {
-          left: Math.max(/*this.shift.left + */ this.pivotX * (this.window.width - this.modal.width), 0),
-          top: Math.max(/*this.shift.top + */ this.pivotY * (this.window.height - this.modal.height), 0)
+          left: inRange(0, maxLeft, left),
+          top: inRange(0, maxTop, top)
         }
       },
       modalClass () {
@@ -181,12 +181,12 @@
         this.window.height = window.innerHeight
 
         if (this.adaptive) {
-          this.modal.width = Math.min(this.window.width, this.modal.width)
-          this.modal.height = Math.min(this.window.height, this.modal.height)
+          this.modal.width = inRange(0, this.window.width, this.modal.width)
+          this.modal.height = inRange(0, this.window.height, this.modal.height)
         }
       },
       genEventObject (params) {
-        //todo: clean this up
+        //todo: clean this up (change to ...)
         return Vue.util.extend({
           name: this.name,
           ref: this.$refs.modal,
@@ -197,8 +197,8 @@
         this.modal.width = event.size.width
         this.modal.height = event.size.height
 
-        let { size } = this.modal
-        let resizeEvent = this.genEventObject({ size });
+        const { size } = this.modal
+        const resizeEvent = this.genEventObject({ size });
 
         this.$emit('resize', resizeEvent)
       },
@@ -214,9 +214,9 @@
         this.$emit(beforeEventName, beforeEvent)
 
         if (!stopEventExecution) {
-          this.visible = !!state
-
           const afterEvent = this.genEventObject({ state, params })
+
+          this.visible = !!state
           this.$emit(afterEventName, afterEvent)
         }
       },
@@ -244,45 +244,33 @@
         if (dragger) {
           let startX = 0
           let startY = 0
-
-          let left = 0
-          let top = 0
+          let cachedShiftX = 0
+          let cachedShiftY = 0
 
           let mousedown = (event) => {
-
-            // left = this.position.left
-            // top = this.position.top
-
             document.addEventListener('mousemove', mousemove)
             document.addEventListener('mouseup', mouseup)
 
-            startX = event.clientX;
-            startY = event.clientY;
-
+            startX = event.clientX
+            startY = event.clientY
+            cachedShiftX = this.shift.left
+            cachedShiftY = this.shift.top
             event.preventDefault()
           }
 
           let mousemove = (event) => {
-            this.shift.left = event.clientX - startX
-            this.shift.top = event.clientY - startY
-
-            console.log(this.shift)
-
+            this.shift.left = cachedShiftX + event.clientX - startX
+            this.shift.top = cachedShiftY + event.clientY - startY
             event.preventDefault()
           }
 
           let mouseup = (event) => {
-            //dragger.removeEventListener('mousedown', mousedown)
             document.removeEventListener('mousemove', mousemove)
             document.removeEventListener('mouseup', mouseup)
-            // this.shiftX = shiftX
-            // this.shiftY = shiftY
-            // console.log(shiftX, shiftY)
             event.preventDefault()
           }
 
           dragger.addEventListener('mousedown', mousedown)
-          console.log(dragger)
         }
       },
 

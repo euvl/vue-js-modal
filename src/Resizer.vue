@@ -2,6 +2,8 @@
   <div :class="className"></div>
 </template>
 <script>
+import { inRange } from './util'
+
 export default {
   name: 'Resizer',
   props: {
@@ -58,21 +60,8 @@ export default {
         var width = event.clientX - el.offsetLeft
         var height = event.clientY - el.offsetTop
 
-        if (width < this.minWidth) {
-          width = this.minWidth
-        }
-
-        if (width > window.innerWidth) {
-          width = window.innerWidth
-        }
-
-        if (height < this.minHeight) {
-          height = this.minHeight
-        }
-
-        if (height > window.innerHeight) {
-          height = window.innerHeight
-        }
+        width = inRange(this.minWidth, window.innerWidth, width)
+        height = inRange(this.minHeight, window.innerHeight, height)
 
         this.size = {width, height}
         el.style.width = width + 'px'
