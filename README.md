@@ -1,4 +1,4 @@
-# Vue.js modal
+# Vue.js 2 modal
 
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 
