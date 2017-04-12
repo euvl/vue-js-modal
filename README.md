@@ -1,10 +1,11 @@
 # Vue.js 2.0+ modal
 
-![](http://i.imgur.com/Ur9lI4e.gif)
-
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 
 ##### Simple to use vue.js modal plugin without any external dependencies
+
+![](http://i.imgur.com/Ur9lI4e.gif)
+
 
 Demo: http://vue-js-modal.yev.io/
 
