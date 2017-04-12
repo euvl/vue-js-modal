@@ -1,4 +1,6 @@
-# Vue.js 2 modal
+# Vue.js 2.0+ modal
+
+![](http://i.imgur.com/Ur9lI4e.gif)
 
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 
@@ -60,8 +62,6 @@ methods: {
 | close        | Emits right before modal is destoyed |
 
 ### Screenshots
-
-![](http://i.imgur.com/Ur9lI4e.gif)
 
 Example:
 ```
