@@ -1,8 +1,11 @@
-# Vue.js modal
+# Vue.js 2.0+ modal
 
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 
-##### Simple to use vue.js modal plugin without any external dependencies
+##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal. http://vue-js-modal.yev.io/
+
+![](http://i.imgur.com/Ur9lI4e.gif)
+
 
 Demo: http://vue-js-modal.yev.io/
 
@@ -60,8 +63,6 @@ methods: {
 | close        | Emits right before modal is destoyed |
 
 ### Screenshots
-
-![](http://i.imgur.com/Ur9lI4e.gif)
 
 Example:
 ```
