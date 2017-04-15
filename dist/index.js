@@ -461,6 +461,9 @@ var ModalPlugin = {
       },
       hide: function hide(name, params) {
         ModalPlugin.event.$emit('toggle', name, false, params);
+      },
+      toggle: function toggle(name, params) {
+        ModalPlugin.event.$emit('toggle', name, undefined, params);
       }
     };
 
@@ -654,7 +657,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     __WEBPACK_IMPORTED_MODULE_1__index__["default"].event.$on('toggle', function (name, state, params) {
       if (name === _this2.name) {
-        _this2.toggle(!_this2.visible, params);
+        if (typeof state === 'undefined') {
+          state = !_this2.visible;
+        }
+
+        _this2.toggle(state, params);
       }
     });
 
@@ -740,7 +747,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!stopEventExecution) {
         var afterEvent = this.genEventObject({ state: state, params: params });
 
-        this.visible = !!state;
+        this.visible = state;
         this.$emit(afterEventName, afterEvent);
       }
     },
