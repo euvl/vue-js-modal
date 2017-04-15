@@ -137,7 +137,11 @@
     created () {
       Modal.event.$on('toggle', (name, state, params) => {
         if (name === this.name) {
-          this.toggle(!this.visible, params)
+          if (typeof state === 'undefined') {
+            state = !this.visible
+          }
+
+          this.toggle(state, params)
         }
       });
 
@@ -216,7 +220,7 @@
         if (!stopEventExecution) {
           const afterEvent = this.genEventObject({ state, params })
 
-          this.visible = !!state
+          this.visible = state
           this.$emit(afterEventName, afterEvent)
         }
       },
