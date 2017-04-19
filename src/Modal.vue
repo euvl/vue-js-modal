@@ -2,7 +2,8 @@
   <transition name="overlay-fade">
     <div v-if="visibility.overlay"
          ref="overlay"
-         class="nice-modal-overlay"
+         class="v-j-modal-overlay"
+         :data-modal="name"
          @mousedown.stop="toggle(false)">
       <transition :name="transition">
         <div v-if="visibility.modal"
@@ -54,7 +55,7 @@
       },
       classes: {
         type: [String, Array],
-        default: 'nice-modal',
+        default: 'v-j-modal',
       },
       minWidth: {
         type: Number,
@@ -212,7 +213,7 @@
 
         let stopEventExecution = false
 
-        const stop = () => { stopEventExecution = false }
+        const stop = () => { stopEventExecution = true }
         const beforeEvent = this.genEventObject({ stop, state, params })
 
         this.$emit(beforeEventName, beforeEvent)
@@ -285,7 +286,7 @@
   };
 </script>
 <style lang="scss" scoped>
-  .nice-modal-overlay {
+  .v-j-modal-overlay {
     position: fixed;
     left: 0;
     top: 0;
@@ -321,7 +322,7 @@
     transform: translateY(-20px);
   }
 
-  .nice-modal {
+  .v-j-modal {
     background: white;
     text-align: left;
     border-radius: 3px;
@@ -330,7 +331,7 @@
 
     //background: yellow !important;
 
-    &.nice-modal-fullscreen {
+    &.v-j-modal-fullscreen {
       width: 100vw;
       height: 100vh;
       margin: 0;
