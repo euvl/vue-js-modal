@@ -535,6 +535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -569,7 +570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     classes: {
       type: [String, Array],
-      default: 'nice-modal'
+      default: 'v--modal'
     },
     minWidth: {
       type: Number,
@@ -738,7 +739,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var stopEventExecution = false;
 
       var stop = function stop() {
-        stopEventExecution = false;
+        stopEventExecution = true;
       };
       var beforeEvent = this.genEventObject({ stop: stop, state: state, params: params });
 
@@ -905,7 +906,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, ".nice-modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.nice-modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.nice-modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.nice-modal.nice-modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
+exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.v--modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.v--modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
 
 // exports
 
@@ -957,7 +958,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [(_vm.visibility.overlay) ? _c('div', {
     ref: "overlay",
-    staticClass: "nice-modal-overlay",
+    staticClass: "v--modal-overlay",
+    attrs: {
+      "data-modal": _vm.name
+    },
     on: {
       "mousedown": function($event) {
         $event.stopPropagation();
