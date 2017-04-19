@@ -49,12 +49,16 @@ export default {
           type: Boolean,
           default: false
         },
+        draggable: {
+          type: Boolean,
+          default: false
+        },
         transition: {
           type: String,
         },
         classes: {
           type: [String, Array],
-          default: 'nice-modal',
+          default: 'v--modal',
         },
         width: {
           type: Number,
@@ -71,6 +75,14 @@ export default {
         minHeight: {
           type: Number,
           default: 0
+        },
+        pivotX: {
+          type: Number,
+          default: 0.5
+        },
+        pivotY: {
+          type: Number,
+          default: 0.5
         }
       }
     }
