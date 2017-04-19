@@ -50,7 +50,7 @@ methods: {
 | height    | false | Number           | 300         | |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
-| pivotX    | false | Number (0 - 1.0) | 0.5         | |
+| pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
 | pivotY    | false | Number (0 - 1.0) | 0.5         | | 
 
 ### Events
