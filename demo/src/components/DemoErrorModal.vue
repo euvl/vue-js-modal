@@ -1,0 +1,82 @@
+<template>
+  <modal name="error-modal"
+         :classes="['v--modal', 'error-modal', hasBugs && 'has-bugs']"
+         :pivot-y="0.2"
+         :width="400"
+         :height="300"
+         @before-close="beforeClose">
+    <div class="error-modal-content">
+      <div class="bugs-label">bugs: {{bugCount}}</div>
+      <button @click="createBug">Create a bug</button>
+      <button @click="fixBug">Fix a bug</button>
+
+      <div style="padding: 10px;">
+        You will be able to close the window only if you have fixed all the bugs :)
+      </div>
+      <sub :style="{opacity: hasBugs ? 1 : 0}">{{bugCount}} bugs to fix</sub>
+    </div>
+  </modal>
+</template>
+<script>
+export default {
+  name: 'DemoErrorModal',
+  data () {
+    return {
+      bugCount: 0,
+      message: '',
+      hasBugs: false
+    }
+  },
+  methods: {
+    createBug () {
+      this.bugCount++
+    },
+
+    fixBug () {
+      this.bugCount = Math.max(this.bugCount - 1, 0)
+      this.hasBugs = false
+    },
+
+    beforeClose (event) {
+      if (this.bugCount > 0) {
+        this.hasBugs = true
+        /*
+        Stopping close event execution
+        */
+        event.stop()
+      }
+    }
+  }
+}
+</script>
+<style lang="scss">
+.modal.error-modal {
+  transition: box-shadow 1s;
+
+  &.has-bugs {
+    box-shadow: 0 24px 80px -2px rgba(255, 0, 0, .6) !important;
+  }
+}
+
+.error-modal-content {
+  padding: 10px;
+  text-align: center;
+
+  .bugs-label {
+    text-transform: uppercase;
+    font-size: 60px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    padding: 40px;
+  }
+
+  button {
+    width: 180px;
+  }
+
+  sub {
+    color: #EC625F;
+    transition: opacity 0.25s;
+  }
+}
+</style>

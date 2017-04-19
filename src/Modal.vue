@@ -2,7 +2,7 @@
   <transition name="overlay-fade">
     <div v-if="visibility.overlay"
          ref="overlay"
-         class="v-j-modal-overlay"
+         class="v--modal-overlay"
          :data-modal="name"
          @mousedown.stop="toggle(false)">
       <transition :name="transition">
@@ -55,7 +55,7 @@
       },
       classes: {
         type: [String, Array],
-        default: 'v-j-modal',
+        default: 'v--modal',
       },
       minWidth: {
         type: Number,
@@ -286,7 +286,7 @@
   };
 </script>
 <style lang="scss" scoped>
-  .v-j-modal-overlay {
+  .v--modal-overlay {
     position: fixed;
     left: 0;
     top: 0;
@@ -322,7 +322,7 @@
     transform: translateY(-20px);
   }
 
-  .v-j-modal {
+  .v--modal {
     background: white;
     text-align: left;
     border-radius: 3px;
@@ -331,7 +331,7 @@
 
     //background: yellow !important;
 
-    &.v-j-modal-fullscreen {
+    &.v--modal-fullscreen {
       width: 100vw;
       height: 100vh;
       margin: 0;

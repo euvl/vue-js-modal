@@ -1,5 +1,6 @@
 <template>
 <div id="app">
+  <demo-error-modal/>
   <modal name="example-modal"
          transition="nice-modal-fade"
          :min-width="200"
@@ -29,39 +30,15 @@
     Vue.use(vmodal)
   </pre>
 
-  <table>
-    <tr>
-      <td style="width: 20%">Modes:</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><b>Simple</b></td>
-      <td>Yet another boring modal :)</td>
-    </tr>
-    <tr>
-      <td><b>Adaptive</b></td>
-      <td>Tries to adjust to the page size</td>
-    </tr>
-    <tr>
-      <td><b>Resizable</b></td>
-      <td>
-        Has a small arrow on the bottom-right corner (customizable) that you can drag to change the size of the modal
-      </td>
-    </tr>
-    <tr>
-      <td><b>Mixed</b></td>
-      <td>
-        Is resizable, but if the size of the screen is changed - modal will return to its initial size as well as it will try to adapt to the page size
-      </td>
-    </tr>
-  </table>
+  <modes-table />
 
-  <div style="margin-top: 20px; margin-bottom: 20px;">
+  <div style="margin-top: 20px; margin-bottom: 15px;">
     <button @click="show(false, false, false)">Simple</button>
     <button @click="show(true, false, false)">Resizable</button>
     <button @click="show(false, true, false)">Adaptive</button>
     <button @click="show(true, true, false)">Mixed</button>
     <button @click="show(false, false, true)">Draggable</button>
+    <button @click="showErrorModal">Demo: Error handling</button>
   </div>
 
   <props-table />
@@ -69,12 +46,17 @@
 </template>
 
 <script>
-import PropsTable from './PropsTable.vue'
-//<props-table/>
+import ModesTable     from './components/ModesTable.vue'
+import PropsTable     from './components/PropsTable.vue'
+import DemoErrorModal from './components/DemoErrorModal.vue'
 
 export default {
   name: 'app',
-  components: {PropsTable},
+  components: {
+    ModesTable,
+    PropsTable,
+    DemoErrorModal
+  },
   data() {
     return {
       resizable: false,
@@ -87,7 +69,6 @@ export default {
       this.resizable = resizable
       this.adaptive = adaptive
       this.draggable = draggable
-
       /*
         $nextTick is required because the data model with new
         "resizable, adaptive, draggable" values is not updated yet.. eh
@@ -95,6 +76,10 @@ export default {
       this.$nextTick(() => {
         this.$modal.show('example-modal')
       })
+    },
+
+    showErrorModal () {
+      this.$modal.show('error-modal')
     }
   }
 }
