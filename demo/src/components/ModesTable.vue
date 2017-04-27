@@ -21,7 +21,7 @@
     <tr>
       <td><b>Mixed</b></td>
       <td>
-        Is resizable, but if the size of the screen is changed - modal will return to its initial size as well as it will try to adapt to the page size
+        Is resizable, but if the size of the screen is changed - modal will try to adapt to the page size
       </td>
     </tr>
   </table>

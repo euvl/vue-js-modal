@@ -906,7 +906,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.v--modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}.v--modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}", ""]);
+exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.v--modal-overlay .modal[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.v--modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}", ""]);
 
 // exports
 
@@ -1013,13 +1013,13 @@ var content = __webpack_require__(8);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3bb0039f", content, true);
+var update = __webpack_require__(3)("5c3a880f", content, true);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
-     var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
+   module.hot.accept("!!./../node_modules/css-loader/index.js?minimize!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
+     var newContent = require("!!./../node_modules/css-loader/index.js?minimize!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-40dd3b1e&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -1039,13 +1039,13 @@ var content = __webpack_require__(9);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("c392065e", content, true);
+var update = __webpack_require__(3)("da8e557e", content, true);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue", function() {
-     var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/sass-loader/lib/loader.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue");
+   module.hot.accept("!!./../node_modules/css-loader/index.js?minimize!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue", function() {
+     var newContent = require("!!./../node_modules/css-loader/index.js?minimize!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-60fe12fc!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Resizer.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

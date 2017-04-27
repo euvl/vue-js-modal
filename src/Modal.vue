@@ -285,7 +285,7 @@
     }
   };
 </script>
-<style lang="scss" scoped>
+<style scoped>
   .v--modal-overlay {
     position: fixed;
     left: 0;
@@ -295,14 +295,29 @@
     background: rgba(0, 0, 0, 0.2);
     z-index: 999;
     opacity: 1;
+  }
 
-    .modal {
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
+  .v--modal-overlay .modal {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: white;
+  }
 
-      background-color: white;
-    }
+  .v--modal {
+    background: white;
+    text-align: left;
+    border-radius: 3px;
+    box-shadow: 0 20px 60px -2px rgba(27, 33, 58, .4);
+    padding: 0;
+  }
+
+  .v--modal.v--modal-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    left: 0;
+    top: 0;
   }
 
   .overlay-fade-enter-active, .overlay-fade-leave-active {
@@ -320,23 +335,5 @@
   .nice-modal-fade-enter, .nice-modal-fade-leave-active {
     opacity: 0;
     transform: translateY(-20px);
-  }
-
-  .v--modal {
-    background: white;
-    text-align: left;
-    border-radius: 3px;
-    box-shadow: 0 20px 60px -2px rgba(27, 33, 58, .4);
-    padding: 0;
-
-    //background: yellow !important;
-
-    &.v--modal-fullscreen {
-      width: 100vw;
-      height: 100vh;
-      margin: 0;
-      left: 0;
-      top: 0;
-    }
   }
 </style>

@@ -76,7 +76,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style>
 .vue-modal-resizer {
   display: block;
   overflow: hidden;
@@ -88,22 +88,22 @@ export default {
   z-index: 9999999;
   background: transparent;
   cursor: se-resize;
+}
 
-  &:after {
-    display: block;
-    position: absolute;
-    content: '';
-    background: transparent;
-    left: 0;
-    top: 0;
-    width: 0;
-    height: 0;
-    border-bottom: 10px solid #ddd;
-    border-left: 10px solid transparent;
-  }
+.vue-modal-resizer::after {
+  display: block;
+  position: absolute;
+  content: '';
+  background: transparent;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid #ddd;
+  border-left: 10px solid transparent;
+}
 
-  &.clicked:after {
-    border-bottom: 10px solid #369BE9;
-  }
+.vue-modal-resizer.clicked::after {
+  border-bottom: 10px solid #369BE9;
 }
 </style>
