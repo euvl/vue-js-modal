@@ -62,10 +62,25 @@ methods: {
 | before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closisng and ask user to correct mistakes if text is not valid)
 | close        | Emits right before modal is destoyed |
 
-### Screenshots
+### Developers
 
-Example:
+To run an example:
 ```
+# Clone repo 
+
+git clone https://github.com/euvl/vue-js-modal.git
+
+# Build main library
+
+cd vue-js-modal
+npm install
+npm run build
+
+# Build and run demo
+
 cd demo
+npm install
 npm run dev
 ```
+
+
