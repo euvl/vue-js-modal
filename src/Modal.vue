@@ -168,9 +168,11 @@
           top: inRange(0, maxTop, top)
         }
       },
+
       modalClass () {
-        return ['modal', this.classes]
+        return ['v--modal-box', this.classes]
       },
+
       modalStyle () {
         return {
           top: this.position.top + 'px',
@@ -190,6 +192,7 @@
           this.modal.height = inRange(0, this.window.height, this.modal.height)
         }
       },
+
       genEventObject (params) {
         //todo: clean this up (change to ...)
         return Vue.util.extend({
@@ -198,6 +201,7 @@
           timestamp: Date.now()
         }, params || {});
       },
+
       resize (event) {
         this.modal.width = event.size.width
         this.modal.height = event.size.height
@@ -207,6 +211,7 @@
 
         this.$emit('resize', resizeEvent)
       },
+
       toggle (state, params) {
         const beforeEventName = this.visible ? 'before-close' : 'before-open'
         const afterEventName = this.visible ? 'closed' : 'opened'
@@ -228,7 +233,7 @@
 
       getDraggableElement () {
         var selector = typeof this.draggable !== 'string'
-          ? '.modal'
+          ? '.v--modal-box'
           : this.draggable
 
         if (selector) {
@@ -297,7 +302,7 @@
     opacity: 1;
   }
 
-  .v--modal-overlay .modal {
+  .v--modal-overlay .v--modal-box {
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
