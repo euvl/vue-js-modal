@@ -1,6 +1,7 @@
 <template>
 <div id="app">
   <demo-error-modal/>
+  <demo-login-modal/>
   <modal name="example-modal"
          transition="nice-modal-fade"
          :min-width="200"
@@ -38,7 +39,8 @@
     <button @click="show(false, true, false)">Adaptive</button>
     <button @click="show(true, true, false)">Mixed</button>
     <button @click="show(false, false, true)">Draggable</button>
-    <button @click="showErrorModal">Demo: Error handling</button>
+    <button @click="$modal.show('error-modal')">Demo: Error handling</button>
+    <button @click="$modal.show('demo-login')">Demo: Login</button>
   </div>
 
   <props-table />
@@ -49,13 +51,15 @@
 import ModesTable     from './components/ModesTable.vue'
 import PropsTable     from './components/PropsTable.vue'
 import DemoErrorModal from './components/DemoErrorModal.vue'
+import DemoLoginModal from './components/DemoLoginModal.vue'
 
 export default {
   name: 'app',
   components: {
     ModesTable,
     PropsTable,
-    DemoErrorModal
+    DemoErrorModal,
+    DemoLoginModal
   },
   data() {
     return {
@@ -76,10 +80,6 @@ export default {
       this.$nextTick(() => {
         this.$modal.show('example-modal')
       })
-    },
-
-    showErrorModal () {
-      this.$modal.show('error-modal')
     }
   }
 }

@@ -4,6 +4,7 @@
          :pivot-y="0.2"
          :width="400"
          :height="300"
+         @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="error-modal-content">
       <div class="bugs-label">bugs: {{bugCount}}</div>
@@ -37,6 +38,10 @@ export default {
       this.hasBugs = false
     },
 
+    beforeOpen (event) {
+      this.bugCount = Math.round(Math.random() * 3) + 1
+    },
+
     beforeClose (event) {
       if (this.bugCount > 0) {
         this.hasBugs = true
@@ -50,7 +55,8 @@ export default {
 }
 </script>
 <style lang="scss">
-.modal.error-modal {
+
+.error-modal {
   transition: box-shadow 1s;
 
   &.has-bugs {

@@ -51,7 +51,7 @@
         default: false
       },
       transition: {
-        type: String,
+        type: String
       },
       classes: {
         type: [String, Array],
