@@ -69,7 +69,7 @@ export default {
     }
   },
   methods: {
-    show(resizable = false, adaptive = false, draggable = false) {
+    show(resizable, adaptive, draggable) {
       this.resizable = resizable
       this.adaptive = adaptive
       this.draggable = draggable
@@ -131,9 +131,21 @@ button {
 
   color: #4db3ff;
   border: 1px solid #4db3ff;
+
+  min-width: 90px;
+
+  margin-bottom: 2px;
+  margin-top: 4px;
+
   &:hover {
     color: #20a0ff;
     border: 1px solid #20a0ff;
+  }
+}
+
+@media (max-width:600px)  {
+  body {
+    padding: 10px;
   }
 }
 </style>

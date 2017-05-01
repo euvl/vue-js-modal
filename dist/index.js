@@ -83,12 +83,14 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return inRange; });
 var inRange = function inRange(from, to, value) {
-  if (value > to) {
-    return to;
-  }
   if (value < from) {
     return from;
   }
+
+  if (value > to) {
+    return to;
+  }
+
   return value;
 };
 
@@ -634,6 +636,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (value) {
         this.visibility.overlay = true;
+        this.adaptWidth();
 
         setTimeout(function () {
           _this.visibility.modal = true;
@@ -708,11 +711,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     onWindowResize: function onWindowResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-
-      if (this.adaptive) {
-        this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
-        this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
-      }
+      this.adaptWidth();
     },
     genEventObject: function genEventObject(params) {
       //todo: clean this up (change to ...)
@@ -721,6 +720,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ref: this.$refs.modal,
         timestamp: Date.now()
       }, params || {});
+    },
+    adaptWidth: function adaptWidth() {
+      if (this.adaptive) {
+        this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
+        this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
+      }
     },
     resize: function resize(event) {
       this.modal.width = event.size.width;
@@ -806,7 +811,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     removeDraggableListeners: function removeDraggableListeners() {
-      console.log('removing draggable handlers');
+      //  console.log('removing draggable handlers')
     }
   }
 };

@@ -116,6 +116,7 @@
       visible (value) {
         if (value) {
           this.visibility.overlay = true
+          this.adaptSize()
 
           setTimeout(() => {
             this.visibility.modal = true
@@ -186,11 +187,7 @@
       onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
-
-        if (this.adaptive) {
-          this.modal.width = inRange(0, this.window.width, this.modal.width)
-          this.modal.height = inRange(0, this.window.height, this.modal.height)
-        }
+        this.adaptSize()
       },
 
       genEventObject (params) {
@@ -200,6 +197,13 @@
           ref: this.$refs.modal,
           timestamp: Date.now()
         }, params || {});
+      },
+
+      adaptSize () {
+        if (this.adaptive) {
+          this.modal.width = inRange(0, this.window.width, this.modal.width)
+          this.modal.height = inRange(0, this.window.height, this.modal.height)
+        }
       },
 
       resize (event) {
@@ -285,7 +289,7 @@
       },
 
       removeDraggableListeners () {
-        console.log('removing draggable handlers')
+      //  console.log('removing draggable handlers')
       }
     }
   };
