@@ -39,8 +39,9 @@
     <button @click="show(false, true, false)">Adaptive</button>
     <button @click="show(true, true, false)">Mixed</button>
     <button @click="show(false, false, true)">Draggable</button>
-    <button @click="$modal.show('error-modal')">Demo: Error handling</button>
-    <button @click="$modal.show('demo-login')">Demo: Login</button>
+    <br>
+    <button class="green" @click="$modal.show('error-modal')">Demo: Error handling</button>
+    <button class="green" @click="$modal.show('demo-login')">Demo: Login</button>
   </div>
 
   <props-table />
@@ -140,6 +141,18 @@ button {
   &:hover {
     color: #20a0ff;
     border: 1px solid #20a0ff;
+  }
+
+  &.green {
+    $green: #50C9BA;
+
+    color: $green;
+    border: 1px solid $green;
+
+    &:hover {
+      color: mix($green, black, 95%);
+      border: 1px solid mix($green, black, 95%);
+    }
   }
 }
 

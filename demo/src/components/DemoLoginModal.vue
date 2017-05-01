@@ -1,5 +1,5 @@
 <template>
-<modal name="demo-login" transition="pop-out" :width="656" :height="400">
+<modal name="demo-login" transition="pop-out" :width="modalWidth" :height="400">
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
@@ -37,8 +37,20 @@
 </modal>
 </template>
 <script>
+const MODAL_WIDTH = 656
+
 export default {
-  name: 'DemoLoginModal'
+  name: 'DemoLoginModal',
+  data () {
+    return {
+      modalWidth: MODAL_WIDTH
+    }
+  },
+  created () {
+    this.modalWidth = window.innerWidth < MODAL_WIDTH
+      ? MODAL_WIDTH / 2
+      : MODAL_WIDTH
+  }
 }
 </script>
 <style lang="scss">
