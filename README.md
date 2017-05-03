@@ -58,9 +58,9 @@ methods: {
 | Name         | Description |
 | ---          | --- |
 | before-open  | Emits while modal is still invisible, but was added to the DOM |
-| open         | Emits after modal became visible or started transition |
+| opened       | Emits after modal became visible or started transition |
 | before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closisng and ask user to correct mistakes if text is not valid)
-| close        | Emits right before modal is destoyed |
+| closed       | Emits right before modal is destoyed |
 
 ### Developers
 
