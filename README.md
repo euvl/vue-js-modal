@@ -63,7 +63,7 @@ methods: {
 | closed       | Emits right before modal is destoyed |
 
 Example:
-```
+```vue
 <template>
   <modal name="example"
          :width="300"
@@ -79,17 +79,17 @@ export default {
   data () {
     return {
       time: 0,
-      duration: 8000
+      duration: 5000
     }
   },
   methods: {
     beforeOpen (event) {
-      console.log(event);
+      console.log(event)
       // Set the opening time of the modal
       this.time = Date.now()
     },
     beforeClose (event) {
-      console.log(event);
+      console.log(event)
       // If modal was open less then 5000 ms - prevent closing it
       if (this.time + this.duration < Date.now()) {
         event.stop()
@@ -99,6 +99,9 @@ export default {
 }
 </script>
 ```
+
+This example, initializes `time` variable every time the modal is being opened. 
+And then forbits closing it for the next 5000 ms
 
 ### Developers
 
