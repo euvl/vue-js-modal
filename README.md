@@ -62,6 +62,44 @@ methods: {
 | before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closisng and ask user to correct mistakes if text is not valid)
 | closed       | Emits right before modal is destoyed |
 
+Example:
+```
+<template>
+  <modal name="example"
+         :width="300"
+         :height="300"
+         @before-open="beforeOpen"
+         @before-close="beforeClose">
+    <b>{{time}}</b>
+  </modal>
+</template>
+<script>
+export default {
+  name: 'ExampleModal',
+  data () {
+    return {
+      time: 0,
+      duration: 8000
+    }
+  },
+  methods: {
+    beforeOpen (event) {
+      console.log(event);
+      // Set the opening time of the modal
+      this.time = Date.now()
+    },
+    beforeClose (event) {
+      console.log(event);
+      // If modal was open less then 5000 ms - prevent closing it
+      if (this.time + this.duration < Date.now()) {
+        event.stop()
+      }
+    }
+  }
+}
+</script>
+```
+
 ### Developers
 
 To run an example:
