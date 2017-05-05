@@ -2,6 +2,8 @@
 <div id="app">
   <demo-error-modal/>
   <demo-login-modal/>
+  <demo-conditional-modal/>
+
   <modal name="example-modal"
          transition="nice-modal-fade"
          :min-width="200"
@@ -42,6 +44,9 @@
     <br>
     <button class="green" @click="$modal.show('error-modal')">Demo: Error handling</button>
     <button class="green" @click="$modal.show('demo-login')">Demo: Login</button>
+    <button :class="canBeShown ? 'green' : 'red'" @click="conditionalShow">
+      Can <b v-if="!canBeShown">NOT</b> be shown
+    </button>
   </div>
 
   <props-table />
@@ -49,10 +54,11 @@
 </template>
 
 <script>
-import ModesTable     from './components/ModesTable.vue'
-import PropsTable     from './components/PropsTable.vue'
-import DemoErrorModal from './components/DemoErrorModal.vue'
-import DemoLoginModal from './components/DemoLoginModal.vue'
+import ModesTable           from './components/ModesTable.vue'
+import PropsTable           from './components/PropsTable.vue'
+import DemoErrorModal       from './components/DemoErrorModal.vue'
+import DemoLoginModal       from './components/DemoLoginModal.vue'
+import DemoConditionalModal from './components/ConditionalModal.vue'
 
 export default {
   name: 'app',
@@ -60,14 +66,21 @@ export default {
     ModesTable,
     PropsTable,
     DemoErrorModal,
-    DemoLoginModal
+    DemoLoginModal,
+    DemoConditionalModal
   },
   data() {
     return {
       resizable: false,
       adaptive: false,
       draggable: false,
+      canBeShown: false
     }
+  },
+  created () {
+    setInterval(() => {
+      this.canBeShown = !this.canBeShown
+    }, 5000)
   },
   methods: {
     show(resizable, adaptive, draggable) {
@@ -81,8 +94,12 @@ export default {
       this.$nextTick(() => {
         this.$modal.show('example-modal')
       })
+    },
+
+    conditionalShow () {
+      this.$modal.show('conditional-modal', { show: this.canBeShown })
     }
-  }
+  },
 }
 </script>
 
@@ -144,14 +161,26 @@ button {
   }
 
   &.green {
-    $green: #50C9BA;
+    $color: #50C9BA;
 
-    color: $green;
-    border: 1px solid $green;
+    color: $color;
+    border: 1px solid $color;
 
     &:hover {
-      color: mix($green, black, 95%);
-      border: 1px solid mix($green, black, 95%);
+      color: mix($color, black, 95%);
+      border: 1px solid mix($color, black, 95%);
+    }
+  }
+
+  &.red {
+    $color: #F21368;
+
+    color: $color;
+    border: 1px solid $color;
+
+    &:hover {
+      color: mix($color, black, 95%);
+      border: 1px solid mix($color, black, 95%);
     }
   }
 }

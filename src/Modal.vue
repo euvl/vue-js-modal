@@ -3,6 +3,7 @@
     <div v-if="visibility.overlay"
          ref="overlay"
          class="v--modal-overlay"
+         :aria-expanded="visible.toString()"
          :data-modal="name"
          @mousedown.stop="toggle(false)">
       <transition :name="transition">

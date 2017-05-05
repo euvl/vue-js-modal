@@ -14,7 +14,9 @@
       <div style="padding: 10px;">
         You will be able to close the window only if you have fixed all the bugs :)
       </div>
-      <sub :style="{opacity: hasBugs ? 1 : 0}">{{bugCount}} bugs to fix</sub>
+      <sub :style="{opacity: hasBugs ? 1 : 0}">
+        {{bugCount}} bugs to fix
+      </sub>
     </div>
   </modal>
 </template>
