@@ -538,6 +538,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -636,7 +637,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (value) {
         this.visibility.overlay = true;
-        this.adaptWidth();
+        this.adaptSize();
 
         setTimeout(function () {
           _this.visibility.modal = true;
@@ -711,7 +712,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     onWindowResize: function onWindowResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      this.adaptWidth();
+      this.adaptSize();
     },
     genEventObject: function genEventObject(params) {
       //todo: clean this up (change to ...)
@@ -721,7 +722,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         timestamp: Date.now()
       }, params || {});
     },
-    adaptWidth: function adaptWidth() {
+    adaptSize: function adaptSize() {
       if (this.adaptive) {
         this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
         this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
@@ -965,6 +966,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ref: "overlay",
     staticClass: "v--modal-overlay",
     attrs: {
+      "aria-expanded": _vm.visible.toString(),
       "data-modal": _vm.name
     },
     on: {
