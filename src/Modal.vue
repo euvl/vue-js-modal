@@ -29,7 +29,7 @@
   import { inRange } from './util'
 
   export default {
-    name: 'Modal',
+    name: 'VueJsModal',
     props: {
       name: {
         required: true,

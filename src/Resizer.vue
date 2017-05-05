@@ -5,7 +5,7 @@
 import { inRange } from './util'
 
 export default {
-  name: 'Resizer',
+  name: 'VueJsModalResizer',
   props: {
     minHeight: {
       type: Number,
