@@ -12,7 +12,7 @@ Demo: http://vue-js-modal.yev.io/
 ### How to use
 
 Include plugin in your main.js file.
-```javsacript
+```javascript
 import vmodal from 'vue-js-modal'
 
 Vue.use(vmodal)
@@ -106,7 +106,7 @@ And then forbits closing it for the next 5000 ms
 ### Developers
 
 To run an example:
-```
+```sh
 # Clone repo 
 
 git clone https://github.com/euvl/vue-js-modal.git
