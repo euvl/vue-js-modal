@@ -19,9 +19,9 @@
       </td>
     </tr>
     <tr>
-      <td><b>Mixed</b></td>
+      <td><b>Draggable</b></td>
       <td>
-        Is resizable, but if the size of the screen is changed - modal will try to adapt to the page size
+        Allows to drag modal on the screen
       </td>
     </tr>
   </table>

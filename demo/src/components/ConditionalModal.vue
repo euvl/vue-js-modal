@@ -1,6 +1,7 @@
 <template>
   <modal name="conditional-modal"
          :height="200"
+         :adaptive="true"
          @before-open="beforeOpen">
     <div style="padding:30px; text-align: center">
       Hello!

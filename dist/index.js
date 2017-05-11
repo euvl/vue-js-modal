@@ -546,7 +546,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = {
-  name: 'Modal',
+  name: 'VueJsModal',
   props: {
     name: {
       required: true,
@@ -716,11 +716,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     genEventObject: function genEventObject(params) {
       //todo: clean this up (change to ...)
-      return __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].util.extend({
+      var data = {
         name: this.name,
+        timestamp: Date.now(),
+        canceled: false,
         ref: this.$refs.modal,
-        timestamp: Date.now()
-      }, params || {});
+        stop: function stop() {
+          this.canceled = true;
+        }
+      };
+
+      return __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].util.extend(data, params || {});
+      //        return event
     },
     adaptSize: function adaptSize() {
       if (this.adaptive) {
@@ -758,6 +765,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.$emit(afterEventName, afterEvent);
       }
     },
+    emitCancelableEvent: function emitCancelableEvent(data) {
+      var stopEventExecution = false;
+      var stop = function stop() {
+        stopEventExecution = true;
+      };
+      var event = this.genEventObject(data);
+    },
     getDraggableElement: function getDraggableElement() {
       var selector = typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable;
 
@@ -784,30 +798,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           var cachedShiftX = 0;
           var cachedShiftY = 0;
 
+          var getPosition = function getPosition(event) {
+            return event.touches && event.touches.length > 0 ? event.touches[0] : event;
+          };
+
           var mousedown = function mousedown(event) {
+            var _getPosition = getPosition(event),
+                clientX = _getPosition.clientX,
+                clientY = _getPosition.clientY;
+
             document.addEventListener('mousemove', mousemove);
             document.addEventListener('mouseup', mouseup);
 
-            startX = event.clientX;
-            startY = event.clientY;
+            document.addEventListener('touchmove', mousemove);
+            document.addEventListener('touchend', mouseup);
+
+            startX = clientX;
+            startY = clientY;
             cachedShiftX = _this3.shift.left;
             cachedShiftY = _this3.shift.top;
+
             event.preventDefault();
           };
 
           var mousemove = function mousemove(event) {
-            _this3.shift.left = cachedShiftX + event.clientX - startX;
-            _this3.shift.top = cachedShiftY + event.clientY - startY;
+            var _getPosition2 = getPosition(event),
+                clientX = _getPosition2.clientX,
+                clientY = _getPosition2.clientY;
+
+            _this3.shift.left = cachedShiftX + clientX - startX;
+            _this3.shift.top = cachedShiftY + clientY - startY;
             event.preventDefault();
           };
 
           var mouseup = function mouseup(event) {
             document.removeEventListener('mousemove', mousemove);
             document.removeEventListener('mouseup', mouseup);
+
+            document.removeEventListener('touchmove', mousemove);
+            document.removeEventListener('touchend', mouseup);
+
             event.preventDefault();
           };
 
           dragger.addEventListener('mousedown', mousedown);
+          dragger.addEventListener('touchstart', mousedown);
         })();
       }
     },
@@ -831,7 +866,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = {
-  name: 'Resizer',
+  name: 'VueJsModalResizer',
   props: {
     minHeight: {
       type: Number,

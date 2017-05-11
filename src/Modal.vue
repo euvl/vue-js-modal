@@ -193,11 +193,18 @@
 
       genEventObject (params) {
         //todo: clean this up (change to ...)
-        return Vue.util.extend({
+        var data = {
           name: this.name,
+          timestamp: Date.now(),
+          canceled: false,
           ref: this.$refs.modal,
-          timestamp: Date.now()
-        }, params || {});
+          stop: function() {
+            this.canceled = true
+          }
+        }
+
+        return Vue.util.extend(data, params || {});
+//        return event
       },
 
       adaptSize () {
@@ -236,6 +243,12 @@
         }
       },
 
+      emitCancelableEvent (data) {
+        let stopEventExecution = false
+        let stop = () => { stopEventExecution = true }
+        let event = this.genEventObject(data)
+      },
+
       getDraggableElement () {
         var selector = typeof this.draggable !== 'string'
           ? '.v--modal-box'
@@ -262,30 +275,49 @@
           let cachedShiftX = 0
           let cachedShiftY = 0
 
+          let getPosition = (event) => {
+              return event.touches && event.touches.length > 0
+                ? event.touches[0]
+                : event
+          }
+
           let mousedown = (event) => {
+            let { clientX, clientY } = getPosition(event)
+
             document.addEventListener('mousemove', mousemove)
             document.addEventListener('mouseup', mouseup)
 
-            startX = event.clientX
-            startY = event.clientY
+            document.addEventListener('touchmove', mousemove)
+            document.addEventListener('touchend', mouseup)
+
+            startX = clientX
+            startY = clientY
             cachedShiftX = this.shift.left
             cachedShiftY = this.shift.top
+
             event.preventDefault()
           }
 
           let mousemove = (event) => {
-            this.shift.left = cachedShiftX + event.clientX - startX
-            this.shift.top = cachedShiftY + event.clientY - startY
+            let { clientX, clientY } = getPosition(event)
+
+            this.shift.left = cachedShiftX + clientX - startX
+            this.shift.top = cachedShiftY + clientY - startY
             event.preventDefault()
           }
 
           let mouseup = (event) => {
             document.removeEventListener('mousemove', mousemove)
             document.removeEventListener('mouseup', mouseup)
+
+            document.removeEventListener('touchmove', mousemove)
+            document.removeEventListener('touchend', mouseup)
+
             event.preventDefault()
           }
 
           dragger.addEventListener('mousedown', mousedown)
+          dragger.addEventListener('touchstart', mousedown)
         }
       },
 

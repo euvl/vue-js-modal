@@ -3,6 +3,7 @@
   <demo-error-modal/>
   <demo-login-modal/>
   <demo-conditional-modal/>
+  <demo-focus-modal/>
 
   <modal name="example-modal"
          transition="nice-modal-fade"
@@ -39,12 +40,22 @@
     <button @click="show(false, false, false)">Simple</button>
     <button @click="show(true, false, false)">Resizable</button>
     <button @click="show(false, true, false)">Adaptive</button>
-    <button @click="show(true, true, false)">Mixed</button>
     <button @click="show(false, false, true)">Draggable</button>
     <br>
-    <button class="green" @click="$modal.show('error-modal')">Demo: Error handling</button>
-    <button class="green" @click="$modal.show('demo-login')">Demo: Login</button>
-    <button :class="canBeShown ? 'green' : 'red'" @click="conditionalShow">
+    <button class="green"
+            @click="$modal.show('error-modal')">
+      Demo: Error handling
+    </button>
+    <button class="green"
+            @click="$modal.show('demo-login')">
+      Demo: Login
+    </button>
+    <button class="green"
+            @click="$modal.show('input-focus-modal')">
+      Demo: Focus Input
+    </button>
+    <button :class="canBeShown ? 'green' : 'red'"
+            @click="conditionalShow">
       Can <b v-if="!canBeShown">NOT</b> be shown
     </button>
   </div>
@@ -57,6 +68,7 @@
 import ModesTable           from './components/ModesTable.vue'
 import PropsTable           from './components/PropsTable.vue'
 import DemoErrorModal       from './components/DemoErrorModal.vue'
+import DemoFocusModal       from './components/InputFocusModal.vue'
 import DemoLoginModal       from './components/DemoLoginModal.vue'
 import DemoConditionalModal from './components/ConditionalModal.vue'
 
@@ -66,6 +78,7 @@ export default {
     ModesTable,
     PropsTable,
     DemoErrorModal,
+    DemoFocusModal,
     DemoLoginModal,
     DemoConditionalModal
   },
