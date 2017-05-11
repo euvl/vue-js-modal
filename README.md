@@ -44,6 +44,7 @@ methods: {
 | delay     | false | Number           | 0           | Delay between showing overlay and actual modal box |
 | resizable | false | Boolean          | false       | If true, allows to resize modal window, keeping it in the center of the screen. |
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
+| draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'nice-modal'| Classes that will eb applied to the actual modal box, if specified not specified, the default 'nice-modal' class will eb applied |
 | width     | false | Number           | 600         | |
