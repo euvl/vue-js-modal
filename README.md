@@ -28,7 +28,7 @@ Call it from anywhere in the app
 ```javascript
 methods: {
   show () {
-    this.$modal.show('hello-word');
+    this.$modal.show('hello-world');
   },
   hide () {
     this.$modal.hide('hello-world');
