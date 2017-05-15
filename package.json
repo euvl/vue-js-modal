@@ -17,7 +17,6 @@
     "url": "https://github.com/euvl/vue-js-modal/issues"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "license": "MIT",
@@ -31,6 +30,7 @@
     "file-loader": "^0.9.0",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
+    "vue": "^2.2.6",
     "vue-hot-reload-api": "^2.0.8",
     "vue-loader": "^10.0.0",
     "vue-style-loader": "^2.0.0",

@@ -6,7 +6,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'index.js'
+    filename: 'index.js',
+    library:'VueJsModal',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
@@ -46,31 +48,15 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.output = {
-    path:'./dist',
-    filename:'index.js',
-    library:'VueJsModal',
-    libraryTarget: 'umd'
-  }
-
-  module.exports.devtool = '#source-map'
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  devtool: '#source-map',
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
       }
     }),
-    /*new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      extractComments: true,
-      compress: false
-    }),*/
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
-  ])
+  ]
 }
