@@ -2,6 +2,7 @@
 <div id="app">
   <demo-error-modal/>
   <demo-login-modal/>
+  <demo-dog-profile-modal />
   <demo-conditional-modal/>
   <demo-focus-modal/>
 
@@ -43,6 +44,10 @@
     <button @click="show(false, false, true)">Draggable</button>
     <br>
     <button class="green"
+            @click="$modal.show('dog-profile')">
+      Demo: Dog Profile photo
+    </button>
+    <button class="green"
             @click="$modal.show('error-modal')">
       Demo: Error handling
     </button>
@@ -50,10 +55,12 @@
             @click="$modal.show('demo-login')">
       Demo: Login
     </button>
+    <!--
     <button class="green"
             @click="$modal.show('input-focus-modal')">
       Demo: Focus Input
     </button>
+    -->
     <button :class="canBeShown ? 'green' : 'red'"
             @click="conditionalShow">
       Can <b v-if="!canBeShown">NOT</b> be shown
@@ -70,6 +77,7 @@ import PropsTable           from './components/PropsTable.vue'
 import DemoErrorModal       from './components/DemoErrorModal.vue'
 import DemoFocusModal       from './components/InputFocusModal.vue'
 import DemoLoginModal       from './components/DemoLoginModal.vue'
+import DemoDogProfileModal  from './components/DogProfileModal.vue'
 import DemoConditionalModal from './components/ConditionalModal.vue'
 
 export default {
@@ -80,6 +88,7 @@ export default {
     DemoErrorModal,
     DemoFocusModal,
     DemoLoginModal,
+    DemoDogProfileModal,
     DemoConditionalModal
   },
   data() {
