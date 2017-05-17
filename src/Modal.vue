@@ -337,6 +337,7 @@
     background: rgba(0, 0, 0, 0.2);
     z-index: 999;
     opacity: 1;
+    overflow: auto;
   }
 
   .v--modal-overlay .v--modal-box {
