@@ -525,6 +525,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -532,308 +566,322 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'VueJsModal',
-  props: {
-    name: {
-      required: true,
-      type: [String, Number]
-    },
-    delay: {
-      type: Number,
-      default: 0
-    },
-    resizable: {
-      type: Boolean,
-      default: false
-    },
-    adaptive: {
-      type: Boolean,
-      default: false
-    },
-    draggable: {
-      type: [Boolean, String],
-      default: false
-    },
-    transition: {
-      type: String
-    },
-    classes: {
-      type: [String, Array],
-      default: 'v--modal'
-    },
-    minWidth: {
-      type: Number,
-      default: 0
-    },
-    minHeight: {
-      type: Number,
-      default: 0
-    },
-    width: {
-      type: Number,
-      default: 600
-    },
-    height: {
-      type: Number,
-      default: 300
-    },
-    pivotX: {
-      type: Number,
-      default: 0.5
-    },
-    pivotY: {
-      type: Number,
-      default: 0.5
-    }
-  },
-  components: {
-    Resizer: __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default.a
-  },
-  data: function data() {
-    return {
-      visible: false,
-
-      visibility: {
-        modal: false,
-        overlay: false
-      },
-
-      shift: {
-        left: 0,
-        top: 0
-      },
-
-      modal: {
-        width: this.width,
-        height: this.height
-      },
-
-      window: {
-        width: window.innerWidth,
-        height: window.innerWidth
-      },
-
-      draggableElement: false
-    };
-  },
-
-  watch: {
-    visible: function visible(value) {
-      var _this = this;
-
-      if (value) {
-        this.visibility.overlay = true;
-        this.adaptSize();
-
-        setTimeout(function () {
-          _this.visibility.modal = true;
-          _this.$nextTick(function () {
-            _this.addDraggableListeners();
-          });
-        }, this.delay);
-      } else {
-        this.visibility.modal = false;
-
-        setTimeout(function () {
-          _this.visibility.overlay = false;
-          _this.$nextTick(function () {
-            _this.removeDraggableListeners();
-          });
-        }, this.delay);
-      }
-    }
-  },
-  created: function created() {
-    var _this2 = this;
-
-    __WEBPACK_IMPORTED_MODULE_1__index__["default"].event.$on('toggle', function (name, state, params) {
-      if (name === _this2.name) {
-        if (typeof state === 'undefined') {
-          state = !_this2.visible;
+    name: 'VueJsModal',
+    props: {
+        name: {
+            required: true,
+            type: [String, Number]
+        },
+        delay: {
+            type: Number,
+            default: 0
+        },
+        resizable: {
+            type: Boolean,
+            default: false
+        },
+        adaptive: {
+            type: Boolean,
+            default: false
+        },
+        draggable: {
+            type: [Boolean, String],
+            default: false
+        },
+        HasCloseButton: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        transition: {
+            type: String
+        },
+        title: {
+            type: String
+        },
+        classes: {
+            type: [String, Array],
+            default: 'v--modal'
+        },
+        minWidth: {
+            type: Number,
+            default: 0
+        },
+        minHeight: {
+            type: Number,
+            default: 0
+        },
+        width: {
+            type: Number,
+            default: 600
+        },
+        height: {
+            type: Number,
+            default: 300
+        },
+        pivotX: {
+            type: Number,
+            default: 0.5
+        },
+        pivotY: {
+            type: Number,
+            default: 0.5
         }
-
-        _this2.toggle(state, params);
-      }
-    });
-
-    window.addEventListener('resize', this.onWindowResize);
-  },
-  beforeDestroy: function beforeDestroy() {
-    window.removeEventListener('resize', this.onWindowResize);
-  },
-  beforeMount: function beforeMount() {
-    this.onWindowResize();
-  },
-
-  computed: {
-    position: function position() {
-      var window = this.window,
-          modal = this.modal,
-          shift = this.shift;
-
-      var maxLeft = window.width - modal.width;
-      var maxTop = window.height - modal.height;
-
-      var left = shift.left + this.pivotX * (window.width - modal.width);
-      var top = shift.top + this.pivotY * (window.height - modal.height);
-
-      return {
-        left: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxLeft, left),
-        top: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxTop, top)
-      };
     },
-    modalClass: function modalClass() {
-      return ['v--modal-box', this.classes];
+    components: {
+        Resizer: __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default.a
     },
-    modalStyle: function modalStyle() {
-      return {
-        top: this.position.top + 'px',
-        left: this.position.left + 'px',
-        width: this.modal.width + 'px',
-        height: this.modal.height + 'px'
-      };
-    }
-  },
-  methods: {
-    onWindowResize: function onWindowResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
-      this.adaptSize();
+    data: function data() {
+        return {
+            visible: false,
+
+            visibility: {
+                modal: false,
+                overlay: false
+            },
+
+            shift: {
+                left: 0,
+                top: 0
+            },
+
+            modal: {
+                width: this.width,
+                height: this.height
+            },
+
+            window: {
+                width: window.innerWidth,
+                height: window.innerWidth
+            },
+
+            draggableElement: false
+        };
     },
-    genEventObject: function genEventObject(params) {
-      //todo: clean this up (change to ...)
-      var data = {
-        name: this.name,
-        timestamp: Date.now(),
-        canceled: false,
-        ref: this.$refs.modal,
-        stop: function stop() {
-          this.canceled = true;
+
+    watch: {
+        visible: function visible(value) {
+            var _this = this;
+
+            if (value) {
+                this.visibility.overlay = true;
+                this.adaptSize();
+
+                setTimeout(function () {
+                    _this.visibility.modal = true;
+                    _this.$nextTick(function () {
+                        _this.addDraggableListeners();
+                    });
+                }, this.delay);
+            } else {
+                this.visibility.modal = false;
+
+                setTimeout(function () {
+                    _this.visibility.overlay = false;
+                    _this.$nextTick(function () {
+                        _this.removeDraggableListeners();
+                    });
+                }, this.delay);
+            }
         }
-      };
-
-      return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.util.extend(data, params || {});
-      //        return event
     },
-    adaptSize: function adaptSize() {
-      if (this.adaptive) {
-        this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
-        this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
-      }
+    created: function created() {
+        var _this2 = this;
+
+        __WEBPACK_IMPORTED_MODULE_1__index__["default"].event.$on('toggle', function (name, state, params) {
+            if (name === _this2.name) {
+                if (typeof state === 'undefined') {
+                    state = !_this2.visible;
+                }
+
+                _this2.toggle(state, params);
+            }
+        });
+
+        window.addEventListener('resize', this.onWindowResize);
     },
-    resize: function resize(event) {
-      this.modal.width = event.size.width;
-      this.modal.height = event.size.height;
-
-      var size = this.modal.size;
-
-      var resizeEvent = this.genEventObject({ size: size });
-
-      this.$emit('resize', resizeEvent);
+    beforeDestroy: function beforeDestroy() {
+        window.removeEventListener('resize', this.onWindowResize);
     },
-    toggle: function toggle(state, params) {
-      var beforeEventName = this.visible ? 'before-close' : 'before-open';
-      var afterEventName = this.visible ? 'closed' : 'opened';
-
-      var stopEventExecution = false;
-
-      var stop = function stop() {
-        stopEventExecution = true;
-      };
-      var beforeEvent = this.genEventObject({ stop: stop, state: state, params: params });
-
-      this.$emit(beforeEventName, beforeEvent);
-
-      if (!stopEventExecution) {
-        var afterEvent = this.genEventObject({ state: state, params: params });
-
-        this.visible = state;
-        this.$emit(afterEventName, afterEvent);
-      }
+    beforeMount: function beforeMount() {
+        this.onWindowResize();
     },
-    emitCancelableEvent: function emitCancelableEvent(data) {
-      var stopEventExecution = false;
-      var stop = function stop() {
-        stopEventExecution = true;
-      };
-      var event = this.genEventObject(data);
-    },
-    getDraggableElement: function getDraggableElement() {
-      var selector = typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable;
 
-      if (selector) {
-        var handler = this.$refs.overlay.querySelector(selector);
-        if (handler) {
-          return handler;
+    computed: {
+        has_title: function has_title() {
+            return this.title || this.$slots.title;
+        },
+        has_tabs: function has_tabs() {
+            return false;
+        },
+        position: function position() {
+            var window = this.window,
+                modal = this.modal,
+                shift = this.shift;
+
+            var maxLeft = window.width - modal.width;
+            var maxTop = window.height - modal.height;
+
+            var left = shift.left + this.pivotX * (window.width - modal.width);
+            var top = shift.top + this.pivotY * (window.height - modal.height);
+
+            return {
+                left: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxLeft, left),
+                top: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxTop, top)
+            };
+        },
+        modalClass: function modalClass() {
+            return ['v--modal-box', this.classes];
+        },
+        modalStyle: function modalStyle() {
+            return {
+                top: this.position.top + 'px',
+                left: this.position.left + 'px',
+                width: this.modal.width + 'px',
+                height: this.modal.height + 'px'
+            };
         }
-      }
     },
-    addDraggableListeners: function addDraggableListeners() {
-      var _this3 = this;
+    methods: {
+        onWindowResize: function onWindowResize() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
+            this.adaptSize();
+        },
+        genEventObject: function genEventObject(params) {
+            //todo: clean this up (change to ...)
+            var data = {
+                name: this.name,
+                timestamp: Date.now(),
+                canceled: false,
+                ref: this.$refs.modal,
+                stop: function stop() {
+                    this.canceled = true;
+                }
+            };
 
-      if (!this.draggable) {
-        return;
-      }
+            return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.util.extend(data, params || {});
+            //        return event
+        },
+        adaptSize: function adaptSize() {
+            if (this.adaptive) {
+                this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
+                this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
+            }
+        },
+        resize: function resize(event) {
+            this.modal.width = event.size.width;
+            this.modal.height = event.size.height;
 
-      var dragger = this.getDraggableElement();
+            var size = this.modal.size;
 
-      if (dragger) {
-        var startX = 0;
-        var startY = 0;
-        var cachedShiftX = 0;
-        var cachedShiftY = 0;
+            var resizeEvent = this.genEventObject({ size: size });
 
-        var getPosition = function getPosition(event) {
-          return event.touches && event.touches.length > 0 ? event.touches[0] : event;
-        };
+            this.$emit('resize', resizeEvent);
+        },
+        toggle: function toggle(state, params) {
+            var beforeEventName = this.visible ? 'before-close' : 'before-open';
+            var afterEventName = this.visible ? 'closed' : 'opened';
 
-        var mousedown = function mousedown(event) {
-          var _getPosition = getPosition(event),
-              clientX = _getPosition.clientX,
-              clientY = _getPosition.clientY;
+            var stopEventExecution = false;
 
-          document.addEventListener('mousemove', _mousemove);
-          document.addEventListener('mouseup', _mouseup);
+            var stop = function stop() {
+                stopEventExecution = true;
+            };
+            var beforeEvent = this.genEventObject({ stop: stop, state: state, params: params });
 
-          document.addEventListener('touchmove', _mousemove);
-          document.addEventListener('touchend', _mouseup);
+            this.$emit(beforeEventName, beforeEvent);
 
-          startX = clientX;
-          startY = clientY;
-          cachedShiftX = _this3.shift.left;
-          cachedShiftY = _this3.shift.top;
+            if (!stopEventExecution) {
+                var afterEvent = this.genEventObject({ state: state, params: params });
 
-          event.preventDefault();
-        };
+                this.visible = state;
+                this.$emit(afterEventName, afterEvent);
+            }
+        },
+        emitCancelableEvent: function emitCancelableEvent(data) {
+            var stopEventExecution = false;
+            var stop = function stop() {
+                stopEventExecution = true;
+            };
+            var event = this.genEventObject(data);
+        },
+        getDraggableElement: function getDraggableElement() {
+            var selector = typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable;
 
-        var _mousemove = function _mousemove(event) {
-          var _getPosition2 = getPosition(event),
-              clientX = _getPosition2.clientX,
-              clientY = _getPosition2.clientY;
+            if (selector) {
+                var handler = this.$refs.overlay.querySelector(selector);
+                if (handler) {
+                    return handler;
+                }
+            }
+        },
+        addDraggableListeners: function addDraggableListeners() {
+            var _this3 = this;
 
-          _this3.shift.left = cachedShiftX + clientX - startX;
-          _this3.shift.top = cachedShiftY + clientY - startY;
-          event.preventDefault();
-        };
+            if (!this.draggable) {
+                return;
+            }
 
-        var _mouseup = function _mouseup(event) {
-          document.removeEventListener('mousemove', _mousemove);
-          document.removeEventListener('mouseup', _mouseup);
+            var dragger = this.getDraggableElement();
 
-          document.removeEventListener('touchmove', _mousemove);
-          document.removeEventListener('touchend', _mouseup);
+            if (dragger) {
+                var startX = 0;
+                var startY = 0;
+                var cachedShiftX = 0;
+                var cachedShiftY = 0;
 
-          event.preventDefault();
-        };
+                var getPosition = function getPosition(event) {
+                    return event.touches && event.touches.length > 0 ? event.touches[0] : event;
+                };
 
-        dragger.addEventListener('mousedown', mousedown);
-        dragger.addEventListener('touchstart', mousedown);
-      }
-    },
-    removeDraggableListeners: function removeDraggableListeners() {
-      //  console.log('removing draggable handlers')
+                var mousedown = function mousedown(event) {
+                    var _getPosition = getPosition(event),
+                        clientX = _getPosition.clientX,
+                        clientY = _getPosition.clientY;
+
+                    document.addEventListener('mousemove', _mousemove);
+                    document.addEventListener('mouseup', _mouseup);
+
+                    document.addEventListener('touchmove', _mousemove);
+                    document.addEventListener('touchend', _mouseup);
+
+                    startX = clientX;
+                    startY = clientY;
+                    cachedShiftX = _this3.shift.left;
+                    cachedShiftY = _this3.shift.top;
+
+                    event.preventDefault();
+                };
+
+                var _mousemove = function _mousemove(event) {
+                    var _getPosition2 = getPosition(event),
+                        clientX = _getPosition2.clientX,
+                        clientY = _getPosition2.clientY;
+
+                    _this3.shift.left = cachedShiftX + clientX - startX;
+                    _this3.shift.top = cachedShiftY + clientY - startY;
+                    event.preventDefault();
+                };
+
+                var _mouseup = function _mouseup(event) {
+                    document.removeEventListener('mousemove', _mousemove);
+                    document.removeEventListener('mouseup', _mouseup);
+
+                    document.removeEventListener('touchmove', _mousemove);
+                    document.removeEventListener('touchend', _mouseup);
+
+                    event.preventDefault();
+                };
+
+                dragger.addEventListener('mousedown', mousedown);
+                dragger.addEventListener('touchstart', mousedown);
+            }
+        },
+        removeDraggableListeners: function removeDraggableListeners() {
+            //  console.log('removing draggable handlers')
+        }
     }
-  }
 });
 
 /***/ }),
@@ -931,7 +979,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.v--modal-overlay .v--modal-box[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.v--modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}", ""]);
+exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1;overflow:auto}.v--modal-overlay .v--modal-box[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.v--modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.sweet-action-close[data-v-40dd3b1e]{display:inline-block;cursor:pointer;color:#222c38;text-align:center;width:22px;height:22px;line-height:22px;border-radius:50%}.sweet-box-actions[data-v-40dd3b1e]{position:absolute;top:8px;right:8px}.sweet-title[data-v-40dd3b1e]{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;height:40px;line-height:40px;border-bottom:1px solid #eaeaea;padding-left:22px;padding-right:40px}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}", ""]);
 
 // exports
 
@@ -1007,7 +1055,59 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         $event.stopPropagation();
       }
     }
-  }, [_vm._t("default"), _vm._v(" "), (_vm.resizable) ? _c('resizer', {
+  }, [_c('div', {
+    staticClass: "sweet-box-actions"
+  }, [_vm._t("box-action"), _vm._v(" "), (_vm.HasCloseButton) ? _c('div', {
+    staticClass: "sweet-action-close",
+    on: {
+      "click": function($event) {
+        _vm.toggle(false)
+      }
+    }
+  }, [_c('svg', {
+    attrs: {
+      "xmlns": "http://www.w3.org/2000/svg",
+      "width": "24",
+      "height": "24",
+      "viewBox": "0 0 24 24"
+    }
+  }, [_c('path', {
+    attrs: {
+      "d": "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
+      "fill": "#292c34"
+    }
+  })])]) : _vm._e()], 2), _vm._v(" "), (_vm.has_title || _vm.has_tabs) ? _c('div', {
+    staticClass: "sweet-title"
+  }, [(_vm.has_tabs && !_vm.has_title) ? [_c('ul', {
+    staticClass: "sweet-modal-tabs"
+  }, _vm._l((_vm.tabs), function(tab) {
+    return _c('li', {
+      class: _vm._getClassesForTab(tab)
+    }, [_c('a', {
+      attrs: {
+        "href": "#"
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm._changeTab(tab)
+        }
+      }
+    }, [_c('div', {
+      staticClass: "sweet-modal-valign"
+    }, [(tab.icon) ? _c('span', {
+      staticClass: "sweet-modal-tab-icon",
+      domProps: {
+        "innerHTML": _vm._s(tab.icon)
+      }
+    }) : _vm._e(), _vm._v(" "), _c('span', {
+      staticClass: "sweet-modal-tab-title"
+    }, [_vm._v(_vm._s(tab.title))])])])])
+  }))] : _vm._e(), _vm._v(" "), (_vm.has_title) ? [(_vm.title) ? _c('h3', {
+    domProps: {
+      "innerHTML": _vm._s(_vm.title)
+    }
+  }) : _vm._e(), _vm._v(" "), _vm._t("title")] : _vm._e()], 2) : _vm._e(), _vm._v(" "), _vm._t("default"), _vm._v(" "), (_vm.resizable) ? _c('resizer', {
     attrs: {
       "min-width": _vm.minWidth,
       "min-height": _vm.minHeight
