@@ -4,8 +4,9 @@
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal. http://vue-js-modal.yev.io/
 
-![](https://media.giphy.com/media/3oKIPco1eNxAA1rD4Q/giphy.gif)
-
+<p align="center">
+  <img src="https://media.giphy.com/media/3oKIPco1eNxAA1rD4Q/giphy.gif">
+</p>
 
 Demo: http://vue-js-modal.yev.io/
 
