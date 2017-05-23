@@ -135,7 +135,7 @@ Draggable property can accept not only `Boolean` but also `String` paramenters. 
 
 Example:
 
-```
+```vue
 <modal name="bar" draggable=".window-header">
   <div class="window-header">DRAG ME HERE</div>
   <div>
