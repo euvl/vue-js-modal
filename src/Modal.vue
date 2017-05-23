@@ -98,6 +98,8 @@
       Resizer
     },
     data () {
+      let direction = window.getComputedStyle(document.getElementsByTagName("BODY")[0]).getPropertyValue("direction");
+
       return {
         visible: false,
 
@@ -123,7 +125,7 @@
 
         draggableElement: false,
         
-        direction : () => window.getComputedStyle(document.getElementsByTagName("BODY")[0]).getPropertyValue("direction"),
+        direction : direction
 
       };
     },

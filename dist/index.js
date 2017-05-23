@@ -593,6 +593,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Resizer: __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default.a
   },
   data: function data() {
+    var direction = window.getComputedStyle(document.getElementsByTagName("BODY")[0]).getPropertyValue("direction");
+
     return {
       visible: false,
 
@@ -618,9 +620,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       draggableElement: false,
 
-      direction: function direction() {
-        return window.getComputedStyle(document.getElementsByTagName("BODY")[0]).getPropertyValue("direction");
-      }
+      direction: direction
 
     };
   },
