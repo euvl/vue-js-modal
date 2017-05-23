@@ -108,6 +108,7 @@ And then forbits closing it for the next 5000 ms
 ### Other
 
 #### Close button
+
 If you want to have a Close (x) button in the top-right corner, you can use "top-right" slot for it. There is deliberately no predefined Close button style - you will have to implement/use your own button.
 
 Example:
@@ -121,11 +122,28 @@ Example:
       </button>
     </div> 
    
-    Hello, world!
+    Hello, ☀️!
  
   </modal>
 </template>
 ```
+
+
+#### Draggable handler
+
+Draggable property can accept not only `Boolean` but also `String` paramenters. With `String` value, you can specify a CSS selector to the element which will be a "handler" for dragging. 
+
+Example:
+
+```
+<modal name="bar" draggable=".window-header">
+  <div class="window-header">DRAG ME HERE</div>
+  <div>
+     Hello, 🌎!
+  </div>
+</modal>
+```
+
 
 ### Developers
 
