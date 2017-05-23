@@ -105,6 +105,28 @@ export default {
 This example, initializes `time` variable every time the modal is being opened. 
 And then forbits closing it for the next 5000 ms
 
+### Other
+
+#### Close button
+If you want to have a Close (x) button in the top-right corner, you can use "top-right" slot for it. There is deliberately no predefined Close button style - you will have to implement/use your own button.
+
+Example:
+```vue
+<template>
+  <modal name="foo">
+  
+    <div slot="top-right">
+      <button @click="$modal.hide('foo')">
+        x
+      </button>
+    </div> 
+   
+    Hello, world!
+ 
+  </modal>
+</template>
+```
+
 ### Developers
 
 To run an example:
