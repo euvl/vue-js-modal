@@ -121,7 +121,10 @@
           height: window.innerWidth
         },
 
-        draggableElement: false
+        draggableElement: false,
+        
+        direction : () => window.getComputedStyle(document.getElementsByTagName("BODY")[0]).getPropertyValue("direction"),
+
       };
     },
     watch: {
@@ -187,6 +190,14 @@
       },
 
       modalStyle () {
+        if(this.direction == 'rtl'){
+            return {
+              top: this.position.top + 'px',
+              right: this.position.left + 'px',
+              width: this.modal.width + 'px',
+              height: this.modal.height + 'px'
+            }
+        }
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
@@ -346,7 +357,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.2);
-    z-index: 999;
+    z-index: 9999;
     opacity: 1;
   }
 
