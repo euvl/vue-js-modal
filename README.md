@@ -118,8 +118,8 @@ Example:
   
     <div slot="top-right">
       <button @click="$modal.hide('foo')">
-        x
-      </button>
+        ❌
+      </button>
     </div> 
    
     Hello, ☀️!
