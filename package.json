@@ -1,7 +1,7 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "main": "dist/index.js",
   "repository": {
@@ -11,7 +11,8 @@
   "keywords": [
     "vue",
     "vuejs",
-    "modal"
+    "modal",
+    "vue-js-modal"
   ],
   "bugs": {
     "url": "https://github.com/euvl/vue-js-modal/issues"

@@ -6,6 +6,9 @@
          :aria-expanded="visible.toString()"
          :data-modal="name"
          @mousedown.stop="toggle(false)">
+      <div class="v--modal-top-right">
+        <slot name="top-right"/>
+      </div>
       <transition :name="transition">
         <div v-if="visibility.modal"
              ref="modal"
@@ -72,7 +75,15 @@
       },
       height: {
         type: Number,
-        default: 300
+        default: 300,
+        /*
+        [Number, String],
+        validator (value) {
+          return typeof value === 'string'
+            ? (value === 'auto')
+            : true
+        }
+        */
       },
       pivotX: {
         type: Number,
@@ -359,6 +370,13 @@
     height: 100vh;
     margin: 0;
     left: 0;
+    top: 0;
+  }
+
+  .v--modal-top-right {
+    display: block;
+    position: absolute;
+    right: 0;
     top: 0;
   }
 

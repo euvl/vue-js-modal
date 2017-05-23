@@ -5,6 +5,9 @@
          :height="260"
          :width="260"
          @opened="opened">
+    <div slot="top-right" class="ct-top-right">
+      HIDE THE DOGGY
+    </div>
     <img src="/static/cute_dog.gif" />
   </modal>
 </template>
@@ -28,6 +31,15 @@ export default {
       width: 260px;
       height: 260px;
     }
+  }
+
+  .ct-top-right {
+    cursor: pointer;
+    padding-top: 20px;
+    padding-right: 30px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 0px 20px black;
   }
 
   .scale-enter-active,
