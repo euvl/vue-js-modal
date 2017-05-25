@@ -1,6 +1,6 @@
 import Modal from './Modal.vue'
 
-const ModalPlugin = {
+const Plugin = {
   install(Vue, options = {}) {
     if (!this.hasOwnProperty("event")) {
       this.event = new Vue()
@@ -29,4 +29,4 @@ const ModalPlugin = {
   }
 }
 
-export default ModalPlugin
+export default Plugin

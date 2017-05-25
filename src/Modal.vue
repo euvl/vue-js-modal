@@ -215,7 +215,6 @@
         }
 
         return Vue.util.extend(data, params || {});
-//        return event
       },
 
       adaptSize () {
