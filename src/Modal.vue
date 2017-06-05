@@ -69,6 +69,20 @@
         type: Number,
         default: 0
       },
+      adaptiveMaxWidth: {
+        type: Number,
+        default: 1,
+        validator (value) {
+          return value > 0 && value <= 1
+        }
+      },
+      adaptiveMaxHeight: {
+        type: Number,
+        default: 1,
+        validator (value) {
+          return value > 0 && value <= 1
+        }
+      }
       width: {
         type: Number,
         default: 600
@@ -219,8 +233,14 @@
 
       adaptSize () {
         if (this.adaptive) {
-          this.modal.width = inRange(0, this.window.width, this.modal.width)
-          this.modal.height = inRange(0, this.window.height, this.modal.height)
+          this.modal.width = inRange(
+            0,
+            this.window.width * this.maxAdaptiveWidth,
+            this.modal.width)
+          this.modal.height = inRange(
+            0,
+            this.window.height * this.maxAdaptiveWidth,
+            this.modal.height)
         }
       },
 
