@@ -10,9 +10,16 @@
 
 Demo: http://vue-js-modal.yev.io/
 
+### Install
+
+```bash
+npm install vue-js-modal --save
+```
+
 ### How to use
 
 Include plugin in your main.js file.
+
 ```javascript
 import vmodal from 'vue-js-modal'
 
