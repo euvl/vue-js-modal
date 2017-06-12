@@ -78,15 +78,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Modal_vue__);
 
 
-var ModalPlugin = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Modal = __webpack_require__(5);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Plugin = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -112,20 +119,24 @@ var ModalPlugin = {
       }
     });
 
-    Vue.component('modal', __WEBPACK_IMPORTED_MODULE_0__Modal_vue___default.a);
+    Vue.component('modal', _Modal2.default);
     return null;
   }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (ModalPlugin);
+exports.default = Plugin;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return inRange; });
-var inRange = function inRange(from, to, value) {
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var inRange = exports.inRange = function inRange(from, to, value) {
   if (value < from) {
     return from;
   }
@@ -491,55 +502,37 @@ module.exports = Component.exports
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Resizer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(1);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _vue = __webpack_require__(16);
 
+var _vue2 = _interopRequireDefault(_vue);
 
+var _index = __webpack_require__(0);
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+var _index2 = _interopRequireDefault(_index);
+
+var _Resizer = __webpack_require__(10);
+
+var _Resizer2 = _interopRequireDefault(_Resizer);
+
+var _util = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'VueJsModal',
   props: {
     name: {
       required: true,
-      type: [String, Number]
+      type: String
     },
     delay: {
       type: Number,
@@ -566,31 +559,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     minWidth: {
       type: Number,
-      default: 0
+      default: 0,
+      validator: function validator(value) {
+        return value >= 0;
+      }
     },
     minHeight: {
       type: Number,
-      default: 0
+      default: 0,
+      validator: function validator(value) {
+        return value >= 0;
+      }
+    },
+    adaptiveMaxWidth: {
+      type: Number,
+      default: 1,
+      validator: function validator(value) {
+        return value > 0 && value <= 1;
+      }
+    },
+    adaptiveMaxHeight: {
+      type: Number,
+      default: 1,
+      validator: function validator(value) {
+        return value > 0 && value <= 1;
+      }
     },
     width: {
       type: Number,
-      default: 600
+      default: 600,
+      validator: function validator(value) {
+        return value >= 0;
+      }
     },
     height: {
-      type: Number,
-      default: 300
+      type: [Number, String],
+      default: 300,
+      validator: function validator(value) {
+        if (typeof value === 'string') {
+          return value === 'auto';
+        }
+
+        if (typeof value === 'number') {
+          return value >= 0;
+        }
+      }
     },
     pivotX: {
       type: Number,
-      default: 0.5
+      default: 0.5,
+      validator: function validator(value) {
+        return value >= 0 && value <= 1;
+      }
     },
     pivotY: {
       type: Number,
-      default: 0.5
+      default: 0.5,
+      validator: function validator(value) {
+        value >= 0 && value <= 1;
+      }
     }
   },
   components: {
-    Resizer: __WEBPACK_IMPORTED_MODULE_2__Resizer_vue___default.a
+    Resizer: _Resizer2.default
   },
   data: function data() {
     return {
@@ -649,7 +680,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   created: function created() {
     var _this2 = this;
 
-    __WEBPACK_IMPORTED_MODULE_1__index__["default"].event.$on('toggle', function (name, state, params) {
+    _index2.default.event.$on('toggle', function (name, state, params) {
       if (name === _this2.name) {
         if (typeof state === 'undefined') {
           state = !_this2.visible;
@@ -681,8 +712,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var top = shift.top + this.pivotY * (window.height - modal.height);
 
       return {
-        left: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxLeft, left),
-        top: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, maxTop, top)
+        left: (0, _util.inRange)(0, maxLeft, left),
+        top: (0, _util.inRange)(0, maxTop, top)
       };
     },
     modalClass: function modalClass() {
@@ -704,7 +735,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.adaptSize();
     },
     genEventObject: function genEventObject(params) {
-      //todo: clean this up (change to ...)
       var data = {
         name: this.name,
         timestamp: Date.now(),
@@ -715,13 +745,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       };
 
-      return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.util.extend(data, params || {});
-      //        return event
+      return _vue2.default.util.extend(data, params || {});
     },
     adaptSize: function adaptSize() {
       if (this.adaptive) {
-        this.modal.width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.width, this.modal.width);
-        this.modal.height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["a" /* inRange */])(0, this.window.height, this.modal.height);
+        this.modal.width = (0, _util.inRange)(0, this.window.width * this.maxAdaptiveWidth, this.modal.width);
+        this.modal.height = (0, _util.inRange)(0, this.window.height * this.maxAdaptiveWidth, this.modal.height);
       }
     },
     resize: function resize(event) {
@@ -833,26 +862,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         dragger.addEventListener('touchstart', mousedown);
       }
     },
-    removeDraggableListeners: function removeDraggableListeners() {
-      //  console.log('removing draggable handlers')
-    }
+    removeDraggableListeners: function removeDraggableListeners() {}
   }
-});
+};
 
 /***/ }),
 /* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
-//
-//
-//
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+var _util = __webpack_require__(1);
+
+exports.default = {
   name: 'VueJsModalResizer',
   props: {
     minHeight: {
@@ -909,8 +936,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var width = event.clientX - el.offsetLeft;
         var height = event.clientY - el.offsetTop;
 
-        width = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* inRange */])(this.minWidth, window.innerWidth, width);
-        height = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* inRange */])(this.minHeight, window.innerHeight, height);
+        width = (0, _util.inRange)(this.minWidth, window.innerWidth, width);
+        height = (0, _util.inRange)(this.minHeight, window.innerHeight, height);
 
         this.size = { width: width, height: height };
         el.style.width = width + 'px';
@@ -923,7 +950,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     }
   }
-});
+};
 
 /***/ }),
 /* 8 */

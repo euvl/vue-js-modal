@@ -36,7 +36,7 @@
     props: {
       name: {
         required: true,
-        type: [String, Number],
+        type: String
       },
       delay: {
         type: Number,
@@ -63,11 +63,17 @@
       },
       minWidth: {
         type: Number,
-        default: 0
+        default: 0,
+        validator (value) {
+          return value >= 0
+        }
       },
       minHeight: {
         type: Number,
-        default: 0
+        default: 0,
+        validator (value) {
+          return value >= 0
+        }
       },
       adaptiveMaxWidth: {
         type: Number,
@@ -82,30 +88,40 @@
         validator (value) {
           return value > 0 && value <= 1
         }
-      }
+      },
       width: {
         type: Number,
-        default: 600
+        default: 600,
+        validator (value) {
+          return value >= 0
+        }
       },
       height: {
-        type: Number,
+        type: [Number, String],
         default: 300,
-        /*
-        [Number, String],
         validator (value) {
-          return typeof value === 'string'
-            ? (value === 'auto')
-            : true
+          if (typeof value === 'string') {
+            return value === 'auto'
+          }
+
+          if (typeof value === 'number') {
+            return value >= 0
+          }
         }
-        */
       },
       pivotX: {
         type: Number,
-        default: 0.5
+        default: 0.5,
+        validator (value) {
+          return value >= 0 && value <= 1
+        }
       },
       pivotY: {
         type: Number,
-        default: 0.5
+        default: 0.5,
+        validator (value) {
+          value >= 0 && value <= 1
+        }
       }
     },
     components: {

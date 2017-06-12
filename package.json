@@ -26,6 +26,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.0.0",
     "babel-preset-latest": "^6.0.0",
+    "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
