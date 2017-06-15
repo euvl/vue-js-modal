@@ -54,7 +54,7 @@ methods: {
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
 | transition| false | String           |             | Transition name |
-| classes   | false | [String, Array]  | 'nice-modal'| Classes that will eb applied to the actual modal box, if specified not specified, the default 'nice-modal' class will eb applied |
+| classes   | false | [String, Array]  | 'nice-modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
 | width     | false | Number           | 600         | |
 | height    | false | Number           | 300         | |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
