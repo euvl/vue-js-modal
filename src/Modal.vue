@@ -371,7 +371,7 @@
     }
   };
 </script>
-<style scoped>
+<style>
   .v--modal-overlay {
     position: fixed;
     left: 0;
