@@ -103,13 +103,13 @@ var Plugin = {
 
     var $modal = {
       show: function show(name, params) {
-        ModalPlugin.event.$emit('toggle', name, true, params);
+        Plugin.event.$emit('toggle', name, true, params);
       },
       hide: function hide(name, params) {
-        ModalPlugin.event.$emit('toggle', name, false, params);
+        Plugin.event.$emit('toggle', name, false, params);
       },
       toggle: function toggle(name, params) {
-        ModalPlugin.event.$emit('toggle', name, undefined, params);
+        Plugin.event.$emit('toggle', name, undefined, params);
       }
     };
 
@@ -480,7 +480,7 @@ exports.default = {
       type: Number,
       default: 0.5,
       validator: function validator(value) {
-        value >= 0 && value <= 1;
+        return value >= 0 && value <= 1;
       }
     }
   },
@@ -507,8 +507,8 @@ exports.default = {
       },
 
       window: {
-        width: window.innerWidth,
-        height: window.innerWidth
+        width: 0,
+        height: 0
       },
 
       draggableElement: false
@@ -541,7 +541,7 @@ exports.default = {
       }
     }
   },
-  created: function created() {
+  beforeMount: function beforeMount() {
     var _this2 = this;
 
     _index2.default.event.$on('toggle', function (name, state, params) {
@@ -555,12 +555,10 @@ exports.default = {
     });
 
     window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
   },
   beforeDestroy: function beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize);
-  },
-  beforeMount: function beforeMount() {
-    this.onWindowResize();
   },
 
   computed: {
