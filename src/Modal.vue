@@ -147,8 +147,8 @@
         },
 
         window: {
-          width: window.innerWidth,
-          height: window.innerWidth
+          width: 0,
+          height: 0
         },
 
         draggableElement: false
@@ -178,7 +178,7 @@
         }
       }
     },
-    created () {
+    beforeMount () {
       Modal.event.$on('toggle', (name, state, params) => {
         if (name === this.name) {
           if (typeof state === 'undefined') {
@@ -190,12 +190,10 @@
       });
 
       window.addEventListener('resize', this.onWindowResize)
+      this.onWindowResize()
     },
     beforeDestroy () {
       window.removeEventListener('resize', this.onWindowResize)
-    },
-    beforeMount () {
-      this.onWindowResize()
     },
     computed: {
       position () {
