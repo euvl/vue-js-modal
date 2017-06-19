@@ -8,15 +8,15 @@ const Plugin = {
 
     const $modal = {
       show(name, params) {
-        ModalPlugin.event.$emit('toggle', name, true, params)
+        Plugin.event.$emit('toggle', name, true, params)
       },
 
       hide(name, params) {
-        ModalPlugin.event.$emit('toggle', name, false, params)
+        Plugin.event.$emit('toggle', name, false, params)
       },
 
       toggle(name, params) {
-        ModalPlugin.event.$emit('toggle', name, undefined, params)
+        Plugin.event.$emit('toggle', name, undefined, params)
       }
     }
 

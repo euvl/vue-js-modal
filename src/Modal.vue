@@ -120,7 +120,7 @@
         type: Number,
         default: 0.5,
         validator (value) {
-          value >= 0 && value <= 1
+          return value >= 0 && value <= 1
         }
       }
     },
