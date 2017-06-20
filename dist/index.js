@@ -103,13 +103,13 @@ var Plugin = {
 
     var $modal = {
       show: function show(name, params) {
-        ModalPlugin.event.$emit('toggle', name, true, params);
+        Plugin.event.$emit('toggle', name, true, params);
       },
       hide: function hide(name, params) {
-        ModalPlugin.event.$emit('toggle', name, false, params);
+        Plugin.event.$emit('toggle', name, false, params);
       },
       toggle: function toggle(name, params) {
-        ModalPlugin.event.$emit('toggle', name, undefined, params);
+        Plugin.event.$emit('toggle', name, undefined, params);
       }
     };
 
@@ -571,20 +571,7 @@ exports.default = {
         return value >= 0;
       }
     },
-    adaptiveMaxWidth: {
-      type: Number,
-      default: 1,
-      validator: function validator(value) {
-        return value > 0 && value <= 1;
-      }
-    },
-    adaptiveMaxHeight: {
-      type: Number,
-      default: 1,
-      validator: function validator(value) {
-        return value > 0 && value <= 1;
-      }
-    },
+
     width: {
       type: Number,
       default: 600,
@@ -616,7 +603,7 @@ exports.default = {
       type: Number,
       default: 0.5,
       validator: function validator(value) {
-        value >= 0 && value <= 1;
+        return value >= 0 && value <= 1;
       }
     }
   },
@@ -961,7 +948,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.v--modal-overlay .v--modal-box[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box;background-color:#fff}.v--modal[data-v-40dd3b1e]{background:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}.v--modal-top-right[data-v-40dd3b1e]{display:block;position:absolute;right:0;top:0}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}", ""]);
+exports.push([module.i, ".v--modal-overlay[data-v-40dd3b1e]{position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,.2);z-index:999;opacity:1}.v--modal-overlay .v--modal-box[data-v-40dd3b1e]{position:relative;overflow:hidden;box-sizing:border-box}.v--modal[data-v-40dd3b1e]{background-color:#fff;text-align:left;border-radius:3px;box-shadow:0 20px 60px -2px rgba(27,33,58,.4);padding:0}.v--modal.v--modal-fullscreen[data-v-40dd3b1e]{width:100vw;height:100vh;margin:0;left:0;top:0}.v--modal-top-right[data-v-40dd3b1e]{display:block;position:absolute;right:0;top:0}.overlay-fade-enter-active[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{transition:all .2s}.overlay-fade-enter[data-v-40dd3b1e],.overlay-fade-leave-active[data-v-40dd3b1e]{opacity:0}.nice-modal-fade-enter-active[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{transition:all .4s}.nice-modal-fade-enter[data-v-40dd3b1e],.nice-modal-fade-leave-active[data-v-40dd3b1e]{opacity:0;transform:translateY(-20px)}", ""]);
 
 // exports
 
