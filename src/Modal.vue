@@ -75,6 +75,7 @@
           return value >= 0
         }
       },
+      /*
       adaptiveMaxWidth: {
         type: Number,
         default: 1,
@@ -89,6 +90,7 @@
           return value > 0 && value <= 1
         }
       },
+      */
       width: {
         type: Number,
         default: 600,
@@ -387,11 +389,10 @@
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
-    background-color: white;
   }
 
   .v--modal {
-    background: white;
+    background-color: white;
     text-align: left;
     border-radius: 3px;
     box-shadow: 0 20px 60px -2px rgba(27, 33, 58, .4);
