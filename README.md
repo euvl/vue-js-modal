@@ -18,7 +18,7 @@ npm install vue-js-modal --save
 
 ### How to use
 
-Include plugin in your main.js file.
+Include plugin in your `main.js` file.
 
 ```javascript
 import vmodal from 'vue-js-modal'
@@ -26,13 +26,15 @@ import vmodal from 'vue-js-modal'
 Vue.use(vmodal)
 ```
 
-Create modal
+Create modal:
+
 ```html
 <modal name="hello-world">
   hello, world!
 </modal>
 ```
-Call it from anywhere in the app
+Call it from anywhere in the app:
+
 ```javascript
 methods: {
   show () {
@@ -43,6 +45,27 @@ methods: {
   }
 }
 ```
+
+### SSR
+
+Include plugin in your `nuxt.config.js` file:
+
+```javascript
+module.exports = {
+  plugins: ['~plugins/vue-js-modal']
+}
+```
+
+And your `plugins/vue-js-modal.js` will look like:
+
+```javascript
+import Vue from 'vue'
+import VModal from 'vue-js-modal/dist/ssr.index'
+
+Vue.use(VModal)
+```
+
+For full demo please look at `demo/server_side_rendering`
 
 ### Properties
 
@@ -60,7 +83,7 @@ methods: {
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
-| pivotY    | false | Number (0 - 1.0) | 0.5         | | 
+| pivotY    | false | Number (0 - 1.0) | 0.5         | |
 
 ### Events
 
@@ -109,7 +132,7 @@ export default {
 </script>
 ```
 
-This example, initializes `time` variable every time the modal is being opened. 
+This example, initializes `time` variable every time the modal is being opened.
 And then forbits closing it for the next 5000 ms
 
 ### Other
@@ -122,15 +145,15 @@ Example:
 ```vue
 <template>
   <modal name="foo">
-  
+
     <div slot="top-right">
       <button @click="$modal.hide('foo')">
         ❌
       </button>
-    </div> 
-   
+    </div>
+
     Hello, ☀️!
- 
+
   </modal>
 </template>
 ```
@@ -138,7 +161,7 @@ Example:
 
 #### Draggable handler
 
-Draggable property can accept not only `Boolean` but also `String` paramenters. With `String` value, you can specify a CSS selector to the element which will be a "handler" for dragging. 
+Draggable property can accept not only `Boolean` but also `String` paramenters. With `String` value, you can specify a CSS selector to the element which will be a "handler" for dragging.
 
 Example:
 
@@ -156,7 +179,7 @@ Example:
 
 To run an example:
 ```sh
-# Clone repo 
+# Clone repo
 
 git clone https://github.com/euvl/vue-js-modal.git
 
@@ -172,5 +195,3 @@ cd demo
 npm install
 npm run dev
 ```
-
-

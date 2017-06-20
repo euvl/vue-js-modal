@@ -1,0 +1,10 @@
+{
+  "name": "nuxt-hello",
+  "scripts": {
+    "start": "nuxt"
+  },
+  "dependencies": {
+    "vue-js-modal": "github:euvl/vue-js-modal#dcf3291623d9fe54bcbf0ca48c0ed35865b8871a",
+    "nuxt": "^1.0.0-alpha.4"
+  }
+}
