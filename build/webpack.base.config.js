@@ -9,7 +9,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
-    filename: 'index.js',
     library:'VueJsModal',
     libraryTarget: 'commonjs2'
   },
@@ -36,6 +35,6 @@ module.exports = {
   },
   devtool: '#source-map',
   plugins: [
-    new UglifyJSPlugin()
+  //  new UglifyJSPlugin()
   ]
 }
