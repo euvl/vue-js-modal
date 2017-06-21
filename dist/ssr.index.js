@@ -95,7 +95,7 @@ var Plugin = {
     this.installed = true;
     this.event = new Vue();
 
-    var $modal = {
+    Vue.prototype.$modal = {
       show: function show(name, params) {
         Plugin.event.$emit('toggle', name, true, params);
       },
@@ -107,7 +107,6 @@ var Plugin = {
       }
     };
 
-    Vue.prototype.$modal = $modal;
     Vue.component('modal', _Modal2.default);
   }
 };

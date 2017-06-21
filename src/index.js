@@ -9,7 +9,7 @@ const Plugin = {
     this.installed = true
     this.event = new Vue()
 
-    const $modal = {
+    Vue.prototype.$modal = {
       show (name, params) {
         Plugin.event.$emit('toggle', name, true, params)
       },
@@ -23,7 +23,6 @@ const Plugin = {
       }
     }
 
-    Vue.prototype.$modal = $modal
     Vue.component('modal', Modal)
   }
 }
