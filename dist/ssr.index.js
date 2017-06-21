@@ -88,9 +88,12 @@ var Plugin = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    if (!this.hasOwnProperty("event")) {
-      this.event = new Vue();
+    if (this.installed) {
+      return;
     }
+
+    this.installed = true;
+    this.event = new Vue();
 
     var $modal = {
       show: function show(name, params) {
@@ -104,14 +107,8 @@ var Plugin = {
       }
     };
 
-    Object.defineProperty(Vue.prototype, '$modal', {
-      get: function get() {
-        return $modal;
-      }
-    });
-
+    Vue.prototype.$modal = $modal;
     Vue.component('modal', _Modal2.default);
-    return null;
   }
 };
 

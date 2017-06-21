@@ -1,31 +1,30 @@
 import Modal from './Modal.vue'
 
 const Plugin = {
-  install(Vue, options = {}) {
-    if (!this.hasOwnProperty("event")) {
-      this.event = new Vue()
+  install (Vue, options = {}) {
+    if (this.installed) {
+      return
     }
 
+    this.installed = true
+    this.event = new Vue()
+
     const $modal = {
-      show(name, params) {
+      show (name, params) {
         Plugin.event.$emit('toggle', name, true, params)
       },
 
-      hide(name, params) {
+      hide (name, params) {
         Plugin.event.$emit('toggle', name, false, params)
       },
 
-      toggle(name, params) {
+      toggle (name, params) {
         Plugin.event.$emit('toggle', name, undefined, params)
       }
     }
 
-    Object.defineProperty(Vue.prototype, '$modal', {
-      get: () => $modal
-    })
-
+    Vue.prototype.$modal = $modal
     Vue.component('modal', Modal)
-    return null
   }
 }
 
