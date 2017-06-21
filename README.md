@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal. http://vue-js-modal.yev.io/
-
+##### (now works with SSR)
 <p align="center">
   <img src="https://media.giphy.com/media/3oKIPco1eNxAA1rD4Q/giphy.gif">
 </p>
@@ -78,12 +78,12 @@ For full demo please look at `demo/server_side_rendering`
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'vue--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
-| width     | false | Number           | 600         | |
-| height    | false | Number           | 300         | |
+| width     | false | Number           | 600         | Width |
+| height    | false | Number           | 300         | Height |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
-| pivotY    | false | Number (0 - 1.0) | 0.5         | |
+| pivotY    | false | Number (0 - 1.0) | 0.5         | Vertical position in %, default is 0.5 (meaning that modal box will be in the middle (50% from left) of the window |
 
 ### Events
 
