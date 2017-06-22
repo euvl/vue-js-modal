@@ -9,8 +9,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
-    library:'VueJsModal',
-    libraryTarget: 'commonjs2'
+    library:'vue-js-modal',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [

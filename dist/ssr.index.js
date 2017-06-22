@@ -1,5 +1,14 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("vue"));
+	else if(typeof define === 'function' && define.amd)
+		define(["vue"], factory);
+	else if(typeof exports === 'object')
+		exports["vue-js-modal"] = factory(require("vue"));
+	else
+		root["vue-js-modal"] = factory(root["vue"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_16__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -967,8 +976,9 @@ module.exports = function listToStyles (parentId, list) {
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = require("vue");
+module.exports = __WEBPACK_EXTERNAL_MODULE_16__;
 
 /***/ })
 /******/ ]);
+});
 //# sourceMappingURL=ssr.index.js.map
