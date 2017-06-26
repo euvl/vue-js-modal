@@ -1,6 +1,6 @@
-# Vue.js 2.0+ modal
-
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
+
+# Vue.js modal
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal. http://vue-js-modal.yev.io/
 ##### (now works with SSR)
