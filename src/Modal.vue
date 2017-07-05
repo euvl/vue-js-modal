@@ -75,22 +75,22 @@
           return value >= 0
         }
       },
-      /*
-      adaptiveMaxWidth: {
+      maxAdaptiveWidth: {
         type: Number,
-        default: 1,
-        validator (value) {
-          return value > 0 && value <= 1
-        }
+        default: 1
+        // ,
+        // validator (value) {
+        //   return value > 0 && value <= 1
+        // }
       },
-      adaptiveMaxHeight: {
+      maxAdaptiveHeight: {
         type: Number,
-        default: 1,
-        validator (value) {
-          return value > 0 && value <= 1
-        }
+        default: 1
+        // ,
+        // validator (value) {
+        //  return value > 0 && value <= 1
+        // }
       },
-      */
       width: {
         type: Number,
         default: 600,
@@ -255,7 +255,7 @@
             this.modal.width)
           this.modal.height = inRange(
             0,
-            this.window.height * this.maxAdaptiveWidth,
+            this.window.height * this.maxAdaptiveHeight,
             this.modal.height)
         }
       },
