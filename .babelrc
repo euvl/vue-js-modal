@@ -1,4 +1,9 @@
 {
-  "presets": ["env"],
+  "presets": [
+    ["env", { 
+      "modules": false,
+      "debug": true
+    }]
+  ],
   "comments": false
 }

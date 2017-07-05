@@ -29,7 +29,7 @@
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.5.3",
     "sass-loader": "^5.0.1",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "vue": "^2.2.6",
