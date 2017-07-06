@@ -93,9 +93,16 @@
       },
       width: {
         type: Number,
-        default: 600,
+        default: [Number, String],
         validator (value) {
-          return value >= 0
+          if (typeof value === 'string') {
+            var reg = new RegExp('^(\d+|\d+[.]\d+)%?$')
+            return reg.test(value)
+          }
+
+          if (typeof value === 'number') {
+            return value >= 0
+          }
         }
       },
       height: {
@@ -103,7 +110,8 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
-            return value === 'auto'
+            var reg = new RegExp('^(\d+|\d+[.]\d+)%?$')
+            return value === 'auto' || reg.test(value)
           }
 
           if (typeof value === 'number') {
@@ -199,17 +207,28 @@
     },
     computed: {
       position () {
-        const { window, modal, shift } = this
-        const maxLeft = window.width - modal.width
-        const maxTop = window.height - modal.height
+        const {window, modal, shift} = this
 
-        const left = shift.left + this.pivotX * (window.width - modal.width)
-        const top = shift.top + this.pivotY * (window.height - modal.height)
+        const maxLeft = window.width - this.trueModalWidth()
+        const maxTop = window.height - this.trueModalHeight()
+
+        const left = shift.left + this.pivotX * (window.width - this.trueModalWidth())
+        const top = shift.top + this.pivotY * (window.height - this.trueModalHeight())
 
         return {
           left: inRange(0, maxLeft, left),
           top: inRange(0, maxTop, top)
         }
+      },
+
+      trueModalWidth () {
+        const {window, modal} = this
+        return (typeof modal.width === 'string') ? window.width * parseFloat(modal.width) / 100.0 : modal.width
+      },
+
+      trueModalHeight () {
+        const {window, modal} = this
+        return (typeof modal.height === 'string') ? window.height * parseFloat(modal.height) / 100.0 : modal.height
       },
 
       modalClass () {
@@ -220,8 +239,8 @@
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
-          width: this.modal.width + 'px',
-          height: this.modal.height + 'px'
+          width: this.trueModalWidth() + 'px',
+          height: this.trueModalHeight() + 'px'
         }
       }
     },
@@ -252,11 +271,11 @@
           this.modal.width = inRange(
             0,
             this.window.width * this.maxAdaptiveWidth,
-            this.modal.width)
+            this.trueModalWidth)
           this.modal.height = inRange(
             0,
             this.window.height * this.maxAdaptiveHeight,
-            this.modal.height)
+            this.trueModalHeight())
         }
       },
 
