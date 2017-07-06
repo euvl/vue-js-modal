@@ -109,7 +109,6 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
-            const reg = RegExp('^(\d+|\d+[.]\d+)%?$')
             return value === 'auto' || (value.charAt(value.length-1) === '%' && !isNaN(parseFloat(value)))
           }
 
