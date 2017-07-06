@@ -96,7 +96,7 @@
         default: [Number, String],
         validator (value) {
           if (typeof value === 'string') {
-            return value.splice(-1) === '%' && !isNaN(parseFloat(value))
+            return value.charAt(value.length-1) === '%' && !isNaN(parseFloat(value))
           }
 
           if (typeof value === 'number') {
@@ -110,7 +110,7 @@
         validator (value) {
           if (typeof value === 'string') {
             const reg = RegExp('^(\d+|\d+[.]\d+)%?$')
-            return value === 'auto' || (value.splice(-1) === '%' && !isNaN(parseFloat(value)))
+            return value === 'auto' || (value.charAt(value.length-1) === '%' && !isNaN(parseFloat(value)))
           }
 
           if (typeof value === 'number') {
