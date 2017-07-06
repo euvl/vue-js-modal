@@ -92,7 +92,7 @@
         // }
       },
       width: {
-        type: Number,
+        type: [Number, String],
         default: [Number, String],
         validator (value) {
           if (typeof value === 'string') {
