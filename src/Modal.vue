@@ -93,7 +93,7 @@
       },
       width: {
         type: [Number, String],
-        default: [Number, String],
+        default: 600,
         validator (value) {
           if (typeof value === 'string') {
             return value.charAt(value.length-1) === '%' && !isNaN(parseFloat(value))
