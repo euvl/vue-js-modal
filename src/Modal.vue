@@ -96,7 +96,7 @@
         default: [Number, String],
         validator (value) {
           if (typeof value === 'string') {
-            return this.isPercentage(value)
+            return string.splice(-1) === '%' && !isNaN(parseFloat(string))
           }
 
           if (typeof value === 'number') {
@@ -110,7 +110,7 @@
         validator (value) {
           if (typeof value === 'string') {
             const reg = RegExp('^(\d+|\d+[.]\d+)%?$')
-            return value === 'auto' || this.isPercentage(value)
+            return value === 'auto' || (string.splice(-1) === '%' && !isNaN(parseFloat(string)))
           }
 
           if (typeof value === 'number') {
@@ -276,10 +276,6 @@
       trueModalHeight () {
         const {window, modal} = this
         return (typeof modal.height === 'string') ? window.height * parseFloat(modal.height) / 100.0 : modal.height
-      },
-
-      isPercentage (string) {
-        return string.splice(-1) === '%' && !isNaN(parseFloat(string))
       },
 
       resize (event) {
