@@ -220,16 +220,6 @@
         }
       },
 
-      trueModalWidth () {
-        const {window, modal} = this
-        return (typeof modal.width === 'string') ? window.width * parseFloat(modal.width) / 100.0 : modal.width
-      },
-
-      trueModalHeight () {
-        const {window, modal} = this
-        return (typeof modal.height === 'string') ? window.height * parseFloat(modal.height) / 100.0 : modal.height
-      },
-
       modalClass () {
         return ['v--modal-box', this.classes]
       },
@@ -270,7 +260,7 @@
           this.modal.width = inRange(
             0,
             this.window.width * this.maxAdaptiveWidth,
-            this.trueModalWidth)
+            this.trueModalWidth())
           this.modal.height = inRange(
             0,
             this.window.height * this.maxAdaptiveHeight,
@@ -278,6 +268,15 @@
         }
       },
 
+      trueModalWidth () {
+        const {window, modal} = this
+        return (typeof modal.width === 'string') ? window.width * parseFloat(modal.width) / 100.0 : modal.width
+      },
+
+      trueModalHeight () {
+        const {window, modal} = this
+        return (typeof modal.height === 'string') ? window.height * parseFloat(modal.height) / 100.0 : modal.height
+      },
 
       isPercentage (string) {
         return string.splice(-1) === '%' && !isNaN(parseFloat(string))
