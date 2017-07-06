@@ -96,8 +96,7 @@
         default: [Number, String],
         validator (value) {
           if (typeof value === 'string') {
-            var reg = new RegExp('^(\d+|\d+[.]\d+)%?$')
-            return reg.test(value)
+            return this.isPercentage(value)
           }
 
           if (typeof value === 'number') {
@@ -110,8 +109,8 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
-            var reg = new RegExp('^(\d+|\d+[.]\d+)%?$')
-            return value === 'auto' || reg.test(value)
+            const reg = RegExp('^(\d+|\d+[.]\d+)%?$')
+            return value === 'auto' || this.isPercentage(value)
           }
 
           if (typeof value === 'number') {
@@ -277,6 +276,11 @@
             this.window.height * this.maxAdaptiveHeight,
             this.trueModalHeight())
         }
+      },
+
+
+      isPercentage (string) {
+        return string.splice(-1) === '%' && !isNaN(parseFloat(string))
       },
 
       resize (event) {
