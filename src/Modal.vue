@@ -96,7 +96,8 @@
         default: 600,
         validator (value) {
           if (typeof value === 'string') {
-            return value.charAt(value.length-1) === '%' && !isNaN(parseFloat(value))
+            return value.charAt(value.length-1) === '%'
+              && !isNaN(parseFloat(value))
           }
 
           if (typeof value === 'number') {
@@ -109,7 +110,8 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
-            return value === 'auto' || (value.charAt(value.length-1) === '%' && !isNaN(parseFloat(value)))
+            return (value.charAt(value.length-1) === '%'
+              && !isNaN(parseFloat(value)))
           }
 
           if (typeof value === 'number') {
