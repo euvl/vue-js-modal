@@ -7,6 +7,10 @@
 var floatRegexp = '[-+]?[0-9]*\.?[0-9]+'
 
 var types = [
+//  {
+//    name: 'rem',
+//    regexp: new RegExp(`^${floatRegexp}rem\$`)
+//  },
   {
     name: 'px',
     regexp: new RegExp(`^${floatRegexp}px\$`)

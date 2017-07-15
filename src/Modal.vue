@@ -19,7 +19,7 @@
           <resizer v-if="resizable"
                    :min-width="minWidth"
                    :min-height="minHeight"
-                   @resize="resize"/>
+                   @resize="onModalResize"/>
         </div>
       </transition>
     </div>
@@ -30,6 +30,7 @@
   import Modal       from './index'
   import Resizer     from './Resizer.vue'
   import { inRange } from './util'
+  import parseNumber from './parser'
 
   export default {
     name: 'VueJsModal',
@@ -75,34 +76,17 @@
           return value >= 0
         }
       },
-      maxAdaptiveWidth: {
-        type: Number,
-        default: 1
-        // ,
-        // validator (value) {
-        //   return value > 0 && value <= 1
-        // }
-      },
-      maxAdaptiveHeight: {
-        type: Number,
-        default: 1
-        // ,
-        // validator (value) {
-        //  return value > 0 && value <= 1
-        // }
-      },
       width: {
         type: [Number, String],
         default: 600,
         validator (value) {
           if (typeof value === 'string') {
-            return value.charAt(value.length-1) === '%'
-              && !isNaN(parseFloat(value))
+            let width = parseNumber(value)
+            return (width.type === '%' || width.type === 'px')
+              && width.value > 0
           }
 
-          if (typeof value === 'number') {
-            return value >= 0
-          }
+          return value >= 0
         }
       },
       height: {
@@ -110,13 +94,12 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
-            return (value.charAt(value.length-1) === '%'
-              && !isNaN(parseFloat(value)))
+            let height = parseNumber(value)
+            return (height.type === '%' || height.type === 'px')
+              && height.value > 0
           }
-
-          if (typeof value === 'number') {
-            return value >= 0
-          }
+          
+          return value >= 0
         }
       },
       pivotX: {
@@ -138,6 +121,11 @@
       Resizer
     },
     data () {
+      let width = parseNumber(this.width)
+      let height = parseNumber(this.height)
+
+      console.log(width, height)
+
       return {
         visible: false,
 
@@ -152,23 +140,26 @@
         },
 
         modal: {
-          width: this.width,
-          height: this.height
+          widthInit: 0,
+          width: width.value,
+          widthType: width.type,
+
+          heightInit: 0,
+          height: height.value,
+          heightType: height.type
         },
 
         window: {
           width: 0,
           height: 0
-        },
-
-        draggableElement: false
-      };
+        }
+      }
     },
     watch: {
       visible (value) {
         if (value) {
           this.visibility.overlay = true
-          this.adaptSize()
+        //  this.adaptSize()
 
           setTimeout(() => {
             this.visibility.modal = true
@@ -207,13 +198,15 @@
     },
     computed: {
       position () {
-        const {window, modal, shift} = this
+        const { window, modal, shift } = this
 
-        const maxLeft = window.width - this.trueModalWidth()
-        const maxTop = window.height - this.trueModalHeight()
+        const maxLeft = window.width - this.trueModalWidth
+        const maxTop = window.height - this.trueModalHeight
 
-        const left = shift.left + this.pivotX * (window.width - this.trueModalWidth())
-        const top = shift.top + this.pivotY * (window.height - this.trueModalHeight())
+        const left = shift.left + 
+          this.pivotX * (window.width - this.trueModalWidth)
+        const top = shift.top + 
+          this.pivotY * (window.height - this.trueModalHeight)
 
         return {
           left: inRange(0, maxLeft, left),
@@ -221,16 +214,40 @@
         }
       },
 
+      trueModalWidth () {
+        const { window, modal } = this
+        const value = modal.widthType === '%'
+          ? window.width / 100 * modal.width
+          : modal.width
+
+        return this.adaptive
+          ? inRange(this.minWidth, this.window.width, value)
+          : value
+      },
+
+      trueModalHeight () {
+        const { window, modal } = this
+        const value = (modal.heightType === '%') 
+          ? window.height / 100 * modal.height 
+          : modal.height
+
+        return this.adaptive
+          ? inRange(this.minHeight, this.window.height, value)
+          : value
+      },
+
       modalClass () {
         return ['v--modal-box', this.classes]
       },
 
       modalStyle () {
+        console.log(this.trueModalWidth, this.trueModalHeight)
+
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
-          width: this.trueModalWidth() + 'px',
-          height: this.trueModalHeight() + 'px'
+          width: this.trueModalWidth + 'px',
+          height: this.trueModalHeight + 'px'
         }
       }
     },
@@ -238,7 +255,7 @@
       onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
-        this.adaptSize()
+      //  this.adaptSize()
       },
 
       genEventObject (params) {
@@ -257,29 +274,16 @@
       },
 
       adaptSize () {
-        if (this.adaptive) {
-          this.modal.width = inRange(
-            0,
-            this.window.width * this.maxAdaptiveWidth,
-            this.trueModalWidth())
-          this.modal.height = inRange(
-            0,
-            this.window.height * this.maxAdaptiveHeight,
-            this.trueModalHeight())
+    /*    if (this.adaptive) {
+          this.modal.width = inRange(this.minWidth, this.window.width,
+            this.trueModalWidth)
+          this.modal.height = inRange(this.minHeight, this.window.height,
+            this.trueModalHeight)
         }
+    */
       },
 
-      trueModalWidth () {
-        const {window, modal} = this
-        return (typeof modal.width === 'string') ? window.width * parseFloat(modal.width) / 100.0 : modal.width
-      },
-
-      trueModalHeight () {
-        const {window, modal} = this
-        return (typeof modal.height === 'string') ? window.height * parseFloat(modal.height) / 100.0 : modal.height
-      },
-
-      resize (event) {
+      onModalResize (event) {
         this.modal.width = event.size.width
         this.modal.height = event.size.height
 
