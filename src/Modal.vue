@@ -124,8 +124,6 @@
       let width = parseNumber(this.width)
       let height = parseNumber(this.height)
 
-      console.log(width, height)
-
       return {
         visible: false,
 
@@ -241,8 +239,6 @@
       },
 
       modalStyle () {
-        console.log(this.trueModalWidth, this.trueModalHeight)
-
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
@@ -255,7 +251,6 @@
       onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
-      //  this.adaptSize()
       },
 
       genEventObject (params) {
@@ -272,23 +267,27 @@
 
         return Vue.util.extend(data, params || {});
       },
-
+    /* 
       adaptSize () {
-    /*    if (this.adaptive) {
+       if (this.adaptive) {
           this.modal.width = inRange(this.minWidth, this.window.width,
             this.trueModalWidth)
           this.modal.height = inRange(this.minHeight, this.window.height,
             this.trueModalHeight)
         }
-    */
       },
-
+    */
       onModalResize (event) {
+        this.modal.widthType = 'px'
         this.modal.width = event.size.width
+
+        this.modal.heightType = 'px'
         this.modal.height = event.size.height
 
         const { size } = this.modal
         const resizeEvent = this.genEventObject({ size });
+
+        console.log(resizeEvent)
 
         this.$emit('resize', resizeEvent)
       },
