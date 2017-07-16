@@ -58,7 +58,7 @@
     </button>
     <button class="blue"
             @click="$modal.show('size-modal')">
-      Demo: PR #2
+      Demo: Size = 60%
     </button>
     <!--
     <button class="green"
