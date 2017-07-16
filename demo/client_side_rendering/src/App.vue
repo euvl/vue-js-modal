@@ -5,6 +5,7 @@
   <demo-dog-profile-modal />
   <demo-conditional-modal/>
   <demo-focus-modal/>
+  <demo-size-modal/>
 
   <modal name="example-modal"
          transition="nice-modal-fade"
@@ -55,6 +56,10 @@
             @click="$modal.show('demo-login')">
       Demo: Login
     </button>
+    <button class="blue"
+            @click="$modal.show('size-modal')">
+      Demo: Size = 60%
+    </button>
     <!--
     <button class="green"
             @click="$modal.show('input-focus-modal')">
@@ -79,6 +84,7 @@ import DemoFocusModal       from './components/InputFocusModal.vue'
 import DemoLoginModal       from './components/DemoLoginModal.vue'
 import DemoDogProfileModal  from './components/DogProfileModal.vue'
 import DemoConditionalModal from './components/ConditionalModal.vue'
+import DemoSizeModal        from './components/SizeModal.vue'
 
 export default {
   name: 'app',
@@ -89,7 +95,8 @@ export default {
     DemoFocusModal,
     DemoLoginModal,
     DemoDogProfileModal,
-    DemoConditionalModal
+    DemoConditionalModal,
+    DemoSizeModal
   },
   data() {
     return {

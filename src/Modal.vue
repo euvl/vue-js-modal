@@ -19,7 +19,7 @@
           <resizer v-if="resizable"
                    :min-width="minWidth"
                    :min-height="minHeight"
-                   @resize="resize"/>
+                   @resize="onModalResize"/>
         </div>
       </transition>
     </div>
@@ -30,6 +30,7 @@
   import Modal       from './index'
   import Resizer     from './Resizer.vue'
   import { inRange } from './util'
+  import parseNumber from './parser'
 
   export default {
     name: 'VueJsModal',
@@ -75,26 +76,16 @@
           return value >= 0
         }
       },
-      maxAdaptiveWidth: {
-        type: Number,
-        default: 1
-        // ,
-        // validator (value) {
-        //   return value > 0 && value <= 1
-        // }
-      },
-      maxAdaptiveHeight: {
-        type: Number,
-        default: 1
-        // ,
-        // validator (value) {
-        //  return value > 0 && value <= 1
-        // }
-      },
       width: {
-        type: Number,
+        type: [Number, String],
         default: 600,
         validator (value) {
+          if (typeof value === 'string') {
+            let width = parseNumber(value)
+            return (width.type === '%' || width.type === 'px')
+              && width.value > 0
+          }
+
           return value >= 0
         }
       },
@@ -103,12 +94,12 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
-            return value === 'auto'
+            let height = parseNumber(value)
+            return (height.type === '%' || height.type === 'px')
+              && height.value > 0
           }
-
-          if (typeof value === 'number') {
-            return value >= 0
-          }
+          
+          return value >= 0
         }
       },
       pivotX: {
@@ -130,6 +121,9 @@
       Resizer
     },
     data () {
+      let width = parseNumber(this.width)
+      let height = parseNumber(this.height)
+
       return {
         visible: false,
 
@@ -144,23 +138,26 @@
         },
 
         modal: {
-          width: this.width,
-          height: this.height
+          widthInit: 0,
+          width: width.value,
+          widthType: width.type,
+
+          heightInit: 0,
+          height: height.value,
+          heightType: height.type
         },
 
         window: {
           width: 0,
           height: 0
-        },
-
-        draggableElement: false
-      };
+        }
+      }
     },
     watch: {
       visible (value) {
         if (value) {
           this.visibility.overlay = true
-          this.adaptSize()
+        //  this.adaptSize()
 
           setTimeout(() => {
             this.visibility.modal = true
@@ -200,16 +197,41 @@
     computed: {
       position () {
         const { window, modal, shift } = this
-        const maxLeft = window.width - modal.width
-        const maxTop = window.height - modal.height
 
-        const left = shift.left + this.pivotX * (window.width - modal.width)
-        const top = shift.top + this.pivotY * (window.height - modal.height)
+        const maxLeft = window.width - this.trueModalWidth
+        const maxTop = window.height - this.trueModalHeight
+
+        const left = shift.left + 
+          this.pivotX * (window.width - this.trueModalWidth)
+        const top = shift.top + 
+          this.pivotY * (window.height - this.trueModalHeight)
 
         return {
           left: inRange(0, maxLeft, left),
           top: inRange(0, maxTop, top)
         }
+      },
+
+      trueModalWidth () {
+        const { window, modal } = this
+        const value = modal.widthType === '%'
+          ? window.width / 100 * modal.width
+          : modal.width
+
+        return this.adaptive
+          ? inRange(this.minWidth, this.window.width, value)
+          : value
+      },
+
+      trueModalHeight () {
+        const { window, modal } = this
+        const value = (modal.heightType === '%') 
+          ? window.height / 100 * modal.height 
+          : modal.height
+
+        return this.adaptive
+          ? inRange(this.minHeight, this.window.height, value)
+          : value
       },
 
       modalClass () {
@@ -220,8 +242,8 @@
         return {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
-          width: this.modal.width + 'px',
-          height: this.modal.height + 'px'
+          width: this.trueModalWidth + 'px',
+          height: this.trueModalHeight + 'px'
         }
       }
     },
@@ -229,7 +251,6 @@
       onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
-        this.adaptSize()
       },
 
       genEventObject (params) {
@@ -246,26 +267,27 @@
 
         return Vue.util.extend(data, params || {});
       },
-
+    /* 
       adaptSize () {
-        if (this.adaptive) {
-          this.modal.width = inRange(
-            0,
-            this.window.width * this.maxAdaptiveWidth,
-            this.modal.width)
-          this.modal.height = inRange(
-            0,
-            this.window.height * this.maxAdaptiveHeight,
-            this.modal.height)
+       if (this.adaptive) {
+          this.modal.width = inRange(this.minWidth, this.window.width,
+            this.trueModalWidth)
+          this.modal.height = inRange(this.minHeight, this.window.height,
+            this.trueModalHeight)
         }
       },
-
-      resize (event) {
+    */
+      onModalResize (event) {
+        this.modal.widthType = 'px'
         this.modal.width = event.size.width
+
+        this.modal.heightType = 'px'
         this.modal.height = event.size.height
 
         const { size } = this.modal
         const resizeEvent = this.genEventObject({ size });
+
+        console.log(resizeEvent)
 
         this.$emit('resize', resizeEvent)
       },

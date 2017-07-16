@@ -21,7 +21,7 @@ export default {
       size: {}
     }
   },
-  mounted() {
+  mounted () {
     this.$el.addEventListener('mousedown', this.start, false)
   },
   computed: {
