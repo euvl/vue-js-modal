@@ -76,6 +76,7 @@ For full demo please look at `demo/server_side_rendering`
 | resizable | false | Boolean          | false       | If true, allows to resize modal window, keeping it in the center of the screen. |
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
+| reset     | false | Boolean          | false       | Resets position and size before showing modal |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'vue--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
 | width     | false | Number           | 600         | Width |

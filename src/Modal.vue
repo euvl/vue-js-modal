@@ -55,6 +55,10 @@
         type: [Boolean, String],
         default: false
       },
+      reset: {
+        type: Boolean,
+        default: false
+      },
       transition: {
         type: String
       },
@@ -121,9 +125,6 @@
       Resizer
     },
     data () {
-      let width = parseNumber(this.width)
-      let height = parseNumber(this.height)
-
       return {
         visible: false,
 
@@ -138,13 +139,10 @@
         },
 
         modal: {
-          widthInit: 0,
-          width: width.value,
-          widthType: width.type,
-
-          heightInit: 0,
-          height: height.value,
-          heightType: height.type
+          width: 0,
+          widthType: 'px',
+          height: 0,
+          heightType: 'px'
         },
 
         window: {
@@ -176,6 +174,9 @@
           }, this.delay)
         }
       }
+    },
+    created () {
+      this.setInitialSize()
     },
     beforeMount () {
       Modal.event.$on('toggle', (name, state, params) => {
@@ -248,6 +249,17 @@
       }
     },
     methods: {
+      setInitialSize () {
+        let { modal } = this
+        let width = parseNumber(this.width)
+        let height = parseNumber(this.height)
+
+        modal.width = width.value
+        modal.widthType = width.type
+        modal.height = height.value
+        modal.heightType = height.type
+      },
+
       onWindowResize () {
         this.window.width = window.innerWidth
         this.window.height = window.innerHeight
@@ -267,16 +279,7 @@
 
         return Vue.util.extend(data, params || {});
       },
-    /* 
-      adaptSize () {
-       if (this.adaptive) {
-          this.modal.width = inRange(this.minWidth, this.window.width,
-            this.trueModalWidth)
-          this.modal.height = inRange(this.minHeight, this.window.height,
-            this.trueModalHeight)
-        }
-      },
-    */
+
       onModalResize (event) {
         this.modal.widthType = 'px'
         this.modal.width = event.size.width
@@ -287,18 +290,31 @@
         const { size } = this.modal
         const resizeEvent = this.genEventObject({ size });
 
-        console.log(resizeEvent)
-
         this.$emit('resize', resizeEvent)
       },
 
       toggle (state, params) {
-        const beforeEventName = this.visible ? 'before-close' : 'before-open'
-        const afterEventName = this.visible ? 'closed' : 'opened'
+        const { reset, visible } = this
+
+        const beforeEventName = visible 
+          ? 'before-close' 
+          : 'before-open'
+          
+        const afterEventName = visible 
+          ? 'closed' 
+          : 'opened'
+
+        if (beforeEventName === 'before-open' && reset) {
+          this.setInitialSize()
+          this.shift.left = 0
+          this.shift.top = 0
+        }
 
         let stopEventExecution = false
 
-        const stop = () => { stopEventExecution = true }
+        const stop = () => {
+          stopEventExecution = true
+        }
         const beforeEvent = this.genEventObject({ stop, state, params })
 
         this.$emit(beforeEventName, beforeEvent)
