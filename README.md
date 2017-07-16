@@ -175,6 +175,12 @@ Example:
 </modal>
 ```
 
+#### Fullscreen
+
+```vue
+<modal name="fs" :adaptive="true" width="100%" height="100%">
+</modal>
+```
 
 ### Developers
 
