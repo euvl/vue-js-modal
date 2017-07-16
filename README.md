@@ -79,8 +79,8 @@ For full demo please look at `demo/server_side_rendering`
 | reset     | false | Boolean          | false       | Resets position and size before showing modal |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'vue--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
-| width     | false | Number           | 600         | Width |
-| height    | false | Number           | 300         | Height |
+| width     | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |
+| height    | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
