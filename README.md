@@ -78,6 +78,7 @@ For full demo please look at `demo/server_side_rendering`
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
 | reset     | false | Boolean          | false       | Resets position and size before showing modal |
+| clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'vue--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
 | width     | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |

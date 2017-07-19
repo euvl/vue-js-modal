@@ -5,7 +5,7 @@
          class="v--modal-overlay"
          :aria-expanded="visible.toString()"
          :data-modal="name"
-         @mousedown.stop="toggle(false)">
+         @mousedown.stop="onBackgroundClick">
       <div class="v--modal-top-right">
         <slot name="top-right"/>
       </div>
@@ -61,6 +61,10 @@
       },
       transition: {
         type: String
+      },
+      clickToClose: {
+        type: Boolean,
+        default: true
       },
       classes: {
         type: [String, Array],
@@ -343,6 +347,12 @@
           if (handler) {
             return handler
           }
+        }
+      },
+
+      onBackgroundClick () {
+        if (this.clickToClose) {
+          this.toggle(false)
         }
       },
 
