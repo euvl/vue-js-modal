@@ -7,10 +7,6 @@
 var floatRegexp = '[-+]?[0-9]*\.?[0-9]+'
 
 var types = [
-//  {
-//    name: 'rem',
-//    regexp: new RegExp(`^${floatRegexp}rem\$`)
-//  },
   {
     name: 'px',
     regexp: new RegExp(`^${floatRegexp}px\$`)
@@ -56,22 +52,3 @@ var parse = (value) => {
 }
 
 export default parse
-
-/// tests
-/*
-console.log(parse(10))
-console.log(parse(10.10))
-console.log(parse(-10))
-
-console.log(parse('5%'))
-console.log(parse('-5%'))
-console.log(parse('5.123%'))
-
-console.log(parse('5px'))
-console.log(parse('-5px'))
-console.log(parse('5.123px'))
-
-console.log(parse("adasd%"))
-console.log(parse(""))
-console.log(parse("+2-3px")) // fails
-*/
