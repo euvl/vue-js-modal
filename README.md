@@ -77,12 +77,13 @@ For full demo please look at `demo/server_side_rendering`
 | resizable | false | Boolean          | false       | If true, allows to resize modal window, keeping it in the center of the screen. |
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
+| scrollable | false | Boolean         | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
 | reset     | false | Boolean          | false       | Resets position and size before showing modal |
 | clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'vue--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
 | width     | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |
-| height    | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") |
+| height    | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") or `"auto"` |
 | minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
@@ -139,6 +140,17 @@ This example, initializes `time` variable every time the modal is being opened.
 And then forbits closing it for the next 5000 ms
 
 ### Other
+
+#### Height: "auto"
+
+From `v1.2.6` height can be set to "auto". If you want to be able to scoll modal content when your it's height exceeds window height - you can set flag `scrollable="true"`.
+
+Example: 
+
+```vue
+<modal name="foo" height="auto" :scrollable="true">...</modal>
+```
+
 
 #### Close button
 
