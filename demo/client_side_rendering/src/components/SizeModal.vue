@@ -5,7 +5,6 @@
         :min-height="200" 
         :pivot-y="0.25"
         :adaptive="true"
-        :draggable="true"
         :scrollable="true"
         :reset="true"
         width="60%"
