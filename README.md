@@ -153,6 +153,10 @@ Example:
 <modal name="foo" height="auto" :scrollable="true">...</modal>
 ```
 
+<p align="center">
+  <img src="https://media.giphy.com/media/xUn3CfwfH3ISuf4mxq/giphy.gif">
+</p>
+
 
 #### Close button
 
