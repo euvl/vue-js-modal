@@ -153,6 +153,14 @@ Example:
 <modal name="foo" height="auto" :scrollable="true">...</modal>
 ```
 
+Auto height:
+
+<p align="center">
+  <img src="https://media.giphy.com/media/xUPGGpEV00RDDDeiuk/giphy.gif">
+</p>
+
+Scrollable content & auto height:
+
 <p align="center">
   <img src="https://media.giphy.com/media/xUn3CfwfH3ISuf4mxq/giphy.gif">
 </p>
