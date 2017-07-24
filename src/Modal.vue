@@ -2,7 +2,7 @@
   <transition name="overlay-fade">
     <div v-if="visibility.overlay"
          ref="overlay"
-         class="v--modal-overlay"
+         :class="overlayClass"
          :aria-expanded="visible.toString()"
          :data-modal="name"
          @mousedown.stop="onBackgroundClick">
@@ -16,7 +16,7 @@
              :style="modalStyle"
              @mousedown.stop>
           <slot/>
-          <resizer v-if="resizable"
+          <resizer v-if="resizable && !isAutoHeight"
                    :min-width="minWidth"
                    :min-height="minHeight"
                    @resize="onModalResize"/>
@@ -53,6 +53,10 @@
       },
       draggable: {
         type: [Boolean, String],
+        default: false
+      },
+      scrollable: {
+        type: Boolean,
         default: false
       },
       reset: {
@@ -102,6 +106,10 @@
         default: 300,
         validator (value) {
           if (typeof value === 'string') {
+            if (value === 'auto') {
+              return true
+            }
+
             let height = parseNumber(value)
             return (height.type === '%' || height.type === 'px')
               && height.value > 0
@@ -159,7 +167,6 @@
       visible (value) {
         if (value) {
           this.visibility.overlay = true
-        //  this.adaptSize()
 
           setTimeout(() => {
             this.visibility.modal = true
@@ -195,48 +202,73 @@
 
       window.addEventListener('resize', this.onWindowResize)
       this.onWindowResize()
+
+      if (this.scrollable && !this.isAutoHeight) {
+        console.warn(`Modal "${this.name}" has scrollable flag set to true ` + 
+          `but height is not "auto" (${this.height})`)
+      }
     },
     beforeDestroy () {
       window.removeEventListener('resize', this.onWindowResize)
     },
     computed: {
+      isAutoHeight () {
+        return this.modal.heightType === 'auto'
+      },
+
       position () {
-        const { window, modal, shift } = this
+        const { window, modal, shift, pivotX, pivotY,
+          trueModalWidth, trueModalHeight, isAutoHeight } = this
 
-        const maxLeft = window.width - this.trueModalWidth
-        const maxTop = window.height - this.trueModalHeight
+        const maxLeft = window.width - trueModalWidth
+        const maxTop = window.height - trueModalHeight
 
-        const left = shift.left + 
-          this.pivotX * (window.width - this.trueModalWidth)
-        const top = shift.top + 
-          this.pivotY * (window.height - this.trueModalHeight)
+        const minTop = this.scrollable
+          ? Number.NEGATIVE_INFINITY
+          : 0
+
+        const left = shift.left + pivotX * maxLeft
+        const top = shift.top + pivotY * maxTop
 
         return {
           left: inRange(0, maxLeft, left),
-          top: inRange(0, maxTop, top)
+          top: inRange(minTop, maxTop, top)
         }
       },
 
       trueModalWidth () {
-        const { window, modal } = this
+        const { window, modal, adaptive, minWidth } = this
+
         const value = modal.widthType === '%'
           ? window.width / 100 * modal.width
           : modal.width
 
-        return this.adaptive
-          ? inRange(this.minWidth, this.window.width, value)
+        return adaptive
+          ? inRange(minWidth, window.width, value)
           : value
       },
 
       trueModalHeight () {
-        const { window, modal } = this
+        const { window, modal, isAutoHeight, adaptive } = this
+
         const value = (modal.heightType === '%') 
           ? window.height / 100 * modal.height 
           : modal.height
 
-        return this.adaptive
+        if (isAutoHeight) {
+          return 0
+        }
+
+        return adaptive
           ? inRange(this.minHeight, this.window.height, value)
           : value
+      },
+
+      overlayClass () {
+        return {
+          'v--modal-overlay': true,
+          'scrollable': this.scrollable && this.isAutoHeight
+        }
       },
 
       modalClass () {
@@ -248,7 +280,9 @@
           top: this.position.top + 'px',
           left: this.position.left + 'px',
           width: this.trueModalWidth + 'px',
-          height: this.trueModalHeight + 'px'
+          height: this.isAutoHeight
+            ? 'auto'
+            : (this.trueModalHeight + 'px')
         }
       }
     },
@@ -424,6 +458,7 @@
 <style>
   .v--modal-overlay {
     position: fixed;
+    box-sizing: border-box;
     left: 0;
     top: 0;
     width: 100vw;
@@ -433,10 +468,21 @@
     opacity: 1;
   }
 
+  .v--modal-overlay.scrollable {
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 10px;
+  }
+
   .v--modal-overlay .v--modal-box {
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
+  }
+
+  .v--modal-overlay.scrollable .v--modal-box {
+    margin-bottom: 10px;
   }
 
   .v--modal {
