@@ -143,7 +143,9 @@ And then forbits closing it for the next 5000 ms
 
 #### Height: "auto"
 
-From `v1.2.6` height can be set to "auto". If you want to be able to scoll modal content when your it's height exceeds window height - you can set flag `scrollable="true"`.
+From `v1.2.6` height can be set to "auto". If you want to be able to scroll modal in case it's height exceeds window height - you can set flag `scrollable="true"`. 
+
+p.s. `scrollable` will only work with `height="auto"`.
 
 Example: 
 
