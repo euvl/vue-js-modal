@@ -1,15 +1,51 @@
 <template> 
   <modal name="size-modal"
-         transition="nice-modal-fade"
-         :min-width="200"
-         :min-height="200" 
-         :adaptive="true"
-         width="60%"
-         height="60%">
-    <div style="height: 100%; box-sizing: border-box; padding: 10px; font-size: 13px; overflow: auto">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum purus egestas libero ornare venenatis. Maecenas pharetra tortor eu tortor imperdiet, a faucibus quam finibus. Nulla id lacinia quam. Praesent imperdiet sed magna non finibus. Aenean blandit, mauris vitae lacinia rutrum, nunc mi scelerisque sem, in laoreet sem lectus ut orci. Ut egestas nulla in vehicula feugiat. Vivamus tincidunt nisi vel risus dictum suscipit. Nulla id blandit mi, vulputate aliquam enim.
-
-    Praesent sodales diam a tellus imperdiet condimentum. Mauris malesuada libero elit, sed tincidunt velit consectetur sit amet. Praesent consequat lobortis pellentesque. Donec pellentesque eros sit amet arcu bibendum, vel pharetra purus sodales. Morbi aliquam ac augue eu aliquam. Cras id justo sit amet tortor luctus lobortis. Vestibulum risus urna, cursus vitae feugiat non, tincidunt non massa.
+        transition="nice-modal-fade"
+        :min-width="200"
+        :min-height="200" 
+        :pivot-y="0.25"
+        :adaptive="true"
+        :scrollable="true"
+        :reset="true"
+        width="60%"
+        height="auto"
+        @before-open="beforeOpen"
+        @before-close="beforeClose">
+  <div class="size-modal-content">
+    <div>A new paragraph will be added every 5 sec to show how <b>height</b> scales.</div>
+    <div v-for="(p, i) in paragraphs" :key="i">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum purus egestas libero ornare venenatis. Maecenas pharetra tortor eu tortor imperdiet, a faucibus quam finibus. Nulla id lacinia quam. Praesent imperdiet sed magna non finibus. Aenean blandit, mauris vitae lacinia rutrum, nunc mi scelerisque sem, in laoreet sem lectus ut orci. Ut egestas nulla in vehicula feugiat. Vivamus tincidunt nisi vel risus dictum suscipit. Nulla id blandit mi, vulputate aliquam enim.
     </div>
-  </modal>
+  </div>
+</modal>
 </template>
+<script>
+  export default {
+    name: 'SizeModalTest',
+    data () {
+      return {
+        paragraphs: [true],
+        timer: null
+      }
+    },
+    methods: {
+      beforeOpen () {
+        this.timer = setInterval(() => {
+          this.paragraphs.push(true)
+        }, 5000)
+      },
+
+      beforeClose () {
+        clearInterval(this.timer)
+        this.timer = null
+        this.paragraphs = []
+      }
+    }
+  }
+</script>
+<style>
+  .size-modal-content {
+    padding: 10px;
+    font-style: 13px;
+  }
+</style>

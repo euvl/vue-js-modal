@@ -3,6 +3,7 @@
 // "0.001px" => { type: "px", value: 0.001 }
 // "0.1%" => { type: "px", value: 0.1 }
 // "foo"  => { type: "", value: "foo" }
+// "auto" => { type: "auto", value: 0 }
 
 var floatRegexp = '[-+]?[0-9]*\.?[0-9]+'
 
@@ -24,6 +25,13 @@ var types = [
 ]
 
 var getType = (value) => {
+  if (value === 'auto') {
+    return {
+      type: value,
+      value: 0
+    }
+  }
+
   for (var i = 0; i < types.length; i++) {
     let type = types[i]
     if (type.regexp.test(value)) {

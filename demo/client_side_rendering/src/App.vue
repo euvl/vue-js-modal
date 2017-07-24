@@ -58,27 +58,18 @@
     </button>
     <button class="blue"
             @click="$modal.show('size-modal')">
-      Demo: Size = 60%
+      Demo: Width: 60%, Height: auto
     </button>
-    <!--
-    <button class="green"
-            @click="$modal.show('input-focus-modal')">
-      Demo: Focus Input
-    </button>
-    -->
     <button :class="canBeShown ? 'green' : 'red'"
             @click="conditionalShow">
       Can <b v-if="!canBeShown">NOT</b> be shown
     </button>
   </div>
-
-  <props-table />
 </div>
 </template>
 
 <script>
 import ModesTable           from './components/ModesTable.vue'
-import PropsTable           from './components/PropsTable.vue'
 import DemoErrorModal       from './components/DemoErrorModal.vue'
 import DemoFocusModal       from './components/InputFocusModal.vue'
 import DemoLoginModal       from './components/DemoLoginModal.vue'
@@ -90,7 +81,6 @@ export default {
   name: 'app',
   components: {
     ModesTable,
-    PropsTable,
     DemoErrorModal,
     DemoFocusModal,
     DemoLoginModal,
