@@ -203,6 +203,26 @@ Example:
 </modal>
 ```
 
+#### Background color
+
+If you want to change overflow background color, you can easily do it using css.
+
+For all modals: 
+
+```css
+.v--modal-overlay {
+  background: red;
+}
+```
+
+For specific modal:
+
+```css
+.v--modal-overlay[data-modal="my_modal_name"] {
+  background: cyan;
+}
+```
+
 #### Fullscreen
 
 ```vue
