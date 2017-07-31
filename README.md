@@ -22,9 +22,20 @@ npm install vue-js-modal --save
 Include plugin in your `main.js` file.
 
 ```javascript
-import vmodal from 'vue-js-modal'
+import VModal from 'vue-js-modal'
 
-Vue.use(vmodal)
+Vue.use(VModal)
+
+/*
+By default plugin will use "modal" name for the component.
+If you need to change it, you can do so by supplying "componentName" option. 
+
+Example:
+
+Vue.use(VModal, { componentName: "foo-modal" })
+...
+<foo-modal name="bar"></foo-modal> 
+*/
 ```
 
 Create modal:

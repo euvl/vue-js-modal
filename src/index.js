@@ -1,5 +1,7 @@
 import Modal from './Modal.vue'
 
+const defaultComponentName = 'modal'
+
 const Plugin = {
   install (Vue, options = {}) {
     if (this.installed) {
@@ -23,7 +25,8 @@ const Plugin = {
       }
     }
 
-    Vue.component('modal', Modal)
+    const componentName = options.componentName || defaultComponentName
+    Vue.component(componentName, Modal)
   }
 }
 
