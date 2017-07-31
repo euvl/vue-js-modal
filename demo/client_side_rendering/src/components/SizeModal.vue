@@ -1,6 +1,7 @@
 <template> 
   <modal name="size-modal"
         transition="nice-modal-fade"
+        classes="demo-modal-class"
         :min-width="200"
         :min-height="200" 
         :pivot-y="0.25"
@@ -47,5 +48,15 @@
   .size-modal-content {
     padding: 10px;
     font-style: 13px;
+  }
+
+  .v--modal-overlay[data-modal="size-modal"] {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .demo-modal-class {
+    border-radius: 5px;
+    background: #F7F7F7;
+    box-shadow: 5px 5px 30px 0px rgba(46,61,73, 0.6);
   }
 </style>

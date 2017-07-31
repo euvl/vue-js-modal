@@ -5,23 +5,25 @@
       <td></td>
     </tr>
     <tr>
-      <td><b>Simple</b></td>
-      <td>Yet another boring modal :)</td>
-    </tr>
-    <tr>
       <td><b>Adaptive</b></td>
-      <td>Tries to adjust to the page size</td>
+      <td>Tries to adjust to the page size.</td>
     </tr>
     <tr>
       <td><b>Resizable</b></td>
       <td>
-        Has a small arrow on the bottom-right corner (customizable) that you can drag to change the size of the modal
+        Has a small arrow on the bottom-right corner (customizable) that you can drag to change the size of the modal.
       </td>
     </tr>
     <tr>
       <td><b>Draggable</b></td>
       <td>
-        Allows to drag modal on the screen
+        Allows to drag modal on the screen.
+      </td>
+    </tr>
+    <tr>
+      <td><b>Scrollable</b></td>
+      <td>
+        If <i>height</i> is set to "auto" - <i>scrollable</i> flag will make your modal... scrollable.
       </td>
     </tr>
   </table>
