@@ -93,6 +93,8 @@ var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var defaultComponentName = 'modal';
+
 var Plugin = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -116,7 +118,8 @@ var Plugin = {
       }
     };
 
-    Vue.component('modal', _Modal2.default);
+    var componentName = options.componentName || defaultComponentName;
+    Vue.component(componentName, _Modal2.default);
   }
 };
 

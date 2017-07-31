@@ -28,7 +28,7 @@ Vue.use(VModal)
 
 /*
 By default plugin will use "modal" name for the component.
-If you need to change it, you can do so by supplying "componentName" option. 
+If you need to change it, you can do so by providing "componentName" param. 
 
 Example:
 
