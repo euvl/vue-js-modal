@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: ['~plugins/vue-js-modal']
+  plugins: ['~/plugins/vue-js-modal']
 }
