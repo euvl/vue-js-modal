@@ -5,6 +5,6 @@
   },
   "dependencies": {
     "vue-js-modal": "latest",
-    "nuxt": "^1.0.0-alpha.4"
+    "nuxt": "^1.0.0-rc3"
   }
 }
