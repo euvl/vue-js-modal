@@ -65,7 +65,7 @@ You can easily send data into the modal:
 this.$modal.show('hello-world', { foo: 'bar' })
 ```
 
-And receive it on `beforeOpen` event:
+And receive it in `beforeOpen` event handler:
 
 ```vue
 <modal name="hello-world" @before-open="beforeOpen"/>
