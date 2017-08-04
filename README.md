@@ -57,6 +57,25 @@ methods: {
   }
 }
 ```
+---
+
+You can easily send data into the modal:
+
+```vue
+this.$modal.show('hello-world', { foo: 'bar' })
+```
+
+And receive it on `beforeOpen` event:
+
+```vue
+<modal name="hello-world" @before-open="beforeOpen"/>
+...
+methods: {
+  beforeOpen (event) {
+    console.log(event.params.foo);
+  }
+}
+```
 
 ### SSR
 
