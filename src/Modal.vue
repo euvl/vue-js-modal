@@ -114,7 +114,7 @@
             return (height.type === '%' || height.type === 'px')
               && height.value > 0
           }
-          
+
           return value >= 0
         }
       },
@@ -204,7 +204,7 @@
       this.onWindowResize()
 
       if (this.scrollable && !this.isAutoHeight) {
-        console.warn(`Modal "${this.name}" has scrollable flag set to true ` + 
+        console.warn(`Modal "${this.name}" has scrollable flag set to true ` +
           `but height is not "auto" (${this.height})`)
       }
     },
@@ -251,8 +251,8 @@
       trueModalHeight () {
         const { window, modal, isAutoHeight, adaptive } = this
 
-        const value = (modal.heightType === '%') 
-          ? window.height / 100 * modal.height 
+        const value = (modal.heightType === '%')
+          ? window.height / 100 * modal.height
           : modal.height
 
         if (isAutoHeight) {
@@ -299,7 +299,7 @@
       },
 
       onWindowResize () {
-        this.window.width = window.innerWidth
+        this.window.width = document.body.clientWidth
         this.window.height = window.innerHeight
       },
 
@@ -334,12 +334,12 @@
       toggle (state, params) {
         const { reset, visible } = this
 
-        const beforeEventName = visible 
-          ? 'before-close' 
+        const beforeEventName = visible
+          ? 'before-close'
           : 'before-open'
-          
-        const afterEventName = visible 
-          ? 'closed' 
+
+        const afterEventName = visible
+          ? 'closed'
           : 'opened'
 
         if (beforeEventName === 'before-open' && reset) {
