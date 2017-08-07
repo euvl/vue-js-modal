@@ -1,4 +1,5 @@
 import Modal from './Modal.vue'
+import Dialog from './Dialog.vue'
 
 const defaultComponentName = 'modal'
 
@@ -27,6 +28,10 @@ const Plugin = {
 
     const componentName = options.componentName || defaultComponentName
     Vue.component(componentName, Modal)
+
+    if (options.dialog) {
+      Vue.component('v-dialog', Dialog)
+    }
   }
 }
 

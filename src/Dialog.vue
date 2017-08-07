@@ -1,52 +1,44 @@
 <template>
   <modal name="dialog"
-         classes="v--modal vue-dialog"
+         :classes="['v--modal', 'vue-dialog', this.params.class]"
          :width="400"
-         :height="180"
+         height="auto"
          :pivot-y="0.3"
          :adaptive="true"
          transition="fade"
          @before-open="beforeOpened"
          @before-close="beforeClosed">
-    <flex-box direction="column" class="dialog-flex">
       <div class="dialog-content">
-        <div class="dialog-c-title" v-text="params.title || ''"></div>
-        <div class="dialog-c-text" v-html="params.text || ''"></div>
+        <div class="dialog-c-title"
+             v-if="params.title"
+             v-html="params.title || ''"></div>
+        <div class="dialog-c-text"
+             v-html="params.text || ''"></div>
       </div>
-      <div class="dialog-buttons" v-if="buttons.length > 0">
+      <div class="dialog-buttons" v-if="buttons">
         <button v-for="(button, i) in buttons"
                 :style="buttonStyle"
                 :key="i"
+                v-html="button.title"
                 @click.stop="click(i, $event)">
           {{button.title}}
         </button>
       </div>
-    </flex-box>
+      <div v-else class="dialog-buttons-none"></div>
   </modal>
 </template>
 <script>
-  /*
-  buttons: [
-    { title: 'Cancel' },
-    { 
-      title: 'Ok', 
-      handler: () => {
-        
-      }
-    }
-  ]
-  */
   export default {
     name: 'Dialog',
     data() {
       return {
         params: {},
-        _buttons: [{ title: 'Cancel' }]
+        defaultButtons: [{ title: 'CLOSE' }]
       }
     },
     computed: {
       buttons () {
-        return this.params.buttons || this._buttons
+        return this.params.buttons || this.defaultButtons
       },
       buttonStyle () {
         return {
@@ -73,65 +65,73 @@
     }
   }
 </script>
-<style lang="scss">
+<style>
   .vue-dialog {
     font-size: 14px;
-    color: rgb(100, 114, 118);
+  }
 
-    .dialog-flex {
-      width: 100%;
-      height: 100%;
-    }
+  .vue-dialog div {
+    box-sizing: border-box;
+  }
 
-    .dialog-content {
-      flex: 1 0 auto;
-      width: 100%;
+  .vue-dialog .dialog-flex {
+    width: 100%;
+    height: 100%;
+  }
 
-      .dialog-c-title {
-        font-weight: 600;
-        padding: 15px;
-      }
+  .vue-dialog .dialog-content {
+    flex: 1 0 auto;
+    width: 100%;
+    padding: 15px;
+  }
 
-      .dialog-c-text {
-        padding: 0px 15px;
-      }
-    }
+  .vue-dialog .dialog-c-title {
+    font-weight: 600;
+    padding-bottom: 15px;
+  }
 
-    .dialog-buttons {
-      display: flex;
-      flex: 0 1 auto;
-      width: 100%;
-      border-top: 1px solid #eee;
-      font-size: 12px;
+  .vue-dialog .dialog-c-text {
+  }
 
-      button {
-        background: transparent;
-        padding: 0;
-        margin: 0;
-        border: 0;
-        cursor: pointer;
-        box-sizing: border-box;
-        line-height: 44px;
-        height: 44px;
+  .vue-dialog .dialog-buttons {
+    display: flex;
+    flex: 0 1 auto;
+    width: 100%;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+  }
 
-        text-transform: uppercase;
-        letter-spacing: 1px;
+  .vue-dialog .dialog-buttons-none {
+    width: 100%;
+    padding-bottom: 15px;
+  }
 
-        color:inherit;
-        font:inherit;
+  .vue-dialog button {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+    line-height: 44px;
+    height: 44px;
 
-        &:hover {
-          background: mix(black, transparent, 0.8%);
-        }
+  /*  text-transform: uppercase; */
+  /*  letter-spacing: 1px; */
 
-        &:active {
-          background: mix(black, transparent, 2.4%);
-        }
+    color:inherit;
+    font:inherit;
+  }
 
-        &:not(:first-of-type) {
-          border-left: 1px solid #eee;
-        }
-      }
-    }
+  .vue-dialog button:hover {
+    background: rgba(0, 0, 0, 0.01);
+  }
+
+  .vue-dialog button:active {
+    background: rgba(0, 0, 0, 0.025);
+  }
+
+  .vue-dialog button:not(:first-of-type) {
+    border-left: 1px solid #eee;
   }
 </style>

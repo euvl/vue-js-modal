@@ -7,6 +7,8 @@
   <demo-focus-modal/>
   <demo-size-modal/>
 
+  <v-dialog/>
+
   <modal name="example-modal"
          transition="nice-modal-fade"
          :min-width="200"
@@ -15,7 +17,7 @@
          :adaptive="adaptive"
          :resizable="resizable"
          :draggable="draggable">
-    <div style="height: 100%; box-sizing: border-box; padding: 10px; font-size: 13px; overflow: auto">
+    <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique growth strategies. Assertively build leveraged growth strategies vis-a-vis multimedia based vortals. Progressively simplify cross-platform value through interactive imperatives. Objectively
       implement enabled web services after plug-and-play ROI. Distinctively impact inexpensive schemas before installed base imperatives. Holisticly benchmark pandemic process improvements without wireless experiences. Efficiently create worldwide partnerships
       after tactical vortals. Uniquely productize enabled platforms vis-a-vis timely processes. Conveniently unleash standards compliant niches through highly efficient testing procedures. Rapidiously enable pandemic niche markets whereas viral markets.
@@ -24,8 +26,10 @@
   </modal>
 
   <h2>Vue.js Modal
-    <a href="https://github.com/euvl/vue-js-modal/blob/master/README.md" target="readme">Readme</a>
-    <a href="https://github.com/euvl/vue-js-modal/issues" target="issues">Issues</a>
+    <a href="https://github.com/euvl/vue-js-modal/blob/master/README.md"
+       target="readme">Readme</a>
+    <a href="https://github.com/euvl/vue-js-modal/issues"
+       target="issues">Issues</a>
   </h2>
 
   <pre style="line-height: 1.5;">
@@ -56,13 +60,26 @@
             @click="$modal.show('demo-login')">
       Demo: Login
     </button>
-    <button class="blue"
+    <button class="green"
             @click="$modal.show('size-modal')">
       Demo: Width: 60%, Height: auto
     </button>
     <button :class="canBeShown ? 'green' : 'red'"
             @click="conditionalShow">
       Can <b v-if="!canBeShown">NOT</b> be shown
+    </button>
+    <br>
+
+    <button @click="showBasicDialog">
+      Dialog: basic
+    </button>
+
+    <button @click="showTitleDialog">
+      Dialog: title
+    </button>
+
+    <button @click="showButtonsDialog">
+      Dialog: buttons
     </button>
   </div>
 </div>
@@ -117,6 +134,44 @@ export default {
 
     conditionalShow () {
       this.$modal.show('conditional-modal', { show: this.canBeShown })
+    },
+
+
+    showBasicDialog () {
+      this.$modal.show('dialog', {
+        text: 'I am a tiny dialog box.<br/>And I render <b>HTML!</b>'
+      })
+    },
+
+    showTitleDialog () {
+      this.$modal.show('dialog', {
+        title: 'Information',
+        text: 'Check out, I have a title 😎'
+      })
+    },
+
+    showButtonsDialog () {
+      this.$modal.show('dialog', {
+        title: 'Buttons example',
+        text: 'You can add an arbitrary number of buttons.',
+        buttons: [
+          {
+            title: 'C💩NCEL'
+          },
+          {
+            title: 'LIKE',
+            handler: () => {
+              alert('LIKE LIKE LIKE')
+            }
+          },
+          {
+            title: 'REPOST',
+            handler: () => {
+              alert('REPOST REPOST REPOST')
+            }
+          }
+        ]
+      })
     }
   },
 }
@@ -202,6 +257,18 @@ button {
       border: 1px solid mix($color, black, 95%);
     }
   }
+}
+
+.example-modal-content {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 13px;
+  overflow: auto;
+}
+
+.vue-dialog button {
+  letter-spacing: 1px;
 }
 
 @media (max-width:600px)  {
