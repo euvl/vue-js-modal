@@ -9,3 +9,5 @@ export const inRange = (from, to, value) => {
 
   return value
 }
+
+export default { inRange }

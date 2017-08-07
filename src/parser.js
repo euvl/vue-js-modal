@@ -11,7 +11,7 @@ var types = [
   {
     name: 'px',
     regexp: new RegExp(`^${floatRegexp}px\$`)
-  }, 
+  },
   {
     name: '%',
     regexp: new RegExp(`^${floatRegexp}%\$`)
@@ -48,13 +48,13 @@ var getType = (value) => {
   }
 }
 
-var parse = (value) => {
+export const parse = (value) => {
   switch (typeof value) {
     case 'number':
       return { type: 'px', value }
     case 'string':
       return getType(value)
-    default: 
+    default:
       return { type: '', value }
   }
 }
