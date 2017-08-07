@@ -349,6 +349,8 @@ var inRange = exports.inRange = function inRange(from, to, value) {
   return value;
 };
 
+exports.default = { inRange: inRange };
+
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1029,7 +1031,7 @@ var getType = function getType(value) {
   };
 };
 
-var parse = function parse(value) {
+var parse = exports.parse = function parse(value) {
   switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
     case 'number':
       return { type: 'px', value: value };
