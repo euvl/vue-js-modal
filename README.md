@@ -79,6 +79,39 @@ methods: {
 }
 ```
 
+### Dialog
+
+In version `1.2.8`, the `<Dialog/>` componnent was added.
+
+It is a simplified version of the modal, which has most parameters set by default and is pretty useful for quick prototyping, showing alerts or creating mobile-like modals.
+
+To start using `<Dialog/>` you will have set a configuration:
+
+```
+Vue.use(VModal, { dialog: true })
+```
+
+And include it in your project:
+
+```
+<dialog/>
+```
+
+Call it (all params except of “text” are optional):
+
+```
+this.$modal.show('dialog', {
+  title: 'Alert!',
+  text: 'You are too awesome',
+  buttons: [
+    { title: 'Deal with it', handler: () => { alert('Woot!') },
+    { title: 'Close' }
+ ]
+})
+```
+
+For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
+
 ### SSR
 
 Include plugin in your `nuxt.config.js` file:
