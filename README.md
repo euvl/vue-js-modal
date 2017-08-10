@@ -110,6 +110,10 @@ this.$modal.show('dialog', {
 })
 ```
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1577802/29165216-ec62552c-7db9-11e7-807e-ef341edcc94d.png">
+</p>
+
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
 ### SSR
