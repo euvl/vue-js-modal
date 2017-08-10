@@ -42,7 +42,7 @@ Vue.use(VModal, { componentName: "foo-modal" })
 
 Create modal:
 
-```html
+```vue
 <modal name="hello-world">
   hello, world!
 </modal>
@@ -63,7 +63,7 @@ methods: {
 
 You can easily send data into the modal:
 
-```vue
+```javascript
 this.$modal.show('hello-world', { foo: 'bar' })
 ```
 
@@ -71,7 +71,8 @@ And receive it in `beforeOpen` event handler:
 
 ```vue
 <modal name="hello-world" @before-open="beforeOpen"/>
-...
+```
+```javascript
 methods: {
   beforeOpen (event) {
     console.log(event.params.foo);
@@ -87,19 +88,19 @@ It is a simplified version of the modal, which has most parameters set by defaul
 
 To start using `<Dialog/>` you will have set a configuration:
 
-```
+```javascript
 Vue.use(VModal, { dialog: true })
 ```
 
 And include it in your project:
 
-```
+```vue
 <dialog/>
 ```
 
 Call it (all params except of “text” are optional):
 
-```
+```javascript
 this.$modal.show('dialog', {
   title: 'Alert!',
   text: 'You are too awesome',
