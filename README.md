@@ -306,17 +306,20 @@ Dont forget about close button :)
 To run an example:
 ```sh
 # Clone repo
-
 git clone https://github.com/euvl/vue-js-modal.git
 
-# Build main library
+# Run unit tests
+npm run unit
 
+# Run linter
+npm run lint
+
+# Build main library for client & ssr
 cd vue-js-modal
 npm install
 npm run build
 
 # Build and run demo
-
 cd demo
 npm install
 npm run dev
