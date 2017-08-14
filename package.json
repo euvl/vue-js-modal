@@ -20,8 +20,9 @@
   "scripts": {
     "build:client": "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
     "build:server": "webpack --config ./build/webpack.server.config.js --progress --hide-modules",
+    "lint": "eslint --ext .js,.vue src test/unit/specs",
     "unit": "karma start test/unit/karma.conf.js",
-    "build": "npm run unit && npm run build:client && npm run build:server"
+    "build": "npm run lint && npm run unit && npm run build:client && npm run build:server"
   },
   "license": "MIT",
   "devDependencies": {
@@ -43,6 +44,13 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.2",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-friendly-formatter": "^2.0.7",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-html": "^2.0.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
     "lolex": "^1.5.2",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.0",

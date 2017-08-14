@@ -15,7 +15,7 @@ export default {
       type: Number,
       default: 0
     }},
-  data() {
+  data () {
     return {
       clicked: false,
       size: {}
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    start(event) {
+    start (event) {
       this.clicked = true
 
       window.addEventListener('mousemove', this.mousemove, false)
@@ -39,7 +39,7 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-    stop() {
+    stop () {
       this.clicked = false
 
       window.removeEventListener('mousemove', this.mousemove, false)
@@ -48,12 +48,12 @@ export default {
       this.$emit('resize-stop', {
         element: this.$el.parentElement,
         size: this.size
-      });
+      })
     },
-    mousemove(event) {
+    mousemove (event) {
       this.resize(event)
     },
-    resize(event) {
+    resize (event) {
       var el = this.$el.parentElement
 
       if (el) {

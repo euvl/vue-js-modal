@@ -1,26 +1,21 @@
-// Parses string with float number and suffix:
-// "0.001" => { type: "px", value: 0.001 }
-// "0.001px" => { type: "px", value: 0.001 }
-// "0.1%" => { type: "px", value: 0.1 }
-// "foo"  => { type: "", value: "foo" }
-// "auto" => { type: "auto", value: 0 }
+const floatRegexp = '[-+]?[0-9]*.?[0-9]+'
 
-var floatRegexp = '[-+]?[0-9]*\.?[0-9]+'
-
-var types = [
+const types = [
   {
     name: 'px',
-    regexp: new RegExp(`^${floatRegexp}px\$`)
+    regexp: new RegExp(`^${floatRegexp}px$`)
   },
   {
     name: '%',
-    regexp: new RegExp(`^${floatRegexp}%\$`)
+    regexp: new RegExp(`^${floatRegexp}%$`)
   },
-  // Fallback option:
-  // If no suffix specified, assign to px
+  /**
+   * Fallback optopn
+   * If no suffix specified, assigning "px"
+   */
   {
     name: 'px',
-    regexp: new RegExp(`^${floatRegexp}\$`)
+    regexp: new RegExp(`^${floatRegexp}$`)
   }
 ]
 

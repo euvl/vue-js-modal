@@ -30,7 +30,7 @@
 <script>
   export default {
     name: 'Dialog',
-    data() {
+    data () {
       return {
         params: {},
         defaultButtons: [{ title: 'CLOSE' }]

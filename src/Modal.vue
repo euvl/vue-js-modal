@@ -41,7 +41,7 @@
       },
       delay: {
         type: Number,
-        default: 0,
+        default: 0
       },
       resizable: {
         type: Boolean,
@@ -72,7 +72,7 @@
       },
       classes: {
         type: [String, Array],
-        default: 'v--modal',
+        default: 'v--modal'
       },
       minWidth: {
         type: Number,
@@ -94,8 +94,8 @@
         validator (value) {
           if (typeof value === 'string') {
             let width = parseNumber(value)
-            return (width.type === '%' || width.type === 'px')
-              && width.value > 0
+            return (width.type === '%' || width.type === 'px') &&
+              width.value > 0
           }
 
           return value >= 0
@@ -111,8 +111,8 @@
             }
 
             let height = parseNumber(value)
-            return (height.type === '%' || height.type === 'px')
-              && height.value > 0
+            return (height.type === '%' || height.type === 'px') &&
+              height.value > 0
           }
 
           return value >= 0
@@ -201,7 +201,7 @@
 
           this.toggle(state, params)
         }
-      });
+      })
 
       window.addEventListener('resize', this.onWindowResize)
       this.onWindowResize()
@@ -229,8 +229,8 @@
        * pivots, window size and modal size
        */
       position () {
-        const { window, modal, shift, pivotX, pivotY,
-          trueModalWidth, trueModalHeight, isAutoHeight } = this
+        const { window, shift, pivotX, pivotY,
+          trueModalWidth, trueModalHeight } = this
 
         const maxLeft = window.width - trueModalWidth
         const maxTop = window.height - trueModalHeight
@@ -338,18 +338,15 @@
        * Generates event object
        */
       genEventObject (params) {
-        //todo: clean this up (change to ...)
+        // @todo: clean this up (change to ...)
         var data = {
           name: this.name,
           timestamp: Date.now(),
           canceled: false,
-          ref: this.$refs.modal,
-          stop: function() {
-            this.canceled = true
-          }
+          ref: this.$refs.modal
         }
 
-        return Vue.util.extend(data, params || {});
+        return Vue.util.extend(data, params || {})
       },
       /**
        * Event handler which is triggered on modal resize
@@ -362,7 +359,7 @@
         this.modal.height = event.size.height
 
         const { size } = this.modal
-        const resizeEvent = this.genEventObject({ size });
+        const resizeEvent = this.genEventObject({ size })
 
         this.$emit('resize', resizeEvent)
       },
@@ -403,12 +400,6 @@
         }
       },
 
-      emitCancelableEvent (data) {
-        let stopEventExecution = false
-        let stop = () => { stopEventExecution = true }
-        let event = this.genEventObject(data)
-      },
-
       getDraggableElement () {
         var selector = typeof this.draggable !== 'string'
           ? '.v--modal-box'
@@ -432,7 +423,7 @@
 
       addDraggableListeners () {
         if (!this.draggable) {
-          return;
+          return
         }
 
         let dragger = this.getDraggableElement()
@@ -444,9 +435,9 @@
           let cachedShiftY = 0
 
           let getPosition = (event) => {
-              return event.touches && event.touches.length > 0
-                ? event.touches[0]
-                : event
+            return event.touches && event.touches.length > 0
+              ? event.touches[0]
+              : event
           }
 
           let mousedown = (event) => {
@@ -493,7 +484,7 @@
       //  console.log('removing draggable handlers')
       }
     }
-  };
+  }
 </script>
 <style>
   .v--modal-overlay {
