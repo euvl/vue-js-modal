@@ -320,7 +320,7 @@ npm install
 npm run build
 
 # Build and run demo
-cd demo
+cd demo/client_side_rendering
 npm install
 npm run dev
 ```
