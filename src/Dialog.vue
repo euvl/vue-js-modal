@@ -40,6 +40,10 @@
       buttons () {
         return this.params.buttons || this.defaultButtons
       },
+      /**
+       * Returns FLEX style with correct width for arbitrary number of
+       * buttons.
+       */
       buttonStyle () {
         return {
           flex: `1 1 ${100 / this.buttons.length}%`

@@ -189,6 +189,9 @@
     created () {
       this.setInitialSize()
     },
+    /**
+     * Sets global listeners
+     */
     beforeMount () {
       Modal.event.$on('toggle', (name, state, params) => {
         if (name === this.name) {
@@ -208,14 +211,23 @@
           `but height is not "auto" (${this.height})`)
       }
     },
+    /**
+     * Removes "resize" window listener
+     */
     beforeDestroy () {
       window.removeEventListener('resize', this.onWindowResize)
     },
     computed: {
+      /**
+       * Returns true if height is set to "auto"
+       */
       isAutoHeight () {
         return this.modal.heightType === 'auto'
       },
-
+      /**
+       * Calculates and returns modal position based on the
+       * pivots, window size and modal size
+       */
       position () {
         const { window, modal, shift, pivotX, pivotY,
           trueModalWidth, trueModalHeight, isAutoHeight } = this
@@ -235,7 +247,10 @@
           top: inRange(minTop, maxTop, top)
         }
       },
-
+      /**
+       * Returns pixel width (if set with %) and makes sure that modal size
+       * fits the window
+       */
       trueModalWidth () {
         const { window, modal, adaptive, minWidth } = this
 
@@ -247,7 +262,12 @@
           ? inRange(minWidth, window.width, value)
           : value
       },
-
+      /**
+       * Returns pixel height (if set with %) and makes sure that modal size
+       * fits the window.
+       *
+       * Returns 0 if height set as "auto"
+       */
       trueModalHeight () {
         const { window, modal, isAutoHeight, adaptive } = this
 
@@ -263,18 +283,24 @@
           ? inRange(this.minHeight, this.window.height, value)
           : value
       },
-
+      /**
+       * Returns class list for screen overlay (modal background)
+       */
       overlayClass () {
         return {
           'v--modal-overlay': true,
           'scrollable': this.scrollable && this.isAutoHeight
         }
       },
-
+      /**
+       * Returns class list for modal itself
+       */
       modalClass () {
         return ['v--modal-box', this.classes]
       },
-
+      /**
+       * CSS styles for position and size of the modal
+       */
       modalStyle () {
         return {
           top: this.position.top + 'px',
@@ -287,6 +313,11 @@
       }
     },
     methods: {
+      /**
+       * Initializes modal's size & position,
+       * if "reset" flag is set to true - this function will be called
+       * every time "beforeOpen" is triggered
+       */
       setInitialSize () {
         let { modal } = this
         let width = parseNumber(this.width)
@@ -303,6 +334,9 @@
         this.window.height = window.innerHeight
       },
 
+      /**
+       * Generates event object
+       */
       genEventObject (params) {
         //todo: clean this up (change to ...)
         var data = {
@@ -317,7 +351,9 @@
 
         return Vue.util.extend(data, params || {});
       },
-
+      /**
+       * Event handler which is triggered on modal resize
+       */
       onModalResize (event) {
         this.modal.widthType = 'px'
         this.modal.width = event.size.width
@@ -330,7 +366,9 @@
 
         this.$emit('resize', resizeEvent)
       },
-
+      /**
+       * Event handler which is triggered on $modal.show and $modal.hight
+       */
       toggle (state, params) {
         const { reset, visible } = this
 
@@ -383,7 +421,9 @@
           }
         }
       },
-
+      /**
+       * Event handler that is triggered when background overlay is clicked
+       */
       onBackgroundClick () {
         if (this.clickToClose) {
           this.toggle(false)
