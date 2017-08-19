@@ -82,11 +82,11 @@ methods: {
 
 ### Dialog
 
-In version `1.2.8`, the `<Dialog/>` component was added.
+In version `1.2.8`, the `<v-dialog/>` component was added.
 
 It is a simplified version of the modal, which has most parameters set by default and is pretty useful for quick prototyping, showing alerts or creating mobile-like modals.
 
-To start using `<Dialog/>` you must set `dialog: true` in plugin configuration:
+To start using `<v-dialog/>` you must set `dialog: true` in plugin configuration:
 
 ```javascript
 Vue.use(VModal, { dialog: true })
@@ -95,7 +95,7 @@ Vue.use(VModal, { dialog: true })
 And include it in your project:
 
 ```vue
-<dialog/>
+<v-dialog/>
 ```
 
 Call it (all params except of “text” are optional):
