@@ -8,9 +8,9 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
+  #    - run:
+  #        name: update-npm
+  #        command: 'sudo npm install -g npm@latest'
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
