@@ -5,7 +5,8 @@
          :class="overlayClass"
          :aria-expanded="visible.toString()"
          :data-modal="name"
-         @mousedown.stop="onBackgroundClick">
+         @mousedown.stop="onBackgroundClick"
+         @touchstart.stop="onBackgroundClick">
       <div class="v--modal-top-right">
         <slot name="top-right"/>
       </div>
@@ -14,7 +15,8 @@
              ref="modal"
              :class="modalClass"
              :style="modalStyle"
-             @mousedown.stop>
+             @mousedown.stop
+             @touchstart.stop>
           <slot/>
           <resizer v-if="resizable && !isAutoHeight"
                    :min-width="minWidth"
