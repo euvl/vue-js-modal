@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: 'globals'
-          command: npm install karma -g
+          command: sudo npm install karma -g
 
       - save_cache:
           paths:
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - checkout
-      
+
       - run:
           name: test
           command: npm run unit
