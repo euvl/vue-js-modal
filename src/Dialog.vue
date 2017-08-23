@@ -16,13 +16,13 @@
              v-html="params.text || ''"></div>
       </div>
       <div class="dialog-buttons" v-if="buttons">
-        <button v-for="(button, i) in buttons"
-                :style="buttonStyle"
-                :key="i"
-                v-html="button.title"
-                @click.stop="click(i, $event)">
-          {{button.title}}
-        </button>
+        <div v-for="(button, i) in buttons"
+             :class="['vue-dialog-button', button.class]"
+             :style="buttonStyle"
+             :key="i"
+             v-html="button.title"
+             @click.stop="click(i, $event)">
+          </div>
       </div>
       <div v-else class="dialog-buttons-none"></div>
   </modal>
@@ -110,32 +110,30 @@
     padding-bottom: 15px;
   }
 
-  .vue-dialog button {
+  .vue-dialog-button {
+    position: relative;
     background: transparent;
     padding: 0;
     margin: 0;
     border: 0;
     cursor: pointer;
+    text-align: center;
     box-sizing: border-box;
     line-height: 44px;
     height: 44px;
-
-  /*  text-transform: uppercase; */
-  /*  letter-spacing: 1px; */
-
-    color:inherit;
-    font:inherit;
+    color: inherit;
+    font: inherit;
   }
 
-  .vue-dialog button:hover {
+  .vue-dialog-button:hover {
     background: rgba(0, 0, 0, 0.01);
   }
 
-  .vue-dialog button:active {
+  .vue-dialog-button:active {
     background: rgba(0, 0, 0, 0.025);
   }
 
-  .vue-dialog button:not(:first-of-type) {
+  .vue-dialog-button:not(:first-of-type) {
     border-left: 1px solid #eee;
   }
 </style>
