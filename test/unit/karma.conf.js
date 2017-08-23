@@ -10,7 +10,8 @@ module.exports = function(config) {
       './tests.webpack.js'
     ],
     browsers: [
-      'Chrome'
+      // 'Chrome',
+      'PhantomJS'
     ],
     preprocessors: {
       './tests.webpack.js': ['webpack', 'sourcemap']
@@ -18,7 +19,8 @@ module.exports = function(config) {
     reporters: ['spec'],
     plugins: [
       // Launchers
-      'karma-chrome-launcher',
+      // 'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
 
       // Test Libraries
       'karma-mocha',
