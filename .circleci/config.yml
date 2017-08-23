@@ -8,14 +8,10 @@ jobs:
 
     steps:
       - checkout
-  #    - run:
-  #        name: update-npm
-  #        command: 'sudo npm install -g npm@latest'
 
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
       - run:
@@ -23,20 +19,9 @@ jobs:
           command: npm install
 
       - run:
-          name: 'globals'
-          command: npm install karma -g
+          name: globals
+          command: sudo npm install karma -g
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-  test:
-    docker:
-      - image: circleci/node:7.10
-
-    steps:
-      - checkout
-      
       - run:
           name: test
           command: npm run unit
@@ -45,14 +30,7 @@ jobs:
           path: test-results.xml
           prefix: tests
 
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
