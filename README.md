@@ -109,7 +109,7 @@ this.$modal.show('dialog', {
   title: 'Alert!',
   text: 'You are too awesome',
   buttons: [
-    { title: 'Deal with it', handler: () => { alert('Woot!') },
+    { title: 'Deal with it', handler: () => { alert('Woot!') } },
     { title: 'Close' }
  ]
 })
