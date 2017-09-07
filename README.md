@@ -1,11 +1,15 @@
+<p align="center">
+  
+# Vue.js modal
+
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
-
-# Vue.js modal
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
 
 [Changelog on Medium](https://medium.com/@yev_dev/vue-js-modal-changelog-61f934691b67)
+
+</p>
 
 <p align="center">
   <img src="https://media.giphy.com/media/3oKIPco1eNxAA1rD4Q/giphy.gif">
@@ -105,7 +109,7 @@ this.$modal.show('dialog', {
   title: 'Alert!',
   text: 'You are too awesome',
   buttons: [
-    { title: 'Deal with it', handler: () => { alert('Woot!') },
+    { title: 'Deal with it', handler: () => { alert('Woot!') } },
     { title: 'Close' }
  ]
 })
