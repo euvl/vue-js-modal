@@ -160,6 +160,7 @@ export default {
           },
           {
             title: 'LIKE',
+            class: 'blue-text',
             handler: () => {
               alert('LIKE LIKE LIKE')
             }
@@ -267,8 +268,12 @@ button {
   overflow: auto;
 }
 
-.vue-dialog button {
+.vue-dialog .vue-dialog-button {
   letter-spacing: 1px;
+}
+
+.blue-text {
+  color: #5298FC;
 }
 
 @media (max-width:600px)  {
