@@ -369,7 +369,7 @@
        * Event handler which is triggered on $modal.show and $modal.hight
        */
       toggle (state, params) {
-        const { reset, visible } = this
+        const { reset, scrollable, visible } = this
 
         const beforeEventName = visible
           ? 'before-close'
@@ -379,10 +379,22 @@
           ? 'closed'
           : 'opened'
 
-        if (beforeEventName === 'before-open' && reset) {
-          this.setInitialSize()
-          this.shift.left = 0
-          this.shift.top = 0
+        if (beforeEventName === 'before-open') {
+          if (reset) {
+            this.setInitialSize()
+            this.shift.left = 0
+            this.shift.top = 0
+          }
+
+          if (scrollable) {
+            document.body.classList.add('v--modal-block-scroll')
+          }
+        }
+
+        if (beforeEventName === 'before-close') {
+          if (scrollable) {
+            document.body.classList.remove('v--modal-block-scroll')
+          }
         }
 
         let stopEventExecution = false
@@ -489,6 +501,10 @@
   }
 </script>
 <style>
+  .v--modal-block-scroll {
+    overflow: hidden;
+  }
+
   .v--modal-overlay {
     position: fixed;
     box-sizing: border-box;
