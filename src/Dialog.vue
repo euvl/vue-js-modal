@@ -1,11 +1,12 @@
 <template>
   <modal name="dialog"
-         :classes="['v--modal', 'vue-dialog', this.params.class]"
-         :width="400"
          height="auto"
+         :classes="['v--modal', 'vue-dialog', this.params.class]"
+         :width="width"
          :pivot-y="0.3"
          :adaptive="true"
-         transition="fade"
+         :clickToClose="clickToClose"
+         :transition="transition"
          @before-open="beforeOpened"
          @before-close="beforeClosed">
       <div class="dialog-content">
@@ -30,6 +31,20 @@
 <script>
   export default {
     name: 'Dialog',
+    props: {
+      width: {
+        type: [Number, String],
+        default: 400
+      },
+      clickToClose: {
+        type: Boolean,
+        default: true
+      },
+      transition: {
+        type: String,
+        default: 'fade'
+      }
+    },
     data () {
       return {
         params: {},
