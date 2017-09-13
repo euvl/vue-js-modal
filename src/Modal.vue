@@ -332,7 +332,7 @@
       },
 
       onWindowResize () {
-        this.window.width = document.body.clientWidth
+        this.window.width = window.innerWidth
         this.window.height = window.innerHeight
       },
 
