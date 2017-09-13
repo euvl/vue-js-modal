@@ -28,7 +28,6 @@
   </transition>
 </template>
 <script>
-  import Vue         from 'vue'
   import Modal       from './index'
   import Resizer     from './Resizer.vue'
   import { inRange } from './util'
@@ -348,7 +347,7 @@
           ref: this.$refs.modal
         }
 
-        return Vue.util.extend(data, params || {})
+        return Object.assign(data, params || {})
       },
       /**
        * Event handler which is triggered on modal resize
