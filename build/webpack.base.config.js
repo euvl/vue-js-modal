@@ -35,6 +35,9 @@ module.exports = {
   },
   devtool: '#source-map',
   plugins: [
-  //  new UglifyJSPlugin()
+    new UglifyJSPlugin({
+      mangle: false,
+      beautify: true
+    })
   ]
 }
