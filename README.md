@@ -2,7 +2,7 @@
   
 # Vue.js modal
 
-[![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
+[![Backers on Open Collective](https://opencollective.com/vue-js-modal/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/vue-js-modal/sponsors/badge.svg)](#sponsors) [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
@@ -328,3 +328,33 @@ cd demo/client_side_rendering
 npm install
 npm run dev
 ```
+
+## Contributors
+
+This project exists thanks to all the people who contribute.
+<a href="graphs/contributors"><img src="https://opencollective.com/vue-js-modal/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/vue-js-modal#backer)]
+
+<a href="https://opencollective.com/vue-js-modal#backers" target="_blank"><img src="https://opencollective.com/vue-js-modal/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/vue-js-modal#sponsor)]
+
+<a href="https://opencollective.com/vue-js-modal/sponsor/0/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/1/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/2/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/3/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/4/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/5/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/6/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/7/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/8/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/vue-js-modal/sponsor/9/website" target="_blank"><img src="https://opencollective.com/vue-js-modal/sponsor/9/avatar.svg"></a>
+
+
