@@ -7,7 +7,7 @@
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
 
-[Changelog on Medium](https://medium.com/@yev_dev/vue-js-modal-changelog-61f934691b67)
+[Changelog on Medium](https://medium.com/@yev_dev/vue-js-modal-changelog-61f934691b67 "Medium")
 
 </p>
 
