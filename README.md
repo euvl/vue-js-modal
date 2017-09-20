@@ -2,8 +2,10 @@
   
 # Vue.js modal
 
-[![Backers on Open Collective](https://opencollective.com/vue-js-modal/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/vue-js-modal/sponsors/badge.svg)](#sponsors) [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
+[![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
+[![Backers on Open Collective](https://opencollective.com/vue-js-modal/backers/badge.svg)](#backers)
+[![Sponsors on Open Collective](https://opencollective.com/vue-js-modal/sponsors/badge.svg)](#sponsors)
 
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
 
