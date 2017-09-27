@@ -22,7 +22,8 @@
     "build:server": "webpack --config ./build/webpack.server.config.js --progress --hide-modules",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "unit": "./node_modules/karma/bin/karma start test/unit/karma.conf.js",
-    "build": "npm run lint && npm run unit && npm run build:client && npm run build:server"
+    "build": "npm run lint && npm run unit && npm run build:client && npm run build:server",
+    "postinstall": "opencollective postinstall"
   },
   "license": "MIT",
   "devDependencies": {
@@ -70,5 +71,13 @@
   },
   "peerDependencies": {
     "vue": "^2.2.6"
+  },
+  "dependencies": {
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/vue-js-modal",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
   }
 }
