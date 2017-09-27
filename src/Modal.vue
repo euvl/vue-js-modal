@@ -454,6 +454,12 @@
           }
 
           let mousedown = (event) => {
+            let target = event.target
+
+            if (target && target.nodeName === 'INPUT') {
+              return
+            }
+
             let { clientX, clientY } = getPosition(event)
 
             document.addEventListener('mousemove', mousemove)
@@ -467,7 +473,7 @@
             cachedShiftX = this.shift.left
             cachedShiftY = this.shift.top
 
-            event.preventDefault()
+          //  event.preventDefault()
           }
 
           let mousemove = (event) => {
