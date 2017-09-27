@@ -8,7 +8,9 @@
          :clickToClose="clickToClose"
          :transition="transition"
          @before-open="beforeOpened"
-         @before-close="beforeClosed">
+         @before-close="beforeClosed"
+         @opened="$emit('opened', $event)"
+         @closed="$emit('closed', $event)">
       <div class="dialog-content">
         <div class="dialog-c-title"
              v-if="params.title"
@@ -68,9 +70,11 @@
     methods: {
       beforeOpened (event) {
         this.params = event.params || {}
+        this.$emit('before-opened', event)
       },
-      beforeClosed () {
+      beforeClosed (event) {
         this.params = {}
+        this.$emit('before-closed', event)
       },
       click (i, event) {
         let button = this.buttons[i]

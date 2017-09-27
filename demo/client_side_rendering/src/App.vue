@@ -7,7 +7,7 @@
   <demo-focus-modal/>
   <demo-size-modal/>
 
-  <v-dialog/>
+  <v-dialog @opened="onEveryDialogOpen"/>
 
   <modal name="example-modal"
          transition="nice-modal-fade"
@@ -172,6 +172,10 @@ export default {
           }
         ]
       })
+    },
+
+    onEveryDialogOpen () {
+      console.log('Opened dialog')
     }
   },
 }
