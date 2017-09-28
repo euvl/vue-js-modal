@@ -22,8 +22,7 @@
     "build:server": "webpack --config ./build/webpack.server.config.js --progress --hide-modules",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "unit": "./node_modules/karma/bin/karma start test/unit/karma.conf.js",
-    "build": "npm run lint && npm run unit && npm run build:client && npm run build:server",
-    "postinstall": "opencollective postinstall"
+    "build": "npm run lint && npm run unit && npm run build:client && npm run build:server"
   },
   "license": "MIT",
   "devDependencies": {
