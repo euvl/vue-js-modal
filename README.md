@@ -223,6 +223,8 @@ From `v1.2.6` height can be set to "auto". If you want to be able to scroll moda
 
 p.s. `scrollable` will only work with `height="auto"`.
 
+p.s.s. height `auto` is **NOT** responsible for correct positioning of the modal. You will have to use `pivot-y` to position it correctly.
+
 Example: 
 
 ```vue
@@ -339,7 +341,7 @@ This project exists thanks to all the people who contribute.
 
 ## Backers
 
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/vue-js-modal#backer)]
+Thank you to all our backers! [[Become a backer](https://opencollective.com/vue-js-modal#backer)]
 
 <a href="https://opencollective.com/vue-js-modal#backers" target="_blank"><img src="https://opencollective.com/vue-js-modal/backers.svg?width=890"></a>
 
