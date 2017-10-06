@@ -234,7 +234,6 @@
         const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
         for (let i = 0; i < prefixes.length; i++) {
           if (prefixes[i] + 'MutationObserver' in window) {
-            console.log('got MutationObserver:', prefixes[i] + 'MutationObserver')
             return window[prefixes[i] + 'MutationObserver']
           }
         }
