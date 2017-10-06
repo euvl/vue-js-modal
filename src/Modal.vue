@@ -33,6 +33,23 @@
   import { inRange } from './util'
   import parseNumber from './parser'
 
+  /**
+   * MutationObserver feature detection:
+   * Detects if MutationObserver is available, return false if not.
+   * No polyfill is provided here, so height 'auto' recalculation will simply stay at its initial height (won't crash).
+   * (Provide polyfill to support IE < 11)
+   */
+  const MutationObserver = (function () {
+    const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
+    for (let i = 0; i < prefixes.length; i++) {
+      if (prefixes[i] + 'MutationObserver' in window) {
+        console.log('got MutationObserver:', prefixes[i] + 'MutationObserver')
+        return window[prefixes[i] + 'MutationObserver']
+      }
+    }
+    return false
+  }())
+
   export default {
     name: 'VueJsModal',
     props: {
@@ -155,16 +172,25 @@
           width: 0,
           widthType: 'px',
           height: 0,
-          heightType: 'px'
+          heightType: 'px',
+          renderedHeight: 0
         },
 
         window: {
           width: 0,
           height: 0
-        }
+        },
+
+        mutationObserver: null
       }
     },
     watch: {
+      /**
+       * Sets the visibility of overlay and modal.
+       * Events 'opened' and 'closed' is called here
+       * inside `setTimeout` and `$nextTick`, after the DOM changes.
+       * This fixes `$refs.modal` `undefined` bug (fixes #15)
+       */
       visible (value) {
         if (value) {
           this.visibility.overlay = true
@@ -173,6 +199,7 @@
             this.visibility.modal = true
             this.$nextTick(() => {
               this.addDraggableListeners()
+              this.callAfterEvent(true)
             })
           }, this.delay)
         } else {
@@ -182,6 +209,7 @@
             this.visibility.overlay = false
             this.$nextTick(() => {
               this.removeDraggableListeners()
+              this.callAfterEvent(false)
             })
           }, this.delay)
         }
@@ -211,6 +239,16 @@
         console.warn(`Modal "${this.name}" has scrollable flag set to true ` +
           `but height is not "auto" (${this.height})`)
       }
+
+      // init MutationObserver
+      // Only observe when using height: 'auto'
+      // The callback will be called when modal DOM changes,
+      // this is for updating the `top` attribute for height 'auto' modals.
+      if (this.isAutoHeight && MutationObserver) {
+        this.mutationObserver = new MutationObserver(mutations => {
+          this.updateRenderedHeight()
+        })
+      }
     },
     /**
      * Removes "resize" window listener
@@ -236,16 +274,12 @@
         const maxLeft = window.width - trueModalWidth
         const maxTop = window.height - trueModalHeight
 
-        const minTop = this.scrollable
-          ? Number.NEGATIVE_INFINITY
-          : 0
-
         const left = shift.left + pivotX * maxLeft
         const top = shift.top + pivotY * maxTop
 
         return {
           left: inRange(0, maxLeft, left),
-          top: inRange(minTop, maxTop, top)
+          top: inRange(0, maxTop, top)
         }
       },
       /**
@@ -267,7 +301,7 @@
        * Returns pixel height (if set with %) and makes sure that modal size
        * fits the window.
        *
-       * Returns 0 if height set as "auto"
+       * Returns modal.renderedHeight if height set as "auto"
        */
       trueModalHeight () {
         const { window, modal, isAutoHeight, adaptive } = this
@@ -277,7 +311,8 @@
           : modal.height
 
         if (isAutoHeight) {
-          return 0
+          // use renderedHeight when height 'auto'
+          return this.modal.renderedHeight
         }
 
         return adaptive
@@ -366,6 +401,8 @@
       },
       /**
        * Event handler which is triggered on $modal.show and $modal.hight
+       * BeforeEvents: ('before-close' and 'before-open') are `$emit`ed here,
+       * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
        */
       toggle (state, params) {
         const { reset, scrollable, visible } = this
@@ -373,10 +410,6 @@
         const beforeEventName = visible
           ? 'before-close'
           : 'before-open'
-
-        const afterEventName = visible
-          ? 'closed'
-          : 'opened'
 
         if (beforeEventName === 'before-open') {
           if (reset) {
@@ -388,9 +421,7 @@
           if (scrollable) {
             document.body.classList.add('v--modal-block-scroll')
           }
-        }
-
-        if (beforeEventName === 'before-close') {
+        } else {
           if (scrollable) {
             document.body.classList.remove('v--modal-block-scroll')
           }
@@ -406,10 +437,8 @@
         this.$emit(beforeEventName, beforeEvent)
 
         if (!stopEventExecution) {
-          const afterEvent = this.genEventObject({ state, params })
-
           this.visible = state
-          this.$emit(afterEventName, afterEvent)
+          // after events are called in `watch.visible`
         }
       },
 
@@ -501,6 +530,61 @@
 
       removeDraggableListeners () {
       //  console.log('removing draggable handlers')
+      },
+
+      /**
+       * 'opened' and 'closed' events are `$emit`ed here.
+       * This is called in watch.visible.
+       * Because modal DOM updates are async,
+       * wrapping afterEvents in `$nextTick` fixes `$refs.modal` undefined bug.
+       * (fixes #15)
+       */
+      callAfterEvent (state) {
+        if (state) {
+          this.observe()
+        } else {
+          this.disconnectObserver()
+        }
+        const afterEventName = state
+          ? 'opened'
+          : 'closed'
+        const afterEvent = this.genEventObject({ state })
+
+        this.$emit(afterEventName, afterEvent)
+
+        // recalculate the true modal height
+        if (state && this.isAutoHeight) {
+          this.updateRenderedHeight()
+        }
+      },
+
+      /**
+       * Update $data.modal.renderedHeight using getBoundingClientRect.
+       * This method is called when:
+       * 1. modal opened
+       * 2. MutationObserver's observe callback
+       */
+      updateRenderedHeight () {
+        this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height
+      },
+
+      /**
+       * Start observing modal's DOM, if childList or subtree changes,
+       * the callback (registered in created) will be called.
+       */
+      observe () {
+        if (this.mutationObserver) {
+          this.mutationObserver.observe(this.$refs.modal, { childList: true, subtree: true })
+        }
+      },
+
+      /**
+       * Disconnects MutationObserver
+       */
+      disconnectObserver () {
+        if (this.mutationObserver) {
+          this.mutationObserver.disconnect()
+        }
       }
     }
   }
@@ -537,6 +621,7 @@
 
   .v--modal-overlay.scrollable .v--modal-box {
     margin-bottom: 10px;
+    transition: top 0.2s ease;
   }
 
   .v--modal {
