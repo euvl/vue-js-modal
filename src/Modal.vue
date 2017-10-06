@@ -33,23 +33,6 @@
   import { inRange } from './util'
   import parseNumber from './parser'
 
-  /**
-   * MutationObserver feature detection:
-   * Detects if MutationObserver is available, return false if not.
-   * No polyfill is provided here, so height 'auto' recalculation will simply stay at its initial height (won't crash).
-   * (Provide polyfill to support IE < 11)
-   */
-  const MutationObserver = (function () {
-    const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
-    for (let i = 0; i < prefixes.length; i++) {
-      if (prefixes[i] + 'MutationObserver' in window) {
-        console.log('got MutationObserver:', prefixes[i] + 'MutationObserver')
-        return window[prefixes[i] + 'MutationObserver']
-      }
-    }
-    return false
-  }())
-
   export default {
     name: 'VueJsModal',
     props: {
@@ -241,6 +224,22 @@
       }
 
       // init MutationObserver
+      /**
+       * MutationObserver feature detection:
+       * Detects if MutationObserver is available, return false if not.
+       * No polyfill is provided here, so height 'auto' recalculation will simply stay at its initial height (won't crash).
+       * (Provide polyfill to support IE < 11)
+       */
+      const MutationObserver = (function () {
+        const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
+        for (let i = 0; i < prefixes.length; i++) {
+          if (prefixes[i] + 'MutationObserver' in window) {
+            console.log('got MutationObserver:', prefixes[i] + 'MutationObserver')
+            return window[prefixes[i] + 'MutationObserver']
+          }
+        }
+        return false
+      }())
       // Only observe when using height: 'auto'
       // The callback will be called when modal DOM changes,
       // this is for updating the `top` attribute for height 'auto' modals.
