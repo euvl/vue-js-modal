@@ -381,15 +381,14 @@
        * Generates event object
        */
       genEventObject (params) {
-        // @todo: clean this up (change to ...)
-        var data = {
+        var eventData = {
           name: this.name,
           timestamp: Date.now(),
           canceled: false,
           ref: this.$refs.modal
         }
 
-        return Object.assign(data, params || {})
+        return Object.assign(eventData, params || {})
       },
       /**
        * Event handler which is triggered on modal resize
@@ -421,6 +420,7 @@
         if (beforeEventName === 'before-open') {
           if (reset) {
             this.setInitialSize()
+
             this.shift.left = 0
             this.shift.top = 0
           }
@@ -631,8 +631,8 @@
   }
 
   .v--modal-overlay.scrollable .v--modal-box {
-    margin-bottom: 10px;
-    transition: top 0.2s ease;
+    margin-bottom: 2px;
+    /* transition: top 0.2s ease; */
   }
 
   .v--modal {
