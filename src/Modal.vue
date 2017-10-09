@@ -439,6 +439,7 @@
         const stop = () => {
           stopEventExecution = true
         }
+
         const beforeEvent = this.genEventObject({ stop, state, params })
 
         this.$emit(beforeEventName, beforeEvent)
@@ -548,10 +549,11 @@
        */
       callAfterEvent (state) {
         if (state) {
-          this.observe()
+          this.connectObserver()
         } else {
           this.disconnectObserver()
         }
+
         const afterEventName = state
           ? 'opened'
           : 'closed'
@@ -578,9 +580,9 @@
 
       /**
        * Start observing modal's DOM, if childList or subtree changes,
-       * the callback (registered in created) will be called.
+       * the callback (registered in beforeMount) will be called.
        */
-      observe () {
+      connectObserver () {
         if (this.mutationObserver) {
           this.mutationObserver.observe(this.$refs.modal, {
             childList: true,
