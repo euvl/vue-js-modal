@@ -1,16 +1,18 @@
-<template> 
+<template>
   <modal name="size-modal"
         transition="nice-modal-fade"
         classes="demo-modal-class"
         :min-width="200"
-        :min-height="200" 
-        :pivot-y="0.25"
+        :min-height="200"
+        :pivot-y="0.5"
         :adaptive="true"
         :scrollable="true"
         :reset="true"
         width="60%"
         height="auto"
         @before-open="beforeOpen"
+        @opened="opened"
+        @closed="closed"
         @before-close="beforeClose">
   <div class="size-modal-content">
     <div>A new paragraph will be added every 5 sec to show how <b>height</b> scales.</div>
@@ -40,6 +42,15 @@
         clearInterval(this.timer)
         this.timer = null
         this.paragraphs = []
+      },
+
+      opened (e) {
+        // e.ref should not be undefined here
+        console.log('opened', e)
+      },
+
+      closed (e) {
+        console.log('closed', e)
       }
     }
   }
