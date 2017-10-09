@@ -217,35 +217,44 @@
 
       window.addEventListener('resize', this.onWindowResize)
       this.onWindowResize()
-
+      /**
+       * Making sure that autoHeight is enabled when using "scrollable"
+       */
       if (this.scrollable && !this.isAutoHeight) {
         console.warn(`Modal "${this.name}" has scrollable flag set to true ` +
           `but height is not "auto" (${this.height})`)
       }
-
-      // init MutationObserver
       /**
-       * MutationObserver feature detection:
-       * Detects if MutationObserver is available, return false if not.
-       * No polyfill is provided here, so height 'auto' recalculation will simply stay at its initial height (won't crash).
-       * (Provide polyfill to support IE < 11)
+       * Only observe when using height: 'auto'
+       * The callback will be called when modal DOM changes,
+       * this is for updating the `top` attribute for height 'auto' modals.
        */
-      const MutationObserver = (function () {
-        const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
-        for (let i = 0; i < prefixes.length; i++) {
-          if (prefixes[i] + 'MutationObserver' in window) {
-            return window[prefixes[i] + 'MutationObserver']
+      if (this.isAutoHeight) {
+        /**
+         * MutationObserver feature detection:
+         * Detects if MutationObserver is available, return false if not.
+         * No polyfill is provided here, so height 'auto' recalculation will
+         * simply stay at its initial height (won't crash).
+         * (Provide polyfill to support IE < 11)
+         */
+        const MutationObserver = (function () {
+          const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
+
+          for (let i = 0; i < prefixes.length; i++) {
+            let name = prefixes[i] + 'MutationObserver'
+
+            if (name in window) {
+              return window[name]
+            }
           }
+          return false
+        }())
+
+        if (MutationObserver) {
+          this.mutationObserver = new MutationObserver(mutations => {
+            this.updateRenderedHeight()
+          })
         }
-        return false
-      }())
-      // Only observe when using height: 'auto'
-      // The callback will be called when modal DOM changes,
-      // this is for updating the `top` attribute for height 'auto' modals.
-      if (this.isAutoHeight && MutationObserver) {
-        this.mutationObserver = new MutationObserver(mutations => {
-          this.updateRenderedHeight()
-        })
       }
     },
     /**
@@ -563,7 +572,8 @@
        * 2. MutationObserver's observe callback
        */
       updateRenderedHeight () {
-        this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height
+        this.modal.renderedHeight = this.$refs.modal
+          .getBoundingClientRect().height
       },
 
       /**
@@ -572,7 +582,10 @@
        */
       observe () {
         if (this.mutationObserver) {
-          this.mutationObserver.observe(this.$refs.modal, { childList: true, subtree: true })
+          this.mutationObserver.observe(this.$refs.modal, {
+            childList: true,
+            subtree: true
+          })
         }
       },
 
