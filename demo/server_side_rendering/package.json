@@ -4,7 +4,7 @@
     "start": "nuxt"
   },
   "dependencies": {
-    "vue-js-modal": "latest",
-    "nuxt": "^1.0.0-rc3"
+    "nuxt": "^1.0.0-rc3",
+    "vue-js-modal": "../../"
   }
 }
