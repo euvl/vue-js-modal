@@ -207,7 +207,7 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(18);
         var Component = __webpack_require__(1)(__webpack_require__(7), __webpack_require__(15), null, null);
-        Component.options.__file = "/Users/dd/code/sandbox/vue-js-modal/src/Dialog.vue", 
+        Component.options.__file = "/Users/yev/Projects/vue/vue-js-modal/src/Dialog.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
@@ -215,7 +215,7 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(19);
         var Component = __webpack_require__(1)(__webpack_require__(8), __webpack_require__(16), null, null);
-        Component.options.__file = "/Users/dd/code/sandbox/vue-js-modal/src/Modal.vue", 
+        Component.options.__file = "/Users/yev/Projects/vue/vue-js-modal/src/Modal.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
@@ -734,7 +734,7 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(20);
         var Component = __webpack_require__(1)(__webpack_require__(9), __webpack_require__(17), null, null);
-        Component.options.__file = "/Users/dd/code/sandbox/vue-js-modal/src/Resizer.vue", 
+        Component.options.__file = "/Users/yev/Projects/vue/vue-js-modal/src/Resizer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
