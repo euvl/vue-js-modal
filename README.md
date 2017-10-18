@@ -221,8 +221,6 @@ From `v1.2.6` height can be set to "auto". If you want to be able to scroll moda
 
 p.s. `scrollable` will only work with `height="auto"`.
 
-p.s.s. height `auto` is **NOT** responsible for correct positioning of the modal. You will have to use `pivot-y` to position it correctly.
-
 Example:
 
 ```vue
