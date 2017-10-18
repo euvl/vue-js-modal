@@ -560,11 +560,6 @@
         const afterEvent = this.genEventObject({ state })
 
         this.$emit(afterEventName, afterEvent)
-
-        // recalculate the true modal height
-        if (state && this.isAutoHeight) {
-          this.updateRenderedHeight()
-        }
       },
 
       /**
@@ -574,8 +569,10 @@
        * 2. MutationObserver's observe callback
        */
       updateRenderedHeight () {
-        this.modal.renderedHeight = this.$refs.modal
-          .getBoundingClientRect().height
+        if (this.$refs.modal) {
+          this.modal.renderedHeight = this.$refs.modal
+            .getBoundingClientRect().height
+        }
       },
 
       /**
