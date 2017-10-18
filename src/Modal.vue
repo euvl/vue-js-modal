@@ -586,6 +586,7 @@
         if (this.mutationObserver) {
           this.mutationObserver.observe(this.$refs.modal, {
             childList: true,
+            attributes: true,
             subtree: true
           })
         }
