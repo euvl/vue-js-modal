@@ -409,7 +409,9 @@
           const afterEvent = this.genEventObject({ state, params })
 
           this.visible = state
-          this.$emit(afterEventName, afterEvent)
+          Vue.$nextTick(() => {
+            this.$emit(afterEventName, afterEvent);
+          });
         }
       },
 
