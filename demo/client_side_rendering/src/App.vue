@@ -7,7 +7,8 @@
   <demo-focus-modal/>
   <demo-size-modal/>
 
-  <v-dialog @opened="onEveryDialogOpen"/>
+  <v-dialog
+    @opened="onEveryDialogOpen"/>
 
   <modal name="example-modal"
          transition="nice-modal-fade"
@@ -45,42 +46,61 @@
   <modes-table />
 
   <div style="margin-top: 20px; margin-bottom: 15px;">
-    <button @click="show(false, false, false)">Simple</button>
-    <button @click="show(true, false, false)">Resizable</button>
-    <button @click="show(false, true, false)">Adaptive</button>
-    <button @click="show(false, false, true)">Draggable</button>
+    <button
+      class="btn"
+      @click="show(false, false, false)">Simple</button>
+    <button
+      class="btn"
+      @click="show(true, false, false)">Resizable</button>
+    <button
+      class="btn"
+      @click="show(false, true, false)">Adaptive</button>
+    <button
+      class="btn"
+      @click="show(false, false, true)">Draggable</button>
     <br>
-    <button class="green"
-            @click="$modal.show('dog-profile')">
+    <button
+      class="btn green"
+      @click="$modal.show('dog-profile')">
       Demo: Dog Profile photo
     </button>
-    <button class="green"
-            @click="$modal.show('error-modal')">
+    <button
+      class="btn green"
+      @click="$modal.show('error-modal')">
       Demo: Error handling
     </button>
-    <button class="green"
-            @click="$modal.show('demo-login')">
+    <button
+      class="btn green"
+      @click="$modal.show('demo-login')">
       Demo: Login
     </button>
-    <button class="green"
-            @click="$modal.show('size-modal')">
+    <button
+      class="btn green"
+      @click="$modal.show('size-modal')">
       Demo: Width: 60%, Height: auto
     </button>
-    <button :class="canBeShown ? 'green' : 'red'"
-            @click="conditionalShow">
+    <button
+      :class="canBeShown ? 'btn green' : 'btn red'"
+      @click="conditionalShow">
       Can <b v-if="!canBeShown">NOT</b> be shown
     </button>
     <br>
 
-    <button @click="showBasicDialog">
+    <button
+      class="btn"
+      @click="showBasicDialog">
       Dialog: basic
     </button>
 
-    <button @click="showTitleDialog">
+    <button
+      class="btn"
+      @click="showTitleDialog">
       Dialog: title
     </button>
 
-    <button @click="showButtonsDialog">
+    <button
+      class="btn"
+      @click="showButtonsDialog">
       Dialog: buttons
     </button>
   </div>
@@ -217,7 +237,7 @@ a {
   color: inherit;
 }
 
-button {
+button.btn {
   outline: none;
   background: white;
   border: 0;
