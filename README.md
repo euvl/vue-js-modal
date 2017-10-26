@@ -293,7 +293,7 @@ For specific modal:
 
 ```css
 .v--modal-overlay[data-modal="my_modal_name"] {
-  background: cyan;
+  background: transparent;
 }
 ```
 
