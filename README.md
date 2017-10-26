@@ -277,9 +277,9 @@ Example:
 </modal>
 ```
 
-#### Background color
+#### Overlay background color
 
-If you want to change overflow background color, you can easily do it using css.
+If you want to change overlay background color, you can easily do it using css.
 
 For all modals:
 
