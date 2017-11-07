@@ -604,6 +604,7 @@
   .v--modal-block-scroll {
     overflow: hidden;
     position: fixed;
+    width: 100vw;
   }
 
   .v--modal-overlay {
