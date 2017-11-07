@@ -603,6 +603,7 @@
 <style>
   .v--modal-block-scroll {
     overflow: hidden;
+    position: fixed;
   }
 
   .v--modal-overlay {
