@@ -624,6 +624,7 @@
     min-height: 100vh;
     overflow-y: auto;
     padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .v--modal-overlay .v--modal-box {
