@@ -446,6 +446,9 @@
 
         if (!stopEventExecution) {
           this.visible = state
+          Vue.$nextTick(() => {
+            this.$emit(afterEventName, afterEvent);
+          });
           // after events are called in `watch.visible`
         }
       },
