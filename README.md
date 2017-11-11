@@ -84,6 +84,12 @@ methods: {
 }
 ```
 
+If you use **Bower** package manager - you will have to initialize library differently:
+
+```
+Vue.use(window["vue-js-modal"].default);
+```
+
 ### Dialog
 
 In version `1.2.8`, the `<v-dialog/>` component was added.
