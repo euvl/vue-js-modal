@@ -603,6 +603,8 @@
 <style>
   .v--modal-block-scroll {
     overflow: hidden;
+    position: fixed;
+    width: 100vw;
   }
 
   .v--modal-overlay {
@@ -622,6 +624,7 @@
     min-height: 100vh;
     overflow-y: auto;
     padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .v--modal-overlay .v--modal-box {
