@@ -256,12 +256,20 @@
           })
         }
       }
+
+      if (this.clickToClose) {
+        window.addEventListener('keyup', this.onEscapeKeyUp)
+      }
     },
     /**
      * Removes "resize" window listener
      */
     beforeDestroy () {
       window.removeEventListener('resize', this.onWindowResize)
+
+      if (this.clickToClose) {
+        window.removeEventListener('keyup', this.onEscapeKeyUp)
+      }
     },
     computed: {
       /**
@@ -370,6 +378,12 @@
         modal.widthType = width.type
         modal.height = height.value
         modal.heightType = height.type
+      },
+
+      onEscapeKeyUp (event) {
+        if ((event.keyCode || event.which) === 27 && this.visible) {
+          this.$modal.hide(this.name)
+        }
       },
 
       onWindowResize () {
