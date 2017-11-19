@@ -86,19 +86,17 @@ methods: {
 
 If you use **Bower** package manager - you will have to initialize library differently:
 
-```
+```js
 Vue.use(window["vue-js-modal"].default);
 ```
 
 ### Dialog
 
-In version `1.2.8`, the `<v-dialog/>` component was added.
-
 It is a simplified version of the modal, which has most parameters set by default and is pretty useful for quick prototyping, showing alerts or creating mobile-like modals.
 
 To start using `<v-dialog/>` you must set `dialog: true` in plugin configuration:
 
-```javascript
+```js
 Vue.use(VModal, { dialog: true })
 ```
 
