@@ -178,7 +178,10 @@ export default {
         text: 'You can add an arbitrary number of buttons.',
         buttons: [
           {
-            title: 'C💩NCEL'
+            title: 'C💩NCEL',
+            handler: () => {
+              this.$modal.hide('dialog')
+            }
           },
           {
             title: 'LIKE',
