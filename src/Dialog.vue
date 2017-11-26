@@ -7,6 +7,7 @@
          :adaptive="true"
          :clickToClose="clickToClose"
          :transition="transition"
+         @keyup.enter="clickDefault"
          @before-open="beforeOpened"
          @before-close="beforeClosed"
          @opened="$emit('opened', $event)"
@@ -84,6 +85,28 @@
           return button.handler(i, event)
         } else {
           this.$modal.hide('dialog')
+        }
+      },
+      clickDefault () {
+        if(this.buttons === undefined || !this.buttons) {
+          this.$modal.hide('dialog')
+        }
+        if(this.buttons.length > 1) {
+          return this.buttons.map(button => {
+            if(button.default != undefined && button.default == true) {
+              if (typeof button.handler === 'function') {
+                return button.handler()
+              } else {
+                this.$modal.hide('dialog')
+              }
+            }
+          });
+        } else if(this.buttons.length == 1) {
+            if (typeof this.buttons[0].handler === 'function') {
+              return this.buttons[0].handler()
+            } else {
+              this.$modal.hide('dialog')
+            }
         }
       }
     }
