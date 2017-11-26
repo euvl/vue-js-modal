@@ -258,7 +258,7 @@
       }
 
       if (this.clickToClose) {
-        window.addEventListener('keyup', this.onEscapeKeyUp)
+      // window.addEventListener('keyup', this.onEscapeKeyUp)
       }
     },
     /**
@@ -268,7 +268,7 @@
       window.removeEventListener('resize', this.onWindowResize)
 
       if (this.clickToClose) {
-        window.removeEventListener('keyup', this.onEscapeKeyUp)
+      //  window.removeEventListener('keyup', this.onEscapeKeyUp)
       }
     },
     computed: {
@@ -381,9 +381,9 @@
       },
 
       onEscapeKeyUp (event) {
-        if ((event.keyCode || event.which) === 27 && this.visible) {
-          this.$modal.hide(this.name)
-        }
+      //  if (event.which === 27 && this.visible) {
+       //   this.$modal.hide(this.name)
+       // }
       },
 
       onWindowResize () {
@@ -427,11 +427,20 @@
       toggle (state, params) {
         const { reset, scrollable, visible } = this
 
+        console.log('woot')
+
         const beforeEventName = visible
           ? 'before-close'
           : 'before-open'
 
         if (beforeEventName === 'before-open') {
+          /**
+           * Need to unfocus previously focused element, otherwise
+           * all keypress events (ESC press, for example) will trigger on that element.
+           */
+          if (document.activeElement) {
+            document.activeElement.blur()
+          }
           if (reset) {
             this.setInitialSize()
 
