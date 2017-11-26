@@ -258,7 +258,7 @@
       }
 
       if (this.clickToClose) {
-      // window.addEventListener('keyup', this.onEscapeKeyUp)
+        window.addEventListener('keyup', this.onEscapeKeyUp)
       }
     },
     /**
@@ -268,7 +268,7 @@
       window.removeEventListener('resize', this.onWindowResize)
 
       if (this.clickToClose) {
-      //  window.removeEventListener('keyup', this.onEscapeKeyUp)
+        window.removeEventListener('keyup', this.onEscapeKeyUp)
       }
     },
     computed: {
@@ -381,9 +381,9 @@
       },
 
       onEscapeKeyUp (event) {
-      //  if (event.which === 27 && this.visible) {
-       //   this.$modal.hide(this.name)
-       // }
+        if (event.which === 27 && this.visible) {
+          this.$modal.hide(this.name)
+        }
       },
 
       onWindowResize () {
@@ -427,8 +427,6 @@
       toggle (state, params) {
         const { reset, scrollable, visible } = this
 
-        console.log('woot')
-
         const beforeEventName = visible
           ? 'before-close'
           : 'before-open'
@@ -441,6 +439,7 @@
           if (document.activeElement) {
             document.activeElement.blur()
           }
+
           if (reset) {
             this.setInitialSize()
 
@@ -577,12 +576,10 @@
           this.disconnectObserver()
         }
 
-        const afterEventName = state
-          ? 'opened'
-          : 'closed'
-        const afterEvent = this.genEventObject({ state })
+        const eventName = state ? 'opened' : 'closed'
+        const event = this.genEventObject({ state })
 
-        this.$emit(afterEventName, afterEvent)
+        this.$emit(eventName, event)
       },
 
       /**

@@ -8,7 +8,10 @@
   <demo-size-modal/>
 
   <v-dialog
-    @opened="onEveryDialogOpen"/>
+    @before-opened="dialogEvent('before-open')"
+    @before-closed="dialogEvent('before-close')"
+    @opened="dialogEvent('opened')"
+    @closed="dialogEvent('closed')"/>
 
   <modal name="example-modal"
          transition="nice-modal-fade"
@@ -185,6 +188,7 @@ export default {
           },
           {
             title: 'LIKE',
+            default: true,
             handler: () => {
               alert('LIKE LIKE LIKE')
             }
@@ -199,8 +203,8 @@ export default {
       })
     },
 
-    onEveryDialogOpen () {
-      console.log('Opened dialog')
+    dialogEvent (eventName) {
+      console.log('Dialog event: ' + eventName)
     }
   },
 }
