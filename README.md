@@ -113,8 +113,18 @@ this.$modal.show('dialog', {
   title: 'Alert!',
   text: 'You are too awesome',
   buttons: [
-    { title: 'Deal with it', handler: () => { alert('Woot!') } },
-    { title: 'Close' }
+    { 
+      title: 'Deal with it',
+      handler: () => { alert('Woot!') }
+    },
+    {
+      titile: '',       // Button title
+      default: true,    // Will be triggered by default if 'Enter' pressed.
+      handler: () => {} // Button click handler
+    },
+    { 
+      title: 'Close'
+    }
  ]
 })
 ```
