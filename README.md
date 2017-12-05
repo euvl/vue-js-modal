@@ -118,7 +118,7 @@ this.$modal.show('dialog', {
       handler: () => { alert('Woot!') }
     },
     {
-      titile: '',       // Button title
+      title: '',       // Button title
       default: true,    // Will be triggered by default if 'Enter' pressed.
       handler: () => {} // Button click handler
     },
