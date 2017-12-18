@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/euvl/vue-js-modal.git"
   },
+  "types": "types/index.d.ts",
   "keywords": [
     "vue",
     "vuejs",
