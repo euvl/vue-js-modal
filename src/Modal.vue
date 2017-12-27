@@ -28,13 +28,13 @@
   </transition>
 </template>
 <script>
-import Modal from "./index";
-import Resizer from "./Resizer.vue";
-import { inRange } from "./util";
-import parseNumber from "./parser";
+import Modal from './index'
+import Resizer from './Resizer.vue'
+import { inRange } from './util'
+import parseNumber from './parser'
 
 export default {
-  name: "VueJsModal",
+  name: 'VueJsModal',
   props: {
     name: {
       required: true,
@@ -73,64 +73,64 @@ export default {
     },
     classes: {
       type: [String, Array],
-      default: "v--modal"
+      default: 'v--modal'
     },
     minWidth: {
       type: Number,
       default: 0,
       validator(value) {
-        return value >= 0;
+        return value >= 0
       }
     },
     minHeight: {
       type: Number,
       default: 0,
       validator(value) {
-        return value >= 0;
+        return value >= 0
       }
     },
     width: {
       type: [Number, String],
       default: 600,
       validator(value) {
-        if (typeof value === "string") {
-          let width = parseNumber(value);
-          return (width.type === "%" || width.type === "px") && width.value > 0;
+        if (typeof value === 'string') {
+          let width = parseNumber(value)
+          return (width.type === '%' || width.type === 'px') && width.value > 0
         }
 
-        return value >= 0;
+        return value >= 0
       }
     },
     height: {
       type: [Number, String],
       default: 300,
       validator(value) {
-        if (typeof value === "string") {
-          if (value === "auto") {
-            return true;
+        if (typeof value === 'string') {
+          if (value === 'auto') {
+            return true
           }
 
-          let height = parseNumber(value);
+          let height = parseNumber(value)
           return (
-            (height.type === "%" || height.type === "px") && height.value > 0
-          );
+            (height.type === '%' || height.type === 'px') && height.value > 0
+          )
         }
 
-        return value >= 0;
+        return value >= 0
       }
     },
     pivotX: {
       type: Number,
       default: 0.5,
       validator(value) {
-        return value >= 0 && value <= 1;
+        return value >= 0 && value <= 1
       }
     },
     pivotY: {
       type: Number,
       default: 0.5,
       validator(value) {
-        return value >= 0 && value <= 1;
+        return value >= 0 && value <= 1
       }
     }
   },
@@ -153,9 +153,9 @@ export default {
 
       modal: {
         width: 0,
-        widthType: "px",
+        widthType: 'px',
         height: 0,
-        heightType: "px",
+        heightType: 'px',
         renderedHeight: 0
       },
 
@@ -165,7 +165,7 @@ export default {
       },
 
       mutationObserver: null
-    };
+    }
   },
   watch: {
     /**
@@ -176,47 +176,47 @@ export default {
        */
     visible(value) {
       if (value) {
-        this.visibility.overlay = true;
+        this.visibility.overlay = true
 
         setTimeout(() => {
-          this.visibility.modal = true;
+          this.visibility.modal = true
           this.$nextTick(() => {
-            this.addDraggableListeners();
-            this.callAfterEvent(true);
-          });
-        }, this.delay);
+            this.addDraggableListeners()
+            this.callAfterEvent(true)
+          })
+        }, this.delay)
       } else {
-        this.visibility.modal = false;
+        this.visibility.modal = false
 
         setTimeout(() => {
-          this.visibility.overlay = false;
+          this.visibility.overlay = false
           this.$nextTick(() => {
-            this.removeDraggableListeners();
-            this.callAfterEvent(false);
-          });
-        }, this.delay);
+            this.removeDraggableListeners()
+            this.callAfterEvent(false)
+          })
+        }, this.delay)
       }
     }
   },
   created() {
-    this.setInitialSize();
+    this.setInitialSize()
   },
   /**
      * Sets global listeners
      */
   beforeMount() {
-    Modal.event.$on("toggle", (name, state, params) => {
+    Modal.event.$on('toggle', (name, state, params) => {
       if (name === this.name) {
-        if (typeof state === "undefined") {
-          state = !this.visible;
+        if (typeof state === 'undefined') {
+          state = !this.visible
         }
 
-        this.toggle(state, params);
+        this.toggle(state, params)
       }
-    });
+    })
 
-    window.addEventListener("resize", this.onWindowResize);
-    this.onWindowResize();
+    window.addEventListener('resize', this.onWindowResize)
+    this.onWindowResize()
     /**
        * Making sure that autoHeight is enabled when using "scrollable"
        */
@@ -224,7 +224,7 @@ export default {
       console.warn(
         `Modal "${this.name}" has scrollable flag set to true ` +
           `but height is not "auto" (${this.height})`
-      );
+      )
     }
     /**
        * Only observe when using height: 'auto'
@@ -240,37 +240,37 @@ export default {
          * (Provide polyfill to support IE < 11)
          */
       const MutationObserver = (function() {
-        const prefixes = ["", "WebKit", "Moz", "O", "Ms"];
+        const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
 
         for (let i = 0; i < prefixes.length; i++) {
-          let name = prefixes[i] + "MutationObserver";
+          let name = prefixes[i] + 'MutationObserver'
 
           if (name in window) {
-            return window[name];
+            return window[name]
           }
         }
-        return false;
-      })();
+        return false
+      })()
 
       if (MutationObserver) {
         this.mutationObserver = new MutationObserver(mutations => {
-          this.updateRenderedHeight();
-        });
+          this.updateRenderedHeight()
+        })
       }
     }
 
     if (this.clickToClose) {
-      window.addEventListener("keyup", this.onEscapeKeyUp);
+      window.addEventListener('keyup', this.onEscapeKeyUp)
     }
   },
   /**
      * Removes "resize" window listener
      */
   beforeDestroy() {
-    window.removeEventListener("resize", this.onWindowResize);
+    window.removeEventListener('resize', this.onWindowResize)
 
     if (this.clickToClose) {
-      window.removeEventListener("keyup", this.onEscapeKeyUp);
+      window.removeEventListener('keyup', this.onEscapeKeyUp)
     }
   },
   computed: {
@@ -278,7 +278,7 @@ export default {
        * Returns true if height is set to "auto"
        */
     isAutoHeight() {
-      return this.modal.heightType === "auto";
+      return this.modal.heightType === 'auto'
     },
     /**
        * Calculates and returns modal position based on the
@@ -292,32 +292,30 @@ export default {
         pivotY,
         trueModalWidth,
         trueModalHeight
-      } = this;
+      } = this
 
-      const maxLeft = window.width - trueModalWidth;
-      const maxTop = window.height - trueModalHeight;
+      const maxLeft = window.width - trueModalWidth
+      const maxTop = window.height - trueModalHeight
 
-      const left = shift.left + pivotX * maxLeft;
-      const top = shift.top + pivotY * maxTop;
+      const left = shift.left + pivotX * maxLeft
+      const top = shift.top + pivotY * maxTop
 
       return {
         left: inRange(0, maxLeft, left),
         top: inRange(0, maxTop, top)
-      };
+      }
     },
     /**
        * Returns pixel width (if set with %) and makes sure that modal size
        * fits the window
        */
     trueModalWidth() {
-      const { window, modal, adaptive, minWidth } = this;
+      const { window, modal, adaptive, minWidth } = this
 
       const value =
-        modal.widthType === "%"
-          ? window.width / 100 * modal.width
-          : modal.width;
+        modal.widthType === '%' ? window.width / 100 * modal.width : modal.width
 
-      return adaptive ? inRange(minWidth, window.width, value) : value;
+      return adaptive ? inRange(minWidth, window.width, value) : value
     },
     /**
        * Returns pixel height (if set with %) and makes sure that modal size
@@ -326,47 +324,47 @@ export default {
        * Returns modal.renderedHeight if height set as "auto"
        */
     trueModalHeight() {
-      const { window, modal, isAutoHeight, adaptive } = this;
+      const { window, modal, isAutoHeight, adaptive } = this
 
       const value =
-        modal.heightType === "%"
+        modal.heightType === '%'
           ? window.height / 100 * modal.height
-          : modal.height;
+          : modal.height
 
       if (isAutoHeight) {
         // use renderedHeight when height 'auto'
-        return this.modal.renderedHeight;
+        return this.modal.renderedHeight
       }
 
       return adaptive
         ? inRange(this.minHeight, this.window.height, value)
-        : value;
+        : value
     },
     /**
        * Returns class list for screen overlay (modal background)
        */
     overlayClass() {
       return {
-        "v--modal-overlay": true,
+        'v--modal-overlay': true,
         scrollable: this.scrollable && this.isAutoHeight
-      };
+      }
     },
     /**
        * Returns class list for modal itself
        */
     modalClass() {
-      return ["v--modal-box", this.classes];
+      return ['v--modal-box', this.classes]
     },
     /**
        * CSS styles for position and size of the modal
        */
     modalStyle() {
       return {
-        top: this.position.top + "px",
-        left: this.position.left + "px",
-        width: this.trueModalWidth + "px",
-        height: this.isAutoHeight ? "auto" : this.trueModalHeight + "px"
-      };
+        top: this.position.top + 'px',
+        left: this.position.left + 'px',
+        width: this.trueModalWidth + 'px',
+        height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
+      }
     }
   },
   methods: {
@@ -376,25 +374,25 @@ export default {
        * every time "beforeOpen" is triggered
        */
     setInitialSize() {
-      let { modal } = this;
-      let width = parseNumber(this.width);
-      let height = parseNumber(this.height);
+      let { modal } = this
+      let width = parseNumber(this.width)
+      let height = parseNumber(this.height)
 
-      modal.width = width.value;
-      modal.widthType = width.type;
-      modal.height = height.value;
-      modal.heightType = height.type;
+      modal.width = width.value
+      modal.widthType = width.type
+      modal.height = height.value
+      modal.heightType = height.type
     },
 
     onEscapeKeyUp(event) {
       if (event.which === 27 && this.visible) {
-        this.$modal.hide(this.name);
+        this.$modal.hide(this.name)
       }
     },
 
     onWindowResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
     },
 
     /**
@@ -406,24 +404,24 @@ export default {
         timestamp: Date.now(),
         canceled: false,
         ref: this.$refs.modal
-      };
+      }
 
-      return Object.assign(eventData, params || {});
+      return Object.assign(eventData, params || {})
     },
     /**
        * Event handler which is triggered on modal resize
        */
     onModalResize(event) {
-      this.modal.widthType = "px";
-      this.modal.width = event.size.width;
+      this.modal.widthType = 'px'
+      this.modal.width = event.size.width
 
-      this.modal.heightType = "px";
-      this.modal.height = event.size.height;
+      this.modal.heightType = 'px'
+      this.modal.height = event.size.height
 
-      const { size } = this.modal;
-      const resizeEvent = this.genEventObject({ size });
+      const { size } = this.modal
+      const resizeEvent = this.genEventObject({ size })
 
-      this.$emit("resize", resizeEvent);
+      this.$emit('resize', resizeEvent)
     },
     /**
        * Event handler which is triggered on $modal.show and $modal.hight
@@ -431,59 +429,59 @@ export default {
        * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
        */
     toggle(state, params) {
-      const { reset, scrollable, visible } = this;
+      const { reset, scrollable, visible } = this
 
-      const beforeEventName = visible ? "before-close" : "before-open";
+      const beforeEventName = visible ? 'before-close' : 'before-open'
 
-      if (beforeEventName === "before-open") {
+      if (beforeEventName === 'before-open') {
         /**
            * Need to unfocus previously focused element, otherwise
            * all keypress events (ESC press, for example) will trigger on that element.
            */
         if (document.activeElement) {
-          document.activeElement.blur();
+          document.activeElement.blur()
         }
 
         if (reset) {
-          this.setInitialSize();
+          this.setInitialSize()
 
-          this.shift.left = 0;
-          this.shift.top = 0;
+          this.shift.left = 0
+          this.shift.top = 0
         }
 
         if (scrollable) {
-          document.body.classList.add("v--modal-block-scroll");
+          document.body.classList.add('v--modal-block-scroll')
         }
       } else {
         if (scrollable) {
-          document.body.classList.remove("v--modal-block-scroll");
+          document.body.classList.remove('v--modal-block-scroll')
         }
       }
 
-      let stopEventExecution = false;
+      let stopEventExecution = false
 
       const stop = () => {
-        stopEventExecution = true;
-      };
+        stopEventExecution = true
+      }
 
-      const beforeEvent = this.genEventObject({ stop, state, params });
+      const beforeEvent = this.genEventObject({ stop, state, params })
 
-      this.$emit(beforeEventName, beforeEvent);
+      this.$emit(beforeEventName, beforeEvent)
 
       if (!stopEventExecution) {
-        this.visible = state;
+        this.visible = state
         // after events are called in `watch.visible`
       }
     },
 
     getDraggableElement() {
       var selector =
-        typeof this.draggable !== "string" ? ".v--modal-box" : this.draggable;
+        typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable
 
       if (selector) {
-        var handler = this.$refs.overlay.querySelector(selector);
+        var handler = this.$refs.overlay.querySelector(selector)
         if (handler) {
-          return handler;
+          return handler
         }
       }
     },
@@ -492,72 +490,72 @@ export default {
        */
     onBackgroundClick() {
       if (this.clickToClose) {
-        this.toggle(false);
+        this.toggle(false)
       }
     },
 
     addDraggableListeners() {
       if (!this.draggable) {
-        return;
+        return
       }
 
-      let dragger = this.getDraggableElement();
+      let dragger = this.getDraggableElement()
 
       if (dragger) {
-        let startX = 0;
-        let startY = 0;
-        let cachedShiftX = 0;
-        let cachedShiftY = 0;
+        let startX = 0
+        let startY = 0
+        let cachedShiftX = 0
+        let cachedShiftY = 0
 
         let getPosition = event => {
           return event.touches && event.touches.length > 0
             ? event.touches[0]
-            : event;
-        };
+            : event
+        }
 
         let mousedown = event => {
-          let target = event.target;
+          let target = event.target
 
-          if (target && target.nodeName === "INPUT") {
-            return;
+          if (target && target.nodeName === 'INPUT') {
+            return
           }
 
-          let { clientX, clientY } = getPosition(event);
+          let { clientX, clientY } = getPosition(event)
 
-          document.addEventListener("mousemove", mousemove);
-          document.addEventListener("mouseup", mouseup);
+          document.addEventListener('mousemove', mousemove)
+          document.addEventListener('mouseup', mouseup)
 
-          document.addEventListener("touchmove", mousemove);
-          document.addEventListener("touchend", mouseup);
+          document.addEventListener('touchmove', mousemove)
+          document.addEventListener('touchend', mouseup)
 
-          startX = clientX;
-          startY = clientY;
-          cachedShiftX = this.shift.left;
-          cachedShiftY = this.shift.top;
+          startX = clientX
+          startY = clientY
+          cachedShiftX = this.shift.left
+          cachedShiftY = this.shift.top
 
           //  event.preventDefault()
-        };
+        }
 
         let mousemove = event => {
-          let { clientX, clientY } = getPosition(event);
+          let { clientX, clientY } = getPosition(event)
 
-          this.shift.left = cachedShiftX + clientX - startX;
-          this.shift.top = cachedShiftY + clientY - startY;
-          event.preventDefault();
-        };
+          this.shift.left = cachedShiftX + clientX - startX
+          this.shift.top = cachedShiftY + clientY - startY
+          event.preventDefault()
+        }
 
         let mouseup = event => {
-          document.removeEventListener("mousemove", mousemove);
-          document.removeEventListener("mouseup", mouseup);
+          document.removeEventListener('mousemove', mousemove)
+          document.removeEventListener('mouseup', mouseup)
 
-          document.removeEventListener("touchmove", mousemove);
-          document.removeEventListener("touchend", mouseup);
+          document.removeEventListener('touchmove', mousemove)
+          document.removeEventListener('touchend', mouseup)
 
-          event.preventDefault();
-        };
+          event.preventDefault()
+        }
 
-        dragger.addEventListener("mousedown", mousedown);
-        dragger.addEventListener("touchstart", mousedown);
+        dragger.addEventListener('mousedown', mousedown)
+        dragger.addEventListener('touchstart', mousedown)
       }
     },
 
@@ -574,15 +572,15 @@ export default {
        */
     callAfterEvent(state) {
       if (state) {
-        this.connectObserver();
+        this.connectObserver()
       } else {
-        this.disconnectObserver();
+        this.disconnectObserver()
       }
 
-      const eventName = state ? "opened" : "closed";
-      const event = this.genEventObject({ state });
+      const eventName = state ? 'opened' : 'closed'
+      const event = this.genEventObject({ state })
 
-      this.$emit(eventName, event);
+      this.$emit(eventName, event)
     },
 
     /**
@@ -593,7 +591,7 @@ export default {
        */
     updateRenderedHeight() {
       if (this.$refs.modal) {
-        this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height;
+        this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height
       }
     },
 
@@ -607,7 +605,7 @@ export default {
           childList: true,
           attributes: true,
           subtree: true
-        });
+        })
       }
     },
 
@@ -616,11 +614,11 @@ export default {
        */
     disconnectObserver() {
       if (this.mutationObserver) {
-        this.mutationObserver.disconnect();
+        this.mutationObserver.disconnect()
       }
     }
   }
-};
+}
 </script>
 <style>
 .v--modal-block-scroll {
