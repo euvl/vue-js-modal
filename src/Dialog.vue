@@ -54,40 +54,40 @@ export default {
       default: 'fade'
     }
   },
-  data () {
+  data() {
     return {
       params: {},
       defaultButtons: [{ title: 'CLOSE' }]
     }
   },
   computed: {
-    buttons () {
+    buttons() {
       return this.params.buttons || this.defaultButtons
     },
     /**
       * Returns FLEX style with correct width for arbitrary number of
       * buttons.
       */
-    buttonStyle () {
+    buttonStyle() {
       return {
         flex: `1 1 ${100 / this.buttons.length}%`
       }
     }
   },
   methods: {
-    beforeOpened (event) {
+    beforeOpened(event) {
       window.addEventListener('keyup', this.onKeyUp)
 
       this.params = event.params || {}
       this.$emit('before-opened', event)
     },
-    beforeClosed (event) {
+    beforeClosed(event) {
       window.removeEventListener('keyup', this.onKeyUp)
 
       this.params = {}
       this.$emit('before-closed', event)
     },
-    click (i, event, source = 'click') {
+    click(i, event, source = 'click') {
       const button = this.buttons[i]
 
       if (button && typeof button.handler === 'function') {
@@ -96,11 +96,12 @@ export default {
         this.$modal.hide('dialog')
       }
     },
-    onKeyUp (event) {
+    onKeyUp(event) {
       if (event.which === 13 && this.buttons.length > 0) {
-        const buttonIndex = this.buttons.length === 1
-          ? 0
-          : this.buttons.findIndex(button => button.default)
+        const buttonIndex =
+          this.buttons.length === 1
+            ? 0
+            : this.buttons.findIndex(button => button.default)
 
         if (buttonIndex !== -1) {
           this.click(buttonIndex, event, 'keypress')

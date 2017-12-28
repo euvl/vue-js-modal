@@ -14,23 +14,24 @@ export default {
     minWidth: {
       type: Number,
       default: 0
-    }},
-  data () {
+    }
+  },
+  data() {
     return {
       clicked: false,
       size: {}
     }
   },
-  mounted () {
+  mounted() {
     this.$el.addEventListener('mousedown', this.start, false)
   },
   computed: {
-    className () {
-      return {'vue-modal-resizer': true, 'clicked': this.clicked}
+    className() {
+      return { 'vue-modal-resizer': true, clicked: this.clicked }
     }
   },
   methods: {
-    start (event) {
+    start(event) {
       this.clicked = true
 
       window.addEventListener('mousemove', this.mousemove, false)
@@ -39,7 +40,7 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-    stop () {
+    stop() {
       this.clicked = false
 
       window.removeEventListener('mousemove', this.mousemove, false)
@@ -50,10 +51,10 @@ export default {
         size: this.size
       })
     },
-    mousemove (event) {
+    mousemove(event) {
       this.resize(event)
     },
-    resize (event) {
+    resize(event) {
       var el = this.$el.parentElement
 
       if (el) {
@@ -63,7 +64,7 @@ export default {
         width = inRange(this.minWidth, window.innerWidth, width)
         height = inRange(this.minHeight, window.innerHeight, height)
 
-        this.size = {width, height}
+        this.size = { width, height }
         el.style.width = width + 'px'
         el.style.height = height + 'px'
 
@@ -104,6 +105,6 @@ export default {
 }
 
 .vue-modal-resizer.clicked::after {
-  border-bottom: 10px solid #369BE9;
+  border-bottom: 10px solid #369be9;
 }
 </style>

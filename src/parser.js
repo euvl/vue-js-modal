@@ -19,7 +19,7 @@ const types = [
   }
 ]
 
-var getType = (value) => {
+var getType = value => {
   if (value === 'auto') {
     return {
       type: value,
@@ -43,7 +43,7 @@ var getType = (value) => {
   }
 }
 
-export const parse = (value) => {
+export const parse = value => {
   switch (typeof value) {
     case 'number':
       return { type: 'px', value }
