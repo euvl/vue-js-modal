@@ -8,22 +8,21 @@
     "type": "git",
     "url": "https://github.com/euvl/vue-js-modal.git"
   },
-  "keywords": [
-    "vue",
-    "vuejs",
-    "modal",
-    "vue-js-modal"
-  ],
+  "keywords": ["vue", "vuejs", "modal", "vue-js-modal"],
   "bugs": {
     "url": "https://github.com/euvl/vue-js-modal/issues"
   },
   "scripts": {
-    "build:client": "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
-    "build:srr": "webpack --config ./build/webpack.srr.config.js --progress --hide-modules",
-    "build:srr-no-css": "webpack --config ./build/webpack.srr-no-css.config.js --progress --hide-modules",
+    "build:client":
+      "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
+    "build:ssr":
+      "webpack --config ./build/webpack.ssr.config.js --progress --hide-modules",
+    "build:ssr-no-css":
+      "webpack --config ./build/webpack.ssr-no-css.config.js --progress --hide-modules",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "unit": "./node_modules/karma/bin/karma start test/unit/karma.conf.js",
-    "build": "npm run lint && npm run unit && npm run build:client && npm run build:srr"
+    "build":
+      "npm run unit && npm run build:client && npm run build:ssr && npm run build:ssr-no-css"
   },
   "license": "MIT",
   "devDependencies": {
@@ -40,6 +39,7 @@
     "eslint-plugin-html": "^2.0.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
+    "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.9.0",
     "jasmine-core": "^2.7.0",
     "karma": "^1.4.1",
