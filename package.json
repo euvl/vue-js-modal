@@ -8,7 +8,13 @@
     "type": "git",
     "url": "https://github.com/euvl/vue-js-modal.git"
   },
-  "keywords": ["vue", "vuejs", "modal", "vue-js-modal"],
+  "types": "types/index.d.ts",
+  "keywords": [
+    "vue",
+    "vuejs",
+    "modal",
+    "vue-js-modal"
+  ],
   "bugs": {
     "url": "https://github.com/euvl/vue-js-modal/issues"
   },
@@ -23,6 +29,7 @@
     "unit": "./node_modules/karma/bin/karma start test/unit/karma.conf.js",
     "build":
       "npm run unit && npm run build:client && npm run build:ssr && npm run build:ssr-no-css"
+    "test:types": "tsc -p types/test"
   },
   "license": "MIT",
   "devDependencies": {
