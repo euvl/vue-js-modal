@@ -156,6 +156,10 @@ Vue.use(VModal)
 
 For full demo please look at `demo/server_side_rendering`
 
+### Extracted CSS
+
+There is also a ssr build with css file extracted. Take a look in /dist folder.
+
 ### Properties
 
 | Name      | Required | Type          | Default     | Description |
