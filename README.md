@@ -327,10 +327,10 @@ Dont forget about close button :)
 
 Check out my other projects:
 
-https://github.com/euvl/vue-notification
-https://github.com/euvl/vue-js-toggle-button
-https://github.com/euvl/vue-js-popover
-https://github.com/euvl/v-clipboard
+* https://github.com/euvl/vue-notification
+* https://github.com/euvl/vue-js-toggle-button
+* https://github.com/euvl/vue-js-popover
+* https://github.com/euvl/v-clipboard
 
 ### Developers
 
