@@ -1,7 +1,7 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "main": "dist/index.js",
   "repository": {
@@ -19,16 +19,12 @@
     "url": "https://github.com/euvl/vue-js-modal/issues"
   },
   "scripts": {
-    "build:client":
-      "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
-    "build:ssr":
-      "webpack --config ./build/webpack.ssr.config.js --progress --hide-modules",
-    "build:ssr-no-css":
-      "webpack --config ./build/webpack.ssr-no-css.config.js --progress --hide-modules",
+    "build:client": "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
+    "build:ssr": "webpack --config ./build/webpack.ssr.config.js --progress --hide-modules",
+    "build:ssr-no-css": "webpack --config ./build/webpack.ssr-no-css.config.js --progress --hide-modules",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "unit": "./node_modules/karma/bin/karma start test/unit/karma.conf.js",
-    "build":
-      "npm run unit && npm run build:client && npm run build:ssr && npm run build:ssr-no-css",
+    "build": "npm run build:client && npm run build:ssr && npm run build:ssr-no-css",
     "test:types": "tsc -p types/test"
   },
   "license": "MIT",

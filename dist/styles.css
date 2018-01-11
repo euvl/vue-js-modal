@@ -1,7 +1,7 @@
 
 .v--modal-block-scroll {
+  position: absolute;
   overflow: hidden;
-  position: fixed;
   width: 100vw;
 }
 .v--modal-overlay {
