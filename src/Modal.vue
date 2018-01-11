@@ -622,8 +622,8 @@ export default {
 </script>
 <style>
 .v--modal-block-scroll {
+  position: absolute;
   overflow: hidden;
-  position: fixed;
   width: 100vw;
 }
 
