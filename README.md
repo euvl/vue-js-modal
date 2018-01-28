@@ -179,7 +179,7 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | minWidth  | false | Number (px)      | 0           | The minimum width to which modal can be resized  |
 | minHeight | false | Number (px)      | 0           | The minimum height to which modal can be resized |
 | maxWidth  | false | Number (px)      | Infinity    | The maximum width of the modal (if the value is greater than window width, window width will be used instead |
-| maxHeight | false | Number (px)      | Infinity    | The maximum width of the modal (if the value is greater than widnow height, window height will be used instead |
+| maxHeight | false | Number (px)      | Infinity    | The maximum height of the modal (if the value is greater than window height, window height will be used instead |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from left) of the window |
 | pivotY    | false | Number (0 - 1.0) | 0.5         | Vertical position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
 
