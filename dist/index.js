@@ -207,14 +207,14 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(18);
         var Component = __webpack_require__(1)(__webpack_require__(7), __webpack_require__(15), null, null);
-        Component.options.__file = "D:\\Projects\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(19);
         var Component = __webpack_require__(1)(__webpack_require__(8), __webpack_require__(16), null, null);
-        Component.options.__file = "D:\\Projects\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
@@ -347,6 +347,14 @@
                         return value >= 0;
                     }
                 },
+                maxWidth: {
+                    type: Number,
+                    default: 1 / 0
+                },
+                maxHeight: {
+                    type: Number,
+                    default: 1 / 0
+                },
                 width: {
                     type: [ Number, String ],
                     default: 600,
@@ -465,12 +473,14 @@
                     };
                 },
                 trueModalWidth: function() {
-                    var window = this.window, modal = this.modal, adaptive = this.adaptive, minWidth = this.minWidth, value = "%" === modal.widthType ? window.width / 100 * modal.width : modal.width;
-                    return adaptive ? (0, _util.inRange)(minWidth, window.width, value) : value;
+                    var window = this.window, modal = this.modal, adaptive = this.adaptive, minWidth = this.minWidth, maxWidth = this.maxWidth, value = "%" === modal.widthType ? window.width / 100 * modal.width : modal.width, max = Math.min(window.width, maxWidth);
+                    return adaptive ? (0, _util.inRange)(minWidth, max, value) : value;
                 },
                 trueModalHeight: function() {
-                    var window = this.window, modal = this.modal, isAutoHeight = this.isAutoHeight, adaptive = this.adaptive, value = "%" === modal.heightType ? window.height / 100 * modal.height : modal.height;
-                    return isAutoHeight ? this.modal.renderedHeight : adaptive ? (0, _util.inRange)(this.minHeight, this.window.height, value) : value;
+                    var window = this.window, modal = this.modal, isAutoHeight = this.isAutoHeight, adaptive = this.adaptive, maxHeight = this.maxHeight, value = "%" === modal.heightType ? window.height / 100 * modal.height : modal.height;
+                    if (isAutoHeight) return this.modal.renderedHeight;
+                    var max = Math.min(window.height, maxHeight);
+                    return adaptive ? (0, _util.inRange)(this.minHeight, max, value) : value;
                 },
                 overlayClass: function() {
                     return {
@@ -722,7 +732,8 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(20);
         var Component = __webpack_require__(1)(__webpack_require__(9), __webpack_require__(17), null, null);
-        Component.options.__file = "D:\\Projects\\vue-js-modal\\src\\Resizer.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue", 
+        Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
