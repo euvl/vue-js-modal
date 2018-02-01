@@ -434,7 +434,7 @@ export default {
       this.$emit('resize', resizeEvent)
     },
     /**
-     * Event handler which is triggered on $modal.show and $modal.hight
+     * Event handler which is triggered on $modal.show and $modal.hide
      * BeforeEvents: ('before-close' and 'before-open') are `$emit`ed here,
      * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
      */
