@@ -434,12 +434,13 @@ export default {
       this.$emit('resize', resizeEvent)
     },
     /**
-     * Event handler which is triggered on $modal.show and $modal.hight
+     * Event handler which is triggered on $modal.show and $modal.hide
      * BeforeEvents: ('before-close' and 'before-open') are `$emit`ed here,
      * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
      */
     toggle(state, params) {
       const { reset, scrollable, visible } = this
+      if (visible === state) return
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
       if (beforeEventName === 'before-open') {
