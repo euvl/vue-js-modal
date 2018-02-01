@@ -440,6 +440,7 @@ export default {
      */
     toggle(state, params) {
       const { reset, scrollable, visible } = this
+      if (visible === state) return
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
       if (beforeEventName === 'before-open') {
