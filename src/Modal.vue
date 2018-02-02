@@ -548,6 +548,8 @@ export default {
         }
 
         let mousemove = event => {
+          console.log('mouse moving')
+
           let { clientX, clientY } = getPosition(event)
 
           this.shift.left = cachedShiftX + clientX - startX
