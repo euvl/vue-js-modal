@@ -305,6 +305,8 @@ export default {
       const maxLeft = (window.width - 100) - trueModalWidth
       const maxTop = window.height - trueModalHeight
 
+      console.log('max left - ' + maxLeft)
+
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
 
