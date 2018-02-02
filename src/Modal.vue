@@ -302,7 +302,7 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = window.width - trueModalWidth
+      const maxLeft = (window.width - 100) - trueModalWidth
       const maxTop = window.height - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
@@ -321,9 +321,9 @@ export default {
       const { window, modal, adaptive, minWidth, maxWidth } = this
 
       const value =
-        modal.widthType === '%' ? window.width / 100 * modal.width : modal.width
+        modal.widthType === '%' ? (window.width - 100) / 100 * modal.width : modal.width
 
-      const max = Math.min(window.width, maxWidth)
+      const max = Math.min((window.width - 100), maxWidth)
 
       return adaptive ? inRange(minWidth, max, value) : value
     },
