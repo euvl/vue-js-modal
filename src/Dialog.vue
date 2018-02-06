@@ -11,7 +11,7 @@
     @before-open="beforeOpened"
     @before-close="beforeClosed"
     @opened="$emit('opened', $event)"
-    @closed="document.body.classList.remove('v--modal-block-scroll') && $emit('closed', $event)">
+    @closed="closed($event)">
     <div class="dialog-content">
       <div
         class="dialog-c-title"
@@ -107,6 +107,10 @@ export default {
           this.click(buttonIndex, event, 'keypress')
         }
       }
+    },
+    closed(event) {
+      document.body.classList.remove('v--modal-block-scroll')
+      this.$emit('closed', event)
     }
   }
 }

@@ -170,6 +170,9 @@
                         });
                         -1 !== buttonIndex && this.click(buttonIndex, event, "keypress");
                     }
+                },
+                closed: function(event) {
+                    document.body.classList.remove("v--modal-block-scroll"), this.$emit("closed", event);
                 }
             }
         };
@@ -649,7 +652,7 @@
                             _vm.$emit("opened", $event);
                         },
                         closed: function($event) {
-                            _vm.document.body.classList.remove("v--modal-block-scroll") && _vm.$emit("closed", $event);
+                            _vm.closed($event);
                         }
                     }
                 }, [ _c("div", {
