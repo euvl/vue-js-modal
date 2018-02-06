@@ -9,11 +9,11 @@
                 l: !1,
                 exports: {}
             };
-            return modules[moduleId].call(module.exports, module, module.exports, __webpack_require__), 
+            return modules[moduleId].call(module.exports, module, module.exports, __webpack_require__),
             module.l = !0, module.exports;
         }
         var installedModules = {};
-        return __webpack_require__.m = modules, __webpack_require__.c = installedModules, 
+        return __webpack_require__.m = modules, __webpack_require__.c = installedModules,
         __webpack_require__.i = function(value) {
             return value;
         }, __webpack_require__.d = function(exports, name, getter) {
@@ -49,7 +49,7 @@
                 }
                 for (i = 0; i < modules.length; i++) {
                     var item = modules[i];
-                    "number" == typeof item[0] && alreadyImportedModules[item[0]] || (mediaQuery && !item[2] ? item[2] = mediaQuery : mediaQuery && (item[2] = "(" + item[2] + ") and (" + mediaQuery + ")"), 
+                    "number" == typeof item[0] && alreadyImportedModules[item[0]] || (mediaQuery && !item[2] ? item[2] = mediaQuery : mediaQuery && (item[2] = "(" + item[2] + ") and (" + mediaQuery + ")"),
                     list.push(item));
                 }
             }, list;
@@ -59,7 +59,7 @@
             var esModule, scriptExports = rawScriptExports = rawScriptExports || {}, type = typeof rawScriptExports.default;
             "object" !== type && "function" !== type || (esModule = rawScriptExports, scriptExports = rawScriptExports.default);
             var options = "function" == typeof scriptExports ? scriptExports.options : scriptExports;
-            if (compiledTemplate && (options.render = compiledTemplate.render, options.staticRenderFns = compiledTemplate.staticRenderFns), 
+            if (compiledTemplate && (options.render = compiledTemplate.render, options.staticRenderFns = compiledTemplate.staticRenderFns),
             scopeId && (options._scopeId = scopeId), cssModules) {
                 var computed = options.computed || (options.computed = {});
                 Object.keys(cssModules).forEach(function(key) {
@@ -163,14 +163,14 @@
         var Component = __webpack_require__(1)(__webpack_require__(7), __webpack_require__(15), null, null);
         Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
-        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
+        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."),
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(19);
         var Component = __webpack_require__(1)(__webpack_require__(8), __webpack_require__(16), null, null);
         Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
-        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
+        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."),
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         "use strict";
@@ -212,7 +212,7 @@
             },
             methods: {
                 beforeOpened: function(event) {
-                    window.addEventListener("keyup", this.onKeyUp), this.params = event.params || {}, 
+                    window.addEventListener("keyup", this.onKeyUp), this.params = event.params || {},
                     this.$emit("before-opened", event);
                 },
                 beforeClosed: function(event) {
@@ -396,8 +396,8 @@
                 var _this2 = this;
                 if (_index2.default.event.$on("toggle", function(name, state, params) {
                     name === _this2.name && (void 0 === state && (state = !_this2.visible), _this2.toggle(state, params));
-                }), window.addEventListener("resize", this.onWindowResize), this.onWindowResize(), 
-                this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
+                }), window.addEventListener("resize", this.onWindowResize), this.onWindowResize(),
+                this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"),
                 this.isAutoHeight) {
                     var MutationObserver = function() {
                         for (var prefixes = [ "", "WebKit", "Moz", "O", "Ms" ], i = 0; i < prefixes.length; i++) {
@@ -456,9 +456,9 @@
             },
             methods: {
                 setInitialSize: function() {
-                    var modal = this.modal, width = (0, _parser2.default)(this.width), height = (0, 
+                    var modal = this.modal, width = (0, _parser2.default)(this.width), height = (0,
                     _parser2.default)(this.height);
-                    modal.width = width.value, modal.widthType = width.type, modal.height = height.value, 
+                    modal.width = width.value, modal.widthType = width.type, modal.height = height.value,
                     modal.heightType = height.type;
                 },
                 onEscapeKeyUp: function(event) {
@@ -477,7 +477,7 @@
                     return Object.assign(eventData, params || {});
                 },
                 onModalResize: function(event) {
-                    this.modal.widthType = "px", this.modal.width = event.size.width, this.modal.heightType = "px", 
+                    this.modal.widthType = "px", this.modal.width = event.size.width, this.modal.heightType = "px",
                     this.modal.height = event.size.height;
                     var size = this.modal.size, resizeEvent = this.genEventObject({
                         size: size
@@ -486,7 +486,7 @@
                 },
                 toggle: function(state, params) {
                     var reset = this.reset, scrollable = this.scrollable, visible = this.visible, beforeEventName = visible ? "before-close" : "before-open";
-                    "before-open" === beforeEventName ? (document.activeElement && document.activeElement.blur(), 
+                    "before-open" === beforeEventName ? (document.activeElement && document.activeElement.blur(),
                     reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && document.body.classList.add("v--modal-block-scroll")) : scrollable && document.body.classList.remove("v--modal-block-scroll");
                     var stopEventExecution = !1, stop = function() {
                         stopEventExecution = !0;
@@ -518,17 +518,17 @@
                                 var target = event.target;
                                 if (!target || "INPUT" !== target.nodeName) {
                                     var _getPosition = getPosition(event), clientX = _getPosition.clientX, clientY = _getPosition.clientY;
-                                    document.addEventListener("mousemove", _mousemove), document.addEventListener("mouseup", _mouseup), 
-                                    document.addEventListener("touchmove", _mousemove), document.addEventListener("touchend", _mouseup), 
+                                    document.addEventListener("mousemove", _mousemove), document.addEventListener("mouseup", _mouseup),
+                                    document.addEventListener("touchmove", _mousemove), document.addEventListener("touchend", _mouseup),
                                     startX = clientX, startY = clientY, cachedShiftX = _this3.shift.left, cachedShiftY = _this3.shift.top;
                                 }
                             }, _mousemove = function(event) {
                                 var _getPosition2 = getPosition(event), clientX = _getPosition2.clientX, clientY = _getPosition2.clientY;
-                                _this3.shift.left = cachedShiftX + clientX - startX, _this3.shift.top = cachedShiftY + clientY - startY, 
+                                _this3.shift.left = cachedShiftX + clientX - startX, _this3.shift.top = cachedShiftY + clientY - startY,
                                 event.preventDefault();
                             }, _mouseup = function _mouseup(event) {
-                                document.removeEventListener("mousemove", _mousemove), document.removeEventListener("mouseup", _mouseup), 
-                                document.removeEventListener("touchmove", _mousemove), document.removeEventListener("touchend", _mouseup), 
+                                document.removeEventListener("mousemove", _mousemove), document.removeEventListener("mouseup", _mouseup),
+                                document.removeEventListener("touchmove", _mousemove), document.removeEventListener("touchend", _mouseup),
                                 event.preventDefault();
                             };
                             dragger.addEventListener("mousedown", mousedown), dragger.addEventListener("touchstart", mousedown);
@@ -595,11 +595,11 @@
             },
             methods: {
                 start: function(event) {
-                    this.clicked = !0, window.addEventListener("mousemove", this.mousemove, !1), window.addEventListener("mouseup", this.stop, !1), 
+                    this.clicked = !0, window.addEventListener("mousemove", this.mousemove, !1), window.addEventListener("mouseup", this.stop, !1),
                     event.stopPropagation(), event.preventDefault();
                 },
                 stop: function() {
-                    this.clicked = !1, window.removeEventListener("mousemove", this.mousemove, !1), 
+                    this.clicked = !1, window.removeEventListener("mousemove", this.mousemove, !1),
                     window.removeEventListener("mouseup", this.stop, !1), this.$emit("resize-stop", {
                         element: this.$el.parentElement,
                         size: this.size
@@ -612,7 +612,7 @@
                     var el = this.$el.parentElement;
                     if (el) {
                         var width = event.clientX - el.offsetLeft, height = event.clientY - el.offsetTop;
-                        width = (0, _util.inRange)(this.minWidth, window.innerWidth, width), height = (0, 
+                        width = (0, _util.inRange)(this.minWidth, window.innerWidth, width), height = (0,
                         _util.inRange)(this.minHeight, window.innerHeight, height), this.size = {
                             width: width,
                             height: height
@@ -686,10 +686,10 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(20);
         var Component = __webpack_require__(1)(__webpack_require__(9), __webpack_require__(17), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue", 
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue",
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
-        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
+        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."),
         module.exports = Component.exports;
     }, function(module, exports) {
         module.exports = {
@@ -713,6 +713,7 @@
                             _vm.$emit("opened", $event);
                         },
                         closed: function($event) {
+                            document.body.classList.remove("v--modal-block-scroll");
                             _vm.$emit("closed", $event);
                         }
                     }
@@ -815,15 +816,15 @@
         }, module.exports.render._withStripped = !0;
     }, function(module, exports, __webpack_require__) {
         var content = __webpack_require__(11);
-        "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
+        "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals),
         __webpack_require__(2)("237a7ca4", content, !1);
     }, function(module, exports, __webpack_require__) {
         var content = __webpack_require__(12);
-        "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
+        "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals),
         __webpack_require__(2)("2790b368", content, !1);
     }, function(module, exports, __webpack_require__) {
         var content = __webpack_require__(13);
-        "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
+        "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals),
         __webpack_require__(2)("02ec91af", content, !1);
     }, function(module, exports) {
         module.exports = function(parentId, list) {
