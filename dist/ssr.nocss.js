@@ -98,14 +98,16 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(9);
         var Component = __webpack_require__(0)(__webpack_require__(5), __webpack_require__(13), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/home/kxtreme/Documentos/vue-js-modal/src/Dialog.vue", 
+        Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(10);
         var Component = __webpack_require__(0)(__webpack_require__(6), __webpack_require__(14), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/home/kxtreme/Documentos/vue-js-modal/src/Modal.vue", 
+        Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
@@ -422,17 +424,20 @@
                     this.$emit("resize", resizeEvent);
                 },
                 toggle: function(state, params) {
-                    var reset = this.reset, scrollable = this.scrollable, visible = this.visible, beforeEventName = visible ? "before-close" : "before-open";
-                    "before-open" === beforeEventName ? (document.activeElement && document.activeElement.blur(), 
-                    reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && document.body.classList.add("v--modal-block-scroll")) : scrollable && document.body.classList.remove("v--modal-block-scroll");
-                    var stopEventExecution = !1, stop = function() {
-                        stopEventExecution = !0;
-                    }, beforeEvent = this.genEventObject({
-                        stop: stop,
-                        state: state,
-                        params: params
-                    });
-                    this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = state);
+                    var reset = this.reset, scrollable = this.scrollable, visible = this.visible;
+                    if (visible !== state) {
+                        var beforeEventName = visible ? "before-close" : "before-open";
+                        "before-open" === beforeEventName ? (document.activeElement && document.activeElement.blur(), 
+                        reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && document.body.classList.add("v--modal-block-scroll")) : scrollable && document.body.classList.remove("v--modal-block-scroll");
+                        var stopEventExecution = !1, stop = function() {
+                            stopEventExecution = !0;
+                        }, beforeEvent = this.genEventObject({
+                            stop: stop,
+                            state: state,
+                            params: params
+                        });
+                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = state);
+                    }
                 },
                 getDraggableElement: function() {
                     var selector = "string" != typeof this.draggable ? ".v--modal-box" : this.draggable;
@@ -617,7 +622,7 @@
     }, function(module, exports) {}, function(module, exports) {}, function(module, exports) {}, function(module, exports, __webpack_require__) {
         __webpack_require__(11);
         var Component = __webpack_require__(0)(__webpack_require__(7), __webpack_require__(15), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue", 
+        Component.options.__file = "/home/kxtreme/Documentos/vue-js-modal/src/Resizer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
@@ -644,7 +649,7 @@
                             _vm.$emit("opened", $event);
                         },
                         closed: function($event) {
-                            _vm.$emit("closed", $event);
+                            _vm.document.body.classList.remove("v--modal-block-scroll") && _vm.$emit("closed", $event);
                         }
                     }
                 }, [ _c("div", {
