@@ -1,5 +1,5 @@
 <template>
-  <modal 
+  <modal
     name="dialog"
     height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
@@ -11,7 +11,7 @@
     @before-open="beforeOpened"
     @before-close="beforeClosed"
     @opened="$emit('opened', $event)"
-    @closed="$emit('closed', $event)">
+    @closed="closed($event)">
     <div class="dialog-content">
       <div
         class="dialog-c-title"
@@ -24,7 +24,7 @@
     <div
       class="vue-dialog-buttons"
       v-if="buttons">
-      <button 
+      <button
         v-for="(button, i) in buttons"
         :class="button.class || 'vue-dialog-button'"
         type="button"
@@ -108,6 +108,10 @@ export default {
           this.click(buttonIndex, event, 'keypress')
         }
       }
+    },
+    closed(event) {
+      document.body.classList.remove('v--modal-block-scroll')
+      this.$emit('closed', event)
     }
   }
 }
