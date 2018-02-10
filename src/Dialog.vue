@@ -27,6 +27,7 @@
       <button 
         v-for="(button, i) in buttons"
         :class="button.class || 'vue-dialog-button'"
+        type="button"
         :style="buttonStyle"
         :key="i"
         v-html="button.title"
