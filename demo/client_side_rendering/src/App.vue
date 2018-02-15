@@ -7,6 +7,8 @@
   <demo-focus-modal/>
   <demo-size-modal/>
 
+  <modals-container />
+
   <v-dialog
     @before-opened="dialogEvent('before-open')"
     @before-closed="dialogEvent('before-close')"
@@ -106,6 +108,22 @@
       @click="showButtonsDialog">
       Dialog: buttons
     </button>
+    <br>
+    <button
+      class="btn"
+      @click="showDynamicRuntimeModal">
+      Dynamic: Runtime Modal
+    </button>
+    <button
+      class="btn"
+      @click="showDynamicComponentModal">
+      Dynamic: Component Modal
+    </button>
+    <button
+      class="btn"
+      @click="showDynamicComponentModalWithModalParams">
+      Dynamic: Component Modal with modal params
+    </button>
   </div>
 </div>
 </template>
@@ -118,6 +136,7 @@ import DemoLoginModal       from './components/DemoLoginModal.vue'
 import DemoDogProfileModal  from './components/DogProfileModal.vue'
 import DemoConditionalModal from './components/ConditionalModal.vue'
 import DemoSizeModal        from './components/SizeModal.vue'
+import CustomComponentModal from './components/CustomComponentModal.vue'
 
 export default {
   name: 'app',
@@ -200,6 +219,36 @@ export default {
             }
           }
         ]
+      })
+    },
+
+    showDynamicRuntimeModal () {
+      this.$modal.show({
+        template: `
+          <div>
+            <h1>This is created inline</h1>
+            <p>{{ text }}</p>
+          </div>
+        `,
+        props: ['text']
+      }, {
+        text: 'This text is passed as a property'
+      })
+    },
+
+    showDynamicComponentModal () {
+      this.$modal.show(CustomComponentModal, {
+        text: 'This text is passed as a property'
+      })
+    },
+
+    showDynamicComponentModalWithModalParams () {
+      this.$modal.show(CustomComponentModal, {
+        text: 'This text is passed as a property'
+      }, {
+        resizable: true,
+        adaptive: true,
+        draggable: true,
       })
     },
 

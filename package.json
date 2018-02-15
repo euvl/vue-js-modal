@@ -24,6 +24,7 @@
     "build:ssr-no-css": "webpack --config ./build/webpack.ssr-no-css.config.js --progress --hide-modules",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "unit": "./node_modules/karma/bin/karma start test/unit/karma.conf.js",
+    "watch": "webpack --config ./build/webpack.client.config.js --progress --hide-modules --watch",
     "build": "npm run build:client && npm run build:ssr && npm run build:ssr-no-css",
     "test:types": "tsc -p types/test"
   },
