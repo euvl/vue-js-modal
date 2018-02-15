@@ -4,7 +4,7 @@ import Dialog from './Dialog.vue'
 const defaultComponentName = 'modal'
 
 const Plugin = {
-  install(Vue, options = {}) {
+  install (Vue, options = {}) {
     /**
      * Makes sure that plugin can be insstalled only once
      */
@@ -18,15 +18,15 @@ const Plugin = {
      * Plugin API
      */
     Vue.prototype.$modal = {
-      show(name, params) {
+      show (name, params) {
         Plugin.event.$emit('toggle', name, true, params)
       },
 
-      hide(name, params) {
+      hide (name, params) {
         Plugin.event.$emit('toggle', name, false, params)
       },
 
-      toggle(name, params) {
+      toggle (name, params) {
         Plugin.event.$emit('toggle', name, undefined, params)
       }
     }
