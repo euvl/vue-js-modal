@@ -113,7 +113,7 @@ this.$modal.show('dialog', {
   title: 'Alert!',
   text: 'You are too awesome',
   buttons: [
-    { 
+    {
       title: 'Deal with it',
       handler: () => { alert('Woot!') }
     },
@@ -122,7 +122,7 @@ this.$modal.show('dialog', {
       default: true,    // Will be triggered by default if 'Enter' pressed.
       handler: () => {} // Button click handler
     },
-    { 
+    {
       title: 'Close'
     }
  ]
@@ -132,6 +132,50 @@ this.$modal.show('dialog', {
 <p align="center">
   <img src="https://user-images.githubusercontent.com/1577802/29165216-ec62552c-7db9-11e7-807e-ef341edcc94d.png">
 </p>
+
+### Dynamic Modals
+
+In order to instantiate modals at runtime (for lazy-loading or decluttering templates), it is possible to create modals dynamically.
+
+To start using this feature you must set `dynamic: true` in plugin configuration:
+
+```js
+Vue.use(VModal, { dynamic: true })
+```
+
+And include the `<modals-container/>` component it in your project:
+
+```vue
+<modals-container/>
+```
+
+Call it (the first argument is the component definition, the second are component properties, and the third modal parameters):
+
+```javascript
+this.$modal.show({
+  template: `
+    <div>
+      <h1>This is created inline</h1>
+      <p>{{ text }}</p>
+    </div>
+  `,
+  props: ['text']
+}, {
+  text: 'This text is passed as a property'
+})
+```
+
+It can also be used with `.vue` files:
+
+```javascript
+import MyComponent from './MyComponent.vue'
+
+this.$modal.show(MyComponent, {
+  text: 'This text is passed as a property'
+}, {
+  draggable: true
+})
+```
 
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 

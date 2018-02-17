@@ -1,4 +1,4 @@
-import Vue, { PluginObject } from "vue";
+import Vue, { PluginObject, ComponentOptions } from "vue";
 
 declare const VueJSModal: PluginObject<VueJSModalOptions>;
 export default VueJSModal;
@@ -9,7 +9,7 @@ export declare interface VueJSModalOptions {
 }
 
 declare interface VModal {
-  show(name: string, params?: object): void;
+  show(modal: string | typeof Vue | ComponentOptions<Vue>, paramsOrProps?: object, params?: object): void;
   hide(name: string, params?: object): void;
   toggle(name: string, params?: object): void;
 }
