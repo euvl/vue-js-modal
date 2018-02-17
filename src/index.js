@@ -16,7 +16,7 @@ const Plugin = {
     this.installed = true
     this.event = new Vue()
     this.dynamicContainer = null
-
+    this.componentName = options.componentName || defaultComponentName
     /**
      * Plugin API
      */
@@ -46,8 +46,7 @@ const Plugin = {
     /**
      * Sets custom component name (if provided)
      */
-    const componentName = options.componentName || defaultComponentName
-    Vue.component(componentName, Modal)
+    Vue.component(this.componentName, Modal)
     /**
      * Registration of <Dialog/> component
      */
