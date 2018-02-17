@@ -113,7 +113,7 @@ this.$modal.show('dialog', {
   title: 'Alert!',
   text: 'You are too awesome',
   buttons: [
-    { 
+    {
       title: 'Deal with it',
       handler: () => { alert('Woot!') }
     },
@@ -122,7 +122,7 @@ this.$modal.show('dialog', {
       default: true,    // Will be triggered by default if 'Enter' pressed.
       handler: () => {} // Button click handler
     },
-    { 
+    {
       title: 'Close'
     }
  ]
@@ -132,6 +132,50 @@ this.$modal.show('dialog', {
 <p align="center">
   <img src="https://user-images.githubusercontent.com/1577802/29165216-ec62552c-7db9-11e7-807e-ef341edcc94d.png">
 </p>
+
+### Dynamic Modals
+
+In order to instantiate modals at runtime (for lazy-loading or decluttering templates), it is possible to create modals dynamically.
+
+To start using this feature you must set `dynamic: true` in plugin configuration:
+
+```js
+Vue.use(VModal, { dynamic: true })
+```
+
+And include the `<modals-container/>` component it in your project:
+
+```vue
+<modals-container/>
+```
+
+Call it (the first argument is the component definition, the second are component properties, and the third modal parameters):
+
+```javascript
+this.$modal.show({
+  template: `
+    <div>
+      <h1>This is created inline</h1>
+      <p>{{ text }}</p>
+    </div>
+  `,
+  props: ['text']
+}, {
+  text: 'This text is passed as a property'
+})
+```
+
+It can also be used with `.vue` files:
+
+```javascript
+import MyComponent from './MyComponent.vue'
+
+this.$modal.show(MyComponent, {
+  text: 'This text is passed as a property'
+}, {
+  draggable: true
+})
+```
 
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
@@ -156,6 +200,10 @@ Vue.use(VModal)
 
 For full demo please look at `demo/server_side_rendering`
 
+### Extracted CSS
+
+There is also a ssr build with css file extracted. Take a look in /dist folder.
+
 ### Properties
 
 | Name      | Required | Type          | Default     | Description |
@@ -172,8 +220,10 @@ For full demo please look at `demo/server_side_rendering`
 | classes   | false | [String, Array]  | 'v--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
 | width     | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |
 | height    | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") or `"auto"` |
-| minWidth  | false | Number           | 0           | The minimum width to which modal can be resized  |
-| minHeight | false | Number           | 0           | The minimum height to which modal can be resized |
+| minWidth  | false | Number (px)      | 0           | The minimum width to which modal can be resized  |
+| minHeight | false | Number (px)      | 0           | The minimum height to which modal can be resized |
+| maxWidth  | false | Number (px)      | Infinity    | The maximum width of the modal (if the value is greater than window width, window width will be used instead |
+| maxHeight | false | Number (px)      | Infinity    | The maximum height of the modal (if the value is greater than window height, window height will be used instead |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from left) of the window |
 | pivotY    | false | Number (0 - 1.0) | 0.5         | Vertical position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
 
@@ -318,6 +368,15 @@ For specific modal:
 Dont forget about close button :)
 </modal>
 ```
+
+### Check out
+
+Check out my other projects:
+
+* https://github.com/euvl/vue-notification
+* https://github.com/euvl/vue-js-toggle-button
+* https://github.com/euvl/vue-js-popover
+* https://github.com/euvl/v-clipboard
 
 ### Developers
 

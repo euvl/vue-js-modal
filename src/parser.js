@@ -28,7 +28,8 @@ var getType = value => {
   }
 
   for (var i = 0; i < types.length; i++) {
-    let type = types[i]
+    const type = types[i]
+
     if (type.regexp.test(value)) {
       return {
         type: type.name,
