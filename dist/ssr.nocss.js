@@ -63,24 +63,25 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var _Modal = __webpack_require__(4), _Modal2 = _interopRequireDefault(_Modal), _Dialog = __webpack_require__(3), _Dialog2 = _interopRequireDefault(_Dialog), Plugin = {
+        var _Modal = __webpack_require__(4), _Modal2 = _interopRequireDefault(_Modal), _Dialog = __webpack_require__(3), _Dialog2 = _interopRequireDefault(_Dialog), _ModalsContainer = __webpack_require__(5), _ModalsContainer2 = _interopRequireDefault(_ModalsContainer), Plugin = {
             install: function(Vue) {
                 var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-                if (!this.installed) {
-                    this.installed = !0, this.event = new Vue(), Vue.prototype.$modal = {
-                        show: function(name, params) {
-                            Plugin.event.$emit("toggle", name, !0, params);
-                        },
-                        hide: function(name, params) {
-                            Plugin.event.$emit("toggle", name, !1, params);
-                        },
-                        toggle: function(name, params) {
-                            Plugin.event.$emit("toggle", name, void 0, params);
-                        }
-                    };
-                    var componentName = options.componentName || "modal";
-                    Vue.component(componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default);
-                }
+                this.installed || (this.installed = !0, this.event = new Vue(), this.dynamicContainer = null, 
+                this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
+                    _setDynamicContainer: function(dynamicContainer) {
+                        Plugin.dynamicContainer = dynamicContainer;
+                    },
+                    show: function(modal, paramsOrProps, params) {
+                        "string" == typeof modal ? Plugin.event.$emit("toggle", modal, !0, paramsOrProps) : null === Plugin.dynamicContainer ? console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page") : Plugin.dynamicContainer.add(modal, paramsOrProps, params);
+                    },
+                    hide: function(name, params) {
+                        Plugin.event.$emit("toggle", name, !1, params);
+                    },
+                    toggle: function(name, params) {
+                        Plugin.event.$emit("toggle", name, void 0, params);
+                    }
+                }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default), 
+                options.dynamic && Vue.component("modals-container", _ModalsContainer2.default));
             }
         };
         exports.default = Plugin;
@@ -96,18 +97,25 @@
             inRange: inRange
         };
     }, function(module, exports, __webpack_require__) {
-        __webpack_require__(9);
-        var Component = __webpack_require__(0)(__webpack_require__(5), __webpack_require__(13), null, null);
+        __webpack_require__(11);
+        var Component = __webpack_require__(0)(__webpack_require__(6), __webpack_require__(16), null, null);
         Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
-        __webpack_require__(10);
-        var Component = __webpack_require__(0)(__webpack_require__(6), __webpack_require__(14), null, null);
+        __webpack_require__(12);
+        var Component = __webpack_require__(0)(__webpack_require__(7), __webpack_require__(17), null, null);
         Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
+        module.exports = Component.exports;
+    }, function(module, exports, __webpack_require__) {
+        var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(15), null, null);
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\ModalsContainer.vue", 
+        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+            return "default" !== key && "__esModule" !== key;
+        }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] ModalsContainer.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         "use strict";
@@ -181,7 +189,7 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var _index = __webpack_require__(1), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(12), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(2), _parser = __webpack_require__(8), _parser2 = _interopRequireDefault(_parser);
+        var _index = __webpack_require__(1), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(14), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(2), _parser = __webpack_require__(10), _parser2 = _interopRequireDefault(_parser);
         exports.default = {
             name: "VueJsModal",
             props: {
@@ -502,6 +510,38 @@
         "use strict";
         Object.defineProperty(exports, "__esModule", {
             value: !0
+        }), exports.default = {
+            data: function() {
+                return {
+                    uid: 0,
+                    modals: []
+                };
+            },
+            created: function() {
+                this.$modal._setDynamicContainer(this);
+            },
+            methods: {
+                add: function(modal, params, config) {
+                    var _this = this, id = this.uid++, name = "_dynamic-modal-" + id;
+                    this.modals.push({
+                        id: id,
+                        name: name,
+                        component: modal,
+                        params: params || {},
+                        config: config || {}
+                    }), this.$nextTick(function() {
+                        _this.$modal.show(name);
+                    });
+                },
+                remove: function(id) {
+                    for (var i in this.modals) if (this.modals[i].id === id) return void this.modals.splice(i, 1);
+                }
+            }
+        };
+    }, function(module, exports, __webpack_require__) {
+        "use strict";
+        Object.defineProperty(exports, "__esModule", {
+            value: !0
         });
         var _util = __webpack_require__(2);
         exports.default = {
@@ -618,13 +658,39 @@
         };
         exports.default = parse;
     }, function(module, exports) {}, function(module, exports) {}, function(module, exports) {}, function(module, exports, __webpack_require__) {
-        __webpack_require__(11);
-        var Component = __webpack_require__(0)(__webpack_require__(7), __webpack_require__(15), null, null);
+        __webpack_require__(13);
+        var Component = __webpack_require__(0)(__webpack_require__(9), __webpack_require__(18), null, null);
         Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
+    }, function(module, exports) {
+        module.exports = {
+            render: function() {
+                var _vm = this, _h = _vm.$createElement, _c = _vm._self._c || _h;
+                return _c("div", {
+                    attrs: {
+                        id: "#modals-container"
+                    }
+                }, _vm._l(_vm.modals, function(modal) {
+                    return _c("modal", _vm._b({
+                        key: modal.id,
+                        attrs: {
+                            name: modal.name
+                        },
+                        on: {
+                            closed: function($event) {
+                                _vm.remove(modal.id);
+                            }
+                        }
+                    }, "modal", modal.config, !1), [ _c(modal.component, _vm._b({
+                        tag: "component"
+                    }, "component", modal.params, !1)) ], 1);
+                }));
+            },
+            staticRenderFns: []
+        }, module.exports.render._withStripped = !0;
     }, function(module, exports) {
         module.exports = {
             render: function() {
