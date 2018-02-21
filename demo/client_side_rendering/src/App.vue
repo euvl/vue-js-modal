@@ -225,7 +225,7 @@ export default {
     showDynamicRuntimeModal () {
       this.$modal.show({
         template: `
-          <div>
+          <div class="example-modal-content">
             <h1>This is created inline</h1>
             <p>{{ text }}</p>
           </div>
@@ -243,9 +243,19 @@ export default {
     },
 
     showDynamicComponentModalWithModalParams () {
-      this.$modal.show(CustomComponentModal, {
-        text: 'This text is passed as a property'
-      }, {
+      this.$modal.show({
+        template: `
+          <div class="example-modal-content">
+            <button class="btn" @click="closeByName">Close this using name</button>
+            <button class="btn" @click="closeByEvent">Close this using events</button>
+          </div>
+        `,
+        methods: {
+          closeByName() { this.$modal.hide('dynamic-modal'); },
+          closeByEvent() { this.$emit('close'); },
+        }
+      }, null, {
+        name: 'dynamic-modal',
         resizable: true,
         adaptive: true,
         draggable: true,

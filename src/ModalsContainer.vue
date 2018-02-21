@@ -3,11 +3,14 @@
         <modal
             v-for="modal in modals"
             :key="modal.id"
-            :name="modal.name"
             v-bind="modal.config"
             @closed="remove(modal.id)"
         >
-            <component :is="modal.component" v-bind="modal.params"></component>
+            <component
+              :is="modal.component"
+              v-bind="modal.params"
+              @close="$modal.hide(modal.config.name)"
+            ></component>
         </modal>
     </div>
 </template>
@@ -25,16 +28,18 @@ export default {
   methods: {
     add (modal, params, config) {
       let id = this.uid++
-      let name = '_dynamic-modal-' + id
+      config = config || {};
+      if (!config.name) {
+        config.name = '_dynamic-modal-' + id;
+      }
       this.modals.push({
         id: id,
-        name: name,
         component: modal,
         params: params || {},
         config: config || {}
       })
       this.$nextTick(() => {
-        this.$modal.show(name)
+        this.$modal.show(config.name)
       })
     },
     remove (id) {
