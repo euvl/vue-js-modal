@@ -40,7 +40,7 @@
 </template>
 <script>
 export default {
-  name: 'Dialog',
+  name: 'VueJsDialog',
   props: {
     width: {
       type: [Number, String],
