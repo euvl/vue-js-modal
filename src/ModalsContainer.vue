@@ -28,7 +28,7 @@ export default {
   methods: {
     add (modal, params, config) {
       let id = this.uid++
-      config = config || {};
+      config = config ? Object.assign({}, config) : {};
       if (!config.name) {
         config.name = '_dynamic-modal-' + id;
       }
@@ -36,7 +36,7 @@ export default {
         id: id,
         component: modal,
         params: params || {},
-        config: config || {}
+        config: config
       })
       this.$nextTick(() => {
         this.$modal.show(config.name)
