@@ -231,7 +231,7 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         }), exports.default = {
-            name: "Dialog",
+            name: "VueJsDialog",
             props: {
                 width: {
                     type: [ Number, String ],
