@@ -177,6 +177,19 @@ this.$modal.show(MyComponent, {
 })
 ```
 
+Other than defining the `name` modal parameter, it's also possible to close dynamic modals emitting a `'close'` event:
+
+```javascript
+this.$modal.show({
+  template: `
+    <div>
+      <p>Close using this button:</p>
+      <button @click="$emit('close')">Close</button>
+    </div>
+  `
+})
+```
+
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
 ### SSR

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="example-modal-content">
     <h1>This is a custom component</h1>
     <p>{{ text }}</p>
   </div>
