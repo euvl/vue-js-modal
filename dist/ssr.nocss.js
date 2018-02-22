@@ -522,15 +522,15 @@
             },
             methods: {
                 add: function(modal, params, config) {
-                    var _this = this, id = this.uid++, name = "_dynamic-modal-" + id;
+                    var _this = this, id = this.uid++;
+                    config = config ? Object.assign({}, config) : {}, config.name || (config.name = "_dynamic-modal-" + id), 
                     this.modals.push({
                         id: id,
-                        name: name,
                         component: modal,
                         params: params || {},
-                        config: config || {}
+                        config: config
                     }), this.$nextTick(function() {
-                        _this.$modal.show(name);
+                        _this.$modal.show(config.name);
                     });
                 },
                 remove: function(id) {
@@ -676,16 +676,18 @@
                 }, _vm._l(_vm.modals, function(modal) {
                     return _c("modal", _vm._b({
                         key: modal.id,
-                        attrs: {
-                            name: modal.name
-                        },
                         on: {
                             closed: function($event) {
                                 _vm.remove(modal.id);
                             }
                         }
                     }, "modal", modal.config, !1), [ _c(modal.component, _vm._b({
-                        tag: "component"
+                        tag: "component",
+                        on: {
+                            close: function($event) {
+                                _vm.$modal.hide(modal.config.name);
+                            }
+                        }
                     }, "component", modal.params, !1)) ], 1);
                 }));
             },
