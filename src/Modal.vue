@@ -460,10 +460,12 @@ export default {
         }
 
         if (scrollable) {
+          document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
           document.body.classList.add('v--modal-block-scroll')
         }
       } else {
         if (scrollable) {
+          document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
           document.body.classList.remove('v--modal-block-scroll')
         }
       }
