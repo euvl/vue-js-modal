@@ -5,6 +5,10 @@
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 
+<p align="right">
+  <a href="https://www.buymeacoffee.com/yev" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+</p>
+
 ##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
 
 [Changelog on Medium](https://medium.com/@yev_dev/vue-js-modal-changelog-61f934691b67 "Medium")
