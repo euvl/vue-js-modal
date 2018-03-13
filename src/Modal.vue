@@ -4,26 +4,28 @@
          ref="overlay"
          :class="overlayClass"
          :aria-expanded="visible.toString()"
-         :data-modal="name"
-         @mousedown.stop="onBackgroundClick"
-         @touchstart.stop="onBackgroundClick">
-      <div class="v--modal-top-right">
-        <slot name="top-right"/>
-      </div>
-      <transition :name="transition">
-        <div v-if="visibility.modal"
-             ref="modal"
-             :class="modalClass"
-             :style="modalStyle"
-             @mousedown.stop
-             @touchstart.stop>
-          <slot/>
-          <resizer v-if="resizable && !isAutoHeight"
-                   :min-width="minWidth"
-                   :min-height="minHeight"
-                   @resize="onModalResize"/>
+         :data-modal="name">
+      <div :class="backgroundClickClass"
+           @mousedown.stop="onBackgroundClick"
+           @touchstart.stop="onBackgroundClick">
+        <div class="v--modal-top-right">
+          <slot name="top-right"/>
         </div>
-      </transition>
+        <transition :name="transition">
+          <div v-if="visibility.modal"
+               ref="modal"
+               :class="modalClass"
+               :style="modalStyle"
+               @mousedown.stop
+               @touchstart.stop>
+            <slot/>
+            <resizer v-if="resizable && !isAutoHeight"
+                     :min-width="minWidth"
+                     :min-height="minHeight"
+                     @resize="onModalResize"/>
+          </div>
+        </transition>
+      </div>
     </div>
   </transition>
 </template>
@@ -360,6 +362,12 @@ export default {
       }
     },
     /**
+     * Returns class list for click outside overlay (background click)
+     */
+    backgroundClickClass() {
+      return ['v--modal-background-click']
+    },
+    /**
      * Returns class list for modal itself
      */
     modalClass () {
@@ -656,8 +664,13 @@ export default {
   height: 100%;
   min-height: 100vh;
   overflow-y: auto;
-  padding-bottom: 10px;
   -webkit-overflow-scrolling: touch;
+}
+
+.v--modal-overlay .v--modal-background-click {
+  min-height: 100%;
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 .v--modal-overlay .v--modal-box {
