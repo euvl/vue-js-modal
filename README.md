@@ -198,6 +198,8 @@ this.$modal.show({
 
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
+**Note:** keep in mind that there are some limitations for using dynamic modals. If you need full functionality then use ordinary modal instead.
+
 ### SSR
 
 Include plugin in your `nuxt.config.js` file:
