@@ -468,11 +468,24 @@ export default {
         }
 
         if (scrollable) {
+          // Store original body padding-right
+          document.body.dataset.vModalBlockScrollRightPadding = document.body.style.paddingRight;
+
+          // Apply scrollBarWidth as padding
+          const scrollBarWidth = window.innerWidth - $('body').scrollWidth;
+          document.body.style.paddingRight = `${scrollBarWidth}px`;
+
+          // Apply scroll class
           document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
           document.body.classList.add('v--modal-block-scroll')
         }
       } else {
         if (scrollable) {
+          // Restore original padding-right on body
+          document.body.style.paddingRight = document.body.dataset.vModalBlockScrollRightPadding || '';
+          delete document.body.dataset.vModalBlockScrollRightPadding;
+
+          // Remove existing scroll class
           document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
           document.body.classList.remove('v--modal-block-scroll')
         }
