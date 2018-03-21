@@ -472,7 +472,7 @@ export default {
           document.body.dataset.vModalBlockScrollRightPadding = document.body.style.paddingRight;
 
           // Apply scrollBarWidth as padding
-          const scrollBarWidth = window.innerWidth - $('body').scrollWidth;
+          const scrollBarWidth = window.innerWidth - document.body.scrollWidth;
           document.body.style.paddingRight = `${scrollBarWidth}px`;
 
           // Apply scroll class
