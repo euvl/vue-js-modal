@@ -10,8 +10,12 @@
   },
   "types": "types/index.d.ts",
   "keywords": [
+    "front-end",
+    "web",
     "vue",
     "vuejs",
+    "dialog",
+    "alert",
     "modal",
     "vue-js-modal"
   ],
