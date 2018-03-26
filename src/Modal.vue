@@ -451,6 +451,7 @@ export default {
       if (visible === state) return
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
+      const MODAL_BLOCK_SCROLL_CLASS = 'v--modal-block-scroll';
       if (beforeEventName === 'before-open') {
         /**
          * Need to unfocus previously focused element, otherwise
