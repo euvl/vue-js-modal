@@ -467,8 +467,9 @@ export default {
           this.shift.top = 0
         }
 
+        const MODAL_BLOCK_SCROLL_CLASS = 'v--modal-block-scroll';
         if (scrollable) {
-          if (document.body.classList.contains('v--modal-block-scroll')) {
+          if (document.body.classList.contains(MODAL_BLOCK_SCROLL_CLASS)) {
             // Stop execution if block scroll has already been added
             return;
           }
@@ -481,8 +482,8 @@ export default {
           document.body.style.paddingRight = `${scrollBarWidth}px`;
 
           // Apply scroll class
-          document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
-          document.body.classList.add('v--modal-block-scroll')
+          document.getElementsByTagName('html')[0].classList.add(MODAL_BLOCK_SCROLL_CLASS)
+          document.body.classList.add(MODAL_BLOCK_SCROLL_CLASS)
         }
       } else {
         if (scrollable) {
@@ -491,8 +492,8 @@ export default {
           delete document.body.dataset.vModalBlockScrollRightPadding;
 
           // Remove existing scroll class
-          document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
-          document.body.classList.remove('v--modal-block-scroll')
+          document.getElementsByTagName('html')[0].classList.remove(MODAL_BLOCK_SCROLL_CLASS)
+          document.body.classList.remove(MODAL_BLOCK_SCROLL_CLASS)
         }
       }
 
