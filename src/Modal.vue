@@ -471,7 +471,7 @@ export default {
         if (scrollable) {
           // Keep track of counter
           const bodyDataSet = document.body.dataset;
-          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10);
+          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10) || 0;
           bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount + 1;
 
           // Stop execution if blockScroll counter is not empty
@@ -492,7 +492,7 @@ export default {
         if (scrollable) {
           // Keep track of counter
           const bodyDataSet = document.body.dataset;
-          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10);
+          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10) || 0;
           bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount - 1;
 
           // Stop execution if blockScroll counter is not empty
