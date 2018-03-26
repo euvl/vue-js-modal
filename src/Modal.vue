@@ -468,15 +468,17 @@ export default {
           this.shift.top = 0
         }
 
-        const MODAL_BLOCK_SCROLL_CLASS = 'v--modal-block-scroll';
         if (scrollable) {
-          if (document.body.classList.contains(MODAL_BLOCK_SCROLL_CLASS)) {
-            // Stop execution if block scroll has already been added
-            return;
-          }
+          // Keep track of counter
+          const bodyDataSet = document.body.dataset;
+          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10);
+          bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount + 1;
+
+          // Stop execution if blockScroll counter is not empty
+          if (currentBlockScrollCount > 0) return;
 
           // Store original body padding-right
-          document.body.dataset.vModalBlockScrollRightPadding = document.body.style.paddingRight;
+          bodyDataSet.vModalBlockScrollRightPadding = document.body.style.paddingRight;
 
           // Apply scrollBarWidth as padding
           const scrollBarWidth = window.innerWidth - document.body.scrollWidth;
@@ -488,6 +490,14 @@ export default {
         }
       } else {
         if (scrollable) {
+          // Keep track of counter
+          const bodyDataSet = document.body.dataset;
+          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10);
+          bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount - 1;
+
+          // Stop execution if blockScroll counter is not empty
+          if (currentBlockScrollCount > 0) return;
+
           // Restore original padding-right on body
           document.body.style.paddingRight = document.body.dataset.vModalBlockScrollRightPadding || '';
           delete document.body.dataset.vModalBlockScrollRightPadding;
