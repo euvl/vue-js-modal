@@ -468,6 +468,11 @@ export default {
         }
 
         if (scrollable) {
+          if (document.body.classList.contains('v--modal-block-scroll')) {
+            // Stop execution if block scroll has already been added
+            return;
+          }
+
           // Store original body padding-right
           document.body.dataset.vModalBlockScrollRightPadding = document.body.style.paddingRight;
 
