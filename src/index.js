@@ -24,7 +24,7 @@ const Plugin = {
       _setDynamicContainer (dynamicContainer) {
         Plugin.dynamicContainer = dynamicContainer
       },
-      show (modal, paramsOrProps, params, events = null) {
+      show (modal, paramsOrProps, params, events = {}) {
         if (typeof modal === 'string') {
           Plugin.event.$emit('toggle', modal, true, paramsOrProps)
         } else {
