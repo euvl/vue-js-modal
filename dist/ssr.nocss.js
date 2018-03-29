@@ -72,7 +72,8 @@
                         Plugin.dynamicContainer = dynamicContainer;
                     },
                     show: function(modal, paramsOrProps, params) {
-                        "string" == typeof modal ? Plugin.event.$emit("toggle", modal, !0, paramsOrProps) : null === Plugin.dynamicContainer ? console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page") : Plugin.dynamicContainer.add(modal, paramsOrProps, params);
+                        var events = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : {};
+                        "string" == typeof modal ? Plugin.event.$emit("toggle", modal, !0, paramsOrProps) : null === Plugin.dynamicContainer ? console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page") : Plugin.dynamicContainer.add(modal, paramsOrProps, params, events);
                     },
                     hide: function(name, params) {
                         Plugin.event.$emit("toggle", name, !1, params);
@@ -99,20 +100,20 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(11);
         var Component = __webpack_require__(0)(__webpack_require__(6), __webpack_require__(16), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/Users/luca/Projects/vue-js-modal/src/Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(12);
         var Component = __webpack_require__(0)(__webpack_require__(7), __webpack_require__(17), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/Users/luca/Projects/vue-js-modal/src/Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(15), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\ModalsContainer.vue", 
+        Component.options.__file = "/Users/luca/Projects/vue-js-modal/src/ModalsContainer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] ModalsContainer.vue: functional components are not supported with templates, they should use render functions."), 
@@ -387,6 +388,9 @@
                         scrollable: this.scrollable && this.isAutoHeight
                     };
                 },
+                backgroundClickClass: function() {
+                    return [ "v--modal-background-click" ];
+                },
                 modalClass: function() {
                     return [ "v--modal-box", this.classes ];
                 },
@@ -434,7 +438,9 @@
                     if (visible !== state) {
                         var beforeEventName = visible ? "before-close" : "before-open";
                         "before-open" === beforeEventName ? (document.activeElement && document.activeElement.blur(), 
-                        reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && document.body.classList.add("v--modal-block-scroll")) : scrollable && document.body.classList.remove("v--modal-block-scroll");
+                        reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && (document.getElementsByTagName("html")[0].classList.add("v--modal-block-scroll"), 
+                        document.body.classList.add("v--modal-block-scroll"))) : scrollable && (document.getElementsByTagName("html")[0].classList.remove("v--modal-block-scroll"), 
+                        document.body.classList.remove("v--modal-block-scroll"));
                         var stopEventExecution = !1, stop = function() {
                             stopEventExecution = !0;
                         }, beforeEvent = this.genEventObject({
@@ -521,14 +527,15 @@
                 this.$modal._setDynamicContainer(this);
             },
             methods: {
-                add: function(modal, params, config) {
+                add: function(modal, params, config, events) {
                     var _this = this, id = this.uid++;
                     config = config ? Object.assign({}, config) : {}, config.name || (config.name = "_dynamic-modal-" + id), 
                     this.modals.push({
                         id: id,
                         component: modal,
                         params: params || {},
-                        config: config
+                        config: config,
+                        events: events
                     }), this.$nextTick(function() {
                         _this.$modal.show(config.name);
                     });
@@ -660,7 +667,7 @@
     }, function(module, exports) {}, function(module, exports) {}, function(module, exports) {}, function(module, exports, __webpack_require__) {
         __webpack_require__(13);
         var Component = __webpack_require__(0)(__webpack_require__(9), __webpack_require__(18), null, null);
-        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue", 
+        Component.options.__file = "/Users/luca/Projects/vue-js-modal/src/Resizer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
@@ -674,14 +681,14 @@
                         id: "#modals-container"
                     }
                 }, _vm._l(_vm.modals, function(modal) {
-                    return _c("modal", _vm._b({
+                    return _c("modal", _vm._g(_vm._b({
                         key: modal.id,
                         on: {
                             closed: function($event) {
                                 _vm.remove(modal.id);
                             }
                         }
-                    }, "modal", modal.config, !1), [ _c(modal.component, _vm._b({
+                    }, "modal", modal.config, !1), modal.events), [ _c(modal.component, _vm._b({
                         tag: "component",
                         on: {
                             close: function($event) {
@@ -769,13 +776,15 @@
                     attrs: {
                         "aria-expanded": _vm.visible.toString(),
                         "data-modal": _vm.name
-                    },
+                    }
+                }, [ _c("div", {
+                    class: _vm.backgroundClickClass,
                     on: {
                         mousedown: function($event) {
-                            $event.stopPropagation(), _vm.onBackgroundClick($event);
+                            return $event.stopPropagation(), _vm.onBackgroundClick($event);
                         },
                         touchstart: function($event) {
-                            $event.stopPropagation(), _vm.onBackgroundClick($event);
+                            return $event.stopPropagation(), _vm.onBackgroundClick($event);
                         }
                     }
                 }, [ _c("div", {
@@ -804,7 +813,7 @@
                     on: {
                         resize: _vm.onModalResize
                     }
-                }) : _vm._e() ], 2) : _vm._e() ]) ], 1) : _vm._e() ]);
+                }) : _vm._e() ], 2) : _vm._e() ]) ], 1) ]) : _vm._e() ]);
             },
             staticRenderFns: []
         }, module.exports.render._withStripped = !0;

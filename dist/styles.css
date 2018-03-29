@@ -1,6 +1,5 @@
 
 .v--modal-block-scroll {
-  position: absolute;
   overflow: hidden;
   width: 100vw;
 }
@@ -19,8 +18,12 @@
   height: 100%;
   min-height: 100vh;
   overflow-y: auto;
-  padding-bottom: 10px;
   -webkit-overflow-scrolling: touch;
+}
+.v--modal-overlay .v--modal-background-click {
+  min-height: 100%;
+  width: 100%;
+  padding-bottom: 10px;
 }
 .v--modal-overlay .v--modal-box {
   position: relative;
