@@ -4,6 +4,7 @@
             v-for="modal in modals"
             :key="modal.id"
             v-bind="modal.config"
+            v-on="modal.events"
             @closed="remove(modal.id)"
         >
             <component
@@ -26,7 +27,7 @@ export default {
     this.$modal._setDynamicContainer(this)
   },
   methods: {
-    add (modal, params, config) {
+    add (modal, params, config, events) {
       let id = this.uid++
       config = config ? Object.assign({}, config) : {};
       if (!config.name) {
@@ -36,7 +37,8 @@ export default {
         id: id,
         component: modal,
         params: params || {},
-        config: config
+        config: config,
+        events: events
       })
       this.$nextTick(() => {
         this.$modal.show(config.name)

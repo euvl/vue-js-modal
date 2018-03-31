@@ -155,7 +155,7 @@ And include the `<modals-container/>` component it in your project:
 <modals-container/>
 ```
 
-Call it (the first argument is the component definition, the second are component properties, and the third modal parameters):
+Call it (the first argument is the component definition, the second are component properties, the third modal parameters, and the fourth the modal event listeners):
 
 ```javascript
 this.$modal.show({
@@ -168,6 +168,10 @@ this.$modal.show({
   props: ['text']
 }, {
   text: 'This text is passed as a property'
+}, {
+  height: 'auto'
+}, {
+  'before-close': (event) => { console.log('this will be called before the modal closes'); }
 })
 ```
 
@@ -278,6 +282,48 @@ export default {
     }
   },
   methods: {
+    beforeOpen (event) {
+      console.log(event)
+      // Set the opening time of the modal
+      this.time = Date.now()
+    },
+    beforeClose (event) {
+      console.log(event)
+      // If modal was open less then 5000 ms - prevent closing it
+      if (this.time + this.duration < Date.now()) {
+        event.stop()
+      }
+    }
+  }
+}
+</script>
+```
+
+Example with a dynamic modal:
+```vue
+export default {
+  name: 'ExampleModal',
+  data () {
+    return {
+      time: 0,
+      duration: 5000
+    }
+  },
+  methods: {
+    openModal () {
+      this.$modal.show({
+        template: `<b>{{time}}</b>`,
+        props: ['time']
+      }, {
+        time: this.time
+      }, {
+        width: 300,
+        height: 300
+      }, {
+        'before-open': this.beforeOpen,
+        'before-close': this.beforeClose
+      })
+    },
     beforeOpen (event) {
       console.log(event)
       // Set the opening time of the modal

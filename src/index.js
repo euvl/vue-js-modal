@@ -24,14 +24,14 @@ const Plugin = {
       _setDynamicContainer (dynamicContainer) {
         Plugin.dynamicContainer = dynamicContainer
       },
-      show (modal, paramsOrProps, params) {
+      show (modal, paramsOrProps, params, events = {}) {
         if (typeof modal === 'string') {
           Plugin.event.$emit('toggle', modal, true, paramsOrProps)
         } else {
           if (Plugin.dynamicContainer === null) {
             console.warn('[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page')
           } else {
-            Plugin.dynamicContainer.add(modal, paramsOrProps, params)
+            Plugin.dynamicContainer.add(modal, paramsOrProps, params, events)
           }
         }
       },
