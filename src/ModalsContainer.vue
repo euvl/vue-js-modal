@@ -1,5 +1,5 @@
 <template>
-    <div id="#modals-container">
+    <div id="modals-container">
         <modal
             v-for="modal in modals"
             :key="modal.id"
