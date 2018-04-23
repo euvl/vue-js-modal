@@ -451,6 +451,7 @@ export default {
       if (visible === state) return
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
+      const MODAL_BLOCK_SCROLL_CLASS = 'v--modal-block-scroll';
       if (beforeEventName === 'before-open') {
         /**
          * Need to unfocus previously focused element, otherwise
@@ -468,13 +469,49 @@ export default {
         }
 
         if (scrollable) {
-          document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
-          document.body.classList.add('v--modal-block-scroll')
+          // Keep track of counter
+          const bodyDataSet = document.body.dataset;
+          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10) || 0;
+
+          // Perform addition if there exist no modal
+          if (currentBlockScrollCount < 1) {
+            // Store original body padding-right
+            bodyDataSet.vModalBlockScrollRightPadding = document.body.style.paddingRight;
+
+            // Apply scrollBarWidth as padding
+            const scrollBarWidth = window.innerWidth - document.body.scrollWidth;
+            document.body.style.paddingRight = `${scrollBarWidth}px`;
+
+            // Apply scroll class
+            document.getElementsByTagName('html')[0].classList.add(MODAL_BLOCK_SCROLL_CLASS)
+            document.body.classList.add(MODAL_BLOCK_SCROLL_CLASS)
+          }
+
+          // Increase counter
+          bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount + 1;
         }
       } else {
         if (scrollable) {
-          document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
-          document.body.classList.remove('v--modal-block-scroll')
+          // Keep track of counter
+          const bodyDataSet = document.body.dataset;
+          const currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10) || 0;
+
+          // Perform removal of block scroll if there is only 1 modal left
+          if (currentBlockScrollCount <= 1) {
+            // Restore original padding-right on body
+            document.body.style.paddingRight = document.body.dataset.vModalBlockScrollRightPadding || '';
+            delete bodyDataSet.vModalBlockScrollRightPadding;
+            delete bodyDataSet.vModalBlockScrollCounter;
+
+            // Remove existing scroll class
+            document.getElementsByTagName('html')[0].classList.remove(MODAL_BLOCK_SCROLL_CLASS)
+            document.body.classList.remove(MODAL_BLOCK_SCROLL_CLASS)
+          } else {
+
+            // Decrease counter
+            bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount - 1;
+          }
+
         }
       }
 
