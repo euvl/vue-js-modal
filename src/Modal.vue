@@ -364,7 +364,7 @@ export default {
     /**
      * Returns class list for click outside overlay (background click)
      */
-    backgroundClickClass() {
+    backgroundClickClass () {
       return ['v--modal-background-click']
     },
     /**
@@ -447,7 +447,7 @@ export default {
      * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
      */
     toggle (state, params) {
-      const { reset, scrollable, visible } = this
+      const { reset, visible } = this
       if (visible === state) return
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
@@ -467,15 +467,11 @@ export default {
           this.shift.top = 0
         }
 
-        if (scrollable) {
-          document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
-          document.body.classList.add('v--modal-block-scroll')
-        }
+        document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
+        document.body.classList.add('v--modal-block-scroll')
       } else {
-        if (scrollable) {
-          document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
-          document.body.classList.remove('v--modal-block-scroll')
-        }
+        document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
+        document.body.classList.remove('v--modal-block-scroll')
       }
 
       let stopEventExecution = false
