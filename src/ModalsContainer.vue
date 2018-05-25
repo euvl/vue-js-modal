@@ -11,6 +11,7 @@
               :is="modal.component"
               v-bind="modal.params"
               @close="$modal.hide(modal.config.name)"
+              v-on="$liteners"
             ></component>
         </modal>
     </div>
