@@ -104,7 +104,7 @@
             }
             return css;
         }
-        var listToStyles = __webpack_require__(24);
+        var listToStyles = __webpack_require__(25);
         module.exports = function(parentId, list, isProduction) {
             if ("undefined" != typeof __VUE_SSR_CONTEXT__) {
                 var context = __VUE_SSR_CONTEXT__, styles = context._styles;
@@ -161,25 +161,22 @@
             inRange: inRange
         };
     }, function(module, exports, __webpack_require__) {
-        __webpack_require__(21);
-        var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(18), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Dialog.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        __webpack_require__(22);
+        var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(19), null, null);
+        Component.options.__file = "/Users/veas/vue-js-modal/src/Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
-        __webpack_require__(22);
-        var Component = __webpack_require__(0)(__webpack_require__(9), __webpack_require__(19), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Modal.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        __webpack_require__(23);
+        var Component = __webpack_require__(0)(__webpack_require__(9), __webpack_require__(20), null, null);
+        Component.options.__file = "/Users/veas/vue-js-modal/src/Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
-        var Component = __webpack_require__(0)(__webpack_require__(10), __webpack_require__(17), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/ModalsContainer.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        var Component = __webpack_require__(0)(__webpack_require__(10), __webpack_require__(18), null, null);
+        Component.options.__file = "/Users/veas/vue-js-modal/src/ModalsContainer.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] ModalsContainer.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
@@ -255,7 +252,7 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var _index = __webpack_require__(3), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(16), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(4), _parser = __webpack_require__(12), _parser2 = _interopRequireDefault(_parser);
+        var _index = __webpack_require__(3), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(17), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(4), _parser = __webpack_require__(12), _parser2 = _interopRequireDefault(_parser), _bodyScrollLock = __webpack_require__(13);
         exports.default = {
             name: "VueJsModal",
             props: {
@@ -503,9 +500,8 @@
                     if (visible !== state) {
                         var beforeEventName = visible ? "before-close" : "before-open";
                         "before-open" === beforeEventName ? (document.activeElement && "function" == typeof document.activeElement.blur && document.activeElement.blur(), 
-                        reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && (document.getElementsByTagName("html")[0].classList.add("v--modal-block-scroll"), 
-                        document.body.classList.add("v--modal-block-scroll"))) : scrollable && (document.getElementsByTagName("html")[0].classList.remove("v--modal-block-scroll"), 
-                        document.body.classList.remove("v--modal-block-scroll"));
+                        reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && (0, 
+                        _bodyScrollLock.disableBodyScroll)(this.$refs.modal)) : scrollable && (0, _bodyScrollLock.enableBodyScroll)(this.$refs.modal);
                         var stopEventExecution = !1, stop = function() {
                             stopEventExecution = !0;
                         }, beforeEvent = this.genEventObject({
@@ -730,16 +726,85 @@
         };
         exports.default = parse;
     }, function(module, exports, __webpack_require__) {
+        "use strict";
+        Object.defineProperty(exports, "__esModule", {
+            value: !0
+        });
+        var _slicedToArray = function() {
+            function sliceIterator(arr, i) {
+                var _arr = [], _n = !0, _d = !1, _e = void 0;
+                try {
+                    for (var _s, _i = arr[Symbol.iterator](); !(_n = (_s = _i.next()).done) && (_arr.push(_s.value), 
+                    !i || _arr.length !== i); _n = !0) ;
+                } catch (err) {
+                    _d = !0, _e = err;
+                } finally {
+                    try {
+                        !_n && _i.return && _i.return();
+                    } finally {
+                        if (_d) throw _e;
+                    }
+                }
+                return _arr;
+            }
+            return function(arr, i) {
+                if (Array.isArray(arr)) return arr;
+                if (Symbol.iterator in Object(arr)) return sliceIterator(arr, i);
+                throw new TypeError("Invalid attempt to destructure non-iterable instance");
+            };
+        }(), isIosDevice = "undefined" != typeof window && window.navigator && window.navigator.platform && /iPad|iPhone|iPod|(iPad Simulator)|(iPhone Simulator)|(iPod Simulator)/.test(window.navigator.platform), firstTargetElement = null, allTargetElements = {}, initialClientY = -1, previousBodyOverflowSetting = void 0, previousDocumentElementOverflowSetting = void 0, previousBodyPaddingRight = void 0, preventDefault = function(rawEvent) {
+            var e = rawEvent || window.event;
+            return e.preventDefault && e.preventDefault(), !1;
+        }, setOverflowHidden = function(options) {
+            setTimeout(function() {
+                if (void 0 === previousBodyPaddingRight) {
+                    var _reserveScrollBarGap = !!options && !0 === options.reserveScrollBarGap, scrollBarGap = window.innerWidth - document.documentElement.clientWidth;
+                    _reserveScrollBarGap && scrollBarGap > 0 && (previousBodyPaddingRight = document.body.style.paddingRight, 
+                    document.body.style.paddingRight = scrollBarGap + "px");
+                }
+                void 0 === previousBodyOverflowSetting && (previousBodyOverflowSetting = document.body.style.overflow, 
+                previousDocumentElementOverflowSetting = document.documentElement.style.overflow, 
+                document.body.style.overflow = "hidden", document.documentElement.style.overflow = "hidden");
+            });
+        }, restoreOverflowSetting = function() {
+            setTimeout(function() {
+                void 0 !== previousBodyPaddingRight && (document.body.style.paddingRight = previousBodyPaddingRight, 
+                previousBodyPaddingRight = void 0), void 0 !== previousBodyOverflowSetting && (document.body.style.overflow = previousBodyOverflowSetting, 
+                document.documentElement.style.overflow = previousDocumentElementOverflowSetting, 
+                previousBodyOverflowSetting = void 0, previousDocumentElementOverflowSetting = void 0);
+            });
+        }, isTargetElementTotallyScrolled = function(targetElement) {
+            return !!targetElement && targetElement.scrollHeight - targetElement.scrollTop <= targetElement.clientHeight;
+        }, handleScroll = function(event, targetElement) {
+            var clientY = event.targetTouches[0].clientY - initialClientY;
+            return targetElement && 0 === targetElement.scrollTop && clientY > 0 ? preventDefault(event) : !(isTargetElementTotallyScrolled(targetElement) && clientY < 0) || preventDefault(event);
+        };
+        exports.disableBodyScroll = function(targetElement, options) {
+            isIosDevice ? targetElement && !allTargetElements[targetElement] && (allTargetElements[targetElement] = targetElement, 
+            targetElement.ontouchstart = function(event) {
+                1 === event.targetTouches.length && (initialClientY = event.targetTouches[0].clientY);
+            }, targetElement.ontouchmove = function(event) {
+                1 === event.targetTouches.length && handleScroll(event, targetElement);
+            }) : setOverflowHidden(options), firstTargetElement || (firstTargetElement = targetElement);
+        }, exports.clearAllBodyScrollLocks = function() {
+            isIosDevice ? (Object.entries(allTargetElements).forEach(function(_ref) {
+                var _ref2 = _slicedToArray(_ref, 2), key = _ref2[0], targetElement = _ref2[1];
+                targetElement.ontouchstart = null, targetElement.ontouchmove = null, delete allTargetElements[key];
+            }), initialClientY = -1) : (restoreOverflowSetting(), firstTargetElement = null);
+        }, exports.enableBodyScroll = function(targetElement) {
+            isIosDevice ? (targetElement.ontouchstart = null, targetElement.ontouchmove = null) : firstTargetElement === targetElement && (restoreOverflowSetting(), 
+            firstTargetElement = null);
+        };
+    }, function(module, exports, __webpack_require__) {
         exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.vue-dialog div {\n  box-sizing: border-box;\n}\n.vue-dialog .dialog-flex {\n  width: 100%;\n  height: 100%;\n}\n.vue-dialog .dialog-content {\n  flex: 1 0 auto;\n  width: 100%;\n  padding: 15px;\n  font-size: 14px;\n}\n.vue-dialog .dialog-c-title {\n  font-weight: 600;\n  padding-bottom: 15px;\n}\n.vue-dialog .dialog-c-text {\n}\n.vue-dialog .vue-dialog-buttons {\n  display: flex;\n  flex: 0 1 auto;\n  width: 100%;\n  border-top: 1px solid #eee;\n}\n.vue-dialog .vue-dialog-buttons-none {\n  width: 100%;\n  padding-bottom: 15px;\n}\n.vue-dialog-button {\n  font-size: 12px !important;\n  background: transparent;\n  padding: 0;\n  margin: 0;\n  border: 0;\n  cursor: pointer;\n  box-sizing: border-box;\n  line-height: 40px;\n  height: 40px;\n  color: inherit;\n  font: inherit;\n  outline: none;\n}\n.vue-dialog-button:hover {\n  background: rgba(0, 0, 0, 0.01);\n}\n.vue-dialog-button:active {\n  background: rgba(0, 0, 0, 0.025);\n}\n.vue-dialog-button:not(:first-of-type) {\n  border-left: 1px solid #eee;\n}\n", "" ]);
     }, function(module, exports, __webpack_require__) {
-        exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.v--modal-block-scroll {\n  overflow: hidden;\n  width: 100vw;\n}\n.v--modal-overlay {\n  position: fixed;\n  box-sizing: border-box;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100vh;\n  background: rgba(0, 0, 0, 0.2);\n  z-index: 999;\n  opacity: 1;\n}\n.v--modal-overlay.scrollable {\n  height: 100%;\n  min-height: 100vh;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.v--modal-overlay .v--modal-background-click {\n  min-height: 100%;\n  width: 100%;\n  padding-bottom: 10px;\n}\n.v--modal-overlay .v--modal-box {\n  position: relative;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.v--modal-overlay.scrollable .v--modal-box {\n  margin-bottom: 2px;\n  /* transition: top 0.2s ease; */\n}\n.v--modal {\n  background-color: white;\n  text-align: left;\n  border-radius: 3px;\n  box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);\n  padding: 0;\n}\n.v--modal.v--modal-fullscreen {\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  left: 0;\n  top: 0;\n}\n.v--modal-top-right {\n  display: block;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.overlay-fade-enter-active,\n.overlay-fade-leave-active {\n  transition: all 0.2s;\n}\n.overlay-fade-enter,\n.overlay-fade-leave-active {\n  opacity: 0;\n}\n.nice-modal-fade-enter-active,\n.nice-modal-fade-leave-active {\n  transition: all 0.4s;\n}\n.nice-modal-fade-enter,\n.nice-modal-fade-leave-active {\n  opacity: 0;\n  transform: translateY(-20px);\n}\n", "" ]);
+        exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.v--modal-overlay {\n  position: fixed;\n  box-sizing: border-box;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100vh;\n  background: rgba(0, 0, 0, 0.2);\n  z-index: 999;\n  opacity: 1;\n}\n.v--modal-overlay.scrollable {\n  height: 100%;\n  min-height: 100vh;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.v--modal-overlay .v--modal-background-click {\n  min-height: 100%;\n  width: 100%;\n  padding-bottom: 10px;\n}\n.v--modal-overlay .v--modal-box {\n  position: relative;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.v--modal-overlay.scrollable .v--modal-box {\n  margin-bottom: 2px;\n  /* transition: top 0.2s ease; */\n}\n.v--modal {\n  background-color: white;\n  text-align: left;\n  border-radius: 3px;\n  box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);\n  padding: 0;\n}\n.v--modal.v--modal-fullscreen {\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  left: 0;\n  top: 0;\n}\n.v--modal-top-right {\n  display: block;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.overlay-fade-enter-active,\n.overlay-fade-leave-active {\n  transition: all 0.2s;\n}\n.overlay-fade-enter,\n.overlay-fade-leave-active {\n  opacity: 0;\n}\n.nice-modal-fade-enter-active,\n.nice-modal-fade-leave-active {\n  transition: all 0.4s;\n}\n.nice-modal-fade-enter,\n.nice-modal-fade-leave-active {\n  opacity: 0;\n  transform: translateY(-20px);\n}\n", "" ]);
     }, function(module, exports, __webpack_require__) {
         exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.vue-modal-resizer {\n  display: block;\n  overflow: hidden;\n  position: absolute;\n  width: 12px;\n  height: 12px;\n  right: 0;\n  bottom: 0;\n  z-index: 9999999;\n  background: transparent;\n  cursor: se-resize;\n}\n.vue-modal-resizer::after {\n  display: block;\n  position: absolute;\n  content: '';\n  background: transparent;\n  left: 0;\n  top: 0;\n  width: 0;\n  height: 0;\n  border-bottom: 10px solid #ddd;\n  border-left: 10px solid transparent;\n}\n.vue-modal-resizer.clicked::after {\n  border-bottom: 10px solid #369be9;\n}\n", "" ]);
     }, function(module, exports, __webpack_require__) {
-        __webpack_require__(23);
-        var Component = __webpack_require__(0)(__webpack_require__(11), __webpack_require__(20), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Resizer.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        __webpack_require__(24);
+        var Component = __webpack_require__(0)(__webpack_require__(11), __webpack_require__(21), null, null);
+        Component.options.__file = "/Users/veas/vue-js-modal/src/Resizer.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
@@ -852,10 +917,10 @@
                     class: _vm.backgroundClickClass,
                     on: {
                         mousedown: function($event) {
-                            $event.stopPropagation(), _vm.onBackgroundClick($event);
+                            return $event.stopPropagation(), _vm.onBackgroundClick($event);
                         },
                         touchstart: function($event) {
-                            $event.stopPropagation(), _vm.onBackgroundClick($event);
+                            return $event.stopPropagation(), _vm.onBackgroundClick($event);
                         }
                     }
                 }, [ _c("div", {
@@ -899,15 +964,15 @@
             staticRenderFns: []
         }, module.exports.render._withStripped = !0;
     }, function(module, exports, __webpack_require__) {
-        var content = __webpack_require__(13);
+        var content = __webpack_require__(14);
         "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
         __webpack_require__(2)("237a7ca4", content, !1);
     }, function(module, exports, __webpack_require__) {
-        var content = __webpack_require__(14);
+        var content = __webpack_require__(15);
         "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
         __webpack_require__(2)("2790b368", content, !1);
     }, function(module, exports, __webpack_require__) {
-        var content = __webpack_require__(15);
+        var content = __webpack_require__(16);
         "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
         __webpack_require__(2)("02ec91af", content, !1);
     }, function(module, exports) {
