@@ -1,8 +1,4 @@
 
-.v--modal-block-scroll {
-  overflow: hidden;
-  width: 100vw;
-}
 .v--modal-overlay {
   position: fixed;
   box-sizing: border-box;
