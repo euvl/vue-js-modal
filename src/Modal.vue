@@ -33,9 +33,8 @@
 import Modal from './index'
 import Resizer from './Resizer.vue'
 import { inRange } from './util'
-import parseNumber from './parser'
-import { disableScrollLock, enableScrollLock } from "body-scroll-lock";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { parseNumber, validateNumber } from './parser'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 export default {
   name: 'VueJsModal',
@@ -104,31 +103,12 @@ export default {
     width: {
       type: [Number, String],
       default: 600,
-      validator (value) {
-        if (typeof value === 'string') {
-          let width = parseNumber(value)
-          return (width.type === '%' || width.type === 'px') && width.value > 0
-        }
-
-        return value >= 0
-      }
-    },
+      validator: numberValidator,
     height: {
       type: [Number, String],
       default: 300,
       validator (value) {
-        if (typeof value === 'string') {
-          if (value === 'auto') {
-            return true
-          }
-
-          let height = parseNumber(value)
-          return (
-            (height.type === '%' || height.type === 'px') && height.value > 0
-          )
-        }
-
-        return value >= 0
+        return value === 'auto' ? true : validateNumber(value)
       }
     },
     pivotX: {

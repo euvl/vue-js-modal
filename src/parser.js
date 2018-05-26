@@ -44,7 +44,7 @@ var getType = value => {
   }
 }
 
-export const parse = value => {
+export const parseNumber = value => {
   switch (typeof value) {
     case 'number':
       return { type: 'px', value }
@@ -55,4 +55,11 @@ export const parse = value => {
   }
 }
 
-export default parse
+export const validateNumber = (value) => {
+  if (typeof value === 'string') {
+    let _value = parseNumber(value)
+    return (_value.type === '%' || _value.type === 'px') && _value.value > 0
+  }
+
+  return value >= 0
+}

@@ -33,11 +33,13 @@
     "test:types": "tsc -p types/test"
   },
   "license": "MIT",
+  "dependencies": {
+    "body-scroll-lock": "^2.4.2"
+  },
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "latest",
     "babel-preset-env": "^1.5.2",
-    "body-scroll-lock": "^2.4.2",
     "chai": "^3.5.0",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
