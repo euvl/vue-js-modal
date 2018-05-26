@@ -103,7 +103,8 @@ export default {
     width: {
       type: [Number, String],
       default: 600,
-      validator: numberValidator,
+      validator: validateNumber
+    },
     height: {
       type: [Number, String],
       default: 300,

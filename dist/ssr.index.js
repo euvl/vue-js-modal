@@ -255,7 +255,7 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var _index = __webpack_require__(3), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(17), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(4), _parser = __webpack_require__(12), _parser2 = _interopRequireDefault(_parser), _bodyScrollLock = __webpack_require__(13);
+        var _index = __webpack_require__(3), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(17), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(4), _parser = __webpack_require__(12), _bodyScrollLock = __webpack_require__(13);
         exports.default = {
             name: "VueJsModal",
             props: {
@@ -323,24 +323,13 @@
                 width: {
                     type: [ Number, String ],
                     default: 600,
-                    validator: function(value) {
-                        if ("string" == typeof value) {
-                            var width = (0, _parser2.default)(value);
-                            return ("%" === width.type || "px" === width.type) && width.value > 0;
-                        }
-                        return value >= 0;
-                    }
+                    validator: _parser.validateNumber
                 },
                 height: {
                     type: [ Number, String ],
                     default: 300,
                     validator: function(value) {
-                        if ("string" == typeof value) {
-                            if ("auto" === value) return !0;
-                            var height = (0, _parser2.default)(value);
-                            return ("%" === height.type || "px" === height.type) && height.value > 0;
-                        }
-                        return value >= 0;
+                        return "auto" === value || (0, _parser.validateNumber)(value);
                     }
                 },
                 pivotX: {
@@ -470,8 +459,8 @@
             },
             methods: {
                 setInitialSize: function() {
-                    var modal = this.modal, width = (0, _parser2.default)(this.width), height = (0, 
-                    _parser2.default)(this.height);
+                    var modal = this.modal, width = (0, _parser.parseNumber)(this.width), height = (0, 
+                    _parser.parseNumber)(this.height);
                     modal.width = width.value, modal.widthType = width.type, modal.height = height.value, 
                     modal.heightType = height.type;
                 },
@@ -709,7 +698,7 @@
                 type: "",
                 value: value
             };
-        }, parse = exports.parse = function(value) {
+        }, parseNumber = exports.parseNumber = function(value) {
             switch (void 0 === value ? "undefined" : _typeof(value)) {
               case "number":
                 return {
@@ -727,7 +716,13 @@
                 };
             }
         };
-        exports.default = parse;
+        exports.validateNumber = function(value) {
+            if ("string" == typeof value) {
+                var _value = parseNumber(value);
+                return ("%" === _value.type || "px" === _value.type) && _value.value > 0;
+            }
+            return value >= 0;
+        };
     }, function(module, exports, __webpack_require__) {
         "use strict";
         Object.defineProperty(exports, "__esModule", {
