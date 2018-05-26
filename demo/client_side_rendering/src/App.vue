@@ -38,6 +38,8 @@
        target="readme">Readme</a>
     <a href="https://github.com/euvl/vue-js-modal/issues"
        target="issues">Issues</a>
+    <a href="https://github.com/euvl/vue-js-modal/tree/master/demo/client_side_rendering/src/components/modals"
+       target="issues">Examples</a>
   </h2>
 
   <pre style="line-height: 1.5;">
@@ -47,8 +49,6 @@
     import vmodal from 'vue-js-modal'
     Vue.use(vmodal)
   </pre>
-
-  <modes-table />
 
   <div style="margin-top: 20px; margin-bottom: 15px;">
     <button
@@ -129,19 +129,17 @@
 </template>
 
 <script>
-import ModesTable           from './components/ModesTable.vue'
-import DemoErrorModal       from './components/DemoErrorModal.vue'
-import DemoFocusModal       from './components/InputFocusModal.vue'
-import DemoLoginModal       from './components/DemoLoginModal.vue'
-import DemoDogProfileModal  from './components/DogProfileModal.vue'
-import DemoConditionalModal from './components/ConditionalModal.vue'
-import DemoSizeModal        from './components/SizeModal.vue'
-import CustomComponentModal from './components/CustomComponentModal.vue'
+import DemoErrorModal       from './components/modals/DemoErrorModal.vue'
+import DemoFocusModal       from './components/modals/InputFocusModal.vue'
+import DemoLoginModal       from './components/modals/DemoLoginModal.vue'
+import DemoDogProfileModal  from './components/modals/DogProfileModal.vue'
+import DemoConditionalModal from './components/modals/ConditionalModal.vue'
+import DemoSizeModal        from './components/modals/SizeModal.vue'
+import CustomComponentModal from './components/modals/CustomComponentModal.vue'
 
 export default {
   name: 'app',
   components: {
-    ModesTable,
     DemoErrorModal,
     DemoFocusModal,
     DemoLoginModal,
@@ -149,7 +147,7 @@ export default {
     DemoConditionalModal,
     DemoSizeModal
   },
-  data() {
+  data () {
     return {
       resizable: false,
       adaptive: false,
@@ -265,16 +263,31 @@ export default {
     dialogEvent (eventName) {
       console.log('Dialog event: ' + eventName)
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss">
+
+*:not(pre) {
+  font-family: 'Montserrat';
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  padding: 50px;
+
+  padding: 100px 50px;
+  padding-bottom: 0;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: #fc00aa;
+  background: -webkit-linear-gradient(to right, #fc00aa, #00dbde);
+  background: linear-gradient(315deg, #fc00aa, #00dbde);
+
   cursor: default;
-  box-sizing: border-box;
 }
 
 pre {
@@ -284,10 +297,16 @@ pre {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #6b7c93;
+
+  background: #F6F9FC;
+  padding: 20px;
+  border-radius: 3px;
+
+  box-shadow: 0 4px 36px rgba(50,50,93,.11),
+    0 1px 33px rgba(0,0,0,.08);
 }
 
 h1,
@@ -307,46 +326,44 @@ button.btn {
   outline: none;
   background: white;
   border: 0;
-  padding: 6px 18px;
+  padding: 10px 18px;
   cursor: pointer;
   border-radius: 3px;
 
-  background: white;
+  color: white;
+  
+  box-shadow: 0 4px 8px rgba(#20a0ff, .3);
+  background: #4db3ff;
 
-  color: #4db3ff;
-  border: 1px solid #4db3ff;
+  font-weight: 600;
+
+  border-radius: 3px;
 
   min-width: 90px;
 
-  margin-bottom: 2px;
-  margin-top: 4px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
 
   &:hover {
-    color: #20a0ff;
-    border: 1px solid #20a0ff;
+    background: #20a0ff;
   }
 
   &.green {
-    $color: #50C9BA;
-
-    color: $color;
-    border: 1px solid $color;
+    box-shadow: 0 4px 8px rgba(#50C9BA, .3);
+    background: #50C9BA;
 
     &:hover {
-      color: mix($color, black, 95%);
-      border: 1px solid mix($color, black, 95%);
+     background: mix(#50C9BA, black, 95%);
     }
   }
 
   &.red {
-    $color: #F21368;
-
-    color: $color;
-    border: 1px solid $color;
+    box-shadow: 0 4px 8px rgba(#F21368, .3);
+    background: #F21368;
 
     &:hover {
-      color: mix($color, black, 95%);
-      border: 1px solid mix($color, black, 95%);
+      background: mix(#F21368, black, 95%);
     }
   }
 }

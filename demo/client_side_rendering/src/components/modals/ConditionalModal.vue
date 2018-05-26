@@ -15,7 +15,7 @@
 export default {
   name: 'ConditionalModal',
   methods: {
-    beforeOpen(event) {
+    beforeOpen (event) {
       console.log('Event:', event)
       console.log('Params:', event.params)
 
