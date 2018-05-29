@@ -34,7 +34,6 @@ import Modal from './index'
 import Resizer from './Resizer.vue'
 import { inRange } from './util'
 import { parseNumber, validateNumber } from './parser'
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 export default {
   name: 'VueJsModal',
@@ -451,11 +450,13 @@ export default {
         }
 
         if (scrollable) {
-          disableBodyScroll(this.$refs.modal);
+          document.getElementsByTagName('html')[0].classList.add('v--modal-block-scroll')
+          document.body.classList.add('v--modal-block-scroll')
         }
       } else {
         if (scrollable) {
-          enableBodyScroll(this.$refs.modal);
+          document.getElementsByTagName('html')[0].classList.remove('v--modal-block-scroll')
+          document.body.classList.remove('v--modal-block-scroll')
         }
       }
 
@@ -623,6 +624,11 @@ export default {
 }
 </script>
 <style>
+.v--modal-block-scroll {
+  overflow: hidden;
+  width: 100vw;
+}
+
 .v--modal-overlay {
   position: fixed;
   box-sizing: border-box;
