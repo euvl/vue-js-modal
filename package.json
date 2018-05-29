@@ -33,9 +33,6 @@
     "test:types": "tsc -p types/test"
   },
   "license": "MIT",
-  "dependencies": {
-    "body-scroll-lock": "^2.4.2"
-  },
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "latest",
