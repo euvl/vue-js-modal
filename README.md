@@ -350,12 +350,12 @@ And then forbits closing it for the next 5000 ms
 
 From `v1.2.6` height can be set to "auto". If you want to be able to scroll modal in case it's height exceeds window height - you can set flag `scrollable="true"`.
 
-p.s. `scrollable` will only work with `height="auto"`.
+p.s. `scrollable` will only work with `height="'auto'"`.
 
 Example:
 
 ```vue
-<modal name="foo" height="auto" :scrollable="true">...</modal>
+<modal name="foo" height="'auto'" :scrollable="true">...</modal>
 ```
 
 Auto height:
