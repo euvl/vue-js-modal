@@ -57,7 +57,13 @@ const Plugin = {
      * Registration of <ModalsContainer/> component
      */
     if (options.dynamic) {
-      Vue.component('modals-container', ModalsContainer)
+      if (options.injectModalsContainer) {
+        const modalsContainer = document.createElement('div')
+        document.body.appendChild(modalsContainer)
+        new Vue({ render: h => h(ModalsContainer) }).$mount(modalsContainer)
+      } else {
+        Vue.component('modals-container', ModalsContainer)
+      }
     }
   }
 }

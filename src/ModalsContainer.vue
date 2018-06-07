@@ -29,9 +29,9 @@ export default {
   methods: {
     add (modal, params, config, events) {
       let id = this.uid++
-      config = config ? Object.assign({}, config) : {};
+      config = config ? Object.assign({}, config) : {}
       if (!config.name) {
-        config.name = '_dynamic-modal-' + id;
+        config.name = '_dynamic-modal-' + id
       }
       this.modals.push({
         id: id,

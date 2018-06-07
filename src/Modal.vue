@@ -346,7 +346,7 @@ export default {
     /**
      * Returns class list for click outside overlay (background click)
      */
-    backgroundClickClass() {
+    backgroundClickClass () {
       return ['v--modal-background-click']
     },
     /**

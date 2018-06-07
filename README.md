@@ -155,6 +155,12 @@ And include the `<modals-container/>` component it in your project:
 <modals-container/>
 ```
 
+Alternatively, the modals container can be automatically appended to the document body once the plugin is loaded using `injectModalsContainer: true`:
+
+```js
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
+```
+
 Call it (the first argument is the component definition, the second are component properties, the third modal parameters, and the fourth the modal event listeners):
 
 ```javascript
