@@ -240,6 +240,8 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
 | scrollable | false | Boolean         | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
 | reset     | false | Boolean          | false       | Resets position and size before showing modal |
+| absolutePositioning | false | Boolean | false      | Force an absolute positioning using left and top instead of CSS `transform` |
+| force3d   | false | Boolean          | true        | If set to `false`, it will position the modal using `translate` instead of `translate3d` |
 | clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
 | transition| false | String           |             | Transition name |
 | classes   | false | [String, Array]  | 'v--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |

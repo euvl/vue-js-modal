@@ -66,6 +66,14 @@ export default {
       type: Boolean,
       default: false
     },
+    absolutePositioning: {
+      type: Boolean,
+      default: false
+    },
+    force3d: {
+      type: Boolean,
+      default: true
+    },
     transition: {
       type: String
     },
@@ -359,12 +367,20 @@ export default {
      * CSS styles for position and size of the modal
      */
     modalStyle () {
-      return {
+      let style = {
         top: this.position.top + 'px',
-        left: this.position.left + 'px',
-        width: this.trueModalWidth + 'px',
-        height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
+        left: this.position.left + 'px'
       }
+      // absolutePositioning parameter is here for legacy purposes
+      if (this.absolutePositioning) {
+        style.top = this.position.top + 'px';
+        style.left = this.position.left + 'px';
+      } else if (this.force3d) {
+        style.transform = 'translate3d(' + Math.round(this.position.left) + 'px, ' + Math.round(this.position.top) + 'px, 0px)';
+      } else {
+        style.transform = 'translate(' + Math.round(this.position.left) + 'px, ' + Math.round(this.position.top) + 'px)';
+      }
+      return style;
     }
   },
   methods: {
