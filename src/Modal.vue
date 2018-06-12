@@ -368,9 +368,9 @@ export default {
      */
     modalStyle () {
       let style = {
-        top: this.position.top + 'px',
-        left: this.position.left + 'px'
-      }
+        width: this.trueModalWidth + 'px',
+        height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
+      };
       // absolutePositioning parameter is here for legacy purposes
       if (this.absolutePositioning) {
         style.top = this.position.top + 'px';
