@@ -129,7 +129,7 @@
         var _Modal = __webpack_require__(6), _Modal2 = _interopRequireDefault(_Modal), _Dialog = __webpack_require__(5), _Dialog2 = _interopRequireDefault(_Dialog), _ModalsContainer = __webpack_require__(7), _ModalsContainer2 = _interopRequireDefault(_ModalsContainer), Plugin = {
             install: function(Vue) {
                 var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-                this.installed || (this.installed = !0, this.event = new Vue(), this.dynamicContainer = null, 
+                if (!this.installed && (this.installed = !0, this.event = new Vue(), this.dynamicContainer = null, 
                 this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
                     _setDynamicContainer: function(dynamicContainer) {
                         Plugin.dynamicContainer = dynamicContainer;
@@ -145,7 +145,14 @@
                         Plugin.event.$emit("toggle", name, void 0, params);
                     }
                 }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default), 
-                options.dynamic && Vue.component("modals-container", _ModalsContainer2.default));
+                options.dynamic)) if (options.injectModalsContainer) {
+                    var modalsContainer = document.createElement("div");
+                    document.body.appendChild(modalsContainer), new Vue({
+                        render: function(h) {
+                            return h(_ModalsContainer2.default);
+                        }
+                    }).$mount(modalsContainer);
+                } else Vue.component("modals-container", _ModalsContainer2.default);
             }
         };
         exports.default = Plugin;
@@ -754,14 +761,14 @@
                                 _vm.remove(modal.id);
                             }
                         }
-                    }, "modal", modal.config, !1), modal.events), [ _c(modal.component, _vm._b({
+                    }, "modal", modal.config, !1), modal.events), [ _c(modal.component, _vm._g(_vm._b({
                         tag: "component",
                         on: {
                             close: function($event) {
                                 _vm.$modal.hide(modal.config.name);
                             }
                         }
-                    }, "component", modal.params, !1)) ], 1);
+                    }, "component", modal.params, !1), _vm.$listeners)) ], 1);
                 }));
             },
             staticRenderFns: []
