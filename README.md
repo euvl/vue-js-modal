@@ -307,6 +307,7 @@ export default {
 
 Example with a dynamic modal:
 ```vue
+<script>
 export default {
   name: 'ExampleModal',
   data () {
