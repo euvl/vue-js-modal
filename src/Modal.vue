@@ -15,9 +15,7 @@
           <div v-if="visibility.modal"
                 ref="modal"
                 :class="modalClass"
-                :style="modalStyle"
-                @mousedown.stop
-                @touchstart.stop>
+                :style="modalStyle">
             <slot/>
             <resizer v-if="resizable && !isAutoHeight"
                       :min-width="minWidth"
