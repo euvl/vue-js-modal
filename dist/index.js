@@ -898,10 +898,12 @@
                     class: _vm.backgroundClickClass,
                     on: {
                         mousedown: function($event) {
-                            $event.stopPropagation(), _vm.onBackgroundClick($event);
+                            if ($event.target !== $event.currentTarget) return null;
+                            _vm.onBackgroundClick($event);
                         },
                         touchstart: function($event) {
-                            $event.stopPropagation(), _vm.onBackgroundClick($event);
+                            if ($event.target !== $event.currentTarget) return null;
+                            _vm.onBackgroundClick($event);
                         }
                     }
                 }, [ _c("div", {
@@ -913,15 +915,7 @@
                 }, [ _vm.visibility.modal ? _c("div", {
                     ref: "modal",
                     class: _vm.modalClass,
-                    style: _vm.modalStyle,
-                    on: {
-                        mousedown: function($event) {
-                            $event.stopPropagation();
-                        },
-                        touchstart: function($event) {
-                            $event.stopPropagation();
-                        }
-                    }
+                    style: _vm.modalStyle
                 }, [ _vm._t("default"), _vm._v(" "), _vm.resizable && !_vm.isAutoHeight ? _c("resizer", {
                     attrs: {
                         "min-width": _vm.minWidth,
