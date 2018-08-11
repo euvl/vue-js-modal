@@ -1,28 +1,26 @@
 <template>
   <transition name="overlay-fade">
     <div v-if="visibility.overlay"
-         ref="overlay"
-         :class="overlayClass"
-         :aria-expanded="visible.toString()"
-         :data-modal="name">
+          ref="overlay"
+          :class="overlayClass"
+          :aria-expanded="visible.toString()"
+          :data-modal="name">
       <div :class="backgroundClickClass"
-           @mousedown.stop="onBackgroundClick"
-           @touchstart.stop="onBackgroundClick">
+            @mousedown.self="onBackgroundClick"
+            @touchstart.self="onBackgroundClick">
         <div class="v--modal-top-right">
           <slot name="top-right"/>
         </div>
         <transition :name="transition">
           <div v-if="visibility.modal"
-               ref="modal"
-               :class="modalClass"
-               :style="modalStyle"
-               @mousedown.stop
-               @touchstart.stop>
+                ref="modal"
+                :class="modalClass"
+                :style="modalStyle">
             <slot/>
             <resizer v-if="resizable && !isAutoHeight"
-                     :min-width="minWidth"
-                     :min-height="minHeight"
-                     @resize="onModalResize"/>
+                      :min-width="minWidth"
+                      :min-height="minHeight"
+                      @resize="onModalResize"/>
           </div>
         </transition>
       </div>
