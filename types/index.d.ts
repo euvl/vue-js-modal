@@ -1,6 +1,8 @@
 import Vue, { PluginObject, ComponentOptions } from "vue";
 
-declare const VueJSModal: PluginObject<VueJSModalOptions>;
+declare const VueJSModal: PluginObject<VueJSModalOptions> & {
+  rootInstance?: Vue
+};
 export default VueJSModal;
 
 export declare interface VueJSModalOptions {

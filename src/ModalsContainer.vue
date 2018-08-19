@@ -25,7 +25,7 @@ export default {
     }
   },
   created () {
-    this.$modal._setDynamicContainer(this)
+    this.$root._dynamicContainer = this
   },
   methods: {
     add (modal, params, config, events) {
