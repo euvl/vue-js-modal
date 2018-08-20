@@ -262,6 +262,12 @@ export default {
     if (this.clickToClose) {
       window.removeEventListener('keyup', this.onEscapeKeyUp)
     }
+    /**
+     * Removes blocked scroll
+     */
+    if (this.scrollable) {
+      document.body.classList.remove('v--modal-block-scroll')
+    }
   },
   computed: {
     /**
