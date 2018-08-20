@@ -123,20 +123,34 @@
                 default: obj
             };
         }
+        function getModalsContainer(Vue, options, root) {
+            if (!root._dynamicContainer && options.injectModalsContainer) {
+                var modalsContainer = document.createElement("div");
+                document.body.appendChild(modalsContainer), new Vue({
+                    parent: root,
+                    render: function(h) {
+                        return h(_ModalsContainer2.default);
+                    }
+                }).$mount(modalsContainer);
+            }
+            return root._dynamicContainer;
+        }
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
         var _Modal = __webpack_require__(6), _Modal2 = _interopRequireDefault(_Modal), _Dialog = __webpack_require__(5), _Dialog2 = _interopRequireDefault(_Dialog), _ModalsContainer = __webpack_require__(7), _ModalsContainer2 = _interopRequireDefault(_ModalsContainer), Plugin = {
             install: function(Vue) {
                 var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-                if (!this.installed && (this.installed = !0, this.event = new Vue(), this.dynamicContainer = null, 
+                this.installed || (this.installed = !0, this.event = new Vue(), this.rootInstance = null, 
                 this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
-                    _setDynamicContainer: function(dynamicContainer) {
-                        Plugin.dynamicContainer = dynamicContainer;
-                    },
                     show: function(modal, paramsOrProps, params) {
                         var events = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : {};
-                        "string" == typeof modal ? Plugin.event.$emit("toggle", modal, !0, paramsOrProps) : null === Plugin.dynamicContainer ? console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page") : Plugin.dynamicContainer.add(modal, paramsOrProps, params, events);
+                        if ("string" == typeof modal) Plugin.event.$emit("toggle", modal, !0, paramsOrProps); else {
+                            var root = Plugin.rootInstance;
+                            params && params.root && (root = params.root);
+                            var dynamicContainer = getModalsContainer(Vue, options, root);
+                            dynamicContainer ? dynamicContainer.add(modal, paramsOrProps, params, events) : console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page");
+                        }
                     },
                     hide: function(name, params) {
                         Plugin.event.$emit("toggle", name, !1, params);
@@ -145,14 +159,12 @@
                         Plugin.event.$emit("toggle", name, void 0, params);
                     }
                 }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default), 
-                options.dynamic)) if (options.injectModalsContainer) {
-                    var modalsContainer = document.createElement("div");
-                    document.body.appendChild(modalsContainer), new Vue({
-                        render: function(h) {
-                            return h(_ModalsContainer2.default);
-                        }
-                    }).$mount(modalsContainer);
-                } else Vue.component("modals-container", _ModalsContainer2.default);
+                options.dynamic && (Vue.component("modals-container", _ModalsContainer2.default), 
+                Vue.mixin({
+                    beforeMount: function() {
+                        null === Plugin.rootInstance && (Plugin.rootInstance = this.$root);
+                    }
+                })));
             }
         };
         exports.default = Plugin;
@@ -420,7 +432,8 @@
                 this.clickToClose && window.addEventListener("keyup", this.onEscapeKeyUp);
             },
             beforeDestroy: function() {
-                window.removeEventListener("resize", this.onWindowResize), this.clickToClose && window.removeEventListener("keyup", this.onEscapeKeyUp);
+                window.removeEventListener("resize", this.onWindowResize), this.clickToClose && window.removeEventListener("keyup", this.onEscapeKeyUp), 
+                this.scrollable && document.body.classList.remove("v--modal-block-scroll");
             },
             computed: {
                 isAutoHeight: function() {
@@ -583,7 +596,7 @@
                 };
             },
             created: function() {
-                this.$modal._setDynamicContainer(this);
+                this.$root._dynamicContainer = this;
             },
             methods: {
                 add: function(modal, params, config, events) {
