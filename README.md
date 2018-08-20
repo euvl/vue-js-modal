@@ -206,6 +206,25 @@ this.$modal.show({
 })
 ```
 
+If using the `injectModalsContainer` flag, the first mounted Vue instance without parents will be treated as the application root. This is only important to keep in mind if more than one root Vue instance is being used, which is unlikely. But if that's the case, the root to use can be indicated with the `root` parameter when invoking dynamic modals or modifying this plugin's `rootInstance` attribute:
+
+```javascript
+import App from './App.vue'
+import VModal from 'vue-js-modal'
+
+const app1 = new Vue({
+  el: '#app-1',
+  render: h => h(App)
+})
+
+const app2 = new Vue({
+  el: '#app-2',
+  render: h => h(App)
+})
+
+VModal.rootInstance = app2
+```
+
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
 **Note:** keep in mind that there are some limitations for using dynamic modals. If you need full functionality then use ordinary modal instead.
@@ -257,6 +276,7 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | maxHeight | false | Number (px)      | Infinity    | The maximum height of the modal (if the value is greater than window height, window height will be used instead |
 | pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from left) of the window |
 | pivotY    | false | Number (0 - 1.0) | 0.5         | Vertical position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
+| root      | false | Vue instance     | null        | Root instance to obtain modal container from. This property is only necessary when using dynamic modals with more than one root instance, which is uncommon |
 
 ### Events
 
