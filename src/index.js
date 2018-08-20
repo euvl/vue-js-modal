@@ -30,12 +30,7 @@ const Plugin = {
             root = params.root
           }
           if (options.injectModalsContainer && !root._dynamicContainer) {
-            const modalsContainer = document.createElement('div')
-            document.body.appendChild(modalsContainer)
-            new Vue({
-              parent: root,
-              render: h => h(ModalsContainer)
-            }).$mount(modalsContainer)
+            injectModalsContainer(Vue, root)
           }
           if (root._dynamicContainer) {
             root._dynamicContainer.add(modal, paramsOrProps, params, events)
@@ -76,6 +71,15 @@ const Plugin = {
       })
     }
   }
+}
+
+function injectModalsContainer (Vue, parent) {
+  const modalsContainer = document.createElement('div')
+  document.body.appendChild(modalsContainer)
+  new Vue({
+    parent: parent,
+    render: h => h(ModalsContainer)
+  }).$mount(modalsContainer)
 }
 
 export default Plugin
