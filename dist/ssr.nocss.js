@@ -243,6 +243,10 @@
                     type: Boolean,
                     default: !1
                 },
+                overlayTransition: {
+                    type: String,
+                    default: "overlay-fade"
+                },
                 transition: {
                     type: String
                 },
@@ -783,7 +787,7 @@
                 var _vm = this, _h = _vm.$createElement, _c = _vm._self._c || _h;
                 return _c("transition", {
                     attrs: {
-                        name: "overlay-fade"
+                        name: _vm.overlayTransition
                     }
                 }, [ _vm.visibility.overlay ? _c("div", {
                     ref: "overlay",
