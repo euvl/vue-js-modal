@@ -1,5 +1,5 @@
 <template>
-  <transition name="overlay-fade">
+  <transition :name="overlayTransition">
     <div v-if="visibility.overlay"
           ref="overlay"
           :class="overlayClass"
@@ -63,6 +63,10 @@ export default {
     reset: {
       type: Boolean,
       default: false
+    },
+    overlayTransition: {
+        type: String,
+        default: 'overlay-fade'
     },
     transition: {
       type: String
