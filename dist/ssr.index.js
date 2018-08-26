@@ -145,7 +145,8 @@
                 this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
                     show: function(modal, paramsOrProps, params) {
                         var events = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : {};
-                        if ("string" == typeof modal) Plugin.event.$emit("toggle", modal, !0, paramsOrProps); else {
+                        if ("string" == typeof modal) Plugin.event.$emit("toggle", modal, !1, paramsOrProps), 
+                        Plugin.event.$emit("toggle", modal, !0, paramsOrProps); else {
                             var root = Plugin.rootInstance;
                             params && params.root && (root = params.root);
                             var dynamicContainer = getModalsContainer(Vue, options, root);
@@ -611,7 +612,9 @@
                 add: function(modal, params, config, events) {
                     var _this = this, id = this.uid++;
                     config = config ? Object.assign({}, config) : {}, config.name || (config.name = "_dynamic-modal-" + id), 
-                    this.modals.push({
+                    this.modals = this.modals.filter(function(modal) {
+                        return modal.config.name != config.name;
+                    }), this.modals.push({
                         id: id,
                         component: modal,
                         params: params || {},

@@ -23,6 +23,7 @@ const Plugin = {
     Vue.prototype.$modal = {
       show (modal, paramsOrProps, params, events = {}) {
         if (typeof modal === 'string') {
+          Plugin.event.$emit('toggle', modal, false, paramsOrProps)
           Plugin.event.$emit('toggle', modal, true, paramsOrProps)
         } else {
           let root = Plugin.rootInstance

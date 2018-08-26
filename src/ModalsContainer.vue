@@ -17,6 +17,7 @@
     </div>
 </template>
 <script>
+
 export default {
   data () {
     return {
@@ -34,6 +35,8 @@ export default {
       if (!config.name) {
         config.name = '_dynamic-modal-' + id
       }
+
+      this.modals = this.modals.filter(modal => modal.config.name != config.name)
       this.modals.push({
         id: id,
         component: modal,
@@ -41,6 +44,7 @@ export default {
         config: config,
         events: events
       })
+
       this.$nextTick(() => {
         this.$modal.show(config.name)
       })
