@@ -79,6 +79,12 @@ export default {
       type: [String, Array],
       default: 'v--modal'
     },
+    overlayClasses: {
+      type: [String, Array],
+      default: function () {
+        return []
+      }
+    },
     minWidth: {
       type: Number,
       default: 0,
@@ -346,10 +352,13 @@ export default {
      * Returns class list for screen overlay (modal background)
      */
     overlayClass () {
-      return {
-        'v--modal-overlay': true,
-        scrollable: this.scrollable && this.isAutoHeight
-      }
+      return [
+        this.overlayClasses,
+        'v--modal-overlay',
+        {
+          scrollable: this.scrollable && this.isAutoHeight
+        }
+      ]
     },
     /**
      * Returns class list for click outside overlay (background click)
