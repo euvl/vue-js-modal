@@ -1,4 +1,5 @@
 {
   "presets": ["env"],
-  "comments": false
+  "comments": false,
+  "plugins": ["transform-object-rest-spread"]
 }

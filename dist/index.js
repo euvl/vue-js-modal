@@ -219,12 +219,34 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var inRange = exports.inRange = function(from, to, value) {
+        var _extends = Object.assign || function(target) {
+            for (var i = 1; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
+            }
+            return target;
+        }, generateId = function() {
+            var index = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+            return function() {
+                return (index++).toString();
+            };
+        }();
+        exports.inRange = function(from, to, value) {
             return value < from ? from : value > to ? to : value;
-        };
-        exports.default = {
-            inRange: inRange
-        };
+        }, exports.createModalEvent = function() {
+            var args = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+            return _extends({
+                id: generateId(),
+                timestamp: Date.now(),
+                canceled: !1
+            }, args);
+        }, exports.MutationObserver = function() {
+            for (var prefixes = [ "", "WebKit", "Moz", "O", "Ms" ], i = 0; i < prefixes.length; i++) {
+                var name = prefixes[i] + "MutationObserver";
+                if (name in window) return window[name];
+            }
+            return !1;
+        }();
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(21);
         var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(18), null, null);
@@ -320,7 +342,13 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var _index = __webpack_require__(3), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(16), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(4), _parser = __webpack_require__(12);
+        var _extends = Object.assign || function(target) {
+            for (var i = 1; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
+            }
+            return target;
+        }, _index = __webpack_require__(3), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(16), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(4), _parser = __webpack_require__(12);
         exports.default = {
             name: "VueJsModal",
             props: {
@@ -444,46 +472,23 @@
                     mutationObserver: null
                 };
             },
-            watch: {
-                visible: function(value) {
-                    var _this = this;
-                    value ? (this.visibility.overlay = !0, setTimeout(function() {
-                        _this.visibility.modal = !0, _this.$nextTick(function() {
-                            _this.addDraggableListeners(), _this.callAfterEvent(!0);
-                        });
-                    }, this.delay)) : (this.visibility.modal = !1, setTimeout(function() {
-                        _this.visibility.overlay = !1, _this.$nextTick(function() {
-                            _this.removeDraggableListeners(), _this.callAfterEvent(!1);
-                        });
-                    }, this.delay));
-                }
-            },
             created: function() {
                 this.setInitialSize();
             },
             beforeMount: function() {
-                var _this2 = this;
-                if (_index2.default.event.$on("toggle-" + this.name, function(state, params) {
-                    void 0 === state && (state = !_this2.visible), _this2.toggle(state, params);
-                }), window.addEventListener("resize", this.onWindowResize), this.onWindowResize(), 
+                var _this = this;
+                _index2.default.event.$on("toggle-" + this.name, function(state, params) {
+                    void 0 === state && (state = !_this.visible), _this.toggle(state, params);
+                }), window.addEventListener("resize", this.handleWindowResize), this.handleWindowResize(), 
                 this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
-                this.isAutoHeight) {
-                    var MutationObserver = function() {
-                        for (var prefixes = [ "", "WebKit", "Moz", "O", "Ms" ], i = 0; i < prefixes.length; i++) {
-                            var name = prefixes[i] + "MutationObserver";
-                            if (name in window) return window[name];
-                        }
-                        return !1;
-                    }();
-                    MutationObserver && (this.mutationObserver = new MutationObserver(function(mutations) {
-                        _this2.updateRenderedHeight();
-                    }));
-                }
-                this.clickToClose && window.addEventListener("keyup", this.onEscapeKeyUp);
+                this.isAutoHeight && _util.MutationObserver && (this.mutationObserver = new _util.MutationObserver(function(mutations) {
+                    _this.updateRenderedHeight();
+                })), this.clickToClose && window.addEventListener("keyup", this.handleEscapeKeyUp);
             },
             beforeDestroy: function() {
-                _index2.default.event.$off("toggle-" + this.name), window.removeEventListener("resize", this.onWindowResize), 
-                this.clickToClose && window.removeEventListener("keyup", this.onEscapeKeyUp), this.scrollable && document.body.classList.remove("v--modal-block-scroll");
+                _index2.default.event.$off("toggle-" + this.name), window.removeEventListener("resize", this.handleWindowResize), 
+                this.clickToClose && window.removeEventListener("keyup", this.handleEscapeKeyUp), 
+                this.scrollable && document.body.classList.remove("v--modal-block-scroll");
             },
             computed: {
                 isAutoHeight: function() {
@@ -512,9 +517,6 @@
                         scrollable: this.scrollable && this.isAutoHeight
                     };
                 },
-                backgroundClickClass: function() {
-                    return [ "v--modal-background-click" ];
-                },
                 modalClass: function() {
                     return [ "v--modal-box", this.classes ];
                 },
@@ -534,91 +536,92 @@
                     modal.width = width.value, modal.widthType = width.type, modal.height = height.value, 
                     modal.heightType = height.type;
                 },
-                onEscapeKeyUp: function(event) {
+                handleEscapeKeyUp: function(event) {
                     27 === event.which && this.visible && this.$modal.hide(this.name);
                 },
-                onWindowResize: function() {
+                handleWindowResize: function() {
                     this.window.width = window.innerWidth, this.window.height = window.innerHeight;
                 },
-                genEventObject: function(params) {
-                    var eventData = {
+                createModalEvent: function() {
+                    var args = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                    return (0, _util.createModalEvent)(_extends({
                         name: this.name,
-                        timestamp: Date.now(),
-                        canceled: !1,
                         ref: this.$refs.modal
-                    };
-                    return Object.assign(eventData, params || {});
+                    }, args));
                 },
-                onModalResize: function(event) {
+                handleModalResize: function(event) {
                     this.modal.widthType = "px", this.modal.width = event.size.width, this.modal.heightType = "px", 
                     this.modal.height = event.size.height;
-                    var size = this.modal.size, resizeEvent = this.genEventObject({
+                    var size = this.modal.size;
+                    this.$emit("resize", this.createModalEvent({
                         size: size
-                    });
-                    this.$emit("resize", resizeEvent);
+                    }));
                 },
-                toggle: function(state, params) {
+                toggle: function(nextState, params) {
                     var reset = this.reset, scrollable = this.scrollable, visible = this.visible;
-                    if (visible !== state) {
+                    if (visible !== nextState) {
                         var beforeEventName = visible ? "before-close" : "before-open";
                         "before-open" === beforeEventName ? (document.activeElement && "BODY" !== document.activeElement.tagName && document.activeElement.blur && document.activeElement.blur(), 
                         reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && document.body.classList.add("v--modal-block-scroll")) : scrollable && document.body.classList.remove("v--modal-block-scroll");
                         var stopEventExecution = !1, stop = function() {
                             stopEventExecution = !0;
-                        }, beforeEvent = this.genEventObject({
+                        }, beforeEvent = this.createModalEvent({
                             stop: stop,
-                            state: state,
+                            state: nextState,
                             params: params
                         });
-                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = state);
+                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = nextState, 
+                        this.visible ? this.startOpeningModal() : this.startClosingModal());
                     }
                 },
                 getDraggableElement: function() {
                     var selector = "string" != typeof this.draggable ? ".v--modal-box" : this.draggable;
-                    if (selector) {
-                        var handler = this.$refs.overlay.querySelector(selector);
-                        if (handler) return handler;
-                    }
+                    return selector ? this.$refs.overlay.querySelector(selector) : null;
                 },
-                onBackgroundClick: function() {
+                handleBackgroundClick: function() {
                     this.clickToClose && this.toggle(!1);
                 },
-                addDraggableListeners: function() {
+                startOpeningModal: function() {
+                    var _this2 = this;
+                    this.visibility.overlay = !0, setTimeout(function() {
+                        _this2.visibility.modal = !0;
+                    }, this.delay);
+                },
+                startClosingModal: function() {
                     var _this3 = this;
+                    this.visibility.modal = !1, setTimeout(function() {
+                        _this3.visibility.overlay = !1;
+                    }, this.delay);
+                },
+                addDraggableListeners: function() {
+                    var _this4 = this;
                     if (this.draggable) {
                         var dragger = this.getDraggableElement();
                         if (dragger) {
                             var startX = 0, startY = 0, cachedShiftX = 0, cachedShiftY = 0, getPosition = function(event) {
                                 return event.touches && event.touches.length > 0 ? event.touches[0] : event;
-                            }, mousedown = function(event) {
+                            };
+                            this.handleDraggableMousedown = function(event) {
                                 var target = event.target;
                                 if (!target || "INPUT" !== target.nodeName) {
                                     var _getPosition = getPosition(event), clientX = _getPosition.clientX, clientY = _getPosition.clientY;
-                                    document.addEventListener("mousemove", _mousemove), document.addEventListener("mouseup", _mouseup), 
-                                    document.addEventListener("touchmove", _mousemove), document.addEventListener("touchend", _mouseup), 
-                                    startX = clientX, startY = clientY, cachedShiftX = _this3.shift.left, cachedShiftY = _this3.shift.top;
+                                    document.addEventListener("mousemove", _this4.handleDraggableMousemove), document.addEventListener("touchmove", _this4.handleDraggableMousemove), 
+                                    document.addEventListener("mouseup", _this4.handleDraggableMouseup), document.addEventListener("touchend", _this4.handleDraggableMouseup), 
+                                    startX = clientX, startY = clientY, cachedShiftX = _this4.shift.left, cachedShiftY = _this4.shift.top;
                                 }
-                            }, _mousemove = function(event) {
+                            }, this.handleDraggableMousemove = function(event) {
                                 var _getPosition2 = getPosition(event), clientX = _getPosition2.clientX, clientY = _getPosition2.clientY;
-                                _this3.shift.left = cachedShiftX + clientX - startX, _this3.shift.top = cachedShiftY + clientY - startY, 
+                                _this4.shift.left = cachedShiftX + clientX - startX, _this4.shift.top = cachedShiftY + clientY - startY, 
                                 event.preventDefault();
-                            }, _mouseup = function _mouseup(event) {
-                                document.removeEventListener("mousemove", _mousemove), document.removeEventListener("mouseup", _mouseup), 
-                                document.removeEventListener("touchmove", _mousemove), document.removeEventListener("touchend", _mouseup), 
+                            }, this.handleDraggableMouseup = function(event) {
+                                document.removeEventListener("mousemove", _this4.handleDraggableMousemove), document.removeEventListener("touchmove", _this4.handleDraggableMousemove), 
+                                document.removeEventListener("mouseup", _this4.handleDraggableMouseup), document.removeEventListener("touchend", _this4.handleDraggableMouseup), 
                                 event.preventDefault();
-                            };
-                            dragger.addEventListener("mousedown", mousedown), dragger.addEventListener("touchstart", mousedown);
+                            }, dragger.addEventListener("mousedown", this.handleDraggableMousedown), dragger.addEventListener("touchstart", this.handleDraggableMousedown);
                         }
                     }
                 },
                 removeDraggableListeners: function() {},
-                callAfterEvent: function(state) {
-                    state ? this.connectObserver() : this.disconnectObserver();
-                    var eventName = state ? "opened" : "closed", event = this.genEventObject({
-                        state: state
-                    });
-                    this.$emit(eventName, event);
-                },
                 updateRenderedHeight: function() {
                     this.$refs.modal && (this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height);
                 },
@@ -632,8 +635,16 @@
                 disconnectObserver: function() {
                     this.mutationObserver && this.mutationObserver.disconnect();
                 },
-                beforeTransitionEnter: function() {},
-                afterTransitionLeave: function() {}
+                afterTransitionEnter: function() {
+                    this.addDraggableListeners(), this.connectObserver(), this.$emit("opened", this.createModalEvent({
+                        state: !0
+                    }));
+                },
+                afterTransitionLeave: function() {
+                    this.removeDraggableListeners(), this.disconnectObserver(), this.$emit("closed", this.createModalEvent({
+                        state: !1
+                    }));
+                }
             }
         };
     }, function(module, exports, __webpack_require__) {
@@ -797,7 +808,7 @@
     }, function(module, exports, __webpack_require__) {
         exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.vue-dialog div {\n  box-sizing: border-box;\n}\n.vue-dialog .dialog-flex {\n  width: 100%;\n  height: 100%;\n}\n.vue-dialog .dialog-content {\n  flex: 1 0 auto;\n  width: 100%;\n  padding: 15px;\n  font-size: 14px;\n}\n.vue-dialog .dialog-c-title {\n  font-weight: 600;\n  padding-bottom: 15px;\n}\n.vue-dialog .dialog-c-text {\n}\n.vue-dialog .vue-dialog-buttons {\n  display: flex;\n  flex: 0 1 auto;\n  width: 100%;\n  border-top: 1px solid #eee;\n}\n.vue-dialog .vue-dialog-buttons-none {\n  width: 100%;\n  padding-bottom: 15px;\n}\n.vue-dialog-button {\n  font-size: 12px !important;\n  background: transparent;\n  padding: 0;\n  margin: 0;\n  border: 0;\n  cursor: pointer;\n  box-sizing: border-box;\n  line-height: 40px;\n  height: 40px;\n  color: inherit;\n  font: inherit;\n  outline: none;\n}\n.vue-dialog-button:hover {\n  background: rgba(0, 0, 0, 0.01);\n}\n.vue-dialog-button:active {\n  background: rgba(0, 0, 0, 0.025);\n}\n.vue-dialog-button:not(:first-of-type) {\n  border-left: 1px solid #eee;\n}\n", "" ]);
     }, function(module, exports, __webpack_require__) {
-        exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.v--modal-block-scroll {\n  overflow: hidden;\n  width: 100vw;\n}\n.v--modal-overlay {\n  position: fixed;\n  box-sizing: border-box;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100vh;\n  background: rgba(0, 0, 0, 0.2);\n  z-index: 999;\n  opacity: 1;\n}\n.v--modal-overlay.scrollable {\n  height: 100%;\n  min-height: 100vh;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.v--modal-overlay .v--modal-background-click {\n  min-height: 100%;\n  width: 100%;\n  padding-bottom: 10px;\n}\n.v--modal-overlay .v--modal-box {\n  position: relative;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.v--modal-overlay.scrollable .v--modal-box {\n  margin-bottom: 2px;\n  /* transition: top 0.2s ease; */\n}\n.v--modal {\n  background-color: white;\n  text-align: left;\n  border-radius: 3px;\n  box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);\n  padding: 0;\n}\n.v--modal.v--modal-fullscreen {\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  left: 0;\n  top: 0;\n}\n.v--modal-top-right {\n  display: block;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.overlay-fade-enter-active,\n.overlay-fade-leave-active {\n  transition: all 0.2s;\n}\n.overlay-fade-enter,\n.overlay-fade-leave-active {\n  opacity: 0;\n}\n.nice-modal-fade-enter-active,\n.nice-modal-fade-leave-active {\n  transition: all 0.4s;\n}\n.nice-modal-fade-enter,\n.nice-modal-fade-leave-active {\n  opacity: 0;\n  transform: translateY(-20px);\n}\n", "" ]);
+        exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.v--modal-block-scroll {\n  overflow: hidden;\n  width: 100vw;\n}\n.v--modal-overlay {\n  position: fixed;\n  box-sizing: border-box;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100vh;\n  background: rgba(0, 0, 0, 0.2);\n  z-index: 999;\n  opacity: 1;\n}\n.v--modal-overlay.scrollable {\n  height: 100%;\n  min-height: 100vh;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.v--modal-overlay .v--modal-background-click {\n  min-height: 100%;\n  width: 100%;\n}\n.v--modal-overlay .v--modal-box {\n  position: relative;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.v--modal-overlay.scrollable .v--modal-box {\n  margin-bottom: 2px;\n}\n.v--modal {\n  background-color: white;\n  text-align: left;\n  border-radius: 3px;\n  box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);\n  padding: 0;\n}\n.v--modal.v--modal-fullscreen {\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  left: 0;\n  top: 0;\n}\n.v--modal-top-right {\n  display: block;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.overlay-fade-enter-active,\n.overlay-fade-leave-active {\n  transition: all 0.2s;\n}\n.overlay-fade-enter,\n.overlay-fade-leave-active {\n  opacity: 0;\n}\n.nice-modal-fade-enter-active,\n.nice-modal-fade-leave-active {\n  transition: all 0.4s;\n}\n.nice-modal-fade-enter,\n.nice-modal-fade-leave-active {\n  opacity: 0;\n  transform: translateY(-20px);\n}\n", "" ]);
     }, function(module, exports, __webpack_require__) {
         exports = module.exports = __webpack_require__(1)(), exports.push([ module.i, "\n.vue-modal-resizer {\n  display: block;\n  overflow: hidden;\n  position: absolute;\n  width: 12px;\n  height: 12px;\n  right: 0;\n  bottom: 0;\n  z-index: 9999999;\n  background: transparent;\n  cursor: se-resize;\n}\n.vue-modal-resizer::after {\n  display: block;\n  position: absolute;\n  content: '';\n  background: transparent;\n  left: 0;\n  top: 0;\n  width: 0;\n  height: 0;\n  border-bottom: 10px solid #ddd;\n  border-left: 10px solid transparent;\n}\n.vue-modal-resizer.clicked::after {\n  border-bottom: 10px solid #369be9;\n}\n", "" ]);
     }, function(module, exports, __webpack_require__) {
@@ -910,19 +921,19 @@
                     ref: "overlay",
                     class: _vm.overlayClass,
                     attrs: {
-                        "aria-expanded": _vm.visible.toString(),
+                        "aria-expanded": _vm.visibility.overlay.toString(),
                         "data-modal": _vm.name
                     }
                 }, [ _c("div", {
-                    class: _vm.backgroundClickClass,
+                    staticClass: "v--modal-background-click",
                     on: {
                         mousedown: function($event) {
                             if ($event.target !== $event.currentTarget) return null;
-                            _vm.onBackgroundClick($event);
+                            _vm.handleBackgroundClick($event);
                         },
                         touchstart: function($event) {
                             if ($event.target !== $event.currentTarget) return null;
-                            _vm.onBackgroundClick($event);
+                            _vm.handleBackgroundClick($event);
                         }
                     }
                 }, [ _c("div", {
@@ -932,7 +943,7 @@
                         name: _vm.transition
                     },
                     on: {
-                        "before-enter": _vm.beforeTransitionEnter,
+                        "after-enter": _vm.afterTransitionEnter,
                         "after-leave": _vm.afterTransitionLeave
                     }
                 }, [ _vm.visibility.modal ? _c("div", {
@@ -945,7 +956,7 @@
                         "min-height": _vm.minHeight
                     },
                     on: {
-                        resize: _vm.onModalResize
+                        resize: _vm.handleModalResize
                     }
                 }) : _vm._e() ], 2) : _vm._e() ]) ], 1) ]) : _vm._e() ]);
             },

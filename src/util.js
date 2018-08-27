@@ -1,3 +1,4 @@
+const generateId = ((index = 0) => () => (index++).toString())()
 /**
  *
  * @param {Number} from  Lower limit
@@ -21,4 +22,25 @@ export const inRange = (from, to, value) => {
   // return value < from ? from : (value > to ? to : value)
 }
 
-export default { inRange }
+export const createModalEvent = (args = {}) => {
+  return {
+    id: generateId(),
+    timestamp: Date.now(),
+    canceled: false,
+    ...args
+  }
+}
+
+export const MutationObserver = (() => {
+  const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
+
+  for (let i = 0; i < prefixes.length; i++) {
+    let name = prefixes[i] + 'MutationObserver'
+
+    if (name in window) {
+      return window[name]
+    }
+  }
+
+  return false
+})()

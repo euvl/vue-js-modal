@@ -23,7 +23,6 @@
 .v--modal-overlay .v--modal-background-click {
   min-height: 100%;
   width: 100%;
-  padding-bottom: 10px;
 }
 .v--modal-overlay .v--modal-box {
   position: relative;
@@ -32,7 +31,6 @@
 }
 .v--modal-overlay.scrollable .v--modal-box {
   margin-bottom: 2px;
-  /* transition: top 0.2s ease; */
 }
 .v--modal {
   background-color: white;

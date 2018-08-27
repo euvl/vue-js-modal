@@ -43,6 +43,7 @@
   </h2>
 
   <pre style="line-height: 1.5;">
+    
     npm install --save vue-js-modal
 
     ...

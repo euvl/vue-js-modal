@@ -1,11 +1,16 @@
 <template>
-  <modal name="dog-profile"
-         classes="cute-dog-profile-photo"
-         transition="scale"
-         :height="260"
-         :width="260"
-         @opened="opened">
-    <div slot="top-right" class="ct-top-right">
+  <modal 
+    name="dog-profile"
+    classes="cute-dog-profile-photo"
+    transition="scale"
+    :height="260"
+    :width="260"
+  >
+    <div 
+      slot="top-right"
+      class="ct-top-right"
+      @click="$modal.hide('dog-profile')"
+    >
       HIDE THE DOGGY
     </div>
     <img src="/static/cute_dog.gif" />
@@ -13,11 +18,7 @@
 </template>
 <script>
 export default {
-  name: 'InputFocusModal',
-  methods: {
-    opened (event) {
-    }
-  }
+  name: 'InputFocusModal'
 }
 </script>
 <style lang="scss">
