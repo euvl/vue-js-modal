@@ -65,8 +65,8 @@ export default {
       default: false
     },
     overlayTransition: {
-        type: String,
-        default: 'overlay-fade'
+      type: String,
+      default: 'overlay-fade'
     },
     transition: {
       type: String
@@ -199,14 +199,12 @@ export default {
    * Sets global listeners
    */
   beforeMount () {
-    Modal.event.$on('toggle', (name, state, params) => {
-      if (name === this.name) {
-        if (typeof state === 'undefined') {
-          state = !this.visible
-        }
-
-        this.toggle(state, params)
+    Modal.event.$on(`toggle-${this.name}`, (state, params) => {
+      if (typeof state === 'undefined') {
+        state = !this.visible
       }
+
+      this.toggle(state, params)
     })
 
     window.addEventListener('resize', this.onWindowResize)
@@ -258,9 +256,10 @@ export default {
     }
   },
   /**
-   * Removes "resize" window listener
+   * Removes global listeners
    */
   beforeDestroy () {
+    Modal.event.$off(`toggle-${this.name}`)
     window.removeEventListener('resize', this.onWindowResize)
 
     if (this.clickToClose) {
