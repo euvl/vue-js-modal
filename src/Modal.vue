@@ -11,7 +11,10 @@
         <div class="v--modal-top-right">
           <slot name="top-right"/>
         </div>
-        <transition :name="transition">
+        <transition
+          :name="transition"
+          @before-enter="beforeTransitionEnter"
+          @after-leave="afterTransitionLeave">
           <div v-if="visibility.modal"
                 ref="modal"
                 :class="modalClass"
@@ -243,7 +246,9 @@ export default {
         }
         return false
       })()
-
+      /**
+       * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+       */
       if (MutationObserver) {
         this.mutationObserver = new MutationObserver(mutations => {
           this.updateRenderedHeight()
@@ -401,7 +406,6 @@ export default {
       this.window.width = window.innerWidth
       this.window.height = window.innerHeight
     },
-
     /**
      * Generates event object
      */
@@ -437,7 +441,11 @@ export default {
      */
     toggle (state, params) {
       const { reset, scrollable, visible } = this
-      if (visible === state) return
+
+      if (visible === state) {
+        return
+      }
+
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
       if (beforeEventName === 'before-open') {
@@ -446,8 +454,8 @@ export default {
          * all keypress events (ESC press, for example) will trigger on that element.
          */
         if (document.activeElement &&
-          document.activeElement.tagName.toLowerCase() !== 'body' &&
-          typeof document.activeElement.blur === 'function') {
+          document.activeElement.tagName !== 'BODY' &&
+          document.activeElement.blur) {
           document.activeElement.blur()
         }
 
@@ -485,7 +493,9 @@ export default {
 
     getDraggableElement () {
       var selector =
-        typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable
+        typeof this.draggable !== 'string' 
+          ? '.v--modal-box'
+          : this.draggable
 
       if (selector) {
         const handler = this.$refs.overlay.querySelector(selector)
@@ -572,7 +582,6 @@ export default {
     removeDraggableListeners () {
       //  console.log('removing draggable handlers')
     },
-
     /**
      * 'opened' and 'closed' events are `$emit`ed here.
      * This is called in watch.visible.
@@ -626,6 +635,14 @@ export default {
       if (this.mutationObserver) {
         this.mutationObserver.disconnect()
       }
+    },
+
+    beforeTransitionEnter () {
+      // console.log('before transition enter')
+    },
+
+    afterTransitionLeave () {
+      // console.log('after transtion leave')
     }
   }
 }

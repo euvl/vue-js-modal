@@ -145,7 +145,7 @@
                 this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
                     show: function(modal, paramsOrProps, params) {
                         var events = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : {};
-                        if ("string" == typeof modal) Plugin.event.$emit("toggle", modal, !0, paramsOrProps); else {
+                        if ("string" == typeof modal) Plugin.event.$emit("toggle-" + modal, !0, paramsOrProps); else {
                             var root = Plugin.rootInstance;
                             params && params.root && (root = params.root);
                             var dynamicContainer = getModalsContainer(Vue, options, root);
@@ -153,10 +153,10 @@
                         }
                     },
                     hide: function(name, params) {
-                        Plugin.event.$emit("toggle", name, !1, params);
+                        Plugin.event.$emit("toggle-" + name, !1, params);
                     },
                     toggle: function(name, params) {
-                        Plugin.event.$emit("toggle", name, void 0, params);
+                        Plugin.event.$emit("toggle-" + name, void 0, params);
                     }
                 }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default), 
                 options.dynamic && (Vue.component("modals-container", _ModalsContainer2.default), 
@@ -417,8 +417,8 @@
             },
             beforeMount: function() {
                 var _this2 = this;
-                if (_index2.default.event.$on("toggle", function(name, state, params) {
-                    name === _this2.name && (void 0 === state && (state = !_this2.visible), _this2.toggle(state, params));
+                if (_index2.default.event.$on("toggle-" + this.name, function(state, params) {
+                    void 0 === state && (state = !_this2.visible), _this2.toggle(state, params);
                 }), window.addEventListener("resize", this.onWindowResize), this.onWindowResize(), 
                 this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
                 this.isAutoHeight) {
@@ -436,8 +436,8 @@
                 this.clickToClose && window.addEventListener("keyup", this.onEscapeKeyUp);
             },
             beforeDestroy: function() {
-                window.removeEventListener("resize", this.onWindowResize), this.clickToClose && window.removeEventListener("keyup", this.onEscapeKeyUp), 
-                this.scrollable && document.body.classList.remove("v--modal-block-scroll");
+                _index2.default.event.$off("toggle-" + this.name), window.removeEventListener("resize", this.onWindowResize), 
+                this.clickToClose && window.removeEventListener("keyup", this.onEscapeKeyUp), this.scrollable && document.body.classList.remove("v--modal-block-scroll");
             },
             computed: {
                 isAutoHeight: function() {
@@ -515,7 +515,7 @@
                     var reset = this.reset, scrollable = this.scrollable, visible = this.visible;
                     if (visible !== state) {
                         var beforeEventName = visible ? "before-close" : "before-open";
-                        "before-open" === beforeEventName ? (document.activeElement && "function" == typeof document.activeElement.blur && document.activeElement.blur(), 
+                        "before-open" === beforeEventName ? (document.activeElement && "BODY" !== document.activeElement.tagName && document.activeElement.blur && document.activeElement.blur(), 
                         reset && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), scrollable && document.body.classList.add("v--modal-block-scroll")) : scrollable && document.body.classList.remove("v--modal-block-scroll");
                         var stopEventExecution = !1, stop = function() {
                             stopEventExecution = !0;
@@ -585,7 +585,9 @@
                 },
                 disconnectObserver: function() {
                     this.mutationObserver && this.mutationObserver.disconnect();
-                }
+                },
+                beforeTransitionEnter: function() {},
+                afterTransitionLeave: function() {}
             }
         };
     }, function(module, exports, __webpack_require__) {
@@ -882,6 +884,10 @@
                 }, [ _vm._t("top-right") ], 2), _vm._v(" "), _c("transition", {
                     attrs: {
                         name: _vm.transition
+                    },
+                    on: {
+                        "before-enter": _vm.beforeTransitionEnter,
+                        "after-leave": _vm.afterTransitionLeave
                     }
                 }, [ _vm.visibility.modal ? _c("div", {
                     ref: "modal",
