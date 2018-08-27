@@ -1,4 +1,4 @@
-const generateId = ((index = 0) => () => (index++).toString())()
+export const generateId = ((index = 0) => () => (index++).toString())()
 /**
  *
  * @param {Number} from  Lower limit

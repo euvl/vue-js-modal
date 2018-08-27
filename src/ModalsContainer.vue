@@ -1,26 +1,29 @@
 <template>
-    <div id="modals-container">
-        <modal
-            v-for="modal in modals"
-            :key="modal.id"
-            v-bind="modal.config"
-            v-on="modal.events"
-            @closed="remove(modal.id)"
-        >
-            <component
-              :is="modal.component"
-              v-bind="modal.params"
-              @close="$modal.hide(modal.config.name)"
-              v-on="$listeners"
-            ></component>
-        </modal>
-    </div>
+  <div id="modals-container">
+    <modal
+      v-for="modal in modals"
+      :key="modal.id"
+      v-bind="modal.modalAttrs"
+      v-on="modal.modalListeners"
+      @closed="remove(modal.id)"
+    >
+      <component
+        :is="modal.component"
+        v-bind="modal.componentAttrs"
+        v-on="$listeners"
+        @close="$modal.hide(modal.modalAttrs.name)"
+      />
+    </modal>
+  </div>
 </template>
 <script>
+import { generateId } from './util'
+
+const PREFIX = '_dynamic_modal_'
+
 export default {
   data () {
     return {
-      uid: 0,
       modals: []
     }
   },
@@ -28,21 +31,20 @@ export default {
     this.$root._dynamicContainer = this
   },
   methods: {
-    add (modal, params, config, events) {
-      let id = this.uid++
-      config = config ? Object.assign({}, config) : {}
-      if (!config.name) {
-        config.name = '_dynamic-modal-' + id
-      }
+    add (component, componentAttrs = {}, modalAttrs = {}, modalListeners) {
+      const id = generateId()
+      const name = modalAttrs.name || (PREFIX + id)
+
       this.modals.push({
-        id: id,
-        component: modal,
-        params: params || {},
-        config: config,
-        events: events
+        id,
+        modalAttrs: { ...modalAttrs, name },
+        modalListeners,
+        component,
+        componentAttrs
       })
+
       this.$nextTick(() => {
-        this.$modal.show(config.name)
+        this.$modal.show(name)
       })
     },
     remove (id) {
