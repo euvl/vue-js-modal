@@ -445,7 +445,9 @@ export default {
          * Need to unfocus previously focused element, otherwise
          * all keypress events (ESC press, for example) will trigger on that element.
          */
-        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        if (document.activeElement &&
+          document.activeElement.tagName.toLowerCase() !== 'body' &&
+          typeof document.activeElement.blur === 'function') {
           document.activeElement.blur()
         }
 
