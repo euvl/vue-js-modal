@@ -23,7 +23,7 @@ const Plugin = {
     Vue.prototype.$modal = {
       show (modal, paramsOrProps, params, events = {}) {
         if (typeof modal === 'string') {
-          Plugin.event.$emit('toggle', modal, true, paramsOrProps)
+          Plugin.event.$emit(`toggle-${modal}`, true, paramsOrProps)
         } else {
           let root = Plugin.rootInstance
           if (params && params.root) {
@@ -39,11 +39,11 @@ const Plugin = {
         }
       },
       hide (name, params) {
-        Plugin.event.$emit('toggle', name, false, params)
+        Plugin.event.$emit(`toggle-${name}`, false, params)
       },
 
       toggle (name, params) {
-        Plugin.event.$emit('toggle', name, undefined, params)
+        Plugin.event.$emit(`toggle-${name}`, undefined, params)
       }
     }
     /**
