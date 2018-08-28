@@ -32,7 +32,7 @@ export const createModalEvent = (args = {}) => {
 }
 
 export const MutationObserver = (() => {
-  if (typeof window !== 'undefined')) {
+  if (typeof window !== 'undefined') {
     const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
 
     for (let i = 0; i < prefixes.length; i++) {

@@ -80,7 +80,7 @@
                 canceled: !1
             }, args);
         }, exports.MutationObserver = function() {
-            for (var prefixes = [ "", "WebKit", "Moz", "O", "Ms" ], i = 0; i < prefixes.length; i++) {
+            if ("undefined" != typeof window) for (var prefixes = [ "", "WebKit", "Moz", "O", "Ms" ], i = 0; i < prefixes.length; i++) {
                 var name = prefixes[i] + "MutationObserver";
                 if (name in window) return window[name];
             }
