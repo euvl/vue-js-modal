@@ -115,18 +115,16 @@
                 this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
                     show: function(modal, paramsOrProps, params) {
                         var events = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : {};
-                        if ("string" == typeof modal) Plugin.event.$emit("toggle-" + modal, !0, paramsOrProps); else {
-                            var root = Plugin.rootInstance;
-                            params && params.root && (root = params.root);
-                            var dynamicContainer = getModalsContainer(Vue, options, root);
-                            dynamicContainer ? dynamicContainer.add(modal, paramsOrProps, params, events) : console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page");
-                        }
+                        if ("string" == typeof modal) return void Plugin.event.$emit("toggle", modal, !0, paramsOrProps);
+                        var root = params && params.root ? params.root : Plugin.rootInstance, container = getModalsContainer(Vue, options, root);
+                        if (container) return void container.add(modal, paramsOrProps, params, events);
+                        console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page");
                     },
                     hide: function(name, params) {
-                        Plugin.event.$emit("toggle-" + name, !1, params);
+                        Plugin.event.$emit("toggle", name, !1, params);
                     },
                     toggle: function(name, params) {
-                        Plugin.event.$emit("toggle-" + name, void 0, params);
+                        Plugin.event.$emit("toggle", name, void 0, params);
                     }
                 }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default), 
                 options.dynamic && (Vue.component("modals-container", _ModalsContainer2.default), 
@@ -368,16 +366,14 @@
             },
             beforeMount: function() {
                 var _this = this;
-                _index2.default.event.$on("toggle-" + this.name, function(state, params) {
-                    void 0 === state && (state = !_this.visible), _this.toggle(state, params);
-                }), window.addEventListener("resize", this.handleWindowResize), this.handleWindowResize(), 
-                this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
+                _index2.default.event.$on("toggle", this.handleToggleEvent), window.addEventListener("resize", this.handleWindowResize), 
+                this.handleWindowResize(), this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
                 this.isAutoHeight && _util.MutationObserver && (this.mutationObserver = new _util.MutationObserver(function(mutations) {
                     _this.updateRenderedHeight();
                 })), this.clickToClose && window.addEventListener("keyup", this.handleEscapeKeyUp);
             },
             beforeDestroy: function() {
-                _index2.default.event.$off("toggle-" + this.name), window.removeEventListener("resize", this.handleWindowResize), 
+                _index2.default.event.$off("toggle", this.handleToggleEvent), window.removeEventListener("resize", this.handleWindowResize), 
                 this.clickToClose && window.removeEventListener("keyup", this.handleEscapeKeyUp), 
                 this.scrollable && document.body.classList.remove("v--modal-block-scroll");
             },
@@ -421,6 +417,12 @@
                 }
             },
             methods: {
+                handleToggleEvent: function(name, state, params) {
+                    if (this.name === name) {
+                        var nextState = void 0 === state ? !this.visible : state;
+                        this.toggle(nextState, params);
+                    }
+                },
                 setInitialSize: function() {
                     var modal = this.modal, width = (0, _parser.parseNumber)(this.width), height = (0, 
                     _parser.parseNumber)(this.height);
@@ -491,24 +493,24 @@
                         if (dragger) {
                             var startX = 0, startY = 0, cachedShiftX = 0, cachedShiftY = 0, getPosition = function(event) {
                                 return event.touches && event.touches.length > 0 ? event.touches[0] : event;
-                            };
-                            this.handleDraggableMousedown = function(event) {
+                            }, handleDraggableMousedown = function(event) {
                                 var target = event.target;
                                 if (!target || "INPUT" !== target.nodeName) {
                                     var _getPosition = getPosition(event), clientX = _getPosition.clientX, clientY = _getPosition.clientY;
-                                    document.addEventListener("mousemove", _this4.handleDraggableMousemove), document.addEventListener("touchmove", _this4.handleDraggableMousemove), 
-                                    document.addEventListener("mouseup", _this4.handleDraggableMouseup), document.addEventListener("touchend", _this4.handleDraggableMouseup), 
+                                    document.addEventListener("mousemove", _handleDraggableMousemove), document.addEventListener("touchmove", _handleDraggableMousemove), 
+                                    document.addEventListener("mouseup", _handleDraggableMouseup), document.addEventListener("touchend", _handleDraggableMouseup), 
                                     startX = clientX, startY = clientY, cachedShiftX = _this4.shift.left, cachedShiftY = _this4.shift.top;
                                 }
-                            }, this.handleDraggableMousemove = function(event) {
+                            }, _handleDraggableMousemove = function(event) {
                                 var _getPosition2 = getPosition(event), clientX = _getPosition2.clientX, clientY = _getPosition2.clientY;
                                 _this4.shift.left = cachedShiftX + clientX - startX, _this4.shift.top = cachedShiftY + clientY - startY, 
                                 event.preventDefault();
-                            }, this.handleDraggableMouseup = function(event) {
-                                document.removeEventListener("mousemove", _this4.handleDraggableMousemove), document.removeEventListener("touchmove", _this4.handleDraggableMousemove), 
-                                document.removeEventListener("mouseup", _this4.handleDraggableMouseup), document.removeEventListener("touchend", _this4.handleDraggableMouseup), 
+                            }, _handleDraggableMouseup = function _handleDraggableMouseup(event) {
+                                document.removeEventListener("mousemove", _handleDraggableMousemove), document.removeEventListener("touchmove", _handleDraggableMousemove), 
+                                document.removeEventListener("mouseup", _handleDraggableMouseup), document.removeEventListener("touchend", _handleDraggableMouseup), 
                                 event.preventDefault();
-                            }, dragger.addEventListener("mousedown", this.handleDraggableMousedown), dragger.addEventListener("touchstart", this.handleDraggableMousedown);
+                            };
+                            dragger.addEventListener("mousedown", handleDraggableMousedown), dragger.addEventListener("touchstart", handleDraggableMousedown);
                         }
                     }
                 },

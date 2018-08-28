@@ -180,13 +180,7 @@ export default {
    * Sets global listeners
    */
   beforeMount () {
-    Modal.event.$on(`toggle-${this.name}`, (state, params) => {
-      if (typeof state === 'undefined') {
-        state = !this.visible
-      }
-
-      this.toggle(state, params)
-    })
+    Modal.event.$on('toggle', this.handleToggleEvent)
 
     window.addEventListener('resize', this.handleWindowResize)
     this.handleWindowResize()
@@ -230,7 +224,7 @@ export default {
    * Removes global listeners
    */
   beforeDestroy () {
-    Modal.event.$off(`toggle-${this.name}`)
+    Modal.event.$off('toggle', this.handleToggleEvent)
     window.removeEventListener('resize', this.handleWindowResize)
 
     if (this.clickToClose) {
@@ -344,6 +338,15 @@ export default {
     }
   },
   methods: {
+    handleToggleEvent (name, state, params) {
+      if (this.name === name) {
+        const nextState = typeof state === 'undefined'
+          ? !this.visible
+          : state
+
+        this.toggle(nextState, params)
+      }
+    },
     /**
      * Initializes modal's size & position,
      * if "reset" flag is set to true - this function will be called
@@ -515,7 +518,7 @@ export default {
             : event
         }
         
-        this.handleDraggableMousedown = event => {
+        const handleDraggableMousedown = event => {
           let target = event.target
 
           if (target && target.nodeName === 'INPUT') {
@@ -524,11 +527,11 @@ export default {
 
           let { clientX, clientY } = getPosition(event)
 
-          document.addEventListener('mousemove', this.handleDraggableMousemove)
-          document.addEventListener('touchmove', this.handleDraggableMousemove)
+          document.addEventListener('mousemove', handleDraggableMousemove)
+          document.addEventListener('touchmove', handleDraggableMousemove)
 
-          document.addEventListener('mouseup', this.handleDraggableMouseup)
-          document.addEventListener('touchend', this.handleDraggableMouseup)
+          document.addEventListener('mouseup', handleDraggableMouseup)
+          document.addEventListener('touchend', handleDraggableMouseup)
 
           startX = clientX
           startY = clientY
@@ -537,7 +540,7 @@ export default {
           cachedShiftY = this.shift.top
         }
 
-        this.handleDraggableMousemove = event => {
+        const handleDraggableMousemove = event => {
           let { clientX, clientY } = getPosition(event)
 
           this.shift.left = cachedShiftX + clientX - startX
@@ -546,28 +549,18 @@ export default {
           event.preventDefault()
         }
 
-        this.handleDraggableMouseup = event => {
-          document.removeEventListener(
-            'mousemove',
-            this.handleDraggableMousemove)
+        const handleDraggableMouseup = event => {
+          document.removeEventListener('mousemove', handleDraggableMousemove)
+          document.removeEventListener('touchmove', handleDraggableMousemove)
 
-          document.removeEventListener(
-            'touchmove',
-            this.handleDraggableMousemove)
-
-          document.removeEventListener(
-            'mouseup',
-            this.handleDraggableMouseup)
-
-          document.removeEventListener(
-            'touchend',
-            this.handleDraggableMouseup)
+          document.removeEventListener('mouseup', handleDraggableMouseup)
+          document.removeEventListener('touchend', handleDraggableMouseup)
 
           event.preventDefault()
         }
 
-        dragger.addEventListener('mousedown', this.handleDraggableMousedown)
-        dragger.addEventListener('touchstart', this.handleDraggableMousedown)
+        dragger.addEventListener('mousedown', handleDraggableMousedown)
+        dragger.addEventListener('touchstart', handleDraggableMousedown)
       }
     },
 

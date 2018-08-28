@@ -3,11 +3,14 @@ import Dialog from './Dialog.vue'
 import ModalsContainer from './ModalsContainer.vue'
 
 const defaultComponentName = 'modal'
+const unmountedRootErrorMessage = 
+  '[vue-js-modal] In order to render dynamic modals, a <modals-container> ' +
+  'component must be present on the page'
 
 const Plugin = {
   install (Vue, options = {}) {
     /**
-     * Makes sure that plugin can be insstalled only once
+     * Makes sure that plugin can be installed only once
      */
     if (this.installed) {
       return
@@ -23,27 +26,29 @@ const Plugin = {
     Vue.prototype.$modal = {
       show (modal, paramsOrProps, params, events = {}) {
         if (typeof modal === 'string') {
-          Plugin.event.$emit(`toggle-${modal}`, true, paramsOrProps)
-        } else {
-          let root = Plugin.rootInstance
-          if (params && params.root) {
-            root = params.root
-          }
-
-          const dynamicContainer = getModalsContainer(Vue, options, root)
-          if (dynamicContainer) {
-            dynamicContainer.add(modal, paramsOrProps, params, events)
-          } else {
-            console.warn('[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page')
-          }
+          Plugin.event.$emit('toggle', modal, true, paramsOrProps)
+          return
         }
+
+        const root = params && params.root
+          ? params.root
+          : Plugin.rootInstance
+        
+        const container = getModalsContainer(Vue, options, root)
+        
+        if (container) {
+          container.add(modal, paramsOrProps, params, events)
+          return
+        }
+
+        console.warn(unmountedRootErrorMessage)
       },
       hide (name, params) {
-        Plugin.event.$emit(`toggle-${name}`, false, params)
+        Plugin.event.$emit('toggle', name, false, params)
       },
 
       toggle (name, params) {
-        Plugin.event.$emit(`toggle-${name}`, undefined, params)
+        Plugin.event.$emit('toggle', name, undefined, params)
       }
     }
     /**
@@ -76,6 +81,7 @@ function getModalsContainer (Vue, options, root) {
   if (!root._dynamicContainer && options.injectModalsContainer) {
     const modalsContainer = document.createElement('div')
     document.body.appendChild(modalsContainer)
+
     new Vue({
       parent: root,
       render: h => h(ModalsContainer)
