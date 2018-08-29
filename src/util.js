@@ -31,7 +31,7 @@ export const createModalEvent = (args = {}) => {
   }
 }
 
-export const MutationObserver = (() => {
+export const getMutationObserver = () => {
   if (typeof window !== 'undefined') {
     const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
 
@@ -45,4 +45,4 @@ export const MutationObserver = (() => {
   }
 
   return false
-})()
+}

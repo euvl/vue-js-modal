@@ -79,13 +79,13 @@
                 timestamp: Date.now(),
                 canceled: !1
             }, args);
-        }, exports.MutationObserver = function() {
+        }, exports.getMutationObserver = function() {
             if ("undefined" != typeof window) for (var prefixes = [ "", "WebKit", "Moz", "O", "Ms" ], i = 0; i < prefixes.length; i++) {
                 var name = prefixes[i] + "MutationObserver";
                 if (name in window) return window[name];
             }
             return !1;
-        }();
+        };
     }, function(module, exports, __webpack_require__) {
         "use strict";
         function _interopRequireDefault(obj) {
@@ -366,11 +366,15 @@
             },
             beforeMount: function() {
                 var _this = this;
-                _index2.default.event.$on("toggle", this.handleToggleEvent), window.addEventListener("resize", this.handleWindowResize), 
+                if (_index2.default.event.$on("toggle", this.handleToggleEvent), window.addEventListener("resize", this.handleWindowResize), 
                 this.handleWindowResize(), this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
-                this.isAutoHeight && _util.MutationObserver && (this.mutationObserver = new _util.MutationObserver(function(mutations) {
-                    _this.updateRenderedHeight();
-                })), this.clickToClose && window.addEventListener("keyup", this.handleEscapeKeyUp);
+                this.isAutoHeight) {
+                    var MutationObserver = (0, _util.getMutationObserver)();
+                    MutationObserver && (this.mutationObserver = new MutationObserver(function(mutations) {
+                        _this.updateRenderedHeight();
+                    }));
+                }
+                this.clickToClose && window.addEventListener("keyup", this.handleEscapeKeyUp);
             },
             beforeDestroy: function() {
                 _index2.default.event.$off("toggle", this.handleToggleEvent), window.removeEventListener("resize", this.handleWindowResize), 

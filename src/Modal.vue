@@ -42,7 +42,7 @@
 <script>
 import Modal from './index'
 import Resizer from './Resizer.vue'
-import { inRange, createModalEvent, MutationObserver } from './util'
+import { inRange, createModalEvent, getMutationObserver } from './util'
 import { parseNumber, validateNumber } from './parser'
 
 export default {
@@ -208,7 +208,12 @@ export default {
        * (Provide polyfill to support IE < 11)
        * 
        * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+       * 
+       * For the sake of SSR, MutationObserver cannot be initialized 
+       * before component creation >_<
        */
+      const MutationObserver = getMutationObserver()
+
       if (MutationObserver) {
         this.mutationObserver = new MutationObserver(mutations => {
           this.updateRenderedHeight()
