@@ -17,6 +17,7 @@
         </div>
         <transition
           :name="transition"
+          @before-enter="beforeTransitionEnter"
           @after-enter="afterTransitionEnter"
           @after-leave="afterTransitionLeave"
         >
@@ -591,7 +592,7 @@ export default {
      */
     connectObserver () {
       if (this.mutationObserver) {
-        this.mutationObserver.observe(this.$refs.modal, {
+        this.mutationObserver.observe(this.$refs.overlay, {
           childList: true,
           attributes: true,
           subtree: true
@@ -607,9 +608,12 @@ export default {
       }
     },
 
-    afterTransitionEnter () {
+    beforeTransitionEnter () {
       this.addDraggableListeners()
       this.connectObserver()
+    },
+
+    afterTransitionEnter () {
       this.$emit(
         'opened',
         this.createModalEvent({ state: true })
