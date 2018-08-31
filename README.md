@@ -285,7 +285,7 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | before-open  | Emits while modal is still invisible, but was added to the DOM |
 | opened       | Emits after modal became visible or started transition |
 | before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closisng and ask user to correct mistakes if text is not valid)
-| closed       | Emits right before modal is destoyed |
+| closed       | Emits right before modal is destroyed |
 
 Example:
 ```vue
