@@ -16,8 +16,6 @@
 
 [Changelog](https://github.com/euvl/vue-js-modal/releases)
 
-</p>
-
 <p align="center">
   <img src="https://media.giphy.com/media/3oKIPco1eNxAA1rD4Q/giphy.gif">
 </p>
@@ -269,7 +267,7 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
 | transition| false | String           |             | Transition name |
 | overlayTransition| false | String           | 'overlay-fade'| Transition name for the background overlay |
-| classes   | false | [String, Array]  | 'v--modal'| Classes that will be applied to the actual modal box, if not specified, the default 'vue--modal' class will be applied |
+| classes   | false | [String, Array]  | 'v--modal'| Classes that will be applied to the actual modal box, if not specified, the default `v--modal` class will be applied |
 | width     | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |
 | height    | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") or `"auto"` |
 | minWidth  | false | Number (px)      | 0           | The minimum width to which modal can be resized  |
