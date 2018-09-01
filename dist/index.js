@@ -632,7 +632,7 @@
                     this.$refs.modal && (this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height);
                 },
                 connectObserver: function() {
-                    this.mutationObserver && this.mutationObserver.observe(this.$refs.modal, {
+                    this.mutationObserver && this.mutationObserver.observe(this.$refs.overlay, {
                         childList: !0,
                         attributes: !0,
                         subtree: !0
@@ -641,8 +641,11 @@
                 disconnectObserver: function() {
                     this.mutationObserver && this.mutationObserver.disconnect();
                 },
+                beforeTransitionEnter: function() {
+                    this.addDraggableListeners(), this.connectObserver();
+                },
                 afterTransitionEnter: function() {
-                    this.addDraggableListeners(), this.connectObserver(), this.$emit("opened", this.createModalEvent({
+                    this.$emit("opened", this.createModalEvent({
                         state: !0
                     }));
                 },
@@ -958,6 +961,7 @@
                         name: _vm.transition
                     },
                     on: {
+                        "before-enter": _vm.beforeTransitionEnter,
                         "after-enter": _vm.afterTransitionEnter,
                         "after-leave": _vm.afterTransitionLeave
                     }
