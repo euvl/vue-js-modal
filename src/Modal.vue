@@ -609,11 +609,12 @@ export default {
     },
 
     beforeTransitionEnter () {
-      this.addDraggableListeners()
       this.connectObserver()
     },
 
     afterTransitionEnter () {
+      this.addDraggableListeners()
+
       this.$emit(
         'opened',
         this.createModalEvent({ state: true })

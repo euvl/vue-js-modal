@@ -642,10 +642,10 @@
                     this.mutationObserver && this.mutationObserver.disconnect();
                 },
                 beforeTransitionEnter: function() {
-                    this.addDraggableListeners(), this.connectObserver();
+                    this.connectObserver();
                 },
                 afterTransitionEnter: function() {
-                    this.$emit("opened", this.createModalEvent({
+                    this.addDraggableListeners(), this.$emit("opened", this.createModalEvent({
                         state: !0
                     }));
                 },
