@@ -5,6 +5,7 @@
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 [![npm](https://img.shields.io/npm/dt/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Feuvl%2Fvue-js-modal.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Feuvl%2Fvue-js-modal?ref=badge_shield)
 
 <p align="right">
   <a href="https://www.buymeacoffee.com/yev" target="_blank">
@@ -495,3 +496,7 @@ cd demo/client_side_rendering
 npm install
 npm run dev
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Feuvl%2Fvue-js-modal.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Feuvl%2Fvue-js-modal?ref=badge_large)
