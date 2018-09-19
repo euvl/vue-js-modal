@@ -88,6 +88,10 @@ export default {
       type: Boolean,
       default: true
     },
+    escapeKeyToClose: {
+      type: Boolean,
+      default: true
+    },
     classes: {
       type: [String, Array],
       default: 'v--modal'
@@ -222,7 +226,7 @@ export default {
       }
     }
 
-    if (this.clickToClose) {
+    if (this.escapeKeyToClose) {
       window.addEventListener('keyup', this.handleEscapeKeyUp)
     }
   },
@@ -233,7 +237,7 @@ export default {
     Modal.event.$off('toggle', this.handleToggleEvent)
     window.removeEventListener('resize', this.handleWindowResize)
 
-    if (this.clickToClose) {
+    if (this.escapeKeyToClose) {
       window.removeEventListener('keyup', this.handleEscapeKeyUp)
     }
     /**
