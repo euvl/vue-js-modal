@@ -12,7 +12,7 @@
   </a>
 </p>
 
-##### Simple to use, highly customizable, mobile friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
+##### Simple to use, highly customizable, mobile-friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
 
 [Changelog](https://github.com/euvl/vue-js-modal/releases)
 
@@ -38,7 +38,7 @@ import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
 /*
-By default plugin will use "modal" name for the component.
+By default, the plugin will use "modal" name for the component.
 If you need to change it, you can do so by providing "componentName" param.
 
 Example:
@@ -226,7 +226,7 @@ VModal.rootInstance = app2
 
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
-**Note:** keep in mind that there are some limitations for using dynamic modals. If you need full functionality then use ordinary modal instead.
+**Note:** keep in mind that there are some limitations in using dynamic modals. If you need full functionality then use ordinary modal instead.
 
 ### SSR
 
@@ -251,7 +251,7 @@ For full demo please look at `demo/server_side_rendering`
 
 ### Extracted CSS
 
-There is also a ssr build with css file extracted. Take a look in /dist folder.
+There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 
 ### Properties
 
@@ -259,7 +259,7 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | ---       | ---      | ---           | ---         | ---         |
 | name      | true  | [String, Number] |             | Name of the modal |
 | delay     | false | Number           | 0           | Delay between showing overlay and actual modal box |
-| resizable | false | Boolean          | false       | If true, allows to resize modal window, keeping it in the center of the screen. |
+| resizable | false | Boolean          | false       | If true allows resizing the modal window, keeping it in the center of the screen. |
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
 | scrollable | false | Boolean         | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
@@ -284,7 +284,7 @@ There is also a ssr build with css file extracted. Take a look in /dist folder.
 | ---          | --- |
 | before-open  | Emits while modal is still invisible, but was added to the DOM |
 | opened       | Emits after modal became visible or started transition |
-| before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closisng and ask user to correct mistakes if text is not valid)
+| before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closing and ask the user to correct mistakes if the text is not valid)
 | closed       | Emits right before modal is destroyed |
 
 Example:
@@ -368,8 +368,8 @@ export default {
 </script>
 ```
 
-This example, initializes `time` variable every time the modal is being opened.
-And then forbits closing it for the next 5000 ms
+This example initializes `time` variable every time the modal is being opened.
+And then forbids closing it for the next 5000 ms
 
 ### Other
 
@@ -422,7 +422,7 @@ Example:
 
 #### Draggable handler
 
-Draggable property can accept not only `Boolean` but also `String` paramenters. With `String` value, you can specify a CSS selector to the element which will be a "handler" for dragging.
+Draggable property can accept not only `Boolean` but also `String` parameters. With `String` value, you can specify a CSS selector to the element which will be a "handler" for dragging.
 
 Example:
 
@@ -437,7 +437,7 @@ Example:
 
 #### Overlay background color
 
-If you want to change overlay background color, you can easily do it using css.
+If you want to change overlay background color, you can easily do it using CSS.
 
 For all modals:
 
@@ -485,7 +485,7 @@ npm run unit
 # Run linter
 npm run lint
 
-# Build main library for client & ssr
+# Build main library for client & SSR
 cd vue-js-modal
 npm install
 npm run build
