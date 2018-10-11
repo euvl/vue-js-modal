@@ -495,3 +495,15 @@ cd demo/client_side_rendering
 npm install
 npm run dev
 ```
+
+### Unit Testing in Vue 2.0 using Jest
+
+Include the plugin to your `<Component>.spec.js`.
+
+For example: If you're using the plugin in your `Main` component, then you should include the plugin to your `Main.spec.js` file.
+
+```
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
+```
