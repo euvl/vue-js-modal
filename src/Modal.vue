@@ -352,6 +352,10 @@ export default {
 
         this.toggle(nextState, params)
       }
+      
+      if (this.name !== name && this.visible) {
+        this.toggle(false, params)
+      }
     },
     /**
      * Initializes modal's size & position,
