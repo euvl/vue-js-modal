@@ -43,7 +43,7 @@
 <script>
 import Modal from './index'
 import Resizer from './Resizer.vue'
-import { inRange, createModalEvent, getMutationObserver } from './util'
+import { inRange, createModalEvent, getMutationObserver } from './utils'
 import { parseNumber, validateNumber } from './parser'
 
 export default {

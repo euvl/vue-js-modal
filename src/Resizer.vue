@@ -2,7 +2,7 @@
   <div :class="className"></div>
 </template>
 <script>
-import { inRange } from './util'
+import { inRange } from './utils'
 
 export default {
   name: 'VueJsModalResizer',
