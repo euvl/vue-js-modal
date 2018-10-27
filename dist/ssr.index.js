@@ -202,22 +202,20 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(21);
         var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(18), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Dialog.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/Users/lee/Code/vue-js-modal-lc/src/Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(22);
         var Component = __webpack_require__(0)(__webpack_require__(9), __webpack_require__(19), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Modal.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/Users/lee/Code/vue-js-modal-lc/src/Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         var Component = __webpack_require__(0)(__webpack_require__(10), __webpack_require__(17), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/ModalsContainer.vue", 
+        Component.options.__file = "/Users/lee/Code/vue-js-modal-lc/src/ModalsContainer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] ModalsContainer.vue: functional components are not supported with templates, they should use render functions."), 
@@ -483,6 +481,20 @@
                     };
                 }
             },
+            watch: {
+                visible: function(value) {
+                    var _this2 = this;
+                    value ? (this.visibility.overlay = !0, setTimeout(function() {
+                        _this2.visibility.modal = !0, _this2.$nextTick(function() {
+                            _this2.addDraggableListeners(), _this2.callAfterEvent(!0);
+                        });
+                    }, this.delay)) : (this.visibility.modal = !1, setTimeout(function() {
+                        _this2.visibility.overlay = !1, _this2.$nextTick(function() {
+                            _this2.removeDraggableListeners(), _this2.callAfterEvent(!1);
+                        });
+                    }, this.delay));
+                }
+            },
             methods: {
                 handleToggleEvent: function(name, state, params) {
                     if (this.name === name) {
@@ -530,8 +542,7 @@
                             state: nextState,
                             params: params
                         });
-                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = nextState, 
-                        this.visible ? this.startOpeningModal() : this.startClosingModal());
+                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = nextState);
                     }
                 },
                 getDraggableElement: function() {
@@ -541,20 +552,15 @@
                 handleBackgroundClick: function() {
                     this.clickToClose && this.toggle(!1);
                 },
-                startOpeningModal: function() {
-                    var _this2 = this;
-                    this.visibility.overlay = !0, setTimeout(function() {
-                        _this2.visibility.modal = !0;
-                    }, this.delay);
-                },
-                startClosingModal: function() {
-                    var _this3 = this;
-                    this.visibility.modal = !1, setTimeout(function() {
-                        _this3.visibility.overlay = !1;
-                    }, this.delay);
+                callAfterEvent: function(state) {
+                    state ? this.connectObserver() : this.disconnectObserver();
+                    var eventName = state ? "opened" : "closed", event = this.createModalEvent({
+                        state: state
+                    });
+                    this.$emit(eventName, event);
                 },
                 addDraggableListeners: function() {
-                    var _this4 = this;
+                    var _this3 = this;
                     if (this.draggable) {
                         var dragger = this.getDraggableElement();
                         if (dragger) {
@@ -566,11 +572,11 @@
                                     var _getPosition = getPosition(event), clientX = _getPosition.clientX, clientY = _getPosition.clientY;
                                     document.addEventListener("mousemove", _handleDraggableMousemove), document.addEventListener("touchmove", _handleDraggableMousemove), 
                                     document.addEventListener("mouseup", _handleDraggableMouseup), document.addEventListener("touchend", _handleDraggableMouseup), 
-                                    startX = clientX, startY = clientY, cachedShiftX = _this4.shift.left, cachedShiftY = _this4.shift.top;
+                                    startX = clientX, startY = clientY, cachedShiftX = _this3.shift.left, cachedShiftY = _this3.shift.top;
                                 }
                             }, _handleDraggableMousemove = function(event) {
                                 var _getPosition2 = getPosition(event), clientX = _getPosition2.clientX, clientY = _getPosition2.clientY;
-                                _this4.shift.left = cachedShiftX + clientX - startX, _this4.shift.top = cachedShiftY + clientY - startY, 
+                                _this3.shift.left = cachedShiftX + clientX - startX, _this3.shift.top = cachedShiftY + clientY - startY, 
                                 event.preventDefault();
                             }, _handleDraggableMouseup = function _handleDraggableMouseup(event) {
                                 document.removeEventListener("mousemove", _handleDraggableMousemove), document.removeEventListener("touchmove", _handleDraggableMousemove), 
@@ -598,16 +604,8 @@
                 beforeTransitionEnter: function() {
                     this.connectObserver();
                 },
-                afterTransitionEnter: function() {
-                    this.addDraggableListeners(), this.$emit("opened", this.createModalEvent({
-                        state: !0
-                    }));
-                },
-                afterTransitionLeave: function() {
-                    this.removeDraggableListeners(), this.disconnectObserver(), this.$emit("closed", this.createModalEvent({
-                        state: !1
-                    }));
-                }
+                afterTransitionEnter: function() {},
+                afterTransitionLeave: function() {}
             }
         };
     }, function(module, exports, __webpack_require__) {
@@ -786,8 +784,7 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(23);
         var Component = __webpack_require__(0)(__webpack_require__(11), __webpack_require__(20), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Resizer.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "/Users/lee/Code/vue-js-modal-lc/src/Resizer.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
@@ -900,12 +897,10 @@
                     staticClass: "v--modal-background-click",
                     on: {
                         mousedown: function($event) {
-                            if ($event.target !== $event.currentTarget) return null;
-                            _vm.handleBackgroundClick($event);
+                            return $event.target !== $event.currentTarget ? null : _vm.handleBackgroundClick($event);
                         },
                         touchstart: function($event) {
-                            if ($event.target !== $event.currentTarget) return null;
-                            _vm.handleBackgroundClick($event);
+                            return $event.target !== $event.currentTarget ? null : _vm.handleBackgroundClick($event);
                         }
                     }
                 }, [ _c("div", {
@@ -948,15 +943,15 @@
     }, function(module, exports, __webpack_require__) {
         var content = __webpack_require__(13);
         "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
-        __webpack_require__(3)("237a7ca4", content, !1);
+        __webpack_require__(3)("62fc789c", content, !1);
     }, function(module, exports, __webpack_require__) {
         var content = __webpack_require__(14);
         "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
-        __webpack_require__(3)("2790b368", content, !1);
+        __webpack_require__(3)("3b895e66", content, !1);
     }, function(module, exports, __webpack_require__) {
         var content = __webpack_require__(15);
         "string" == typeof content && (content = [ [ module.i, content, "" ] ]), content.locals && (module.exports = content.locals), 
-        __webpack_require__(3)("02ec91af", content, !1);
+        __webpack_require__(3)("16c34cd5", content, !1);
     }, function(module, exports) {
         module.exports = function(parentId, list) {
             for (var styles = [], newStyles = {}, i = 0; i < list.length; i++) {
