@@ -139,22 +139,20 @@
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(11);
         var Component = __webpack_require__(0)(__webpack_require__(6), __webpack_require__(16), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Dialog.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Dialog.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Dialog.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         __webpack_require__(12);
         var Component = __webpack_require__(0)(__webpack_require__(7), __webpack_require__(17), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Modal.vue", 
-        Component.esModule && Object.keys(Component.esModule).some(function(key) {
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Modal.vue", Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions."), 
         module.exports = Component.exports;
     }, function(module, exports, __webpack_require__) {
         var Component = __webpack_require__(0)(__webpack_require__(8), __webpack_require__(15), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/ModalsContainer.vue", 
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\ModalsContainer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] ModalsContainer.vue: functional components are not supported with templates, they should use render functions."), 
@@ -237,7 +235,7 @@
                 for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
             }
             return target;
-        }, _index = __webpack_require__(2), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(14), _Resizer2 = _interopRequireDefault(_Resizer), _util = __webpack_require__(1), _parser = __webpack_require__(10);
+        }, _index = __webpack_require__(2), _index2 = _interopRequireDefault(_index), _Resizer = __webpack_require__(14), _Resizer2 = _interopRequireDefault(_Resizer), _utils = __webpack_require__(1), _parser = __webpack_require__(10);
         exports.default = {
             name: "VueJsModal",
             props: {
@@ -369,7 +367,7 @@
                 if (_index2.default.event.$on("toggle", this.handleToggleEvent), window.addEventListener("resize", this.handleWindowResize), 
                 this.handleWindowResize(), this.scrollable && !this.isAutoHeight && console.warn('Modal "' + this.name + '" has scrollable flag set to true but height is not "auto" (' + this.height + ")"), 
                 this.isAutoHeight) {
-                    var MutationObserver = (0, _util.getMutationObserver)();
+                    var MutationObserver = (0, _utils.getMutationObserver)();
                     MutationObserver && (this.mutationObserver = new MutationObserver(function(mutations) {
                         _this.updateRenderedHeight();
                     }));
@@ -388,19 +386,19 @@
                 position: function() {
                     var window = this.window, shift = this.shift, pivotX = this.pivotX, pivotY = this.pivotY, trueModalWidth = this.trueModalWidth, trueModalHeight = this.trueModalHeight, maxLeft = window.width - trueModalWidth, maxTop = window.height - trueModalHeight, left = shift.left + pivotX * maxLeft, top = shift.top + pivotY * maxTop;
                     return {
-                        left: parseInt((0, _util.inRange)(0, maxLeft, left)),
-                        top: parseInt((0, _util.inRange)(0, maxTop, top))
+                        left: parseInt((0, _utils.inRange)(0, maxLeft, left)),
+                        top: parseInt((0, _utils.inRange)(0, maxTop, top))
                     };
                 },
                 trueModalWidth: function() {
                     var window = this.window, modal = this.modal, adaptive = this.adaptive, minWidth = this.minWidth, maxWidth = this.maxWidth, value = "%" === modal.widthType ? window.width / 100 * modal.width : modal.width, max = Math.min(window.width, maxWidth);
-                    return adaptive ? (0, _util.inRange)(minWidth, max, value) : value;
+                    return adaptive ? (0, _utils.inRange)(minWidth, max, value) : value;
                 },
                 trueModalHeight: function() {
                     var window = this.window, modal = this.modal, isAutoHeight = this.isAutoHeight, adaptive = this.adaptive, maxHeight = this.maxHeight, value = "%" === modal.heightType ? window.height / 100 * modal.height : modal.height;
                     if (isAutoHeight) return this.modal.renderedHeight;
                     var max = Math.min(window.height, maxHeight);
-                    return adaptive ? (0, _util.inRange)(this.minHeight, max, value) : value;
+                    return adaptive ? (0, _utils.inRange)(this.minHeight, max, value) : value;
                 },
                 overlayClass: function() {
                     return {
@@ -418,6 +416,20 @@
                         width: this.trueModalWidth + "px",
                         height: this.isAutoHeight ? "auto" : this.trueModalHeight + "px"
                     };
+                }
+            },
+            watch: {
+                visible: function(value) {
+                    var _this2 = this;
+                    value ? (this.visibility.overlay = !0, setTimeout(function() {
+                        _this2.visibility.modal = !0, _this2.$nextTick(function() {
+                            _this2.addDraggableListeners(), _this2.callAfterEvent(!0);
+                        });
+                    }, this.delay)) : (this.visibility.modal = !1, setTimeout(function() {
+                        _this2.visibility.overlay = !1, _this2.$nextTick(function() {
+                            _this2.removeDraggableListeners(), _this2.callAfterEvent(!1);
+                        });
+                    }, this.delay));
                 }
             },
             methods: {
@@ -441,7 +453,7 @@
                 },
                 createModalEvent: function() {
                     var args = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-                    return (0, _util.createModalEvent)(_extends({
+                    return (0, _utils.createModalEvent)(_extends({
                         name: this.name,
                         ref: this.$refs.modal
                     }, args));
@@ -467,8 +479,7 @@
                             state: nextState,
                             params: params
                         });
-                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = nextState, 
-                        this.visible ? this.startOpeningModal() : this.startClosingModal());
+                        this.$emit(beforeEventName, beforeEvent), stopEventExecution || (this.visible = nextState);
                     }
                 },
                 getDraggableElement: function() {
@@ -478,20 +489,15 @@
                 handleBackgroundClick: function() {
                     this.clickToClose && this.toggle(!1);
                 },
-                startOpeningModal: function() {
-                    var _this2 = this;
-                    this.visibility.overlay = !0, setTimeout(function() {
-                        _this2.visibility.modal = !0;
-                    }, this.delay);
-                },
-                startClosingModal: function() {
-                    var _this3 = this;
-                    this.visibility.modal = !1, setTimeout(function() {
-                        _this3.visibility.overlay = !1;
-                    }, this.delay);
+                callAfterEvent: function(state) {
+                    state ? this.connectObserver() : this.disconnectObserver();
+                    var eventName = state ? "opened" : "closed", event = this.createModalEvent({
+                        state: state
+                    });
+                    this.$emit(eventName, event);
                 },
                 addDraggableListeners: function() {
-                    var _this4 = this;
+                    var _this3 = this;
                     if (this.draggable) {
                         var dragger = this.getDraggableElement();
                         if (dragger) {
@@ -503,11 +509,11 @@
                                     var _getPosition = getPosition(event), clientX = _getPosition.clientX, clientY = _getPosition.clientY;
                                     document.addEventListener("mousemove", _handleDraggableMousemove), document.addEventListener("touchmove", _handleDraggableMousemove), 
                                     document.addEventListener("mouseup", _handleDraggableMouseup), document.addEventListener("touchend", _handleDraggableMouseup), 
-                                    startX = clientX, startY = clientY, cachedShiftX = _this4.shift.left, cachedShiftY = _this4.shift.top;
+                                    startX = clientX, startY = clientY, cachedShiftX = _this3.shift.left, cachedShiftY = _this3.shift.top;
                                 }
                             }, _handleDraggableMousemove = function(event) {
                                 var _getPosition2 = getPosition(event), clientX = _getPosition2.clientX, clientY = _getPosition2.clientY;
-                                _this4.shift.left = cachedShiftX + clientX - startX, _this4.shift.top = cachedShiftY + clientY - startY, 
+                                _this3.shift.left = cachedShiftX + clientX - startX, _this3.shift.top = cachedShiftY + clientY - startY, 
                                 event.preventDefault();
                             }, _handleDraggableMouseup = function _handleDraggableMouseup(event) {
                                 document.removeEventListener("mousemove", _handleDraggableMousemove), document.removeEventListener("touchmove", _handleDraggableMousemove), 
@@ -535,16 +541,8 @@
                 beforeTransitionEnter: function() {
                     this.connectObserver();
                 },
-                afterTransitionEnter: function() {
-                    this.addDraggableListeners(), this.$emit("opened", this.createModalEvent({
-                        state: !0
-                    }));
-                },
-                afterTransitionLeave: function() {
-                    this.removeDraggableListeners(), this.disconnectObserver(), this.$emit("closed", this.createModalEvent({
-                        state: !1
-                    }));
-                }
+                afterTransitionEnter: function() {},
+                afterTransitionLeave: function() {}
             }
         };
     }, function(module, exports, __webpack_require__) {
@@ -558,7 +556,7 @@
                 for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
             }
             return target;
-        }, _util = __webpack_require__(1);
+        }, _utils = __webpack_require__(1);
         exports.default = {
             data: function() {
                 return {
@@ -571,7 +569,7 @@
             methods: {
                 add: function(component) {
                     var componentAttrs = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, _this = this, modalAttrs = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {}, modalListeners = arguments[3], id = (0, 
-                    _util.generateId)(), name = modalAttrs.name || "_dynamic_modal_" + id;
+                    _utils.generateId)(), name = modalAttrs.name || "_dynamic_modal_" + id;
                     this.modals.push({
                         id: id,
                         modalAttrs: _extends({}, modalAttrs, {
@@ -594,7 +592,7 @@
         Object.defineProperty(exports, "__esModule", {
             value: !0
         });
-        var _util = __webpack_require__(1);
+        var _utils = __webpack_require__(1);
         exports.default = {
             name: "VueJsModalResizer",
             props: {
@@ -643,8 +641,8 @@
                     var el = this.$el.parentElement;
                     if (el) {
                         var width = event.clientX - el.offsetLeft, height = event.clientY - el.offsetTop;
-                        width = (0, _util.inRange)(this.minWidth, window.innerWidth, width), height = (0, 
-                        _util.inRange)(this.minHeight, window.innerHeight, height), this.size = {
+                        width = (0, _utils.inRange)(this.minWidth, window.innerWidth, width), height = (0, 
+                        _utils.inRange)(this.minHeight, window.innerHeight, height), this.size = {
                             width: width,
                             height: height
                         }, el.style.width = width + "px", el.style.height = height + "px", this.$emit("resize", {
@@ -717,7 +715,7 @@
     }, function(module, exports) {}, function(module, exports) {}, function(module, exports) {}, function(module, exports, __webpack_require__) {
         __webpack_require__(13);
         var Component = __webpack_require__(0)(__webpack_require__(9), __webpack_require__(18), null, null);
-        Component.options.__file = "/Users/yev.vlasenko2/Projects/vue/vue-js-modal/src/Resizer.vue", 
+        Component.options.__file = "D:\\Projects\\vue\\vue-js-modal\\src\\Resizer.vue", 
         Component.esModule && Object.keys(Component.esModule).some(function(key) {
             return "default" !== key && "__esModule" !== key;
         }) && console.error("named exports are not supported in *.vue files."), Component.options.functional && console.error("[vue-loader] Resizer.vue: functional components are not supported with templates, they should use render functions."), 

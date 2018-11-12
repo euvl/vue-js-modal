@@ -43,7 +43,7 @@
 <script>
 import Modal from './index'
 import Resizer from './Resizer.vue'
-import { inRange, createModalEvent, getMutationObserver } from './util'
+import { inRange, createModalEvent, getMutationObserver } from './utils'
 import { parseNumber, validateNumber } from './parser'
 
 export default {
@@ -202,15 +202,15 @@ export default {
     if (this.isAutoHeight) {
       /**
        * MutationObserver feature detection:
-       * 
+       *
        * Detects if MutationObserver is available, return false if not.
        * No polyfill is provided here, so height 'auto' recalculation will
        * simply stay at its initial height (won't crash).
        * (Provide polyfill to support IE < 11)
-       * 
+       *
        * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-       * 
-       * For the sake of SSR, MutationObserver cannot be initialized 
+       *
+       * For the sake of SSR, MutationObserver cannot be initialized
        * before component creation >_<
        */
       const MutationObserver = getMutationObserver()
@@ -343,6 +343,36 @@ export default {
       }
     }
   },
+  watch: {
+    /**
+     * Sets the visibility of overlay and modal.
+     * Events 'opened' and 'closed' is called here
+     * inside `setTimeout` and `$nextTick`, after the DOM changes.
+     * This fixes `$refs.modal` `undefined` bug (fixes #15)
+     */
+    visible (value) {
+      if (value) {
+        this.visibility.overlay = true
+        setTimeout(() => {
+          this.visibility.modal = true
+          this.$nextTick(() => {
+            this.addDraggableListeners()
+            this.callAfterEvent(true)
+          })
+        }, this.delay)
+      } else {
+        this.visibility.modal = false
+        setTimeout(() => {
+          this.visibility.overlay = false
+          this.$nextTick(() => {
+            this.removeDraggableListeners()
+            this.callAfterEvent(false)
+          })
+        }, this.delay)
+      }
+    }
+  },
+
   methods: {
     handleToggleEvent (name, state, params) {
       if (this.name === name) {
@@ -465,9 +495,6 @@ export default {
 
       if (!stopEventExecution) {
         this.visible = nextState
-        this.visible
-          ? this.startOpeningModal()
-          : this.startClosingModal()
       }
     },
 
@@ -480,6 +507,7 @@ export default {
         ? this.$refs.overlay.querySelector(selector)
         : null
     },
+
     /**
      * Event handler that is triggered when background overlay is clicked
      */
@@ -489,20 +517,22 @@ export default {
       }
     },
 
-    startOpeningModal () {
-      this.visibility.overlay = true
-
-      setTimeout(() => {
-        this.visibility.modal = true
-      }, this.delay)
-    },
-
-    startClosingModal () {
-      this.visibility.modal = false
-
-      setTimeout(() => {
-        this.visibility.overlay = false
-      }, this.delay)
+    /**
+     *'opened' and 'closed' events are `$emit`ed here.
+     * This is called in watch.visible.
+     * Because modal DOM updates are async,
+     * wrapping afterEvents in `$nextTick` fixes `$refs.modal` undefined bug.
+     * (fixes #15)
+     */
+    callAfterEvent (state) {
+      if (state) {
+        this.connectObserver()
+      } else {
+        this.disconnectObserver()
+      }
+      const eventName = state ? 'opened' : 'closed'
+      const event = this.createModalEvent({ state })
+      this.$emit(eventName, event)
     },
 
     addDraggableListeners () {
@@ -523,7 +553,7 @@ export default {
             ? event.touches[0]
             : event
         }
-        
+
         const handleDraggableMousedown = event => {
           let target = event.target
 
@@ -551,7 +581,7 @@ export default {
 
           this.shift.left = cachedShiftX + clientX - startX
           this.shift.top = cachedShiftY + clientY - startY
- 
+
           event.preventDefault()
         }
 
@@ -613,25 +643,16 @@ export default {
     },
 
     afterTransitionEnter () {
-      this.addDraggableListeners()
-
-      this.$emit(
-        'opened',
-        this.createModalEvent({ state: true })
-      )
+      // console.log('after transition enter')
     },
 
     afterTransitionLeave () {
-      this.removeDraggableListeners()
-      this.disconnectObserver()
-      this.$emit(
-        'closed',
-        this.createModalEvent({ state: false })
-      )
+      // console.log('after transition leave')
     }
   }
 }
 </script>
+
 <style>
 .v--modal-block-scroll {
   overflow: hidden;
