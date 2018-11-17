@@ -165,11 +165,11 @@ export default {
 }
 
 .vue-dialog-button:hover {
-  background: rgba(0, 0, 0, 0.01);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .vue-dialog-button:active {
-  background: rgba(0, 0, 0, 0.025);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .vue-dialog-button:not(:first-of-type) {
