@@ -1,6 +1,6 @@
 <template>
   <modal
-    name="dialog"
+    :name="dialogName"
     height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
     :width="width"
@@ -42,6 +42,10 @@
 export default {
   name: 'VueJsDialog',
   props: {
+    dialogName: {
+      type: String,
+      default: 'dialog'
+    },
     width: {
       type: [Number, String],
       default: 400
