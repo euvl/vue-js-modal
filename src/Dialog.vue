@@ -17,8 +17,14 @@
         class="dialog-c-title"
         v-if="params.title"
         v-html="params.title || ''"></div>
+      <component
+        v-if="params.component"
+        v-bind="params.props"
+        :is="params.component">
+      </component>
       <div
         class="dialog-c-text"
+        v-else
         v-html="params.text || ''"></div>
     </div>
     <div
