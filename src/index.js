@@ -2,7 +2,7 @@ import Modal from './Modal.vue'
 import Dialog from './Dialog.vue'
 import ModalsContainer from './ModalsContainer.vue'
 
-const defaultComponentName = 'modal'
+const defaultComponentName = 'Modal'
 const unmountedRootErrorMessage =
   '[vue-js-modal] In order to render dynamic modals, a <modals-container> ' +
   'component must be present on the page'
@@ -59,13 +59,13 @@ const Plugin = {
      * Registration of <Dialog/> component
      */
     if (options.dialog) {
-      Vue.component('v-dialog', Dialog)
+      Vue.component('VDialog', Dialog)
     }
     /**
      * Registration of <ModalsContainer/> component
      */
     if (options.dynamic) {
-      Vue.component('modals-container', ModalsContainer)
+      Vue.component('ModalsContainer', ModalsContainer)
       Vue.mixin({
         beforeMount () {
           if (Plugin.rootInstance === null) {
