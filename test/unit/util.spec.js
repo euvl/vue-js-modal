@@ -1,4 +1,4 @@
-var util = require('../../src/util')
+var util = require('../../src/utils/index')
 var { expect } = require('chai')
 
 describe('util.js', () => {

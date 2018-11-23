@@ -221,7 +221,7 @@
             install: function(Vue) {
                 var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
                 this.installed || (this.installed = !0, this.event = new Vue(), this.rootInstance = null, 
-                this.componentName = options.componentName || "modal", Vue.prototype.$modal = {
+                this.componentName = options.componentName || "Modal", Vue.prototype.$modal = {
                     show: function(modal, paramsOrProps, params) {
                         var events = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : {};
                         if ("string" == typeof modal) return void Plugin.event.$emit("toggle", modal, !0, paramsOrProps);
@@ -235,8 +235,8 @@
                     toggle: function(name, params) {
                         Plugin.event.$emit("toggle", name, void 0, params);
                     }
-                }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("v-dialog", _Dialog2.default), 
-                options.dynamic && (Vue.component("modals-container", _ModalsContainer2.default), 
+                }, Vue.component(this.componentName, _Modal2.default), options.dialog && Vue.component("VDialog", _Dialog2.default), 
+                options.dynamic && (Vue.component("ModalsContainer", _ModalsContainer2.default), 
                 Vue.mixin({
                     beforeMount: function() {
                         null === Plugin.rootInstance && (Plugin.rootInstance = this.$root);
@@ -895,12 +895,14 @@
                     domProps: {
                         innerHTML: _vm._s(_vm.params.title || "")
                     }
-                }) : _vm._e(), _vm._v(" "), _c("div", {
+                }) : _vm._e(), _vm._v(" "), _vm.params.component ? _c(_vm.params.component, _vm._b({
+                    tag: "component"
+                }, "component", _vm.params.props, !1)) : _c("div", {
                     staticClass: "dialog-c-text",
                     domProps: {
                         innerHTML: _vm._s(_vm.params.text || "")
                     }
-                }) ]), _vm._v(" "), _vm.buttons ? _c("div", {
+                }) ], 1), _vm._v(" "), _vm.buttons ? _c("div", {
                     staticClass: "vue-dialog-buttons"
                 }, _vm._l(_vm.buttons, function(button, i) {
                     return _c("button", {
