@@ -1,7 +1,7 @@
 // Karma configuration
 var webpackConfig = require('../../build/webpack.test.config.js')
 
-module.exports = function(config) {
+module.exports = (config) => {
   config.set({
     frameworks: [
       'mocha'
@@ -40,6 +40,6 @@ module.exports = function(config) {
     },
     logLevel: config.LOG_INFO,
     singleRun: true,
-    concurrency: Infinity,
+    concurrency: Infinity
   })
 }
