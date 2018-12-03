@@ -175,7 +175,7 @@ export default {
     }
   },
   created () {
-    this.setInitialSize()
+    this.setSize()
   },
   /**
    * Sets global listeners
@@ -345,6 +345,12 @@ export default {
   },
   watch: {
     /**
+     * Executes `setSize` method on width or height change.
+     */
+    width: 'setSize',
+    height: 'setSize',
+
+    /**
      * Sets the visibility of overlay and modal.
      * Events 'opened' and 'closed' is called here
      * inside `setTimeout` and `$nextTick`, after the DOM changes.
@@ -383,12 +389,13 @@ export default {
         this.toggle(nextState, params)
       }
     },
+
     /**
-     * Initializes modal's size & position,
+     * Sets modal's size & position,
      * if "reset" flag is set to true - this function will be called
      * every time "beforeOpen" is triggered
      */
-    setInitialSize () {
+    setSize () {
       const { modal } = this
       const width = parseNumber(this.width)
       const height = parseNumber(this.height)
@@ -464,7 +471,7 @@ export default {
         }
 
         if (reset) {
-          this.setInitialSize()
+          this.setSize()
 
           this.shift.left = 0
           this.shift.top = 0
