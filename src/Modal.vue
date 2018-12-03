@@ -679,7 +679,6 @@ export default {
 }
 
 .v--modal-overlay .v--modal-background-click {
-  min-height: 100%;
   width: 100%;
 }
 
