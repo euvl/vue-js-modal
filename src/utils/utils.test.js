@@ -1,5 +1,4 @@
-var util = require('../../src/utils/index')
-var { expect } = require('chai')
+var util = require('./index')
 
 describe('util.js', () => {
   describe('#inRange', () => {
