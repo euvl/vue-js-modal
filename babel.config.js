@@ -4,6 +4,6 @@ module.exports = function(babel) {
   return {
     presets: ["@babel/preset-env"],
     comments: false,
-    plugins: ["@babel/plugin-proposal-object-rest-spread"],
+    plugins: ["@babel/plugin-proposal-object-rest-spread"]
   };
 };
