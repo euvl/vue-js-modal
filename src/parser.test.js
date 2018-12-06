@@ -1,5 +1,4 @@
-var { parseNumber } = require('../../src/parser')
-var { expect } = require('chai')
+var { parseNumber } = require('./parser')
 
 describe('parser.js', () => {
   describe('#parse', () => {
