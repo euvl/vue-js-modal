@@ -62,7 +62,7 @@ export default {
   transition: box-shadow 1s;
 
   &.has-bugs {
-    box-shadow: 0 24px 80px -2px rgba(255, 0, 0, .6) !important;
+    box-shadow: 0 24px 80px -2px rgba(255, 0, 0, .4) !important;
   }
 }
 

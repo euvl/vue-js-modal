@@ -1,4 +1,33 @@
 
+.vue-modal-resizer {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 0;
+  bottom: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: se-resize;
+}
+.vue-modal-resizer::after {
+  display: block;
+  position: absolute;
+  content: '';
+  background: transparent;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid #ddd;
+  border-left: 10px solid transparent;
+}
+.vue-modal-resizer.clicked::after {
+  border-bottom: 10px solid #369be9;
+}
+
+
 .v--modal-block-scroll {
   overflow: hidden;
   width: 100vw;
@@ -21,8 +50,8 @@
   -webkit-overflow-scrolling: touch;
 }
 .v--modal-overlay .v--modal-background-click {
-  min-height: 100%;
   width: 100%;
+  height: 100%;
 }
 .v--modal-overlay .v--modal-box {
   position: relative;
@@ -70,33 +99,6 @@
   transform: translateY(-20px);
 }
 
-.vue-modal-resizer {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  right: 0;
-  bottom: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: se-resize;
-}
-.vue-modal-resizer::after {
-  display: block;
-  position: absolute;
-  content: '';
-  background: transparent;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-bottom: 10px solid #ddd;
-  border-left: 10px solid transparent;
-}
-.vue-modal-resizer.clicked::after {
-  border-bottom: 10px solid #369be9;
-}
 
 .vue-dialog div {
   box-sizing: border-box;
@@ -150,3 +152,4 @@
 .vue-dialog-button:not(:first-of-type) {
   border-left: 1px solid #eee;
 }
+
