@@ -1,12 +1,16 @@
 <template>
 <div id="app">
+  <!-- Modals -->
   <demo-error-modal/>
   <demo-login-modal/>
   <demo-dog-profile-modal />
   <demo-conditional-modal/>
-  <demo-focus-modal/>
   <demo-size-modal/>
+  <demo-adaptive-modal/>
+  <demo-resizable-modal/>
+  <demo-draggable-modal/>
 
+  <!-- Dialogs -->
   <modals-container />
 
   <v-dialog
@@ -14,24 +18,6 @@
     @before-closed="dialogEvent('before-close')"
     @opened="dialogEvent('opened')"
     @closed="dialogEvent('closed')"/>
-
-  <modal name="example-modal"
-         transition="nice-modal-fade"
-         :min-width="200"
-         :min-height="200"
-         :delay="100"
-         :adaptive="adaptive"
-         :resizable="resizable"
-         :draggable="draggable">
-    <div class="example-modal-content">
-      Appropriately exploit professional infrastructures rather than unique growth strategies. Assertively build leveraged growth strategies vis-a-vis multimedia based vortals. Progressively simplify cross-platform value through interactive imperatives. Objectively
-      implement enabled web services after plug-and-play ROI. Distinctively impact inexpensive schemas before installed base imperatives. Holisticly benchmark pandemic process improvements without wireless experiences. Efficiently create worldwide partnerships
-      after tactical vortals. Uniquely productize enabled platforms vis-a-vis timely processes. Conveniently unleash standards compliant niches through highly efficient testing procedures. Rapidiously enable pandemic niche markets whereas viral markets.
-      Assertively simplify alternative partnerships and error-free e-commerce. Professionally formulate 24/365 internal or "organic" sources through equity invested mindshare. Globally redefine unique best practices for.
-
-      <input placeholder="Email">
-    </div>
-  </modal>
 
   <h2>Vue.js Modal
     <a href="https://github.com/euvl/vue-js-modal/blob/master/README.md"
@@ -41,6 +27,8 @@
     <a href="https://github.com/euvl/vue-js-modal/tree/master/demo/client_side_rendering/src/components/modals"
        target="issues">Examples</a>
   </h2>
+
+  <!-- Other -->
 
   <pre style="line-height: 1.5;">
     
@@ -54,16 +42,19 @@
   <div style="margin-top: 20px; margin-bottom: 15px;">
     <button
       class="btn"
-      @click="show(false, false, false)">Simple</button>
+      @click="$modal.show('example-resizable')">
+      Resizable
+    </button>
     <button
       class="btn"
-      @click="show(true, false, false)">Resizable</button>
+      @click="$modal.show('example-adaptive')">
+      Adaptive
+    </button>
     <button
       class="btn"
-      @click="show(false, true, false)">Adaptive</button>
-    <button
-      class="btn"
-      @click="show(false, false, true)">Draggable</button>
+      @click="$modal.show('example-draggable')">
+      Draggable
+    </button>
     <br>
     <button
       class="btn green"
@@ -90,6 +81,7 @@
       @click="conditionalShow">
       Can <b v-if="!canBeShown">NOT</b> be shown
     </button>
+
     <br>
 
     <button
@@ -130,19 +122,24 @@
 </template>
 
 <script>
+
+import DemoAdaptiveModal    from './components/Modal_Adaptive.vue'
+import DemoDraggableModal   from './components/Modal_Draggable.vue'
+import DemoResizableModal   from './components/Modal_Resizable.vue'
+import DemoConditionalModal from './components/Modal_Conditional.vue'
 import DemoErrorModal       from './components/modals/DemoErrorModal.vue'
-import DemoFocusModal       from './components/modals/InputFocusModal.vue'
 import DemoLoginModal       from './components/modals/DemoLoginModal.vue'
 import DemoDogProfileModal  from './components/modals/DogProfileModal.vue'
-import DemoConditionalModal from './components/modals/ConditionalModal.vue'
 import DemoSizeModal        from './components/modals/SizeModal.vue'
 import CustomComponentModal from './components/modals/CustomComponentModal.vue'
 
 export default {
   name: 'app',
   components: {
+    DemoAdaptiveModal,
+    DemoDraggableModal,
+    DemoResizableModal,
     DemoErrorModal,
-    DemoFocusModal,
     DemoLoginModal,
     DemoDogProfileModal,
     DemoConditionalModal,
@@ -150,9 +147,6 @@ export default {
   },
   data () {
     return {
-      resizable: false,
-      adaptive: false,
-      draggable: false,
       canBeShown: false
     }
   },
@@ -162,23 +156,11 @@ export default {
     }, 5000)
   },
   methods: {
-    show(resizable, adaptive, draggable) {
-      this.resizable = resizable
-      this.adaptive = adaptive
-      this.draggable = draggable
-      /*
-        $nextTick is required because the data model with new
-        "resizable, adaptive, draggable" values is not updated yet.. eh
-      */
-      this.$nextTick(() => {
-        this.$modal.show('example-modal')
+    conditionalShow () {
+      this.$modal.show('conditional-modal', {
+        show: this.canBeShown
       })
     },
-
-    conditionalShow () {
-      this.$modal.show('conditional-modal', { show: this.canBeShown })
-    },
-
 
     showBasicDialog () {
       this.$modal.show('dialog', {
@@ -250,8 +232,12 @@ export default {
           </div>
         `,
         methods: {
-          closeByName() { this.$modal.hide('dynamic-modal'); },
-          closeByEvent() { this.$emit('close'); },
+          closeByName() {
+            this.$modal.hide('dynamic-modal'); 
+          },
+          closeByEvent() {
+            this.$emit('close');
+          },
         }
       }, null, {
         name: 'dynamic-modal',
