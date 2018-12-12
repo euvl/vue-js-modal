@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-  name: 'ConditionalModal',
+  name: 'Modal_Conditional',
   methods: {
     beforeOpen (event) {
       console.log('Event:', event)
