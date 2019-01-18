@@ -401,7 +401,8 @@ export default {
 
     handleEscapeKeyUp (event) {
       if (event.which === 27 && this.visible) {
-        this.$modal.hide(this.name)
+        //this.$modal.hide(this.name)
+        this.$emit('closed', event)
       }
     },
 

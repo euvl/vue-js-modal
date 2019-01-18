@@ -49,11 +49,19 @@ export default {
     },
     remove (id) {
       for (let i in this.modals) {
-        if (this.modals[i].id === id) {
+        if (this.modals[i].id === id && this.findTopId() === id) {
           this.modals.splice(i, 1)
           return
         }
       }
+    },
+    findTopId () {
+      let result = -1;
+      this.modals.forEach(ele => {
+        if(ele.id > result)
+          result = ele.id;
+      })
+      return result;
     }
   }
 }
