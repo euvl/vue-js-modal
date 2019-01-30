@@ -179,7 +179,7 @@ export default {
   },
 
   /* 
-    * if props (fpr example, width) have been changed after window.resize, we should recalc modal sizes  
+    * if props (for example, width) have been changed after window.resize, we should recalc modal sizes  
   */
   mounted() {
     window.addEventListener('resize', () => {
