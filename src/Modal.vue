@@ -177,6 +177,16 @@ export default {
   created () {
     this.setInitialSize()
   },
+
+  /* 
+    * if props (fpr example, width) have been changed after window.resize, we should recalc modal sizes  
+  */
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.setInitialSize();
+    });
+  },
+
   /**
    * Sets global listeners
    */
