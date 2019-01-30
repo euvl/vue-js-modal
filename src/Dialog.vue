@@ -4,6 +4,7 @@
     height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
     :width="width"
+    :scrollable="scrollable"
     :pivot-y="0.3"
     :adaptive="true"
     :clickToClose="clickToClose"
@@ -59,6 +60,10 @@ export default {
     transition: {
       type: String,
       default: 'fade'
+    },
+    scrollable: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
