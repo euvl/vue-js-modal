@@ -182,9 +182,12 @@ export default {
     * if props (for example, width) have been changed after window.resize, we should recalc modal sizes  
   */
   mounted() {
-    window.addEventListener('resize', () => {
-      this.setInitialSize();
-    });
+    if(this.draggable === false && this.resizable === false)
+    {
+      window.addEventListener('resize', () => {
+        this.setInitialSize();
+      });
+    }
   },
 
   /**
