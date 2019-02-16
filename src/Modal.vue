@@ -408,6 +408,8 @@ export default {
     handleWindowResize () {
       this.window.width = window.innerWidth
       this.window.height = window.innerHeight
+
+      this.ensureShiftInWindowBounds()
     },
     /**
      * Generates event object
@@ -586,6 +588,8 @@ export default {
         }
 
         const handleDraggableMouseup = event => {
+          this.ensureShiftInWindowBounds()
+
           document.removeEventListener('mousemove', handleDraggableMousemove)
           document.removeEventListener('touchmove', handleDraggableMousemove)
 
@@ -648,6 +652,26 @@ export default {
 
     afterTransitionLeave () {
       // console.log('after transition leave')
+    },
+
+    ensureShiftInWindowBounds () {
+      const {
+        window,
+        shift,
+        pivotX,
+        pivotY,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      const maxLeft = window.width - trueModalWidth
+      const maxTop = window.height - trueModalHeight
+
+      const left = shift.left + pivotX * maxLeft
+      const top = shift.top + pivotY * maxTop
+
+      this.shift.left -= left - inRange(0, maxLeft, left)
+      this.shift.top -= top - inRange(0, maxTop, top)
     }
   }
 }
