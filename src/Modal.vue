@@ -168,7 +168,9 @@ export default {
 
       window: {
         width: 0,
-        height: 0
+        height: 0,
+        scrollLeft: 0,
+        scrollTop: 0
       },
 
       mutationObserver: null
@@ -183,6 +185,7 @@ export default {
   beforeMount () {
     Modal.event.$on('toggle', this.handleToggleEvent)
 
+    window.addEventListener('scroll', this.handleWindowResize)
     window.addEventListener('resize', this.handleWindowResize)
     this.handleWindowResize()
     /**
@@ -231,6 +234,7 @@ export default {
    */
   beforeDestroy () {
     Modal.event.$off('toggle', this.handleToggleEvent)
+    window.removeEventListener('scroll', this.handleWindowResize)
     window.removeEventListener('resize', this.handleWindowResize)
 
     if (this.clickToClose) {
@@ -264,15 +268,18 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
+      const scrollLeft = window.scrollLeft
+      const scrollTop = window.scrollTop
+
+      const maxLeft = window.width + scrollLeft - trueModalWidth
+      const maxTop = window.height + scrollTop - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
 
       return {
-        left: parseInt(inRange(0, maxLeft, left)),
-        top: parseInt(inRange(0, maxTop, top))
+        left: parseInt(inRange(scrollLeft, maxLeft, left)),
+        top: parseInt(inRange(scrollTop, maxTop, top))
       }
     },
     /**
@@ -408,6 +415,8 @@ export default {
     handleWindowResize () {
       this.window.width = window.innerWidth
       this.window.height = window.innerHeight
+      this.window.scrollLeft = window.scrollX
+      this.window.scrollTop = window.scrollY
 
       this.ensureShiftInWindowBounds()
     },
@@ -664,14 +673,17 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
+      const scrollLeft = window.scrollLeft
+      const scrollTop = window.scrollTop
+
+      const maxLeft = window.width + scrollLeft - trueModalWidth
+      const maxTop = window.height + scrollTop - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
 
-      this.shift.left -= left - inRange(0, maxLeft, left)
-      this.shift.top -= top - inRange(0, maxTop, top)
+      this.shift.left -= left - inRange(scrollLeft, maxLeft, left)
+      this.shift.top -= top - inRange(scrollTop, maxTop, top)
     }
   }
 }
