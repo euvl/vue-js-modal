@@ -145,7 +145,7 @@ In order to instantiate modals at runtime (for lazy-loading or decluttering temp
 To start using this feature you must set `dynamic: true` in plugin configuration:
 
 ```js
-Vue.use(VModal, { dynamic: true })
+Vue.use(VModal, { dynamic: true, dynamicDefaults: { clickToClose: false } })
 ```
 
 And include the `<modals-container/>` component it in your project:
@@ -223,6 +223,41 @@ const app2 = new Vue({
 
 VModal.rootInstance = app2
 ```
+
+It is possible to set default property values for dynamic modals.
+
+Example:
+
+```javascript
+
+import VueJsModal from 'plugin'
+
+Vue.use(VueJsModal, {
+  dynamic: true,
+  dynamicDefaults: {
+    foo: 'foo'
+  }
+})
+```
+
+```javascript
+{
+    showDynamicRuntimeModal () {
+      this.$modal.show({
+        template: `
+          <div class="example-modal-content">
+            <p>{{ text }}</p>
+            <p>Default Property: {{ foo }} - value is "foo"</p>
+          </div>
+        `,
+        props: ['text', 'foo']
+      }, {
+        text: 'This text is passed as a property'
+      })
+    },
+}
+```
+
 
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
