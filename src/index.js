@@ -1,11 +1,32 @@
 import Modal from './Modal.vue'
 import Dialog from './Dialog.vue'
 import ModalsContainer from './ModalsContainer.vue'
+import { createDivInBody } from './utils'
 
 const defaultComponentName = 'Modal'
-const unmountedRootErrorMessage =
-  '[vue-js-modal] In order to render dynamic modals, a <modals-container> ' +
-  'component must be present on the page'
+
+const UNMOUNTED_ROOT_ERROR_MESSAGE =
+  '[vue-js-modal] ' +
+  'In order to render dynamic modals, a <modals-container> ' +
+  'component must be present on the page.'
+
+const DYNAMIC_MODAL_DISABLED_ERROR =
+  '[vue-js-modal] ' +
+  '$modal() received object as a first argument, but dynamic modals are ' +
+  'switched off. https://github.com/euvl/vue-js-modal/#dynamic-modals'
+
+export const getModalsContainer = (Vue, options, root) => {
+  if (!root._dynamicContainer && options.injectModalsContainer) {
+    const container = createDivInBody()
+
+    new Vue({
+      parent: root,
+      render: h => h(ModalsContainer)
+    }).$mount(container)
+  }
+
+  return root._dynamicContainer
+}
 
 const Plugin = {
   install (Vue, options = {}) {
@@ -19,34 +40,49 @@ const Plugin = {
     this.installed = true
     this.event = new Vue()
     this.rootInstance = null
-    this.componentName = options.componentName || defaultComponentName
+    
+    const componentName = options.componentName || defaultComponentName
+    const dynamicDefaults = options.dynamicDefaults || {}
     /**
      * Plugin API
      */
+    const showStaticModal = (modal, params) => {
+      Plugin.event.$emit('toggle', modal, true, params)
+    }
+
+    const showDynamicModal = (modal, props, params, events) => {
+      /**
+       * Get root for dynamic modal
+       */
+      const root = params && params.root ? params.root : Plugin.rootInstance
+      const container = getModalsContainer(Vue, options, root)
+      /**
+       * Show dynamic modal
+       */
+      if (container) {
+        container.add(modal, { ...dynamicDefaults, ...props }, params, events)
+        return
+      }
+
+      console.warn(UNMOUNTED_ROOT_ERROR_MESSAGE)
+    }
+
     Vue.prototype.$modal = {
-      show (modal, paramsOrProps, params, events = {}) {
-        if (typeof modal === 'string') {
-          Plugin.event.$emit('toggle', modal, true, paramsOrProps)
-          return
+      show (modal, ...args) {
+        switch (typeof modal) {
+          case 'string': {
+            return showStaticModal(modal, ...args)
+          }
+          case 'object': {
+            return options.dynamic
+              ? showDynamicModal(modal, ...args)
+              : console.warn(DYNAMIC_MODAL_DISABLED_ERROR)
+          }
         }
-
-        const root = params && params.root
-          ? params.root
-          : Plugin.rootInstance
-
-        const container = getModalsContainer(Vue, options, root)
-
-        if (container) {
-          container.add(modal, paramsOrProps, params, events)
-          return
-        }
-
-        console.warn(unmountedRootErrorMessage)
       },
       hide (name, params) {
         Plugin.event.$emit('toggle', name, false, params)
       },
-
       toggle (name, params) {
         Plugin.event.$emit('toggle', name, undefined, params)
       }
@@ -54,7 +90,7 @@ const Plugin = {
     /**
      * Sets custom component name (if provided)
      */
-    Vue.component(this.componentName, Modal)
+    Vue.component(componentName, Modal)
     /**
      * Registration of <Dialog/> component
      */
@@ -75,20 +111,6 @@ const Plugin = {
       })
     }
   }
-}
-
-function getModalsContainer (Vue, options, root) {
-  if (!root._dynamicContainer && options.injectModalsContainer) {
-    const modalsContainer = document.createElement('div')
-    document.body.appendChild(modalsContainer)
-
-    new Vue({
-      parent: root,
-      render: h => h(ModalsContainer)
-    }).$mount(modalsContainer)
-  }
-
-  return root._dynamicContainer
 }
 
 export default Plugin

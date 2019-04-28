@@ -5,6 +5,9 @@ import VueJsModal from 'plugin'
 Vue.use(VueJsModal, {
   dialog: true,
   dynamic: true,
+  dynamicDefaults: {
+    foo: 'foo'
+  }
 })
 
 new Vue({

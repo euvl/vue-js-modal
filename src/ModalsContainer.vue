@@ -31,7 +31,7 @@ export default {
     this.$root._dynamicContainer = this
   },
   methods: {
-    add (component, componentAttrs = {}, modalAttrs = {}, modalListeners) {
+    add (component, componentAttrs = {}, modalAttrs = {}, modalListeners = {}) {
       const id = generateId()
       const name = modalAttrs.name || (PREFIX + id)
 
@@ -48,11 +48,10 @@ export default {
       })
     },
     remove (id) {
-      for (let i in this.modals) {
-        if (this.modals[i].id === id) {
-          this.modals.splice(i, 1)
-          return
-        }
+      const index = this.modals.findIndex(v => v.id === id)
+
+      if (index !== -1) {
+        this.modals.splice(index, 1)
       }
     }
   }

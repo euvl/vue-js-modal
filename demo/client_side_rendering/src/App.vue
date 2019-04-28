@@ -209,9 +209,10 @@ export default {
           <div class="example-modal-content">
             <h1>This is created inline</h1>
             <p>{{ text }}</p>
+            <p>Default Property: {{ foo }}</p>
           </div>
         `,
-        props: ['text']
+        props: ['text', 'foo']
       }, {
         text: 'This text is passed as a property'
       })

@@ -43,7 +43,12 @@
 <script>
 import Modal from './index'
 import Resizer from './Resizer.vue'
-import { inRange, createModalEvent, getMutationObserver } from './utils'
+import {
+  inRange,
+  createModalEvent,
+  getMutationObserver,
+  blurActiveElement
+} from './utils'
 import { parseNumber, validateNumber } from './parser'
 
 export default {
@@ -459,11 +464,7 @@ export default {
          * Need to unfocus previously focused element, otherwise
          * all keypress events (ESC press, for example) will trigger on that element.
          */
-        if (document.activeElement &&
-          document.activeElement.tagName !== 'BODY' &&
-          document.activeElement.blur) {
-          document.activeElement.blur()
-        }
+        blurActiveElement()
 
         if (reset) {
           this.setInitialSize()
@@ -704,7 +705,7 @@ export default {
 
 .v--modal-overlay .v--modal-background-click {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 .v--modal-overlay .v--modal-box {

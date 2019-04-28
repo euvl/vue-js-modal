@@ -9,17 +9,7 @@ export const generateId = ((index = 0) => () => (index++).toString())()
  *   are exceeded
  */
 export const inRange = (from, to, value) => {
-  if (value < from) {
-    return from
-  }
-
-  if (value > to) {
-    return to
-  }
-
-  return value
-  // lol
-  // return value < from ? from : (value > to ? to : value)
+  return value < from ? from : (value > to ? to : value)
 }
 
 export const createModalEvent = (args = {}) => {
@@ -42,6 +32,26 @@ export const getMutationObserver = () => {
         return window[name]
       }
     }
+  }
+
+  return false
+}
+
+export const createDivInBody = () => {
+  const div = document.createElement('div')
+  document.body.appendChild(modalsContainer)
+
+  return div
+}
+
+export const blurActiveElement = () => {
+  if (typeof document !== 'undefined' &&
+    document.activeElement &&
+    document.activeElement.tagName !== 'BODY' &&
+    document.activeElement.blur) {
+    document.activeElement.blur()
+
+    return true
   }
 
   return false
