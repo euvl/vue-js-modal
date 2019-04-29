@@ -39,7 +39,7 @@ export const getMutationObserver = () => {
 
 export const createDivInBody = () => {
   const div = document.createElement('div')
-  document.body.appendChild(modalsContainer)
+  document.body.appendChild(div)
 
   return div
 }
