@@ -15,6 +15,10 @@ const DYNAMIC_MODAL_DISABLED_ERROR =
   '$modal() received object as a first argument, but dynamic modals are ' +
   'switched off. https://github.com/euvl/vue-js-modal/#dynamic-modals'
 
+const UNSUPPORTED_ARGUMENT_ERROR =
+  '[vue-js-modal] ' +
+  '$modal() received an unsupported argument as a first argument.'
+
 export const getModalsContainer = (Vue, options, root) => {
   if (!root._dynamicContainer && options.injectModalsContainer) {
     const container = createDivInBody()
@@ -73,10 +77,14 @@ const Plugin = {
           case 'string': {
             return showStaticModal(modal, ...args)
           }
-          case 'object': {
+          case 'object':
+          case 'function': {
             return options.dynamic
               ? showDynamicModal(modal, ...args)
               : console.warn(DYNAMIC_MODAL_DISABLED_ERROR)
+          }
+          default: {
+            console.warn(UNSUPPORTED_ARGUMENT_ERROR, modal)
           }
         }
       },
