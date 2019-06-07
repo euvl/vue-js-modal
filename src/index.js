@@ -44,7 +44,7 @@ const Plugin = {
     this.installed = true
     this.event = new Vue()
     this.rootInstance = null
-    
+
     const componentName = options.componentName || defaultComponentName
     const dynamicDefaults = options.dynamicDefaults || {}
     /**
@@ -64,7 +64,7 @@ const Plugin = {
        * Show dynamic modal
        */
       if (container) {
-        container.add(modal, { ...dynamicDefaults, ...props }, params, events)
+        container.add(modal, props, { ...dynamicDefaults, ...params }, events)
         return
       }
 
