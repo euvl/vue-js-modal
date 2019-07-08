@@ -32,6 +32,8 @@
               v-if="resizable && !isAutoHeight"
               :min-width="minWidth"
               :min-height="minHeight"
+              :max-width='maxWidth'
+              :max-height='maxHeight'
               @resize="handleModalResize"
             />
           </div>
