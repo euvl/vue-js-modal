@@ -288,6 +288,8 @@ For full demo please look at `demo/server_side_rendering`
 
 There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 
+There is also a client build with CSS file extracted to run under CSP. Use /dist/index-no-css.js and /dist/index-styles.css 
+
 ### Properties
 
 | Name      | Required | Type          | Default     | Description |
