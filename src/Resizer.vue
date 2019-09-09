@@ -69,16 +69,11 @@ export default {
         var width = event.clientX - el.offsetLeft
         var height = event.clientY - el.offsetTop
 
-        width = inRange(this.minWidth, window.innerWidth, width)
-        height = inRange(this.minHeight, window.innerHeight, height)
+        const maxWidth = Math.min(window.innerWidth, this.maxWidth)
+        const maxHeight = Math.min(window.innerHeight, this.maxHeight)
 
-        if(this.maxWidth && width > this.maxWidth) {
-          width = this.maxWidth
-        }
-
-        if(this.maxHeight && height > this.maxHeight) {
-          height = this.maxHeight
-        }
+        width = inRange(this.minWidth, maxWidth, width)
+        height = inRange(this.minHeight, maxHeight, height)
 
         this.size = { width, height }
         el.style.width = width + 'px'
