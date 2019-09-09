@@ -562,7 +562,8 @@ export default {
         const handleDraggableMousedown = event => {
           let target = event.target
 
-          if (target && target.nodeName === 'INPUT') {
+          if (target &&
+              (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA')) {
             return
           }
 
