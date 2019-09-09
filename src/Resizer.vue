@@ -17,11 +17,11 @@ export default {
     },
     maxWidth: {
       type: Number,
-      default: 9999
+      default: Number.MAX_SAFE_INTEGER
     },
     maxHeight: {
       type: Number,
-      default: 9999
+      default: Number.MAX_SAFE_INTEGER
     }
   },
   data () {
@@ -64,14 +64,21 @@ export default {
     },
     resize (event) {
       var el = this.$el.parentElement
+
       if (el) {
         var width = event.clientX - el.offsetLeft
         var height = event.clientY - el.offsetTop
+
         width = inRange(this.minWidth, window.innerWidth, width)
         height = inRange(this.minHeight, window.innerHeight, height)
-        // My adjustment here //
-        if( this.maxWidth && width > this.maxWidth) width = this.maxWidth
-        if( this.maxHeight && height > this.maxHeight) height = this.maxHeight
+
+        if(this.maxWidth && width > this.maxWidth) {
+          width = this.maxWidth
+        }
+
+        if(this.maxHeight && height > this.maxHeight) {
+          height = this.maxHeight
+        }
 
         this.size = { width, height }
         el.style.width = width + 'px'
