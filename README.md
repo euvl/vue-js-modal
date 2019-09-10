@@ -33,9 +33,9 @@ npm install vue-js-modal --save
 Include plugin in your `main.js` file.
 
 ```javascript
-import VModal from 'vue-js-modal'
+import vmodal from 'vue-js-modal'
 
-Vue.use(VModal)
+Vue.use(vmodal)
 
 /*
 By default, the plugin will use "modal" name for the component.
@@ -43,7 +43,7 @@ If you need to change it, you can do so by providing "componentName" param.
 
 Example:
 
-Vue.use(VModal, { componentName: "foo-modal" })
+Vue.use(vmodal, { componentName: "foo-modal" })
 ...
 <foo-modal name="bar"></foo-modal>
 */
@@ -102,7 +102,7 @@ It is a simplified version of the modal, which has most parameters set by defaul
 To start using `<v-dialog/>` you must set `dialog: true` in plugin configuration:
 
 ```js
-Vue.use(VModal, { dialog: true })
+Vue.use(vmodal, { dialog: true })
 ```
 
 And include it in your project:
@@ -145,7 +145,7 @@ In order to instantiate modals at runtime (for lazy-loading or decluttering temp
 To start using this feature you must set `dynamic: true` in plugin configuration:
 
 ```js
-Vue.use(VModal, { dynamic: true, dynamicDefaults: { clickToClose: false } })
+Vue.use(vmodal, { dynamic: true, dynamicDefaults: { clickToClose: false } })
 ```
 
 And include the `<modals-container/>` component it in your project:
@@ -157,7 +157,7 @@ And include the `<modals-container/>` component it in your project:
 Alternatively, the modals container can be automatically appended to the document body once the plugin is loaded using `injectModalsContainer: true`:
 
 ```js
-Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
+Vue.use(vmodal, { dynamic: true, injectModalsContainer: true })
 ```
 
 Call it (the first argument is the component definition, the second are component properties, the third modal parameters, and the fourth the modal event listeners):
@@ -209,7 +209,7 @@ If using the `injectModalsContainer` flag, the first mounted Vue instance withou
 
 ```javascript
 import App from './App.vue'
-import VModal from 'vue-js-modal'
+import vmodal from 'vue-js-modal'
 
 const app1 = new Vue({
   el: '#app-1',
@@ -221,7 +221,7 @@ const app2 = new Vue({
   render: h => h(App)
 })
 
-VModal.rootInstance = app2
+vmodal.rootInstance = app2
 ```
 
 It is possible to set default property values for dynamic modals.
@@ -277,9 +277,9 @@ And your `plugins/vue-js-modal.js` will look like:
 
 ```javascript
 import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.index'
+import vmodal from 'vue-js-modal/dist/ssr.index'
 
-Vue.use(VModal)
+Vue.use(vmodal)
 ```
 
 For full demo please look at `demo/server_side_rendering`
@@ -538,7 +538,7 @@ Include the plugin to your `<Component>.spec.js`.
 For example: If you're using the plugin in your `Main` component, then you should include the plugin to your `Main.spec.js` file.
 
 ```
-import VModal from 'vue-js-modal'
+import vmodal from 'vue-js-modal'
 
-Vue.use(VModal)
+Vue.use(vmodal)
 ```
