@@ -32,6 +32,8 @@
               v-if="resizable && !isAutoHeight"
               :min-width="minWidth"
               :min-height="minHeight"
+              :max-width="maxWidth"
+              :max-height="maxHeight"
               @resize="handleModalResize"
             />
           </div>
@@ -560,7 +562,8 @@ export default {
         const handleDraggableMousedown = event => {
           let target = event.target
 
-          if (target && target.nodeName === 'INPUT') {
+          if (target &&
+              (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA')) {
             return
           }
 
