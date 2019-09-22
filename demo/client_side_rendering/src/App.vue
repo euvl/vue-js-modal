@@ -35,8 +35,8 @@
     npm install --save vue-js-modal
 
     ...
-    import vmodal from 'vue-js-modal'
-    Vue.use(vmodal)
+    import VModal from 'vue-js-modal'
+    Vue.use(VModal)
   </pre>
 
   <div style="margin-top: 20px; margin-bottom: 15px;">
