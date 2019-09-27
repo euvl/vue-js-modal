@@ -293,7 +293,7 @@ export default {
         ? window.width / 100 * modal.width
         : modal.width
 
-      const max = Math.min(window.width, maxWidth)
+      const max = Math.max(minWidth, Math.min(window.width, maxWidth))
 
       return adaptive
         ? inRange(minWidth, max, value)
@@ -306,7 +306,7 @@ export default {
      * Returns modal.renderedHeight if height set as "auto"
      */
     trueModalHeight () {
-      const { window, modal, isAutoHeight, adaptive, maxHeight } = this
+      const { window, modal, isAutoHeight, adaptive, minHeight, maxHeight } = this
 
       const value = modal.heightType === '%'
         ? window.height / 100 * modal.height
@@ -317,10 +317,10 @@ export default {
         return this.modal.renderedHeight
       }
 
-      const max = Math.min(window.height, maxHeight)
+      const max = Math.max(minHeight, Math.min(window.height, maxHeight))
 
       return adaptive
-        ? inRange(this.minHeight, max, value)
+        ? inRange(minHeight, max, value)
         : value
     },
     /**
