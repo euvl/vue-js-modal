@@ -26,6 +26,8 @@
             ref="modal"
             :class="modalClass"
             :style="modalStyle"
+            role="dialog"
+            aria-modal="true"
           >
             <slot/>
             <resizer
