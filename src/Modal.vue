@@ -484,7 +484,7 @@ export default {
         : 'before-open'
 
       if (beforeEventName === 'before-open') {
-        this.returnFocusElement = document.activeElement;
+        this.returnFocusElement = document.activeElement
 
         if (reset) {
           this.setInitialSize()
@@ -549,13 +549,13 @@ export default {
      */
     callAfterEvent (state) {
       if (state) {
-        this.connectObserver();
+        this.connectObserver()
         let focusableElements = this.getFocusableModalElements()
         this.focusElementByIndex(focusableElements, 0)
 
-        document.addEventListener("focusin", this.trapFocusListener);
+        document.addEventListener("focusin", this.trapFocusListener)
       } else {
-        this.disconnectObserver();
+        this.disconnectObserver()
 
         document.removeEventListener("focusin", this.trapFocusListener)
         this.returnFocusElement.focus()
@@ -580,18 +580,18 @@ export default {
         }
       }
     },
-    
+
     getFocusableModalElements() {
-      let modalContent = this.$refs.modal;
-      return modalContent ? modalContent.querySelectorAll(FOCUSABLE_SELECTOR) : [];
+      let modalContent = this.$refs.modal
+      return modalContent ? modalContent.querySelectorAll(FOCUSABLE_SELECTOR) : []
     },
-    
+
     focusElementByIndex (focusableElements, index) {
       if (focusableElements.length > 0 && index < focusableElements.length) {
-        focusableElements[index].focus();
+        focusableElements[index].focus()
       }
     },
-    
+
     addDraggableListeners () {
       if (!this.draggable) {
         return
