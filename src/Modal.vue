@@ -21,20 +21,30 @@
           @after-enter="afterTransitionEnter"
           @after-leave="afterTransitionLeave"
         >
-          <div
-            v-if="visibility.modal"
-            ref="modal"
-            :class="modalClass"
-            :style="modalStyle"
-          >
-            <slot/>
-            <resizer
-              v-if="resizable && !isAutoHeight"
-              :min-width="minWidth"
-              :min-height="minHeight"
-              :max-width="maxWidth"
-              :max-height="maxHeight"
-              @resize="handleModalResize"
+          <div>
+            <span
+              ref="topTabTrap"
+              tabindex="0"
+            />
+            <div
+              v-if="visibility.modal"
+              ref="modal"
+              :class="modalClass"
+              :style="modalStyle"
+            >
+              <slot/>
+              <resizer
+                v-if="resizable && !isAutoHeight"
+                :min-width="minWidth"
+                :min-height="minHeight"
+                :max-width="maxWidth"
+                :max-height="maxHeight"
+                @resize="handleModalResize"
+              />
+            </div>
+            <span
+              ref="bottomTabTrap"
+              tabindex="0"
             />
           </div>
         </transition>
@@ -52,6 +62,16 @@ import {
   blurActiveElement
 } from './utils'
 import { parseNumber, validateNumber } from './parser'
+
+const FOCUSABLE_SELECTOR = [
+  "button",
+  "[href]:not(.disabled)",
+  "input",
+  "select",
+  "textarea",
+  "[tabindex]",
+  "[contenteditable]"
+].map(s => `${s}:not(:disabled):not([disabled])`).join(", ");
 
 export default {
   name: 'VueJsModal',
@@ -154,6 +174,8 @@ export default {
   data () {
     return {
       visible: false,
+
+      returnFocusElement: null,
 
       visibility: {
         modal: false,
@@ -462,11 +484,7 @@ export default {
         : 'before-open'
 
       if (beforeEventName === 'before-open') {
-        /**
-         * Need to unfocus previously focused element, otherwise
-         * all keypress events (ESC press, for example) will trigger on that element.
-         */
-        blurActiveElement()
+        this.returnFocusElement = document.activeElement;
 
         if (reset) {
           this.setInitialSize()
@@ -531,15 +549,50 @@ export default {
      */
     callAfterEvent (state) {
       if (state) {
-        this.connectObserver()
+        this.connectObserver();
+        let focusableElements = this.getFocusableModalElements()
+        this.focusElementByIndex(focusableElements, 0)
+
+        document.addEventListener("focusin", this.trapFocusListener);
       } else {
-        this.disconnectObserver()
+        this.disconnectObserver();
+
+        document.removeEventListener("focusin", this.trapFocusListener)
+        this.returnFocusElement.focus()
       }
       const eventName = state ? 'opened' : 'closed'
       const event = this.createModalEvent({ state })
       this.$emit(eventName, event)
     },
 
+    trapFocusListener(event) {
+      debugger;
+      let modalContent = this.$refs.modal
+      let activeElement = event.target
+      if (modalContent && !modalContent.contains(activeElement)) {
+        const focusableElements = this.getFocusableModalElements()
+        let topTabTrap = this.$refs.topTabTrap
+        let bottomTabTrap = this.$refs.bottomTabTrap
+
+        if (topTabTrap && activeElement === topTabTrap) {
+          this.focusElementByIndex(focusableElements, focusableElements.length - 1)
+        } else if (bottomTabTrap && activeElement === bottomTabTrap) {
+          this.focusElementByIndex(focusableElements, 0)
+        }
+      }
+    },
+    
+    getFocusableModalElements() {
+      let modalContent = this.$refs.modal;
+      return modalContent ? modalContent.querySelectorAll(FOCUSABLE_SELECTOR) : [];
+    },
+    
+    focusElementByIndex (focusableElements, index) {
+      if (focusableElements.length > 0 && index < focusableElements.length) {
+        focusableElements[index].focus();
+      }
+    },
+    
     addDraggableListeners () {
       if (!this.draggable) {
         return
