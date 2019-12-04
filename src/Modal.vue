@@ -566,7 +566,6 @@ export default {
     },
 
     trapFocusListener(event) {
-      debugger;
       let modalContent = this.$refs.modal
       let activeElement = event.target
       if (modalContent && !modalContent.contains(activeElement)) {
