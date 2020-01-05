@@ -676,7 +676,7 @@ export default {
 
       this.shift.left -= left - inRange(0, maxLeft, left)
       this.shift.top -= top - inRange(0, maxTop, top)
-      this.shift.top = Math.min(this.shift.top, 0) // to ensure that top is not negative
+      this.shift.top = Math.max(this.shift.top, 0) // to ensure that top is not negative
     }
   }
 }
