@@ -115,11 +115,11 @@ export default {
     },
     maxWidth: {
       type: Number,
-      default: Infinity
+      default: Number.MAX_SAFE_INTEGER
     },
     maxHeight: {
       type: Number,
-      default: Infinity
+      default: Number.MAX_SAFE_INTEGER
     },
     width: {
       type: [Number, String],
@@ -226,6 +226,9 @@ export default {
         this.mutationObserver = new MutationObserver(mutations => {
           this.updateRenderedHeight()
         })
+      } else {
+        console.warn('MutationObserver was not found. Vue-js-modal automatic resizing relies ' +
+          'heavily on MutationObserver. Please make sure to provide shim for it.')
       }
     }
 
@@ -358,8 +361,11 @@ export default {
      * This fixes `$refs.modal` `undefined` bug (fixes #15)
      */
     visible (value) {
+      console.log('Activating visible watcher, value: ', value)
+
       if (value) {
         this.visibility.overlay = true
+
         setTimeout(() => {
           this.visibility.modal = true
           this.$nextTick(() => {
@@ -369,6 +375,7 @@ export default {
         }, this.delay)
       } else {
         this.visibility.modal = false
+
         setTimeout(() => {
           this.visibility.overlay = false
           this.$nextTick(() => {
@@ -413,7 +420,7 @@ export default {
     },
 
     handleWindowResize () {
-      this.window.width = window.innerWidth
+      this.window.width = window.clientWidth
       this.window.height = window.innerHeight
 
       this.ensureShiftInWindowBounds()
