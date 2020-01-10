@@ -272,7 +272,7 @@ export default {
       } = this
 
       const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
+      const maxTop = Math.max((window.height - trueModalHeight), 0)
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
@@ -669,14 +669,13 @@ export default {
       } = this
 
       const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
+      const maxTop = Math.max((window.height - trueModalHeight), 0)
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
 
       this.shift.left -= left - inRange(0, maxLeft, left)
       this.shift.top -= top - inRange(0, maxTop, top)
-      this.shift.top = Math.max(this.shift.top, 0) // to ensure that top is not negative
     }
   }
 }
