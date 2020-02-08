@@ -57,7 +57,7 @@ export const blurActiveElement = () => {
   return false
 }
 // Different browsers handle innerWidth/clientWidth differently, 
-// this function tries tu return the smallest width (assuming that it excludes
+// this function tries to return the smallest width (assuming that it excludes
 // scrollbar width)
 export const windowWidthWithoutScrollbar = () => {
   const { innerWidth } = window
