@@ -101,8 +101,7 @@ export default {
       default: 'v--modal'
     },
     styles: {
-      type: String,
-      default: ''
+      type: [String, Array, Object],
     },
     minWidth: {
       type: Number,
@@ -346,16 +345,31 @@ export default {
     modalClass () {
       return ['v--modal-box', this.classes]
     },
+    stylesProp () {
+      if (typeof this.styles === 'string') { 
+        return this.styles
+          .split(';')
+          .map(v => v
+            .trim()
+            .split(':')
+          )
+          .reduce((styles, [key, value]) => {
+            return { ...styles, [key]: value }
+          })
+      }
+
+      return this.styles
+    },
     /**
      * CSS styles for position and size of the modal
      */
     modalStyle () {
-      return [{
+      return [this.stylesProp, {
         top: this.position.top + 'px',
         left: this.position.left + 'px',
         width: this.trueModalWidth + 'px',
         height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
-      }, this.styles]
+      }, ]
     }
   },
   watch: {
