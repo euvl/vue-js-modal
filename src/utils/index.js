@@ -69,3 +69,12 @@ export const windowWidthWithoutScrollbar = () => {
 
   return clientWidth || innerWidth
 }
+
+export const stringStylesToObject = (styles) => {
+  const lines = styles.split(';').map(line => line.trim()).filter(Boolean)
+  const entries = lines.map(line => line.split(':'))
+
+  return entries.reduce((styles, [key, value]) => {
+    return { ...styles, [key]: value }
+  }, {})
+}

@@ -50,7 +50,8 @@ import {
   createModalEvent,
   getMutationObserver,
   blurActiveElement,
-  windowWidthWithoutScrollbar
+  windowWidthWithoutScrollbar,
+  stringStylesToObject
 } from './utils'
 import { parseNumber, validateNumber } from './parser'
 
@@ -346,19 +347,9 @@ export default {
       return ['v--modal-box', this.classes]
     },
     stylesProp () {
-      if (typeof this.styles === 'string') { 
-        return this.styles
-          .split(';')
-          .map(v => v
-            .trim()
-            .split(':')
-          )
-          .reduce((styles, [key, value]) => {
-            return { ...styles, [key]: value }
-          })
-      }
-
-      return this.styles
+      return typeof this.styles === 'string'
+        ? stringStylesToObject(this.styles)
+        : this.styles
     },
     /**
      * CSS styles for position and size of the modal
