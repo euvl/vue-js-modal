@@ -49,7 +49,8 @@ import {
   inRange,
   createModalEvent,
   getMutationObserver,
-  blurActiveElement
+  blurActiveElement,
+  windowWidthWithoutScrollbar
 } from './utils'
 import { parseNumber, validateNumber } from './parser'
 
@@ -173,7 +174,7 @@ export default {
         renderedHeight: 0
       },
 
-      window: {
+      viewport: {
         width: 0,
         height: 0
       },
@@ -266,7 +267,7 @@ export default {
      */
     position () {
       const {
-        window,
+        viewport,
         shift,
         pivotX,
         pivotY,
@@ -274,8 +275,8 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
+      const maxLeft = viewport.width - trueModalWidth
+      const maxTop = viewport.height - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
@@ -290,13 +291,13 @@ export default {
      * fits the window
      */
     trueModalWidth () {
-      const { window, modal, adaptive, minWidth, maxWidth } = this
+      const { viewport, modal, adaptive, minWidth, maxWidth } = this
 
       const value = modal.widthType === '%'
-        ? window.width / 100 * modal.width
+        ? viewport.width / 100 * modal.width
         : modal.width
 
-      const max = Math.max(minWidth, Math.min(window.width, maxWidth))
+      const max = Math.max(minWidth, Math.min(viewport.width, maxWidth))
 
       return adaptive
         ? inRange(minWidth, max, value)
@@ -309,10 +310,10 @@ export default {
      * Returns modal.renderedHeight if height set as "auto"
      */
     trueModalHeight () {
-      const { window, modal, isAutoHeight, adaptive, minHeight, maxHeight } = this
+      const { viewport, modal, isAutoHeight, adaptive, minHeight, maxHeight } = this
 
       const value = modal.heightType === '%'
-        ? window.height / 100 * modal.height
+        ? viewport.height / 100 * modal.height
         : modal.height
 
       if (isAutoHeight) {
@@ -320,7 +321,7 @@ export default {
         return this.modal.renderedHeight
       }
 
-      const max = Math.max(minHeight, Math.min(window.height, maxHeight))
+      const max = Math.max(minHeight, Math.min(viewport.height, maxHeight))
 
       return adaptive
         ? inRange(minHeight, max, value)
@@ -361,7 +362,7 @@ export default {
      * This fixes `$refs.modal` `undefined` bug (fixes #15)
      */
     visible (value) {
-      console.log('Activating visible watcher, value: ', value)
+      // console.log('Activating visible watcher, value: ', value)
 
       if (value) {
         this.visibility.overlay = true
@@ -420,8 +421,8 @@ export default {
     },
 
     handleWindowResize () {
-      this.window.width = window.clientWidth
-      this.window.height = window.innerHeight
+      this.viewport.width = windowWidthWithoutScrollbar()
+      this.viewport.height = window.innerHeight
 
       this.ensureShiftInWindowBounds()
     },
@@ -667,7 +668,7 @@ export default {
 
     ensureShiftInWindowBounds () {
       const {
-        window,
+        viewport,
         shift,
         pivotX,
         pivotY,
@@ -675,8 +676,8 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
+      const maxLeft = viewport.width - trueModalWidth
+      const maxTop = viewport.height - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
