@@ -100,7 +100,7 @@ export default {
       type: [String, Array],
       default: 'v--modal'
     },
-    style: {
+    styles: {
       type: String,
       default: ''
     },
@@ -355,7 +355,7 @@ export default {
         left: this.position.left + 'px',
         width: this.trueModalWidth + 'px',
         height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
-      }, this.style]
+      }, this.styles]
     }
   },
   watch: {
