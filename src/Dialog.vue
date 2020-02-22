@@ -133,6 +133,8 @@ export default {
   width: 100%;
   padding: 15px;
   font-size: 14px;
+  overflow-y: auto;
+  max-height: 85vh;
 }
 
 .vue-dialog .dialog-c-title {
