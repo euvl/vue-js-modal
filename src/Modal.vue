@@ -580,7 +580,7 @@ export default {
           let target = event.target
 
           if (target &&
-              (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA')) {
+              (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA' || target.nodeName === 'SELECT')) {
             return
           }
 
