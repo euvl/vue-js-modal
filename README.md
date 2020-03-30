@@ -296,7 +296,7 @@ There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 | delay     | false | Number           | 0           | Delay between showing overlay and actual modal box |
 | resizable | false | Boolean          | false       | If true allows resizing the modal window, keeping it in the center of the screen. |
 | adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
-| draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. |
+| draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. If string, a selector to use as a handle for dragging |
 | scrollable | false | Boolean         | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
 | reset     | false | Boolean          | false       | Resets position and size before showing modal |
 | clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
