@@ -12,31 +12,6 @@ export const inRange = (from, to, value) => {
   return value < from ? from : value > to ? to : value
 }
 
-export const createModalEvent = (args = {}) => {
-  return {
-    id: generateId(),
-    timestamp: Date.now(),
-    canceled: false,
-    ...args
-  }
-}
-
-// export const getMutationObserver = () => {
-//   if (typeof window !== 'undefined') {
-//     const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
-
-//     for (let i = 0; i < prefixes.length; i++) {
-//       let name = prefixes[i] + 'MutationObserver'
-
-//       if (name in window) {
-//         return window[name]
-//       }
-//     }
-//   }
-
-//   return false
-// }
-
 export const createDivInBody = () => {
   const div = document.createElement('div')
   document.body.appendChild(div)
@@ -52,11 +27,7 @@ export const blurActiveElement = () => {
     document.activeElement.blur
   ) {
     document.activeElement.blur()
-
-    return true
   }
-
-  return false
 }
 // Different browsers handle innerWidth/clientWidth differently,
 // this function tries to return the smallest width (assuming that it excludes

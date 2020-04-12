@@ -82,22 +82,30 @@
   right: 0;
   top: 0;
 }
-.overlay-fade-enter-active,
-.overlay-fade-leave-active {
-  transition: all 0.2s;
+.vue-js-modal-transition--overlay-enter-active,
+.vue-js-modal-transition--overlay-leave-active {
+  transition: all 100ms;
 }
-.overlay-fade-enter,
-.overlay-fade-leave-active {
+.vue-js-modal-transition--overlay-enter,
+.vue-js-modal-transition--overlay-leave-active {
   opacity: 0;
 }
-.nice-modal-fade-enter-active,
-.nice-modal-fade-leave-active {
-  transition: all 0.4s;
+.vue-js-modal-transition--modal-enter-active,
+.vue-js-modal-transition--modal-leave-active {
+  transition: all 400ms;
 }
-.nice-modal-fade-enter,
-.nice-modal-fade-leave-active {
+.vue-js-modal-transition--modal-enter,
+.vue-js-modal-transition--modal-leave-active {
   opacity: 0;
   transform: translateY(-20px);
+}
+.vue-js-modal-transition--default-enter-active,
+.vue-js-modal-transition--default-leave-active {
+  transition: all 2ms;
+}
+.vue-js-modal-transition--default-enter,
+.vue-js-modal-transition--default-leave-active {
+  opacity: 0;
 }
 
 
