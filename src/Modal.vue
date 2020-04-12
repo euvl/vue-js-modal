@@ -1,6 +1,6 @@
 <template>
   <transition
-    :name="overlayTransition"
+    :name="guaranteedOverlayTransition"
     @before-enter="beforeOverlayTransitionEnter"
     @after-enter="afterOverlayTransitionEnter"
     @after-leave="afterOverlayTransitionLeave"
@@ -21,7 +21,7 @@
           <slot name="top-right"/>
         </div>
         <transition
-          :name="transition"
+          :name="guaranteedModalTransition"
           @after-enter="afterModalTransitionEnter"
           @before-leave="beforeModalTransitionLeave"
           @after-leave="afterModalTransitionLeave"
@@ -59,6 +59,8 @@ import {
 import ModalEvent from './ModalEvent'
 import { parseNumber, validateNumber } from './parser'
 import ResizeObserver from './ResizeObserver'
+
+const defaultTransition = 'vue-js-modal-transition--default'
 
 export default {
   name: 'VueJsModal',
@@ -249,6 +251,18 @@ export default {
     }
   },
   computed: {
+    /**
+     *  Because modal state is based on transitions - we need to make sure
+     * that there is always a transition for overlay/modal
+     **/
+    guaranteedOverlayTransition() {
+      return this.overlayTransition || defaultTransition
+    },
+
+    guaranteedModalTransition() {
+      return this.transition || defaultTransition
+    },
+
     /**
      * Returns true if height is set to "auto"
      */
@@ -719,7 +733,7 @@ export default {
 
 .vue-js-modal-transition--overlay-enter-active,
 .vue-js-modal-transition--overlay-leave-active {
-  transition: all 100ms;
+  transition: all 50ms;
 }
 
 .vue-js-modal-transition--overlay-enter,
