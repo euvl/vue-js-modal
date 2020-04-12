@@ -1,9 +1,8 @@
 module.exports = function(babel) {
-  babel.cache(true);
+  babel.cache(true)
 
   return {
-    presets: ["@babel/preset-env"],
-    comments: false,
-    plugins: ["@babel/plugin-proposal-object-rest-spread"]
-  };
-};
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-proposal-object-rest-spread']
+  }
+}

@@ -1,18 +1,34 @@
 module.exports = {
   root: true,
-  extends: 'standard',
-  plugins: [
-    'html'
+
+  env: {
+    node: true
+  },
+
+  extends: [
+    'plugin:vue/essential',
+    'eslint:recommended',
+    '@vue/prettier',
   ],
-  'rules': {
-    'no-multi-spaces': [
-      'error', {
-        exceptions: {
-          'ImportDeclaration': true
-        }
+
+  parserOptions: {
+    ecmaVersion: 2020
+  },
+
+  rules: {
+    'no-console': 'off',
+    'no-debugger': 'off'
+  },
+
+  overrides: [
+    {
+      files: [
+        '**/*.spec.{j,t}s?(x)',
+      //  '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
       }
-    ],
-    'arrow-parens': 0,
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
-  }
+    }
+  ],
 }

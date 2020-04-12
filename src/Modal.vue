@@ -178,10 +178,8 @@ export default {
         renderedHeight: 0
       },
 
-      viewport: {
-        width: 0,
-        height: 0
-      },
+      viewportHeight: 0,
+      viewportWidth: 0,
 
       mutationObserver: null
     }
@@ -271,7 +269,8 @@ export default {
      */
     position () {
       const {
-        viewport,
+        viewportHeight,
+        viewportWidth,
         shift,
         pivotX,
         pivotY,
@@ -279,8 +278,8 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = viewport.width - trueModalWidth
-      const maxTop = viewport.height - trueModalHeight
+      const maxLeft = viewportWidth - trueModalWidth
+      const maxTop = viewportHeight - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
@@ -295,13 +294,13 @@ export default {
      * fits the window
      */
     trueModalWidth () {
-      const { viewport, modal, adaptive, minWidth, maxWidth } = this
+      const { viewportWidth, modal, adaptive, minWidth, maxWidth } = this
 
       const value = modal.widthType === '%'
-        ? viewport.width / 100 * modal.width
+        ? viewportWidth / 100 * modal.width
         : modal.width
 
-      const max = Math.max(minWidth, Math.min(viewport.width, maxWidth))
+      const max = Math.max(minWidth, Math.min(viewportWidth, maxWidth))
 
       return adaptive
         ? inRange(minWidth, max, value)
@@ -314,10 +313,10 @@ export default {
      * Returns modal.renderedHeight if height set as "auto"
      */
     trueModalHeight () {
-      const { viewport, modal, isAutoHeight, adaptive, minHeight, maxHeight } = this
+      const { viewportHeight, modal, isAutoHeight, adaptive, minHeight, maxHeight } = this
 
       const value = modal.heightType === '%'
-        ? viewport.height / 100 * modal.height
+        ? viewportHeight / 100 * modal.height
         : modal.height
 
       if (isAutoHeight) {
@@ -325,7 +324,7 @@ export default {
         return this.modal.renderedHeight
       }
 
-      const max = Math.max(minHeight, Math.min(viewport.height, maxHeight))
+      const max = Math.max(minHeight, Math.min(viewportHeight, maxHeight))
 
       return adaptive
         ? inRange(minHeight, max, value)
@@ -430,8 +429,8 @@ export default {
     },
 
     handleWindowResize () {
-      this.viewport.width = windowWidthWithoutScrollbar()
-      this.viewport.height = window.innerHeight
+      this.viewportWidth = windowWidthWithoutScrollbar()
+      this.viewportHeight = window.innerHeight
 
       this.ensureShiftInWindowBounds()
     },
@@ -677,7 +676,8 @@ export default {
 
     ensureShiftInWindowBounds () {
       const {
-        viewport,
+        viewportHeight,
+        viewportWidth,
         shift,
         pivotX,
         pivotY,
@@ -685,8 +685,8 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = viewport.width - trueModalWidth
-      const maxTop = viewport.height - trueModalHeight
+      const maxLeft = viewportWidth - trueModalWidth
+      const maxTop = viewportHeight - trueModalHeight
 
       const left = shift.left + pivotX * maxLeft
       const top = shift.top + pivotY * maxTop
