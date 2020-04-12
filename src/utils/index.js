@@ -21,21 +21,21 @@ export const createModalEvent = (args = {}) => {
   }
 }
 
-export const getMutationObserver = () => {
-  if (typeof window !== 'undefined') {
-    const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
+// export const getMutationObserver = () => {
+//   if (typeof window !== 'undefined') {
+//     const prefixes = ['', 'WebKit', 'Moz', 'O', 'Ms']
 
-    for (let i = 0; i < prefixes.length; i++) {
-      let name = prefixes[i] + 'MutationObserver'
+//     for (let i = 0; i < prefixes.length; i++) {
+//       let name = prefixes[i] + 'MutationObserver'
 
-      if (name in window) {
-        return window[name]
-      }
-    }
-  }
+//       if (name in window) {
+//         return window[name]
+//       }
+//     }
+//   }
 
-  return false
-}
+//   return false
+// }
 
 export const createDivInBody = () => {
   const div = document.createElement('div')
