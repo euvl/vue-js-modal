@@ -41,22 +41,21 @@ const MODAL_WIDTH = 656
 
 export default {
   name: 'DemoLoginModal',
-  data () {
+  data() {
     return {
       modalWidth: MODAL_WIDTH
     }
   },
-  created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH
-      ? MODAL_WIDTH / 2
-      : MODAL_WIDTH
+  created() {
+    this.modalWidth =
+      window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   }
 }
 </script>
 <style lang="scss">
 $background_color: #404142;
-$github_color: #DBA226;
-$facebook_color: #3880FF;
+$github_color: #dba226;
+$facebook_color: #3880ff;
 
 .box {
   background: white;
@@ -78,7 +77,7 @@ $facebook_color: #3880FF;
     width: 50%;
 
     &#bp-right {
-      background: url("/static/panorama.jpg") no-repeat top left;
+      background: url('/static/panorama.jpg') no-repeat top left;
       border-left: 1px solid #eee;
     }
   }
@@ -102,7 +101,7 @@ $facebook_color: #3880FF;
     width: 100%;
     font-size: 11px;
     color: white;
-    background: #F38181;
+    background: #f38181;
   }
 
   .partition {
@@ -125,8 +124,8 @@ $facebook_color: #3880FF;
     }
   }
 
-  input[type=password],
-  input[type=text] {
+  input[type='password'],
+  input[type='text'] {
     display: block;
     box-sizing: border-box;
     margin-bottom: 4px;
@@ -134,7 +133,7 @@ $facebook_color: #3880FF;
     font-size: 12px;
     line-height: 2;
     border: 0;
-    border-bottom: 1px solid #DDDEDF;
+    border-bottom: 1px solid #dddedf;
     padding: 4px 8px;
     font-family: inherit;
     transition: 0.5s all;
@@ -147,19 +146,19 @@ $facebook_color: #3880FF;
     box-sizing: border-box;
     padding: 10px;
     letter-spacing: 1px;
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     min-width: 140px;
     margin-top: 8px;
     color: #8b8c8d;
     cursor: pointer;
-    border: 1px solid #DDDEDF;
+    border: 1px solid #dddedf;
     text-transform: uppercase;
     transition: 0.1s all;
     font-size: 10px;
     outline: none;
     &:hover {
-      border-color: mix(#DDDEDF, black, 90%);
+      border-color: mix(#dddedf, black, 90%);
       color: mix(#8b8c8d, black, 80%);
     }
   }

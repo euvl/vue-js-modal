@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'DemoErrorModal',
-  data () {
+  data() {
     return {
       bugCount: 0,
       message: '',
@@ -31,38 +31,37 @@ export default {
     }
   },
   methods: {
-    createBug () {
+    createBug() {
       this.bugCount++
     },
 
-    fixBug () {
+    fixBug() {
       this.bugCount = Math.max(this.bugCount - 1, 0)
       this.hasBugs = false
     },
 
-    beforeOpen (event) {
+    beforeOpen() {
       this.bugCount = Math.round(Math.random() * 3) + 1
     },
 
-    beforeClose (event) {
+    beforeClose(event) {
       if (this.bugCount > 0) {
         this.hasBugs = true
         /*
         Stopping close event execution
         */
-        event.stop()
+        event.cancel()
       }
     }
   }
 }
 </script>
 <style lang="scss">
-
 .error-modal {
   transition: box-shadow 1s;
 
   &.has-bugs {
-    box-shadow: 0 24px 80px -2px rgba(255, 0, 0, .4) !important;
+    box-shadow: 0 24px 80px -2px rgba(255, 0, 0, 0.4) !important;
   }
 }
 
@@ -83,7 +82,7 @@ export default {
   }
 
   sub {
-    color: #EC625F;
+    color: #ec625f;
     transition: opacity 0.25s;
   }
 }

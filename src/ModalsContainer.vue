@@ -22,18 +22,18 @@ import { generateId } from './utils'
 const PREFIX = '_dynamic_modal_'
 
 export default {
-  data () {
+  data() {
     return {
       modals: []
     }
   },
-  created () {
+  created() {
     this.$root._dynamicContainer = this
   },
   methods: {
-    add (component, componentAttrs = {}, modalAttrs = {}, modalListeners = {}) {
+    add(component, componentAttrs = {}, modalAttrs = {}, modalListeners = {}) {
       const id = generateId()
-      const name = modalAttrs.name || (PREFIX + id)
+      const name = modalAttrs.name || PREFIX + id
 
       this.modals.push({
         id,
@@ -47,7 +47,7 @@ export default {
         this.$modal.show(name)
       })
     },
-    remove (id) {
+    remove(id) {
       const index = this.modals.findIndex(v => v.id === id)
 
       if (index !== -1) {

@@ -1,0 +1,7 @@
+* Using ResizeObserver instead of MutationObserver
+* Delay property is deprecated - component is relying on modal & overlay transition durations instead
+* Using transition states to coordinate modal & overlay transitions (previously if overlay transition was longer than
+modal transition weird stuff was happening)
+* Renamed Event.stop => Event.cancel
+* Overlay is not a parent of the modal anymore
+* Removed `v--modal-background-click` element

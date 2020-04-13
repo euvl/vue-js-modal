@@ -1,51 +1,55 @@
 <template>
-  <transition
-    :name="guaranteedOverlayTransition"
-    @before-enter="beforeOverlayTransitionEnter"
-    @after-enter="afterOverlayTransitionEnter"
-    @after-leave="afterOverlayTransitionLeave"
+  <div
+    v-if="visible"
+    :class="containerClass"
+    :data-modal="name"
   >
-    <div
-      v-if="visibility.overlay"
-      ref="overlay"
-      :class="overlayClass"
-      :aria-expanded="visibility.overlay.toString()"
-      :data-modal="name"
+    <transition
+      :name="guaranteedOverlayTransition"
+      @before-enter="beforeOverlayTransitionEnter"
+      @after-enter="afterOverlayTransitionEnter"
+      @before-leave="beforeOverlayTransitionLeave"
+      @after-leave="afterOverlayTransitionLeave"
     >
       <div
-        class="v--modal-background-click"
-        @mousedown.self="onBackgroundClick"
-        @touchstart.self="onBackgroundClick"
+        v-if="visibility.overlay"
+        ref="overlay"
+        class="vm--overlay"
+        :aria-expanded="visibility.overlay.toString()"
+        @mousedown.self="onOverlayClick"
+        @touchstart.self="onOverlayClick"
       >
-        <div class="v--modal-top-right">
+        <div class="vm--top-right-slot">
           <slot name="top-right"/>
         </div>
-        <transition
-          :name="guaranteedModalTransition"
-          @after-enter="afterModalTransitionEnter"
-          @before-leave="beforeModalTransitionLeave"
-          @after-leave="afterModalTransitionLeave"
-        >
-          <div
-            v-if="visibility.modal"
-            ref="modal"
-            :class="modalClass"
-            :style="modalStyle"
-          >
-            <slot/>
-            <resizer
-              v-if="resizable && !isAutoHeight"
-              :min-width="minWidth"
-              :min-height="minHeight"
-              :max-width="maxWidth"
-              :max-height="maxHeight"
-              @resize="handleModalResize"
-            />
-          </div>
-        </transition>
       </div>
-    </div>
-  </transition>
+    </transition>
+    <transition
+      :name="guaranteedModalTransition"
+      @before-enter="beforeModalTransitionEnter"
+      @after-enter="afterModalTransitionEnter"
+      @before-leave="beforeModalTransitionLeave"
+      @after-leave="afterModalTransitionLeave"
+    >
+      <div
+        v-if="visibility.modal"
+        ref="modal"
+        :aria-expanded="visibility.modal.toString()"
+        :class="modalClass"
+        :style="modalStyle"
+      >
+        <slot/>
+        <resizer
+          v-if="resizable && !isAutoHeight"
+          :min-width="minWidth"
+          :min-height="minHeight"
+          :max-width="maxWidth"
+          :max-height="maxHeight"
+          @resize="handleModalResize"
+        />
+      </div>
+    </transition>
+  </div>
 </template>
 <script>
 import Modal from './index'
@@ -61,6 +65,13 @@ import { parseNumber, validateNumber } from './parser'
 import ResizeObserver from './ResizeObserver'
 
 const defaultTransition = 'vue-js-modal-transition--default'
+
+const TransitionState = {
+  Enter: 'enter',
+  Entering: 'entering',
+  Leave: 'leave',
+  Leaving: 'leavng'
+}
 
 export default {
   name: 'VueJsModal',
@@ -174,12 +185,15 @@ export default {
     return {
       visible: false,
 
-      isVisibilityChanging: false,
+      // isVisibilityChanging: false,
 
       visibility: {
         modal: false,
         overlay: false
       },
+
+      overlayTransitionState: null,
+      modalTransitionState: null,
 
       shiftLeft: 0,
       shiftTop: 0,
@@ -193,9 +207,7 @@ export default {
       },
 
       viewportHeight: 0,
-      viewportWidth: 0,
-
-      mutationObserver: null
+      viewportWidth: 0
     }
   },
   created() {
@@ -251,6 +263,9 @@ export default {
     }
   },
   computed: {
+    hasTransitionFinished() {
+      return this.visibility.modal === this.visibility.overlay
+    },
     /**
      *  Because modal state is based on transitions - we need to make sure
      * that there is always a transition for overlay/modal
@@ -342,14 +357,11 @@ export default {
 
       return adaptive ? inRange(minHeight, max, value) : value
     },
-    /**
-     * Returns class list for screen overlay (modal background)
-     */
-    overlayClass() {
-      return {
-        'v--modal-overlay': true,
-        scrollable: this.scrollable && this.isAutoHeight
-      }
+    containerClass() {
+      return [
+        'vm--container',
+        this.scrollable && this.isAutoHeight && 'scrollable'
+      ]
     },
     /**
      * Returns class list for modal itself
@@ -376,44 +388,75 @@ export default {
           height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
         }
       ]
+    },
+
+    isComponentReadyToBeDestroyed() {
+      return (
+        this.overlayTransitionState === TransitionState.Leave &&
+        this.modalTransitionState === TransitionState.Leave
+      )
     }
   },
 
   watch: {
-    visible(value) {
-      if (value) {
-        this.visibility.overlay = true
-      } else {
-        this.visibility.modal = false
+    // visible(value) {
+    //   if (value) {
+    //     this.startTransitionEnter()
+    //   }
+    //   // } else {
+    //   //   this.visibility.overlay = false
+    //   //   this.visibility.modal = false
+    //   // }
+    // },
+
+    isComponentReadyToBeDestroyed(isReady) {
+      if (isReady) {
+        this.visible = false
       }
     }
   },
 
   methods: {
-    beforeOverlayTransitionEnter() {
-      /* Entering transition sequance started */
-      this.isVisibilityChanging = true
-    },
-
-    afterOverlayTransitionEnter() {
+    startTransitionEnter() {
+      this.visibility.overlay = true
       this.visibility.modal = true
     },
 
+    startTransitionLeave() {
+      this.visibility.overlay = false
+      this.visibility.modal = false
+    },
+
+    beforeOverlayTransitionEnter() {
+      this.overlayTransitionState = TransitionState.Entering
+      /* Entering transition sequance started */
+      // this.isVisibilityChanging = true
+    },
+
+    afterOverlayTransitionEnter() {
+      this.overlayTransitionState = TransitionState.Enter
+      // this.visibility.modal = true
+    },
+
+    beforeOverlayTransitionLeave() {
+      this.overlayTransitionState = TransitionState.Leaving
+    },
+
     afterOverlayTransitionLeave() {
+      this.overlayTransitionState = TransitionState.Leave
       /* Leaving transition sequance finished */
-      this.isVisibilityChanging = false
+      // this.isVisibilityChanging = false
+    },
 
-      const event = this.createModalEvent({
-        state: 'closed'
-      })
-
-      this.$emit('closed', event)
+    beforeModalTransitionEnter() {
+      this.modalTransitionState = TransitionState.Entering
     },
 
     afterModalTransitionEnter() {
       /* Entering transition sequance finished */
-      this.isVisibilityChanging = false
+      // this.isVisibilityChanging = false
       /* Setup resize ovserver */
+      this.modalTransitionState = TransitionState.Enter
       this.resizeObserver.observe(this.$refs.modal)
 
       const event = this.createModalEvent({
@@ -424,13 +467,21 @@ export default {
     },
 
     beforeModalTransitionLeave() {
-      /* Leaving transition sequance started */
-      this.isVisibilityChanging = true
+      this.modalTransitionState = TransitionState.Leaving
       this.resizeObserver.unobserve(this.$refs.modal)
+      /* Leaving transition sequance started */
+      // this.isVisibilityChanging = true
     },
 
     afterModalTransitionLeave() {
-      this.visibility.overlay = false
+      this.modalTransitionState = TransitionState.Leave
+
+      const event = this.createModalEvent({
+        state: 'closed'
+      })
+
+      this.$emit('closed', event)
+      // this.visibility.overlay = false
     },
 
     onToggle(name, state, params) {
@@ -493,64 +544,90 @@ export default {
       this.$emit('resize', this.createModalEvent({ size }))
     },
 
+    open(params) {
+      /**
+       * Need to unfocus previously focused element, otherwise
+       * all keypress events (ESC press, for example) will trigger on that element.
+       */
+      blurActiveElement()
+
+      if (this.reset) {
+        this.setInitialSize()
+
+        this.shiftLeft = 0
+        this.shiftTop = 0
+      }
+
+      if (this.scrollable) {
+        document.body.classList.add('v--modal-block-scroll')
+      }
+
+      let cancelEvent = false
+
+      const cancel = () => {
+        cancelEvent = true
+      }
+
+      const event = this.createModalEvent({
+        cancel,
+        state: 'before-open',
+        params
+      })
+
+      this.$emit('before-open', event)
+
+      if (cancelEvent) {
+        return
+      }
+
+      this.visible = true
+      /* Making sure that entering tranition uses "enter" sequance instead of "appear" */
+      this.$nextTick(() => {
+        this.startTransitionEnter()
+      })
+    },
+
+    close(params) {
+      if (this.scrollable) {
+        document.body.classList.remove('v--modal-block-scroll')
+      }
+
+      let cancelEvent = false
+
+      const cancel = () => {
+        cancelEvent = true
+      }
+
+      const event = this.createModalEvent({
+        cancel,
+        state: 'before-close',
+        params
+      })
+
+      this.$emit('before-close', event)
+
+      if (cancelEvent) {
+        return
+      }
+
+      this.startTransitionLeave()
+    },
     /**
      * Event handler which is triggered on $modal.show and $modal.hide
      * BeforeEvents: ('before-close' and 'before-open') are `$emit`ed here,
      * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
      */
-    toggle(nextState, params) {
-      const { reset, scrollable, visible } = this
+    toggle(isOpening, params) {
+      const { visible } = this
 
-      if (visible === nextState) {
+      if (visible === isOpening) {
         return
       }
 
-      const isOpening = visible
-      const isClosing = !visible
-
-      const beforeEventName = visible ? 'before-close' : 'before-open'
-
       if (isOpening) {
-        /**
-         * Need to unfocus previously focused element, otherwise
-         * all keypress events (ESC press, for example) will trigger on that element.
-         */
-        blurActiveElement()
-
-        if (reset) {
-          this.setInitialSize()
-
-          this.shiftLeft = 0
-          this.shiftTop = 0
-        }
-
-        if (scrollable) {
-          document.body.classList.add('v--modal-block-scroll')
-        }
-      }
-
-      if (isClosing) {
-        if (scrollable) {
-          document.body.classList.remove('v--modal-block-scroll')
-        }
-      }
-
-      let stopEventExecution = false
-
-      const stop = () => {
-        stopEventExecution = true
-      }
-
-      const beforeEvent = this.createModalEvent({
-        stop,
-        state: nextState,
-        params
-      })
-
-      this.$emit(beforeEventName, beforeEvent)
-
-      if (!stopEventExecution) {
-        this.visible = nextState
+        this.open(params)
+      } else {
+        this.close(params)
       }
     },
 
@@ -564,7 +641,7 @@ export default {
     /**
      * Event handler that is triggered when background overlay is clicked
      */
-    onBackgroundClick() {
+    onOverlayClick() {
       if (this.clickToClose) {
         this.toggle(false)
       }
@@ -673,7 +750,17 @@ export default {
   width: 100vw;
 }
 
-.v--modal-overlay {
+.vm--container {
+  position: fixed;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 999;
+}
+
+.vm--overlay {
   position: fixed;
   box-sizing: border-box;
   left: 0;
@@ -681,30 +768,24 @@ export default {
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.2);
-  z-index: 999;
+  /* z-index: 999; */
   opacity: 1;
 }
 
-.v--modal-overlay.scrollable {
+.vm--container.scrollable {
   height: 100%;
   min-height: 100vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.v--modal-overlay .v--modal-background-click {
-  width: 100%;
-  min-height: 100%;
-  height: auto;
-}
-
-.v--modal-overlay .v--modal-box {
+.v--modal-box {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-.v--modal-overlay.scrollable .v--modal-box {
+.vm--container.scrollable .v--modal-box {
   margin-bottom: 2px;
 }
 
@@ -716,15 +797,15 @@ export default {
   padding: 0;
 }
 
-.v--modal.v--modal-fullscreen {
+/* .v--modal.v--modal-fullscreen {
   width: 100vw;
   height: 100vh;
   margin: 0;
   left: 0;
   top: 0;
-}
+} */
 
-.v--modal-top-right {
+.vm--top-right-slot {
   display: block;
   position: absolute;
   right: 0;

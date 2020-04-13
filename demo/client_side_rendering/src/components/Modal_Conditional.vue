@@ -15,12 +15,12 @@
 export default {
   name: 'Modal_Conditional',
   methods: {
-    beforeOpen (event) {
+    beforeOpen(event) {
       console.log('Event:', event)
       console.log('Params:', event.params)
 
       if (event.params.show === false) {
-        event.stop()
+        event.cancel()
       }
     }
   }

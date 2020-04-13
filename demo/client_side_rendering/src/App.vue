@@ -122,15 +122,14 @@
 </template>
 
 <script>
-
-import DemoAdaptiveModal    from './components/Modal_Adaptive.vue'
-import DemoDraggableModal   from './components/Modal_Draggable.vue'
-import DemoResizableModal   from './components/Modal_Resizable.vue'
+import DemoAdaptiveModal from './components/Modal_Adaptive.vue'
+import DemoDraggableModal from './components/Modal_Draggable.vue'
+import DemoResizableModal from './components/Modal_Resizable.vue'
 import DemoConditionalModal from './components/Modal_Conditional.vue'
-import DemoErrorModal       from './components/modals/DemoErrorModal.vue'
-import DemoLoginModal       from './components/modals/DemoLoginModal.vue'
-import DemoDogProfileModal  from './components/modals/DogProfileModal.vue'
-import DemoSizeModal        from './components/modals/SizeModal.vue'
+import DemoErrorModal from './components/modals/DemoErrorModal.vue'
+import DemoLoginModal from './components/modals/DemoLoginModal.vue'
+import DemoDogProfileModal from './components/modals/DogProfileModal.vue'
+import DemoSizeModal from './components/modals/SizeModal.vue'
 import CustomComponentModal from './components/modals/CustomComponentModal.vue'
 
 export default {
@@ -145,37 +144,37 @@ export default {
     DemoConditionalModal,
     DemoSizeModal
   },
-  data () {
+  data() {
     return {
       canBeShown: false
     }
   },
-  created () {
+  created() {
     setInterval(() => {
       this.canBeShown = !this.canBeShown
     }, 5000)
   },
   methods: {
-    conditionalShow () {
+    conditionalShow() {
       this.$modal.show('conditional-modal', {
         show: this.canBeShown
       })
     },
 
-    showBasicDialog () {
+    showBasicDialog() {
       this.$modal.show('dialog', {
         text: 'I am a tiny dialog box.<br/>And I render <b>HTML!</b>'
       })
     },
 
-    showTitleDialog () {
+    showTitleDialog() {
       this.$modal.show('dialog', {
         title: 'Information',
         text: 'Check out, I have a title 😎'
       })
     },
 
-    showButtonsDialog () {
+    showButtonsDialog() {
       this.$modal.show('dialog', {
         title: 'Buttons example',
         text: 'You can add an arbitrary number of buttons.',
@@ -203,52 +202,59 @@ export default {
       })
     },
 
-    showDynamicRuntimeModal () {
-      this.$modal.show({
-        template: `
+    showDynamicRuntimeModal() {
+      this.$modal.show(
+        {
+          template: `
           <div class="example-modal-content">
             <h1>This is created inline</h1>
             <p>{{ text }}</p>
             <p>Default Property: {{ foo }}</p>
           </div>
         `,
-        props: ['text', 'foo']
-      }, {
-        text: 'This text is passed as a property'
-      })
+          props: ['text', 'foo']
+        },
+        {
+          text: 'This text is passed as a property'
+        }
+      )
     },
 
-    showDynamicComponentModal () {
+    showDynamicComponentModal() {
       this.$modal.show(CustomComponentModal, {
         text: 'This text is passed as a property'
       })
     },
 
-    showDynamicComponentModalWithModalParams () {
-      this.$modal.show({
-        template: `
+    showDynamicComponentModalWithModalParams() {
+      this.$modal.show(
+        {
+          template: `
           <div class="example-modal-content">
             <button class="btn" @click="closeByName">Close this using name</button>
             <button class="btn" @click="closeByEvent">Close this using events</button>
           </div>
         `,
-        methods: {
-          closeByName() {
-            this.$modal.hide('dynamic-modal'); 
-          },
-          closeByEvent() {
-            this.$emit('close');
-          },
+          methods: {
+            closeByName() {
+              this.$modal.hide('dynamic-modal')
+            },
+            closeByEvent() {
+              this.$emit('close')
+            }
+          }
+        },
+        null,
+        {
+          name: 'dynamic-modal',
+          resizable: true,
+          adaptive: true,
+          draggable: true
         }
-      }, null, {
-        name: 'dynamic-modal',
-        resizable: true,
-        adaptive: true,
-        draggable: true,
-      })
+      )
     },
 
-    dialogEvent (eventName) {
+    dialogEvent(eventName) {
       console.log('Dialog event: ' + eventName)
     }
   }
@@ -256,7 +262,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 *:not(pre) {
   font-family: 'Montserrat';
   box-sizing: border-box;
@@ -289,12 +294,11 @@ pre {
   -moz-osx-font-smoothing: grayscale;
   color: #6b7c93;
 
-  background: #F6F9FC;
+  background: #f6f9fc;
   padding: 20px;
   border-radius: 3px;
 
-  box-shadow: 0 4px 36px rgba(50,50,93,.11),
-    0 1px 33px rgba(0,0,0,.08);
+  box-shadow: 0 4px 36px rgba(50, 50, 93, 0.11), 0 1px 33px rgba(0, 0, 0, 0.08);
 }
 
 h1,
@@ -319,8 +323,8 @@ button.btn {
   border-radius: 3px;
 
   color: white;
-  
-  box-shadow: 0 4px 8px rgba(#20a0ff, .3);
+
+  box-shadow: 0 4px 8px rgba(#20a0ff, 0.3);
   background: #4db3ff;
 
   font-weight: 600;
@@ -338,20 +342,20 @@ button.btn {
   }
 
   &.green {
-    box-shadow: 0 4px 8px rgba(#50C9BA, .3);
-    background: #50C9BA;
+    box-shadow: 0 4px 8px rgba(#50c9ba, 0.3);
+    background: #50c9ba;
 
     &:hover {
-     background: mix(#50C9BA, black, 95%);
+      background: mix(#50c9ba, black, 95%);
     }
   }
 
   &.red {
-    box-shadow: 0 4px 8px rgba(#F21368, .3);
-    background: #F21368;
+    box-shadow: 0 4px 8px rgba(#f21368, 0.3);
+    background: #f21368;
 
     &:hover {
-      background: mix(#F21368, black, 95%);
+      background: mix(#f21368, black, 95%);
     }
   }
 }
@@ -368,7 +372,7 @@ button.btn {
   letter-spacing: 1px;
 }
 
-@media (max-width:600px)  {
+@media (max-width: 600px) {
   body {
     padding: 10px;
   }
