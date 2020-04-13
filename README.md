@@ -499,6 +499,12 @@ Dont forget about close button :)
 </modal>
 ```
 
+#### IE support
+
+This plugin uses arrow functions, resize observer and other features of modern after-2008-financial-crisis world.
+
+To be able to use this plugin in IE you need to make sure that you transpile the code preoperty. Please read this stackoverflow: https://stackoverflow.com/questions/56446904/transpiling-es6-for-ie11-with-babel
+
 ### Check out
 
 Check out my other projects:
