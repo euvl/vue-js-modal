@@ -2,7 +2,6 @@
   <div
     v-if="visible"
     :class="containerClass"
-    :data-modal="name"
   >
     <transition
       :name="guaranteedOverlayTransition"
@@ -15,6 +14,7 @@
         v-if="visibility.overlay"
         ref="overlay"
         class="vm--overlay"
+        :data-modal="name"
         :aria-expanded="visibility.overlay.toString()"
         @mousedown.self="onOverlayClick"
         @touchstart.self="onOverlayClick"
@@ -64,7 +64,7 @@ import ModalEvent from './ModalEvent'
 import { parseNumber, validateNumber } from './parser'
 import ResizeObserver from './ResizeObserver'
 
-const defaultTransition = 'vue-js-modal-transition--default'
+const defaultTransition = 'vm-transition--default'
 
 const TransitionState = {
   Enter: 'enter',
@@ -79,16 +79,6 @@ export default {
     name: {
       required: true,
       type: String
-    },
-    delay: {
-      type: Number,
-      default: 0,
-      validator(value) {
-        if (value > 0) {
-          console.warn('[vue-js-modal] "delay" property is deprecated.')
-        }
-        return true
-      }
     },
     resizable: {
       type: Boolean,
@@ -112,11 +102,11 @@ export default {
     },
     overlayTransition: {
       type: String,
-      default: 'vue-js-modal-transition--overlay'
+      default: 'vm-transition--overlay'
     },
     transition: {
       type: String,
-      default: 'vue-js-modal-transition--modal'
+      default: 'vm-transition--modal'
     },
     clickToClose: {
       type: Boolean,
@@ -450,6 +440,12 @@ export default {
 
     beforeModalTransitionEnter() {
       this.modalTransitionState = TransitionState.Entering
+      // console.log('1', this.$refs.modal)
+
+      this.$nextTick(() => {
+        //  console.log('2', this.$refs.modal)
+        this.resizeObserver.observe(this.$refs.modal)
+      })
     },
 
     afterModalTransitionEnter() {
@@ -457,7 +453,6 @@ export default {
       // this.isVisibilityChanging = false
       /* Setup resize ovserver */
       this.modalTransitionState = TransitionState.Enter
-      this.resizeObserver.observe(this.$refs.modal)
 
       const event = this.createModalEvent({
         state: 'opened'
@@ -812,34 +807,34 @@ export default {
   top: 0;
 }
 
-.vue-js-modal-transition--overlay-enter-active,
-.vue-js-modal-transition--overlay-leave-active {
+.vm-transition--overlay-enter-active,
+.vm-transition--overlay-leave-active {
   transition: all 50ms;
 }
 
-.vue-js-modal-transition--overlay-enter,
-.vue-js-modal-transition--overlay-leave-active {
+.vm-transition--overlay-enter,
+.vm-transition--overlay-leave-active {
   opacity: 0;
 }
 
-.vue-js-modal-transition--modal-enter-active,
-.vue-js-modal-transition--modal-leave-active {
+.vm-transition--modal-enter-active,
+.vm-transition--modal-leave-active {
   transition: all 400ms;
 }
 
-.vue-js-modal-transition--modal-enter,
-.vue-js-modal-transition--modal-leave-active {
+.vm-transition--modal-enter,
+.vm-transition--modal-leave-active {
   opacity: 0;
   transform: translateY(-20px);
 }
 
-.vue-js-modal-transition--default-enter-active,
-.vue-js-modal-transition--default-leave-active {
+.vm-transition--default-enter-active,
+.vm-transition--default-leave-active {
   transition: all 2ms;
 }
 
-.vue-js-modal-transition--default-enter,
-.vue-js-modal-transition--default-leave-active {
+.vm-transition--default-enter,
+.vm-transition--default-leave-active {
   opacity: 0;
 }
 </style>

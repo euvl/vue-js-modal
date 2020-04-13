@@ -1,14 +1,13 @@
 import { generateId } from './utils'
 
-function ModalEvent(properties = {}) {
-  const id = generateId()
-  const timestamp = Date.now()
+class ModalEvent {
+  constructor(properties = {}) {
+    this.timestamp = Date.now()
+    this.id = generateId()
 
-  return {
-    timestamp,
-    id,
-    canceled: false,
-    ...properties
+    Object.keys(properties).forEach(key => {
+      this[key] = properties[key]
+    })
   }
 }
 

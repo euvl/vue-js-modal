@@ -478,7 +478,7 @@ If you want to change overlay background color, you can easily do it using CSS.
 For all modals:
 
 ```css
-.v--modal-overlay {
+.vm--overlay {
   background: red;
 }
 ```
@@ -486,7 +486,7 @@ For all modals:
 For specific modal:
 
 ```css
-.v--modal-overlay[data-modal="my_modal_name"] {
+.vm--overlay[data-modal="my_modal_name"] {
   background: transparent;
 }
 ```
