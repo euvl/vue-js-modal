@@ -1,18 +1,20 @@
 <template>
-  <modal name="size-modal"
-        classes="demo-modal-class"
-        :min-width="200"
-        :min-height="200"
-        :pivot-y="0.5"
-        :adaptive="true"
-        :scrollable="true"
-        :reset="true"
-        width="60%"
-        height="auto"
-        @before-open="beforeOpen"
-        @opened="opened"
-        @closed="closed"
-        @before-close="beforeClose">
+  <modal 
+    name="size-modal"
+    classes="demo-modal-class"
+    :min-width="200"
+    :min-height="200"
+    :pivot-y="0.5"
+    :adaptive="true"
+    :scrollable="true"
+    :reset="true"
+    width="60%"
+    height="auto"
+    @before-open="beforeOpen"
+    @opened="opened"
+    @before-close="beforeClose"
+    @closed="closed"
+  >
   <div class="size-modal-content">
     <div>A new paragraph will be added every 5 sec to show how <b>height</b> scales.</div>
     <div v-for="(p, i) in paragraphs" :key="i">
@@ -30,31 +32,31 @@ export default {
   name: 'SizeModalTest',
   data() {
     return {
-      paragraphs: [true],
+      paragraphs: [null, null],
       timer: null
     }
   },
   methods: {
-    beforeOpen() {
-      this.timer = setInterval(() => {
-        this.paragraphs.push(true)
-      }, 5000)
+    beforeOpen(event) {
+      console.log('before-open', event)
     },
-
     beforeClose() {
       clearInterval(this.timer)
       this.timer = null
-      this.paragraphs = []
     },
 
-    opened(e) {
+    opened(event) {
+      this.timer = setInterval(() => {
+        this.paragraphs.push(null)
+      }, 5000)
       // e.ref should not be undefined here
-      console.log('opened', e)
-      console.log('ref', e.ref)
+      console.log('opened', event)
+      console.log('ref', event.ref)
     },
 
-    closed(e) {
-      console.log('closed', e)
+    closed(event) {
+      this.paragraphs = []
+      console.log('closed', event)
     }
   }
 }
