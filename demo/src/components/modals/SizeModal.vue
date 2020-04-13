@@ -15,17 +15,17 @@
     @before-close="beforeClose"
     @closed="closed"
   >
-  <div class="size-modal-content">
-    <div>A new paragraph will be added every 5 sec to show how <b>height</b> scales.</div>
-    <div v-for="(p, i) in paragraphs" :key="i">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum purus egestas libero ornare venenatis.
-      Maecenas pharetra tortor eu tortor imperdiet, a faucibus quam finibus. Nulla id lacinia quam.
-      Praesent imperdiet sed magna non finibus. Aenean blandit, mauris vitae lacinia rutrum,
-      nunc mi scelerisque sem, in laoreet sem lectus ut orci. Ut egestas nulla in vehicula feugiat.
-      Vivamus tincidunt nisi vel risus dictum suscipit. Nulla id blandit mi, vulputate aliquam enim.
+    <div class="size-modal-content">
+      <div>A new paragraph will be added every 5 sec to show how <b>height</b> scales.</div>
+      <div v-for="(p, i) in paragraphs" :key="i">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum purus egestas libero ornare venenatis.
+        Maecenas pharetra tortor eu tortor imperdiet, a faucibus quam finibus. Nulla id lacinia quam.
+        Praesent imperdiet sed magna non finibus. Aenean blandit, mauris vitae lacinia rutrum,
+        nunc mi scelerisque sem, in laoreet sem lectus ut orci. Ut egestas nulla in vehicula feugiat.
+        Vivamus tincidunt nisi vel risus dictum suscipit. Nulla id blandit mi, vulputate aliquam enim.
+      </div>
     </div>
-  </div>
-</modal>
+  </modal>
 </template>
 <script>
 export default {

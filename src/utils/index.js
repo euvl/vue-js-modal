@@ -54,3 +54,13 @@ export const stringStylesToObject = styles => {
     return { ...styles, [key]: value }
   }, {})
 }
+
+const INPUT_NOTE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
+
+export const isInput = element => {
+  return element && INPUT_NOTE_NAMES.indexOf(element.nodeName) !== -1
+}
+
+export const getTouchEvent = event => {
+  return event.touches && event.touches.length > 0 ? event.touches[0] : event
+}

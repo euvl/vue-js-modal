@@ -12,7 +12,6 @@
     >
       <div
         v-if="visibility.overlay"
-        ref="overlay"
         class="vm--overlay"
         :data-modal="name"
         :aria-expanded="visibility.overlay.toString()"
@@ -55,7 +54,9 @@
 import Modal from './index'
 import Resizer from './Resizer.vue'
 import {
+  isInput,
   inRange,
+  getTouchEvent,
   blurActiveElement,
   windowWidthWithoutScrollbar,
   stringStylesToObject
@@ -249,7 +250,7 @@ export default {
      * Removes blocked scroll
      */
     if (this.scrollable) {
-      document.body.classList.remove('v--modal-block-scroll')
+      document.body.classList.remove('vm__block-scroll')
     }
   },
   computed: {
@@ -313,9 +314,12 @@ export default {
           ? (viewportWidth / 100) * modal.width
           : modal.width
 
-      const max = Math.max(minWidth, Math.min(viewportWidth, maxWidth))
+      if (adaptive) {
+        const max = Math.max(minWidth, Math.min(viewportWidth, maxWidth))
+        return inRange(minWidth, max, value)
+      }
 
-      return adaptive ? inRange(minWidth, max, value) : value
+      return value
     },
     /**
      * Returns pixel height (if set with %) and makes sure that modal size
@@ -343,21 +347,27 @@ export default {
         return this.modal.renderedHeight
       }
 
-      const max = Math.max(minHeight, Math.min(viewportHeight, maxHeight))
+      if (adaptive) {
+        const max = Math.max(minHeight, Math.min(viewportHeight, maxHeight))
 
-      return adaptive ? inRange(minHeight, max, value) : value
+        return inRange(minHeight, max, value)
+      }
+
+      return value
     },
+
     containerClass() {
       return [
         'vm--container',
         this.scrollable && this.isAutoHeight && 'scrollable'
       ]
     },
+
     /**
      * Returns class list for modal itself
      */
     modalClass() {
-      return ['v--modal-box', this.classes]
+      return ['vm--modal-box', this.classes]
     },
 
     stylesProp() {
@@ -389,16 +399,6 @@ export default {
   },
 
   watch: {
-    // visible(value) {
-    //   if (value) {
-    //     this.startTransitionEnter()
-    //   }
-    //   // } else {
-    //   //   this.visibility.overlay = false
-    //   //   this.visibility.modal = false
-    //   // }
-    // },
-
     isComponentReadyToBeDestroyed(isReady) {
       if (isReady) {
         this.visible = false
@@ -419,13 +419,10 @@ export default {
 
     beforeOverlayTransitionEnter() {
       this.overlayTransitionState = TransitionState.Entering
-      /* Entering transition sequance started */
-      // this.isVisibilityChanging = true
     },
 
     afterOverlayTransitionEnter() {
       this.overlayTransitionState = TransitionState.Enter
-      // this.visibility.modal = true
     },
 
     beforeOverlayTransitionLeave() {
@@ -434,25 +431,20 @@ export default {
 
     afterOverlayTransitionLeave() {
       this.overlayTransitionState = TransitionState.Leave
-      /* Leaving transition sequance finished */
-      // this.isVisibilityChanging = false
     },
 
     beforeModalTransitionEnter() {
       this.modalTransitionState = TransitionState.Entering
-      // console.log('1', this.$refs.modal)
 
       this.$nextTick(() => {
-        //  console.log('2', this.$refs.modal)
         this.resizeObserver.observe(this.$refs.modal)
       })
     },
 
     afterModalTransitionEnter() {
-      /* Entering transition sequance finished */
-      // this.isVisibilityChanging = false
       /* Setup resize ovserver */
       this.modalTransitionState = TransitionState.Enter
+      this.addDraggableListeners()
 
       const event = this.createModalEvent({
         state: 'opened'
@@ -464,8 +456,6 @@ export default {
     beforeModalTransitionLeave() {
       this.modalTransitionState = TransitionState.Leaving
       this.resizeObserver.unobserve(this.$refs.modal)
-      /* Leaving transition sequance started */
-      // this.isVisibilityChanging = true
     },
 
     afterModalTransitionLeave() {
@@ -476,7 +466,6 @@ export default {
       })
 
       this.$emit('closed', event)
-      // this.visibility.overlay = false
     },
 
     onToggle(name, state, params) {
@@ -554,7 +543,7 @@ export default {
       }
 
       if (this.scrollable) {
-        document.body.classList.add('v--modal-block-scroll')
+        document.body.classList.add('vm__block-scroll')
       }
 
       let cancelEvent = false
@@ -584,7 +573,7 @@ export default {
 
     close(params) {
       if (this.scrollable) {
-        document.body.classList.remove('v--modal-block-scroll')
+        document.body.classList.remove('vm__block-scroll')
       }
 
       let cancelEvent = false
@@ -627,10 +616,15 @@ export default {
     },
 
     getDraggableElement() {
-      const selector =
-        typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable
+      if (this.draggable === true) {
+        return this.$refs.modal
+      }
 
-      return selector ? this.$refs.overlay.querySelector(selector) : null
+      if (typeof this.draggable === 'string') {
+        return this.$refs.modal.querySelector(this.draggable)
+      }
+
+      return null
     },
 
     /**
@@ -652,28 +646,17 @@ export default {
       if (dragger) {
         let startX = 0
         let startY = 0
-        let cachedShiftLeft = 0
-        let cachedShiftTop = 0
-
-        const getPosition = event => {
-          return event.touches && event.touches.length > 0
-            ? event.touches[0]
-            : event
-        }
+        let initialShiftLeft = 0
+        let initialShiftTop = 0
 
         const handleDraggableMousedown = event => {
           let target = event.target
 
-          if (
-            target &&
-            (target.nodeName === 'INPUT' ||
-              target.nodeName === 'TEXTAREA' ||
-              target.nodeName === 'SELECT')
-          ) {
+          if (isInput(target)) {
             return
           }
 
-          let { clientX, clientY } = getPosition(event)
+          let { clientX, clientY } = getTouchEvent(event)
 
           document.addEventListener('mousemove', handleDraggableMousemove)
           document.addEventListener('touchmove', handleDraggableMousemove)
@@ -684,15 +667,15 @@ export default {
           startX = clientX
           startY = clientY
 
-          cachedShiftLeft = this.shiftLeft
-          cachedShiftTop = this.shiftTop
+          initialShiftLeft = this.shiftLeft
+          initialShiftTop = this.shiftTop
         }
 
         const handleDraggableMousemove = event => {
-          let { clientX, clientY } = getPosition(event)
+          let { clientX, clientY } = getTouchEvent(event)
 
-          this.shiftLeft = cachedShiftLeft + clientX - startX
-          this.shiftTop = cachedShiftTop + clientY - startY
+          this.shiftLeft = initialShiftLeft + clientX - startX
+          this.shiftTop = initialShiftTop + clientY - startY
 
           event.preventDefault()
         }
@@ -740,7 +723,7 @@ export default {
 </script>
 
 <style>
-.v--modal-block-scroll {
+.vm__block-scroll {
   overflow: hidden;
   width: 100vw;
 }
@@ -774,13 +757,13 @@ export default {
   -webkit-overflow-scrolling: touch;
 }
 
-.v--modal-box {
+.vm--modal-box {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-.vm--container.scrollable .v--modal-box {
+.vm--container.scrollable .vm--modal-box {
   margin-bottom: 2px;
 }
 

@@ -28,7 +28,7 @@
 }
 
 
-.v--modal-block-scroll {
+.vm__block-scroll {
   overflow: hidden;
   width: 100vw;
 }
@@ -58,12 +58,12 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
-.v--modal-box {
+.vm--modal-box {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
 }
-.vm--container.scrollable .v--modal-box {
+.vm--container.scrollable .vm--modal-box {
   margin-bottom: 2px;
 }
 .v--modal {

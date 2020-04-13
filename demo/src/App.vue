@@ -59,7 +59,7 @@
     <button
       class="btn green"
       @click="$modal.show('dog-profile')">
-      Demo: Dog Profile photo
+      Demo: Dog Profile photo 
     </button>
     <button
       class="btn green"
