@@ -180,20 +180,20 @@ export default {
         text: 'You can add an arbitrary number of buttons.',
         buttons: [
           {
-            title: 'C💩NCEL',
+            title: 'Cancel 💩',
             handler: () => {
               this.$modal.hide('dialog')
             }
           },
           {
-            title: 'LIKE',
+            title: 'Like',
             default: true,
             handler: () => {
               alert('LIKE LIKE LIKE')
             }
           },
           {
-            title: 'REPOST',
+            title: 'Repost',
             handler: () => {
               alert('REPOST REPOST REPOST')
             }
@@ -366,10 +366,6 @@ button.btn {
   padding: 10px;
   font-size: 13px;
   overflow: auto;
-}
-
-.vue-dialog button {
-  letter-spacing: 1px;
 }
 
 @media (max-width: 600px) {
