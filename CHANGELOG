@@ -5,3 +5,4 @@ modal transition weird stuff was happening)
 * Renamed Event.stop => Event.cancel
 * Overlay is not a parent of the modal anymore
 * Removed `v--modal-background-click` element
+* Fixed dialogs not working when componentName is changed
