@@ -131,8 +131,6 @@
   font-weight: 600;
   padding-bottom: 15px;
 }
-.vue-dialog .dialog-c-text {
-}
 .vue-dialog .vue-dialog-buttons {
   display: flex;
   flex: 0 1 auto;

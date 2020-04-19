@@ -72,6 +72,12 @@ const Plugin = {
     }
 
     Vue.prototype.$modal = {
+      get context() {
+        return {
+          componentName
+        }
+      },
+
       show(modal, ...args) {
         switch (typeof modal) {
           case 'string': {

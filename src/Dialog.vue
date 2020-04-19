@@ -1,5 +1,5 @@
 <template>
-  <modal
+  <component :is="$modal.context.componentName"
     name="dialog"
     height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
@@ -42,7 +42,7 @@
       </button>
     </div>
     <div v-else class="vue-dialog-buttons-none"></div>
-  </modal>
+  </component>
 </template>
 <script>
 export default {
@@ -141,9 +141,6 @@ export default {
 .vue-dialog .dialog-c-title {
   font-weight: 600;
   padding-bottom: 15px;
-}
-
-.vue-dialog .dialog-c-text {
 }
 
 .vue-dialog .vue-dialog-buttons {
