@@ -250,13 +250,10 @@ export default {
      * Removes blocked scroll
      */
     if (this.scrollable) {
-      document.body.classList.remove('vm__block-scroll')
+      document.body.classList.remove('vm--block-scroll')
     }
   },
   computed: {
-    hasTransitionFinished() {
-      return this.visibility.modal === this.visibility.overlay
-    },
     /**
      *  Because modal state is based on transitions - we need to make sure
      * that there is always a transition for overlay/modal
@@ -543,7 +540,7 @@ export default {
       }
 
       if (this.scrollable) {
-        document.body.classList.add('vm__block-scroll')
+        document.body.classList.add('vm--block-scroll')
       }
 
       let cancelEvent = false
@@ -573,7 +570,7 @@ export default {
 
     close(params) {
       if (this.scrollable) {
-        document.body.classList.remove('vm__block-scroll')
+        document.body.classList.remove('vm--block-scroll')
       }
 
       let cancelEvent = false
@@ -723,7 +720,7 @@ export default {
 </script>
 
 <style>
-.vm__block-scroll {
+.vm--block-scroll {
   overflow: hidden;
   width: 100vw;
 }
