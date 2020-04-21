@@ -299,6 +299,7 @@ There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 | draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. If string, a selector to use as a handle for dragging |
 | scrollable | false | Boolean         | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
 | reset     | false | Boolean          | false       | Resets position and size before showing modal |
+| focus-trap | false | Boolean         | false       | Enable focus trap (plugin uses naive implementation of the focus trap) |
 | clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
 | transition| false | String           |             | Transition name |
 | overlayTransition| false | String           | 'overlay-fade'| Transition name for the background overlay |
@@ -320,7 +321,7 @@ There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 | ---          | --- |
 | before-open  | Emits while modal is still invisible, but was added to the DOM |
 | opened       | Emits after modal became visible or started transition |
-| before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.stop()` (example: you are creating a text editor, and want to stop closing and ask the user to correct mistakes if the text is not valid)
+| before-close | Emits before modal is going to be closed. Can be stopped from the event listener calling `event.cancel()` (example: you are creating a text editor, and want to stop closing and ask the user to correct mistakes if the text is not valid)
 | closed       | Emits right before modal is destroyed |
 
 Example:
@@ -353,7 +354,7 @@ export default {
       console.log(event)
       // If modal was open less then 5000 ms - prevent closing it
       if (this.time + this.duration < Date.now()) {
-        event.stop()
+        event.cancel()
       }
     }
   }
@@ -396,7 +397,7 @@ export default {
       console.log(event)
       // If modal was open less then 5000 ms - prevent closing it
       if (this.time + this.duration < Date.now()) {
-        event.stop()
+        event.cancel()
       }
     }
   }
