@@ -26,6 +26,8 @@
             ref="modal"
             :class="modalClass"
             :style="modalStyle"
+            role="dialog"
+            aria-modal="true"
           >
             <slot/>
             <resizer
@@ -102,19 +104,19 @@ export default {
       default: 'v--modal'
     },
     styles: {
-      type: [String, Array, Object],
+      type: [String, Array, Object]
     },
     minWidth: {
       type: Number,
       default: 0,
-      validator (value) {
+      validator(value) {
         return value >= 0
       }
     },
     minHeight: {
       type: Number,
       default: 0,
-      validator (value) {
+      validator(value) {
         return value >= 0
       }
     },
@@ -134,21 +136,21 @@ export default {
     height: {
       type: [Number, String],
       default: 300,
-      validator (value) {
+      validator(value) {
         return value === 'auto' || validateNumber(value)
       }
     },
     pivotX: {
       type: Number,
       default: 0.5,
-      validator (value) {
+      validator(value) {
         return value >= 0 && value <= 1
       }
     },
     pivotY: {
       type: Number,
       default: 0.5,
-      validator (value) {
+      validator(value) {
         return value >= 0 && value <= 1
       }
     }
@@ -156,7 +158,7 @@ export default {
   components: {
     Resizer
   },
-  data () {
+  data() {
     return {
       visible: false,
 
@@ -184,13 +186,13 @@ export default {
       mutationObserver: null
     }
   },
-  created () {
+  created() {
     this.setInitialSize()
   },
   /**
    * Sets global listeners
    */
-  beforeMount () {
+  beforeMount() {
     Modal.event.$on('toggle', this.handleToggleEvent)
 
     window.addEventListener('resize', this.handleWindowResize)
@@ -230,8 +232,10 @@ export default {
           this.updateRenderedHeight()
         })
       } else {
-        console.warn('MutationObserver was not found. Vue-js-modal automatic resizing relies ' +
-          'heavily on MutationObserver. Please make sure to provide shim for it.')
+        console.warn(
+          'MutationObserver was not found. Vue-js-modal automatic resizing relies ' +
+            'heavily on MutationObserver. Please make sure to provide shim for it.'
+        )
       }
     }
 
@@ -242,7 +246,7 @@ export default {
   /**
    * Removes global listeners
    */
-  beforeDestroy () {
+  beforeDestroy() {
     Modal.event.$off('toggle', this.handleToggleEvent)
     window.removeEventListener('resize', this.handleWindowResize)
 
@@ -260,14 +264,14 @@ export default {
     /**
      * Returns true if height is set to "auto"
      */
-    isAutoHeight () {
+    isAutoHeight() {
       return this.modal.heightType === 'auto'
     },
     /**
      * Calculates and returns modal position based on the
      * pivots, window size and modal size
      */
-    position () {
+    position() {
       const {
         viewportHeight,
         viewportWidth,
@@ -293,18 +297,17 @@ export default {
      * Returns pixel width (if set with %) and makes sure that modal size
      * fits the window
      */
-    trueModalWidth () {
+    trueModalWidth() {
       const { viewportWidth, modal, adaptive, minWidth, maxWidth } = this
 
-      const value = modal.widthType === '%'
-        ? viewportWidth / 100 * modal.width
-        : modal.width
+      const value =
+        modal.widthType === '%'
+          ? (viewportWidth / 100) * modal.width
+          : modal.width
 
       const max = Math.max(minWidth, Math.min(viewportWidth, maxWidth))
 
-      return adaptive
-        ? inRange(minWidth, max, value)
-        : value
+      return adaptive ? inRange(minWidth, max, value) : value
     },
     /**
      * Returns pixel height (if set with %) and makes sure that modal size
@@ -312,12 +315,20 @@ export default {
      *
      * Returns modal.renderedHeight if height set as "auto"
      */
-    trueModalHeight () {
-      const { viewportHeight, modal, isAutoHeight, adaptive, minHeight, maxHeight } = this
+    trueModalHeight() {
+      const {
+        viewportHeight,
+        modal,
+        isAutoHeight,
+        adaptive,
+        minHeight,
+        maxHeight
+      } = this
 
-      const value = modal.heightType === '%'
-        ? viewportHeight / 100 * modal.height
-        : modal.height
+      const value =
+        modal.heightType === '%'
+          ? (viewportHeight / 100) * modal.height
+          : modal.height
 
       if (isAutoHeight) {
         // use renderedHeight when height 'auto'
@@ -326,14 +337,12 @@ export default {
 
       const max = Math.max(minHeight, Math.min(viewportHeight, maxHeight))
 
-      return adaptive
-        ? inRange(minHeight, max, value)
-        : value
+      return adaptive ? inRange(minHeight, max, value) : value
     },
     /**
      * Returns class list for screen overlay (modal background)
      */
-    overlayClass () {
+    overlayClass() {
       return {
         'v--modal-overlay': true,
         scrollable: this.scrollable && this.isAutoHeight
@@ -342,10 +351,10 @@ export default {
     /**
      * Returns class list for modal itself
      */
-    modalClass () {
+    modalClass() {
       return ['v--modal-box', this.classes]
     },
-    stylesProp () {
+    stylesProp() {
       return typeof this.styles === 'string'
         ? stringStylesToObject(this.styles)
         : this.styles
@@ -353,13 +362,16 @@ export default {
     /**
      * CSS styles for position and size of the modal
      */
-    modalStyle () {
-      return [this.stylesProp, {
-        top: this.position.top + 'px',
-        left: this.position.left + 'px',
-        width: this.trueModalWidth + 'px',
-        height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
-      }, ]
+    modalStyle() {
+      return [
+        this.stylesProp,
+        {
+          top: this.position.top + 'px',
+          left: this.position.left + 'px',
+          width: this.trueModalWidth + 'px',
+          height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
+        }
+      ]
     }
   },
   watch: {
@@ -369,7 +381,7 @@ export default {
      * inside `setTimeout` and `$nextTick`, after the DOM changes.
      * This fixes `$refs.modal` `undefined` bug (fixes #15)
      */
-    visible (value) {
+    visible(value) {
       // console.log('Activating visible watcher, value: ', value)
 
       if (value) {
@@ -397,11 +409,9 @@ export default {
   },
 
   methods: {
-    handleToggleEvent (name, state, params) {
+    handleToggleEvent(name, state, params) {
       if (this.name === name) {
-        const nextState = typeof state === 'undefined'
-          ? !this.visible
-          : state
+        const nextState = typeof state === 'undefined' ? !this.visible : state
 
         this.toggle(nextState, params)
       }
@@ -411,7 +421,7 @@ export default {
      * if "reset" flag is set to true - this function will be called
      * every time "beforeOpen" is triggered
      */
-    setInitialSize () {
+    setInitialSize() {
       const { modal } = this
       const width = parseNumber(this.width)
       const height = parseNumber(this.height)
@@ -422,13 +432,13 @@ export default {
       modal.heightType = height.type
     },
 
-    handleEscapeKeyUp (event) {
+    handleEscapeKeyUp(event) {
       if (event.which === 27 && this.visible) {
         this.$modal.hide(this.name)
       }
     },
 
-    handleWindowResize () {
+    handleWindowResize() {
       this.viewportWidth = windowWidthWithoutScrollbar()
       this.viewportHeight = window.innerHeight
 
@@ -437,7 +447,7 @@ export default {
     /**
      * Generates event object
      */
-    createModalEvent (args = {}) {
+    createModalEvent(args = {}) {
       return createModalEvent({
         name: this.name,
         ref: this.$refs.modal,
@@ -447,7 +457,7 @@ export default {
     /**
      * Event handler which is triggered on modal resize
      */
-    handleModalResize (event) {
+    handleModalResize(event) {
       this.modal.widthType = 'px'
       this.modal.width = event.size.width
 
@@ -456,26 +466,21 @@ export default {
 
       const { size } = this.modal
 
-      this.$emit(
-        'resize',
-        this.createModalEvent({ size })
-      )
+      this.$emit('resize', this.createModalEvent({ size }))
     },
     /**
      * Event handler which is triggered on $modal.show and $modal.hide
      * BeforeEvents: ('before-close' and 'before-open') are `$emit`ed here,
      * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
      */
-    toggle (nextState, params) {
+    toggle(nextState, params) {
       const { reset, scrollable, visible } = this
 
       if (visible === nextState) {
         return
       }
 
-      const beforeEventName = visible
-        ? 'before-close'
-        : 'before-open'
+      const beforeEventName = visible ? 'before-close' : 'before-open'
 
       if (beforeEventName === 'before-open') {
         /**
@@ -519,20 +524,17 @@ export default {
       }
     },
 
-    getDraggableElement () {
-      const selector = typeof this.draggable !== 'string'
-        ? '.v--modal-box'
-        : this.draggable
+    getDraggableElement() {
+      const selector =
+        typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable
 
-      return selector
-        ? this.$refs.overlay.querySelector(selector)
-        : null
+      return selector ? this.$refs.overlay.querySelector(selector) : null
     },
 
     /**
      * Event handler that is triggered when background overlay is clicked
      */
-    handleBackgroundClick () {
+    handleBackgroundClick() {
       if (this.clickToClose) {
         this.toggle(false)
       }
@@ -545,7 +547,7 @@ export default {
      * wrapping afterEvents in `$nextTick` fixes `$refs.modal` undefined bug.
      * (fixes #15)
      */
-    callAfterEvent (state) {
+    callAfterEvent(state) {
       if (state) {
         this.connectObserver()
       } else {
@@ -556,7 +558,7 @@ export default {
       this.$emit(eventName, event)
     },
 
-    addDraggableListeners () {
+    addDraggableListeners() {
       if (!this.draggable) {
         return
       }
@@ -578,8 +580,12 @@ export default {
         const handleDraggableMousedown = event => {
           let target = event.target
 
-          if (target &&
-              (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA' || target.nodeName === 'SELECT')) {
+          if (
+            target &&
+            (target.nodeName === 'INPUT' ||
+              target.nodeName === 'TEXTAREA' ||
+              target.nodeName === 'SELECT')
+          ) {
             return
           }
 
@@ -624,7 +630,7 @@ export default {
       }
     },
 
-    removeDraggableListeners () {
+    removeDraggableListeners() {
       /**
        * Ideally this is not needed because "dragger" will be unmounted anyway.
        */
@@ -635,7 +641,7 @@ export default {
      * 1. modal opened
      * 2. MutationObserver's observe callback
      */
-    updateRenderedHeight () {
+    updateRenderedHeight() {
       if (this.$refs.modal) {
         this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height
       }
@@ -644,7 +650,7 @@ export default {
      * Start observing modal's DOM, if childList or subtree changes,
      * the callback (registered in beforeMount) will be called.
      */
-    connectObserver () {
+    connectObserver() {
       if (this.mutationObserver) {
         this.mutationObserver.observe(this.$refs.overlay, {
           childList: true,
@@ -656,25 +662,25 @@ export default {
     /**
      * Disconnects MutationObserver
      */
-    disconnectObserver () {
+    disconnectObserver() {
       if (this.mutationObserver) {
         this.mutationObserver.disconnect()
       }
     },
 
-    beforeTransitionEnter () {
+    beforeTransitionEnter() {
       this.connectObserver()
     },
 
-    afterTransitionEnter () {
+    afterTransitionEnter() {
       // console.log('after transition enter')
     },
 
-    afterTransitionLeave () {
+    afterTransitionLeave() {
       // console.log('after transition leave')
     },
 
-    ensureShiftInWindowBounds () {
+    ensureShiftInWindowBounds() {
       const {
         viewportHeight,
         viewportWidth,
