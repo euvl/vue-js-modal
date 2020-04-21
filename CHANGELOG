@@ -7,3 +7,5 @@ modal transition weird stuff was happening)
 * Removed `v--modal-background-click` element
 * Fixed dialogs not working when componentName is changed
 * Started using prettier
+* Added naive implementation of focus trap
+* Building sourcemaps
