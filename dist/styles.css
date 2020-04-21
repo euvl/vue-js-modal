@@ -28,7 +28,7 @@
 }
 
 
-.vm__block-scroll {
+.vm--block-scroll {
   overflow: hidden;
   width: 100vw;
 }

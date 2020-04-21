@@ -1,5 +1,5 @@
 <template>
-<modal name="demo-login" transition="pop-out" :width="modalWidth" :height="400">
+<modal name="demo-login" transition="pop-out" :width="modalWidth" :focus-trap="true" :height="400">
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
@@ -8,7 +8,7 @@
           <form autocomplete="false">
 
             <div class="autocomplete-fix">
-              <input type="password">
+              <input disabled type="password">
             </div>
 
             <input id="n-email" type="text" placeholder="Email">
@@ -137,7 +137,6 @@ $facebook_color: #3880ff;
     padding: 4px 8px;
     font-family: inherit;
     transition: 0.5s all;
-    outline: none;
   }
 
   button {
@@ -156,7 +155,6 @@ $facebook_color: #3880ff;
     text-transform: uppercase;
     transition: 0.1s all;
     font-size: 10px;
-    outline: none;
     &:hover {
       border-color: mix(#dddedf, black, 90%);
       color: mix(#8b8c8d, black, 80%);

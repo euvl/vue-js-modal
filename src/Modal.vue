@@ -65,7 +65,8 @@ import {
 } from './utils'
 import ModalEvent from './ModalEvent'
 import { parseNumber, validateNumber } from './parser'
-import ResizeObserver from './ResizeObserver'
+import ResizeObserver from './utils/resizeObserver'
+import FocusTrap from './utils/focusTrap'
 
 const defaultTransition = 'vm-transition--default'
 
@@ -96,6 +97,10 @@ export default {
       default: false
     },
     scrollable: {
+      type: Boolean,
+      default: false
+    },
+    focusTrap: {
       type: Boolean,
       default: false
     },
@@ -236,6 +241,8 @@ export default {
         this.modal.renderedHeight = entry.contentRect.height
       }
     })
+
+    this.$focusTrap = new FocusTrap()
   },
   /**
    * Removes global listeners
@@ -251,9 +258,7 @@ export default {
     /**
      * Removes blocked scroll
      */
-    if (this.scrollable) {
-      document.body.classList.remove('vm--block-scroll')
-    }
+    document.body.classList.remove('vm--block-scroll')
   },
   computed: {
     /**
@@ -443,7 +448,14 @@ export default {
     afterModalTransitionEnter() {
       /* Setup resize ovserver */
       this.modalTransitionState = TransitionState.Enter
-      this.addDraggableListeners()
+
+      if (this.draggable) {
+        this.addDraggableListeners()
+      }
+
+      if (this.focusTrap) {
+        this.$focusTrap.enable(this.$refs.modal)
+      }
 
       const event = this.createModalEvent({
         state: 'opened'
@@ -455,6 +467,10 @@ export default {
     beforeModalTransitionLeave() {
       this.modalTransitionState = TransitionState.Leaving
       this.resizeObserver.unobserve(this.$refs.modal)
+
+      if (this.$focusTrap.enabled()) {
+        this.$focusTrap.disable()
+      }
     },
 
     afterModalTransitionLeave() {
@@ -480,14 +496,13 @@ export default {
      * every time "beforeOpen" is triggered
      */
     setInitialSize() {
-      const { modal } = this
       const width = parseNumber(this.width)
       const height = parseNumber(this.height)
 
-      modal.width = width.value
-      modal.widthType = width.type
-      modal.height = height.value
-      modal.heightType = height.type
+      this.modal.width = width.value
+      this.modal.widthType = width.type
+      this.modal.height = height.value
+      this.modal.heightType = height.type
     },
 
     onEscapeKeyUp(event) {
@@ -636,10 +651,6 @@ export default {
     },
 
     addDraggableListeners() {
-      if (!this.draggable) {
-        return
-      }
-
       const dragger = this.getDraggableElement()
 
       if (dragger) {
