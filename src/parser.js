@@ -19,7 +19,7 @@ const types = [
   }
 ]
 
-var getType = value => {
+const getType = value => {
   if (value === 'auto') {
     return {
       type: value,
@@ -27,14 +27,12 @@ var getType = value => {
     }
   }
 
-  for (var i = 0; i < types.length; i++) {
-    const type = types[i]
+  const type = types.find(type => type.regexp.test(value))
 
-    if (type.regexp.test(value)) {
-      return {
-        type: type.name,
-        value: parseFloat(value)
-      }
+  if (type) {
+    return {
+      type: type.name,
+      value: parseFloat(value)
     }
   }
 
@@ -55,7 +53,7 @@ export const parseNumber = value => {
   }
 }
 
-export const validateNumber = (value) => {
+export const validateNumber = value => {
   if (typeof value === 'string') {
     let _value = parseNumber(value)
     return (_value.type === '%' || _value.type === 'px') && _value.value > 0

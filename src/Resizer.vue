@@ -2,7 +2,7 @@
   <div :class="className"></div>
 </template>
 <script>
-import { inRange } from './utils'
+import { inRange, windowWidthWithoutScrollbar } from './utils'
 
 export default {
   name: 'VueJsModalResizer',
@@ -69,7 +69,7 @@ export default {
         var width = event.clientX - el.offsetLeft
         var height = event.clientY - el.offsetTop
 
-        const maxWidth = Math.min(window.innerWidth, this.maxWidth)
+        const maxWidth = Math.min(windowWidthWithoutScrollbar(), this.maxWidth)
         const maxHeight = Math.min(window.innerHeight, this.maxHeight)
 
         width = inRange(this.minWidth, maxWidth, width)

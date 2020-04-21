@@ -5,7 +5,8 @@
       :min-width="200"
       :min-height="200"
       :delay="100"
-      :resizable="true">
+      :resizable="true"
+      styles="color: red">
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique growth strategies. Assertively build leveraged growth strategies vis-a-vis multimedia based vortals. Progressively simplify cross-platform value through interactive imperatives. Objectively
       implement enabled web services after plug-and-play ROI. Distinctively impact inexpensive schemas before installed base imperatives. Holisticly benchmark pandemic process improvements without wireless experiences. Efficiently create worldwide partnerships
