@@ -291,7 +291,7 @@ export default {
       } = this
 
       const maxLeft = viewportWidth - trueModalWidth
-      const maxTop = viewportHeight - trueModalHeight
+      const maxTop = Math.max(viewportHeight - trueModalHeight, 0)
 
       const left = shiftLeft + pivotX * maxLeft
       const top = shiftTop + pivotY * maxTop
@@ -709,7 +709,7 @@ export default {
       } = this
 
       const maxLeft = viewportWidth - trueModalWidth
-      const maxTop = viewportHeight - trueModalHeight
+      const maxTop = Math.max(viewportHeight - trueModalHeight, 0)
 
       const left = shiftLeft + pivotX * maxLeft
       const top = shiftTop + pivotY * maxTop
