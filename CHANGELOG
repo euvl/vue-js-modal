@@ -8,4 +8,4 @@ modal transition weird stuff was happening)
 * Fixed dialogs not working when componentName is changed
 * Started using prettier
 * Added naive implementation of focus trap
-* Building sourcemaps
+* Building source-maps
