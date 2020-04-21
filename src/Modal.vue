@@ -36,6 +36,8 @@
         :aria-expanded="visibility.modal.toString()"
         :class="modalClass"
         :style="modalStyle"
+        role=“dialog”
+        aria-modal=“true”
       >
         <slot/>
         <resizer
