@@ -282,8 +282,6 @@ import VModal from 'vue-js-modal/dist/ssr.index'
 Vue.use(VModal)
 ```
 
-For full demo please look at `demo/server_side_rendering`
-
 ### Extracted CSS
 
 There is also an SSR build with CSS file extracted. Take a look in /dist folder.
