@@ -79,7 +79,7 @@ this.$modal.show('hello-world', { foo: 'bar' })
 And receive it in `beforeOpen` event handler:
 
 ```vue
-<modal name="hello-world" @before-open="beforeOpen"/>
+<modal name="hello-world" @before-open="beforeOpen" />
 ```
 ```javascript
 methods: {
@@ -99,7 +99,7 @@ Vue.use(window["vue-js-modal"].default);
 
 It is a simplified version of the modal, which has most parameters set by default and is pretty useful for quick prototyping, showing alerts or creating mobile-like modals.
 
-To start using `<v-dialog/>` you must set `dialog: true` in plugin configuration:
+To start using `<v-dialog />` you must set `dialog: true` in plugin configuration:
 
 ```js
 Vue.use(VModal, { dialog: true })
@@ -108,7 +108,7 @@ Vue.use(VModal, { dialog: true })
 And include it in your project:
 
 ```vue
-<v-dialog/>
+<v-dialog />
 ```
 
 Call it (all params except of “text” are optional):
@@ -148,10 +148,10 @@ To start using this feature you must set `dynamic: true` in plugin configuration
 Vue.use(VModal, { dynamic: true, dynamicDefaults: { clickToClose: false } })
 ```
 
-And include the `<modals-container/>` component it in your project:
+And include the `<modals-container />` component it in your project:
 
 ```vue
-<modals-container/>
+<modals-container />
 ```
 
 Alternatively, the modals container can be automatically appended to the document body once the plugin is loaded using `injectModalsContainer: true`:
