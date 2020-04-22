@@ -1,7 +1,7 @@
 {
   "name": "vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "1.3.35",
+  "version": "2.0.0-rc1",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "main": "dist/index.js",
   "publishConfig": {
@@ -34,7 +34,9 @@
     "test": "jest",
     "build": "npm run build:client && npm run build:ssr && npm run build:ssr-no-css",
     "watch": "webpack --config ./build/webpack.client.config.js --progress --hide-modules --watch",
-    "test:types": "tsc -p types/test"
+    "test:types": "tsc -p types/test",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "license": "MIT",
   "devDependencies": {
@@ -52,7 +54,7 @@
     "jest": "^23.6.0",
     "jest-serializer-vue": "^2.0.2",
     "mini-css-extract-plugin": "^0.4.5",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.13.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "sass-loader": "^7.1.0",
     "ts-loader": "^6.2.2",
@@ -72,5 +74,7 @@
     "vue": "^2.2.6"
   },
   "browserslist": "> 0.25%, not dead",
-  "dependencies": {}
+  "dependencies": {
+    "resize-observer-polyfill": "^1.5.1"
+  }
 }

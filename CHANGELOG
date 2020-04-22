@@ -1,0 +1,12 @@
+* Using ResizeObserver instead of MutationObserver
+* Delay property is deprecated - component is relying on modal & overlay transition durations instead
+* Using transition states to coordinate modal & overlay transitions (previously if overlay transition was longer than
+modal transition weird stuff was happening)
+* Renamed Event.stop => Event.cancel
+* Overlay is not a parent of the modal anymore
+* Removed `v--modal-background-click` element
+* Fixed dialogs not working when componentName is changed
+* Started using prettier
+* Added naive implementation of focus trap
+* Building source-maps
+* ActiveElement is blurred after before-open is fired - not it is possible to cache document.activeElement

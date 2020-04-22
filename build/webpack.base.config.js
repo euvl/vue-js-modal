@@ -6,6 +6,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
   mode: 'production',
   entry: path.resolve(__dirname, '../src/index.js'),
+  devtool: 'source-map',
   output: {
     library: 'vue-js-modal',
     libraryTarget: 'umd',
@@ -19,7 +20,8 @@ module.exports = {
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
-        parallel: true
+        parallel: true,
+        sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({
         canPrint: true

@@ -10,7 +10,7 @@ const types = [
     regexp: new RegExp(`^${floatRegexp}%$`)
   },
   /**
-   * Fallback optopn
+   * Fallback option
    * If no suffix specified, assigning "px"
    */
   {

@@ -29,25 +29,18 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ['vue-style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-        ]
+        use: ['vue-style-loader', 'css-loader']
       }
     ]
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      'plugin': path.resolve(__dirname, '../../dist/index.js')
+      vue$: 'vue/dist/vue.esm.js',
+      plugin: path.resolve(__dirname, '../dist/index.js')
     }
   },
   devServer: {
@@ -55,9 +48,7 @@ module.exports = {
     noInfo: true
   },
   devtool: '#eval-source-map',
-  plugins: [
-    new VueLoaderPlugin()
-  ]
+  plugins: [new VueLoaderPlugin()]
 }
 /*
 if (process.env.NODE_ENV === 'production') {

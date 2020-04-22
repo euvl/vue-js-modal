@@ -1,7 +1,6 @@
 <template>
     <modal 
       name="example-resizable"
-      transition="nice-modal-fade"
       :min-width="200"
       :min-height="200"
       :delay="100"
@@ -20,4 +19,3 @@ export default {
   name: 'Modal_Resizable'
 }
 </script>
-

@@ -33,7 +33,7 @@ export const getModalsContainer = (Vue, options, root) => {
 }
 
 const Plugin = {
-  install (Vue, options = {}) {
+  install(Vue, options = {}) {
     /**
      * Makes sure that plugin can be installed only once
      */
@@ -72,26 +72,36 @@ const Plugin = {
     }
 
     Vue.prototype.$modal = {
-      show (modal, ...args) {
+      get context() {
+        return {
+          componentName
+        }
+      },
+
+      show(modal, ...args) {
         switch (typeof modal) {
           case 'string': {
             return showStaticModal(modal, ...args)
           }
+
           case 'object':
           case 'function': {
             return options.dynamic
               ? showDynamicModal(modal, ...args)
               : console.warn(DYNAMIC_MODAL_DISABLED_ERROR)
           }
+
           default: {
             console.warn(UNSUPPORTED_ARGUMENT_ERROR, modal)
           }
         }
       },
-      hide (name, params) {
+
+      hide(name, params) {
         Plugin.event.$emit('toggle', name, false, params)
       },
-      toggle (name, params) {
+
+      toggle(name, params) {
         Plugin.event.$emit('toggle', name, undefined, params)
       }
     }
@@ -110,8 +120,9 @@ const Plugin = {
      */
     if (options.dynamic) {
       Vue.component('ModalsContainer', ModalsContainer)
+
       Vue.mixin({
-        beforeMount () {
+        beforeMount() {
           if (Plugin.rootInstance === null) {
             Plugin.rootInstance = this.$root
           }
