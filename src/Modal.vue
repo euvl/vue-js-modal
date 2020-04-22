@@ -46,7 +46,7 @@
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
-          @resize="handleModalResize"
+          @resize="onModalResize"
         />
       </div>
     </transition>
@@ -530,7 +530,7 @@ export default {
     /**
      * Event handler which is triggered on modal resize
      */
-    handleModalResize(event) {
+    onModalResize(event) {
       this.modal.widthType = 'px'
       this.modal.width = event.size.width
 
@@ -575,7 +575,6 @@ export default {
 
         return
       }
-
       /**
        * Need to unfocus previously focused element, otherwise
        * all keypress events (ESC press, for example) will trigger on that element.
@@ -614,11 +613,7 @@ export default {
 
       this.startTransitionLeave()
     },
-    /**
-     * Event handler which is triggered on $modal.show and $modal.hide
-     * BeforeEvents: ('before-close' and 'before-open') are `$emit`ed here,
-     * but AfterEvents ('opened' and 'closed') are moved to `watch.visible`.
-     */
+
     toggle(isOpening, params) {
       const { visible } = this
 

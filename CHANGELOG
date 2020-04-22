@@ -1,3 +1,5 @@
+v 2.0.0
+
 * Using ResizeObserver instead of MutationObserver
 * Delay property is deprecated - component is relying on modal & overlay transition durations instead
 * Using transition states to coordinate modal & overlay transitions (previously if overlay transition was longer than
