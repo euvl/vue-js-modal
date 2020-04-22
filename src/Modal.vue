@@ -543,12 +543,6 @@ export default {
     },
 
     open(params) {
-      /**
-       * Need to unfocus previously focused element, otherwise
-       * all keypress events (ESC press, for example) will trigger on that element.
-       */
-      blurActiveElement()
-
       if (this.reset) {
         this.setInitialSize()
 
@@ -575,8 +569,18 @@ export default {
       this.$emit('before-open', event)
 
       if (cancelEvent) {
+        if (this.scrollable) {
+          document.body.classList.remove('vm--block-scroll')
+        }
+
         return
       }
+
+      /**
+       * Need to unfocus previously focused element, otherwise
+       * all keypress events (ESC press, for example) will trigger on that element.
+       */
+      blurActiveElement()
 
       this.visible = true
       /* Making sure that entering tranition uses "enter" sequance instead of "appear" */
