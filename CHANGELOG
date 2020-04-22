@@ -9,3 +9,4 @@ modal transition weird stuff was happening)
 * Started using prettier
 * Added naive implementation of focus trap
 * Building source-maps
+* ActiveElement is blurred after before-open is fired - not it is possible to cache document.activeElement
