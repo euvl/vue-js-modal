@@ -483,12 +483,6 @@ export default {
       const beforeEventName = visible ? 'before-close' : 'before-open'
 
       if (beforeEventName === 'before-open') {
-        /**
-         * Need to unfocus previously focused element, otherwise
-         * all keypress events (ESC press, for example) will trigger on that element.
-         */
-        blurActiveElement()
-
         if (reset) {
           this.setInitialSize()
 
@@ -521,6 +515,14 @@ export default {
 
       if (!stopEventExecution) {
         this.visible = nextState
+
+        if (beforeEventName === 'before-open') {
+          /**
+           * Need to unfocus previously focused element, otherwise
+           * all keypress events (ESC press, for example) will trigger on that element.
+           */
+          blurActiveElement()
+        }
       }
     },
 
