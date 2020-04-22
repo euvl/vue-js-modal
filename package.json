@@ -34,7 +34,9 @@
     "test": "jest",
     "build": "npm run build:client && npm run build:ssr && npm run build:ssr-no-css",
     "watch": "webpack --config ./build/webpack.client.config.js --progress --hide-modules --watch",
-    "test:types": "tsc -p types/test"
+    "test:types": "tsc -p types/test",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "license": "MIT",
   "devDependencies": {
