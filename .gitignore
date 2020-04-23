@@ -3,5 +3,5 @@
 node_modules/
 npm-debug.log
 *.map
-
+docs/.vuepress/dist
 .idea/
