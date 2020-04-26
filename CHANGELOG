@@ -12,3 +12,4 @@ modal transition weird stuff was happening)
 * Added naive implementation of focus trap
 * Building source-maps
 * ActiveElement is blurred after before-open is fired - not it is possible to cache document.activeElement
+* Setting "classes" prop does not remove .v--modal

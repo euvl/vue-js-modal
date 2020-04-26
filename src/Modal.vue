@@ -122,7 +122,7 @@ export default {
     },
     classes: {
       type: [String, Array],
-      default: 'v--modal'
+      default: () => []
     },
     styles: {
       type: [String, Array, Object]
@@ -371,7 +371,7 @@ export default {
      * Returns class list for modal itself
      */
     modalClass() {
-      return ['vm--modal-box', this.classes]
+      return ['vm--modal-box', 'v--modal', this.classes]
     },
 
     stylesProp() {
@@ -783,14 +783,6 @@ export default {
   box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);
   padding: 0;
 }
-
-/* .v--modal.v--modal-fullscreen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  left: 0;
-  top: 0;
-} */
 
 .vm--top-right-slot {
   display: block;
