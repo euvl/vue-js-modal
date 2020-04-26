@@ -13,7 +13,7 @@ Version 2.0.0+ potentially has breaking changes. Please take a look at the chang
 * Using ResizeObserver instead of MutationObserver
 * Using transition states to coordinate modal & overlay transitions (instead of delays)
 * Using prettier
-* Overlay is not a parent of the modal anymore (now has independant transition)
+* Overlay is not a parent of the modal anymore (now has independent transition)
 * Renamed **Event.stop => Event.cancel**
 * Removed `v--modal-background-click` element
 * Removed `v--modal` default class
