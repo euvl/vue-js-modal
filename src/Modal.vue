@@ -15,8 +15,7 @@
         class="vm--overlay"
         :data-modal="name"
         :aria-expanded="visibility.overlay.toString()"
-        @mousedown.self="onOverlayClick"
-        @touchstart.self="onOverlayClick"
+        @click.self.stop="onOverlayClick"
       >
         <div class="vm--top-right-slot">
           <slot name="top-right"/>
