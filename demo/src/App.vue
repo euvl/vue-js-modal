@@ -206,52 +206,68 @@ export default {
       this.$modal.show(
         {
           template: `
-          <div class="example-modal-content">
-            <h1>This is created inline</h1>
-            <p>{{ text }}</p>
-            <p>Default Property: {{ foo }}</p>
-          </div>
-        `,
-          props: ['text', 'foo']
+              <div class="example-modal-content">
+                <h1>This is created inline</h1>
+                <p>{{ text }}</p>
+                <p>Default Property: {{ foo }}</p>
+              </div>
+            `,
+          props: ['text', 'height']
         },
         {
-          text: 'This text is passed as a property'
+          text: 'This text is passed as a property',
+          height: 'auto'
         }
       )
     },
 
     showDynamicComponentModal() {
+      console.log('Showing one more')
       this.$modal.show(DemoCustomComponent, {
         text: 'This text is passed as a property'
       })
     },
 
     showDynamicComponentModalWithModalParams() {
-      this.$modal.show(
-        {
-          template: `
-          <div class="example-modal-content">
-            <button class="btn" @click="closeByName">Close this using name</button>
-            <button class="btn" @click="closeByEvent">Close this using events</button>
-          </div>
-        `,
-          methods: {
-            closeByName() {
-              this.$modal.hide('dynamic-modal')
-            },
-            closeByEvent() {
-              this.$emit('close')
-            }
-          }
-        },
-        null,
-        {
-          name: 'dynamic-modal',
-          resizable: true,
-          adaptive: true,
-          draggable: true
+      let counter = 0
+
+      const interval = setInterval(() => {
+        if (counter === 5) {
+          clearInterval(interval)
+        } else {
+          counter++
         }
-      )
+
+        const name = `dynamic-modal-${Date.now()}`
+
+        this.$modal.show(
+          {
+            template: `
+              <div class="example-modal-content">
+                <button class="btn" @click="closeByName">Close this using name</button>
+                <button class="btn" @click="closeByEvent">Close this using events</button>
+                <button class="btn" @click="this.$modal.hideAll">Close all dynamic modals</button>
+            </div>
+            `,
+            methods: {
+              closeByName() {
+                this.$modal.hide(name)
+              },
+              closeByEvent() {
+                this.$emit('close')
+              }
+            }
+          },
+          null,
+          {
+            height: 'auto',
+            name: name,
+            resizable: true,
+            adaptive: true,
+            draggable: true
+          }
+        )
+      }, 2000)
     },
 
     dialogEvent(eventName) {

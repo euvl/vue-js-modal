@@ -1,5 +1,6 @@
 <template>
-  <component :is="$modal.context.componentName"
+  <component 
+    :is="$modal.context.componentName"
     name="dialog"
     height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
@@ -11,21 +12,21 @@
     @before-open="beforeOpened"
     @before-close="beforeClosed"
     @opened="$emit('opened', $event)"
-    @closed="$emit('closed', $event)">
+    @closed="$emit('closed', $event)"
+  >
     <div class="dialog-content">
       <div
         class="dialog-c-title"
         v-if="params.title"
-        v-html="params.title || ''"></div>
+        v-html="params.title || ''" />
       <component
         v-if="params.component"
         v-bind="params.props"
-        :is="params.component">
-      </component>
+        :is="params.component" />
       <div
         class="dialog-c-text"
         v-else
-        v-html="params.text || ''"></div>
+        v-html="params.text || ''" />
     </div>
     <div
       class="vue-dialog-buttons"
@@ -37,11 +38,12 @@
         :style="buttonStyle"
         :key="i"
         v-html="button.title"
-        @click.stop="click(i, $event)">
+        @click.stop="click(i, $event)"
+      >
         {{button.title}}
       </button>
     </div>
-    <div v-else class="vue-dialog-buttons-none"></div>
+    <div v-else class="vue-dialog-buttons-none" />
   </component>
 </template>
 <script>

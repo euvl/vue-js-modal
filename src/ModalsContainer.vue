@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import Modal from './index'
 import { generateId } from './utils'
 
 const PREFIX = '_dynamic_modal_'
@@ -29,6 +30,11 @@ export default {
   },
   created() {
     this.$root._dynamicContainer = this
+  },
+  mounted() {
+    Modal.event.$on('hide-all', () => {
+      this.modals = []
+    })
   },
   methods: {
     add(component, componentAttrs = {}, modalAttrs = {}, modalListeners = {}) {

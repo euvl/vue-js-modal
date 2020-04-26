@@ -19,6 +19,10 @@ const UNSUPPORTED_ARGUMENT_ERROR =
   '[vue-js-modal] ' +
   '$modal() received an unsupported argument as a first argument.'
 
+const HIDE_ALL_RESTRICTION_ERROR =
+  '[vue-js-modal] ' +
+  '$modal.hideAll() call will be ignored because dynamic modals are not enabled.'
+
 export const getModalsContainer = (Vue, options, root) => {
   if (!root._dynamicContainer && options.injectModalsContainer) {
     const container = createDivInBody()
@@ -99,6 +103,14 @@ const Plugin = {
 
       hide(name, params) {
         Plugin.event.$emit('toggle', name, false, params)
+      },
+
+      hideAll() {
+        if (options.dynamic) {
+          Plugin.event.$emit('hide-all')
+        } else {
+          console.warn(HIDE_ALL_RESTRICTION_ERROR)
+        }
       },
 
       toggle(name, params) {
