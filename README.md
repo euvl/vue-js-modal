@@ -14,15 +14,15 @@ Version 2.0.0+ potentially has breaking changes. Please take a look at the chang
 * Using transition states to coordinate modal & overlay transitions (instead of delays)
 * Using prettier
 * Overlay is not a parent of the modal anymore (now has independent transition)
-* Renamed **Event.stop => Event.cancel**
-* Removed `v--modal-background-click` element
-* Removed `v--modal` default class
+* **Renamed** `Event.stop` => `Event.cancel`
+* **Removed** `v--modal-background-click` element
+* **Removed** `v--modal` default class
 * **Removed "delay" property** - component is relying on modal & overlay transition durations
-* Added naive implementation of **focus trap**
+* Added naive implementation of focus trap
 * Added source-maps
 * Added `hideAll` for dynamic modals
-* Fix: dialogs not working when componentName is changed
-* Fix: ActiveElement is blurred after before-open is fired - not it is possible to cache document.activeElement
+* Fix: dialogs not working when `componentName` is changed
+* Fix: `ActiveElement` is blurred after `before-open` event is fired (it is possible to cache document.activeElement now)
 
 <p align="right">
   <a href="https://www.buymeacoffee.com/yev" target="_blank">
