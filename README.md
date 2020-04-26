@@ -6,7 +6,7 @@
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 [![npm](https://img.shields.io/npm/dt/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 
-# ⚠️⚠️⚠️ v2.0.0 Changelog:
+# ⚠️⚠️⚠️ 2.0.0-rc.3 Changelog:
 
 
 * Using ResizeObserver instead of MutationObserver
