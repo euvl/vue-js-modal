@@ -361,10 +361,11 @@ button.btn {
 }
 
 .example-modal-content {
-  height: 100%;
+  //  height: 100%;
   box-sizing: border-box;
   padding: 10px;
   font-size: 13px;
+  line-height: 1.5;
   overflow: auto;
 }
 

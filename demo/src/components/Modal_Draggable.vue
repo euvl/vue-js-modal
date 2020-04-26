@@ -3,7 +3,6 @@
       name="example-draggable"
       :min-width="200"
       :min-height="200"
-      :delay="100"
       :draggable="true">
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique growth strategies. Assertively build leveraged growth strategies vis-a-vis multimedia based vortals. Progressively simplify cross-platform value through interactive imperatives. Objectively

@@ -11,7 +11,7 @@
       class="ct-top-right"
       @click="$modal.hide('dog-profile')"
     >
-      HIDE THE DOGGY
+      Slot for close button
     </div>
     <img src="/static/cute_dog.gif" />
   </modal>
@@ -36,11 +36,13 @@ export default {
 
 .ct-top-right {
   cursor: pointer;
-  padding-top: 20px;
-  padding-right: 30px;
+  margin: 20px;
+  padding: 10px 20px;
   font-weight: 600;
   color: white;
   text-shadow: 0 0px 20px black;
+  background: #555;
+  border-radius: 100px;
 }
 
 .scale-enter-active,
