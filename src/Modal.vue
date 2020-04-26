@@ -182,8 +182,6 @@ export default {
     return {
       visible: false,
 
-      // isVisibilityChanging: false,
-
       visibility: {
         modal: false,
         overlay: false

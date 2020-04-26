@@ -1,7 +1,8 @@
 <template>
-    <modal 
-      name="example-adaptive"
-      :adaptive="true">
+  <modal 
+    name="example-adaptive"
+    :adaptive="true"
+  >
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique growth strategies. Assertively build leveraged growth strategies vis-a-vis multimedia based vortals. Progressively simplify cross-platform value through interactive imperatives. Objectively
       implement enabled web services after plug-and-play ROI. Distinctively impact inexpensive schemas before installed base imperatives. Holisticly benchmark pandemic process improvements without wireless experiences. Efficiently create worldwide partnerships
