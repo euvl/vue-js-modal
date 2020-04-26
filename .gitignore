@@ -1,7 +1,8 @@
 .vscode
 .DS_Store
+.idea/
+*.map
 node_modules/
 npm-debug.log
-*.map
+demo/dist/*
 docs/.vuepress/dist
-.idea/
