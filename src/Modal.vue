@@ -36,8 +36,8 @@
         :aria-expanded="visibility.modal.toString()"
         :class="modalClass"
         :style="modalStyle"
-        role=“dialog”
-        aria-modal=“true”
+        role="dialog"
+        aria-modal="true"
       >
         <slot/>
         <resizer
@@ -371,7 +371,7 @@ export default {
      * Returns class list for modal itself
      */
     modalClass() {
-      return ['vm--modal-box', 'v--modal', this.classes]
+      return ['vm--modal', this.classes]
     },
 
     stylesProp() {
@@ -766,22 +766,18 @@ export default {
   -webkit-overflow-scrolling: touch;
 }
 
-.vm--modal-box {
+.vm--modal {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-}
 
-.vm--container.scrollable .vm--modal-box {
-  margin-bottom: 2px;
-}
-
-.v--modal {
   background-color: white;
-  text-align: left;
   border-radius: 3px;
   box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);
-  padding: 0;
+}
+
+.vm--container.scrollable .vm--modal {
+  margin-bottom: 2px;
 }
 
 .vm--top-right-slot {

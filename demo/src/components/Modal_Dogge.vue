@@ -24,14 +24,14 @@ export default {
 <style lang="scss">
 .cute-dog-profile-photo {
   background-color: transparent;
-  border-radius: 100%;
+  border-radius: 200px;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.65);
+}
 
-  img {
-    width: 260px;
-    height: 260px;
-  }
+.cute-dog-profile-photo img {
+  width: 260px;
+  height: 260px;
 }
 
 .ct-top-right {

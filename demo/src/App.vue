@@ -126,11 +126,11 @@ import DemoAdaptiveModal from './components/Modal_Adaptive.vue'
 import DemoDraggableModal from './components/Modal_Draggable.vue'
 import DemoResizableModal from './components/Modal_Resizable.vue'
 import DemoConditionalModal from './components/Modal_Conditional.vue'
-import DemoErrorModal from './components/modals/DemoErrorModal.vue'
-import DemoLoginModal from './components/modals/DemoLoginModal.vue'
-import DemoDogProfileModal from './components/modals/DogProfileModal.vue'
-import DemoSizeModal from './components/modals/SizeModal.vue'
-import CustomComponentModal from './components/modals/CustomComponentModal.vue'
+import DemoErrorModal from './components/Modal_Error.vue'
+import DemoLoginModal from './components/Modal_Login.vue'
+import DemoDogProfileModal from './components/Modal_Dogge.vue'
+import DemoSizeModal from './components/Modal_Autosize.vue'
+import DemoCustomComponent from './components/Modal_CustomComponent.vue'
 
 export default {
   name: 'app',
@@ -221,7 +221,7 @@ export default {
     },
 
     showDynamicComponentModal() {
-      this.$modal.show(CustomComponentModal, {
+      this.$modal.show(DemoCustomComponent, {
         text: 'This text is passed as a property'
       })
     },

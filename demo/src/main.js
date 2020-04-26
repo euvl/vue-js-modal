@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
 import VueJsModal from 'plugin'
+import App from './App.vue'
 
 Vue.use(VueJsModal, {
   dialog: true,
