@@ -73,14 +73,6 @@
   box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);
   padding: 0;
 }
-
-/* .v--modal.v--modal-fullscreen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  left: 0;
-  top: 0;
-} */
 .vm--top-right-slot {
   display: block;
   position: absolute;
