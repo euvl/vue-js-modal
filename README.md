@@ -6,6 +6,23 @@
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 [![npm](https://img.shields.io/npm/dt/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 
+# ⚠️⚠️⚠️ v2.0.0 Changelog:
+
+
+* Using ResizeObserver instead of MutationObserver
+* Using transition states to coordinate modal & overlay transitions (instead of delays)
+* Using prettier
+* Overlay is not a parent of the modal anymore (now has independant transition)
+* Renamed **Event.stop => Event.cancel**
+* Removed `v--modal-background-click` element
+* Removed `v--modal` default class
+* **Removed "delay" property** - component is relying on modal & overlay transition durations
+* Added naive implementation of **focus trap**
+* Added source-maps
+* Added `hideAll` for dynamic modals
+* Fix: dialogs not working when componentName is changed
+* Fix: ActiveElement is blurred after before-open is fired - not it is possible to cache document.activeElement
+
 <p align="right">
   <a href="https://www.buymeacoffee.com/yev" target="_blank">
   <img width="200" alt="screen shot 2018-03-01 at 10 33 39" src="https://user-images.githubusercontent.com/1577802/36840220-21beb89c-1d3c-11e8-98a4-45fc334842cf.png">
