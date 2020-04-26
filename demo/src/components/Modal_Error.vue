@@ -1,9 +1,10 @@
 <template>
   <modal name="error-modal"
-         :classes="['v--modal', 'error-modal', hasBugs && 'has-bugs']"
+         :classes="['error-modal', hasBugs && 'has-bugs']"
          :pivot-y="0.2"
          :width="400"
          :height="300"
+         :adaptive="true"
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="error-modal-content">

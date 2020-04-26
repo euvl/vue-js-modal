@@ -20,8 +20,8 @@
           </div>
 
           <div class="button-set">
-            <button id="goto-signin-btn">Sign In</button>
-            <button id="register-btn">Register</button>
+            <button id="goto-signin-btn" @click="signIn">Sign In</button>
+            <button id="register-btn" @click="register">Register</button>
           </div>
 
           <button class="large-btn github-btn">connect with <span>github</span></button>
@@ -49,6 +49,14 @@ export default {
   created() {
     this.modalWidth =
       window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
+  },
+  methods: {
+    signIn() {
+      alert('Sign in')
+    },
+    register() {
+      alert('Register')
+    }
   }
 }
 </script>
