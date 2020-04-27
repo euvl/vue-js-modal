@@ -1,12 +1,13 @@
+const INPUT_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
+
 export const generateId = ((index = 0) => () => (index++).toString())()
 /**
- *
  * @param {Number} from  Lower limit
  * @param {Number} to    Upper limit
  * @param {Number} value Checked number value
  *
  * @return {Number} Either source value itself or limit value if range limits
- *   are exceeded
+ * are exceeded
  */
 export const inRange = (from, to, value) => {
   return value < from ? from : value > to ? to : value
@@ -48,17 +49,19 @@ export const stringStylesToObject = styles => {
     .split(';')
     .map(line => line.trim())
     .filter(Boolean)
+
   const entries = lines.map(line => line.split(':'))
 
   return entries.reduce((styles, [key, value]) => {
-    return { ...styles, [key]: value }
+    return {
+      ...styles,
+      [key]: value
+    }
   }, {})
 }
 
-const INPUT_NOTE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
-
 export const isInput = element => {
-  return element && INPUT_NOTE_NAMES.indexOf(element.nodeName) !== -1
+  return element && INPUT_NODE_NAMES.indexOf(element.nodeName) !== -1
 }
 
 export const getTouchEvent = event => {

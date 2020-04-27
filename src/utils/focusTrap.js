@@ -17,7 +17,6 @@ const isTabPressed = event => {
 }
 
 const querySelectorAll = (element, selector) => {
-  console.log(element)
   return [...(element.querySelectorAll(selector) || [])]
 }
 

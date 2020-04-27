@@ -52,7 +52,6 @@
   </div>
 </template>
 <script>
-import Modal from './index'
 import Resizer from './Resizer.vue'
 import {
   isInput,
@@ -212,7 +211,7 @@ export default {
    * Sets global listeners
    */
   beforeMount() {
-    Modal.event.$on('toggle', this.onToggle)
+    this.$modal.subscription.$on('toggle', this.onToggle)
 
     window.addEventListener('resize', this.onWindowResize)
     this.onWindowResize()
@@ -245,7 +244,7 @@ export default {
    * Removes global listeners
    */
   beforeDestroy() {
-    Modal.event.$off('toggle', this.onToggle)
+    this.$modal.subscription.$off('toggle', this.onToggle)
 
     window.removeEventListener('resize', this.onWindowResize)
 

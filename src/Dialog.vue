@@ -32,13 +32,13 @@
       class="vue-dialog-buttons"
       v-if="buttons">
       <button
-        v-for="(button, i) in buttons"
+        v-for="(button, index) in buttons"
         :class="button.class || 'vue-dialog-button'"
         type="button"
         :style="buttonStyle"
-        :key="i"
+        :key="index"
         v-html="button.title"
-        @click.stop="click(i, $event)"
+        @click.stop="click(index, $event)"
       >
         {{button.title}}
       </button>
@@ -98,11 +98,11 @@ export default {
       this.$emit('before-closed', event)
     },
 
-    click(i, event, source = 'click') {
-      const button = this.buttons[i]
+    click(buttonIndex, event, source = 'click') {
+      const button = this.buttons[buttonIndex]
 
       if (button && typeof button.handler === 'function') {
-        button.handler(i, event, { source })
+        button.handler(buttonIndex, event, { source })
       } else {
         this.$modal.hide('dialog')
       }
