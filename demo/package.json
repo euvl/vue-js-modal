@@ -19,11 +19,11 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "sass-loader": "^8.0.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
-    "vue": "^2.2.6",
+    "vue": "^2.6.11",
     "vue-hot-reload-api": "^2.0.8",
     "vue-loader": "^15.0.0",
     "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.2.6",
+    "vue-template-compiler": "^2.6.11",
     "webpack": "^4.27.1",
     "webpack-dev-server": "^3.1.11"
   }
