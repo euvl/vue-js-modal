@@ -75,6 +75,7 @@
   },
   "browserslist": "> 0.25%, not dead",
   "dependencies": {
+    "@scarf/scarf": "^1.0.4",
     "resize-observer-polyfill": "^1.5.1"
   }
 }

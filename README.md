@@ -46,6 +46,8 @@ Demo: http://vue-js-modal.yev.io/
 npm install vue-js-modal --save
 ```
 
+> Please note: Vue.js modal uses [Scarf](https://www.npmjs.com/package/@scarf/scarf) to collect anonymized installation analytics. These analytics help support the maintainers of this library. However, if you'd like to opt out, you can do so by setting `scarfSettings.enabled = false` in your project's package.json. Alternatively, you can set the environment variable `SCARF_ANALYTICS=false`.
+
 ### How to use
 
 Include plugin in your `main.js` file.
