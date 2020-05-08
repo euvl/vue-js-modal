@@ -362,7 +362,7 @@ export default {
      */
     autoHeight() {
       return this.adaptive && this.modal.renderedHeight >= this.viewportHeight
-        ? this.viewportHeight + 'px'
+        ? Math.max(this.minHeight, this.viewportHeight) + 'px'
         : 'auto';
     },
 
