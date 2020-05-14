@@ -24,7 +24,7 @@
        target="readme">Readme</a>
     <a href="https://github.com/euvl/vue-js-modal/issues"
        target="issues">Issues</a>
-    <a href="https://github.com/euvl/vue-js-modal/tree/master/demo/client_side_rendering/src/components/modals"
+    <a href="https://github.com/euvl/vue-js-modal/tree/master/demo/src/components"
        target="issues">Examples</a>
   </h2>
 
