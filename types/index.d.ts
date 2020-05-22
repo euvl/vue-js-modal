@@ -17,6 +17,7 @@ declare interface VModal {
     | ComponentOptions<Vue> 
     | AsyncComponent, paramsOrProps?: object, params?: object, events?: object): void;
   hide(name: string, params?: object): void;
+  hideAll(): void;
   toggle(name: string, params?: object): void;
 }
 
