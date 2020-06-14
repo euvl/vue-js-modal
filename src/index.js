@@ -1,13 +1,13 @@
-import Modal from './Modal.vue'
-import Dialog from './Dialog.vue'
-import ModalsContainer from './ModalsContainer.vue'
+import Modal from './components/Modal.vue'
+import Dialog from './components/Dialog.vue'
+import ModalsContainer from './components/ModalsContainer.vue'
 import { createDivInBody } from './utils'
 import {
   UNMOUNTED_ROOT_ERROR_MESSAGE,
   DYNAMIC_MODAL_DISABLED_ERROR,
   UNSUPPORTED_ARGUMENT_ERROR,
   HIDE_ALL_RESTRICTION_ERROR
-} from './errors'
+} from './utils/errors'
 
 const defaultComponentName = 'Modal'
 
