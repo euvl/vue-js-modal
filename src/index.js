@@ -1,18 +1,19 @@
 import Modal from './components/Modal.vue'
 import Dialog from './components/Dialog.vue'
 import ModalsContainer from './components/ModalsContainer.vue'
-import VueJsModal from './VueJsModal'
+import plugin from './VueJsModal'
 
-function plugin(Vue, options = {}) {
-  const instance = new VueJsModal(Vue, options, {
+const VueJsModal = new plugin()
+
+const install = (Vue, options = {}) => {
+  VueJsModal.init(Vue, options, {
     componentName: options.componentName || 'Modal'
   })
-
-  Vue.prototype.$modal = instance
+  Vue.prototype.$modal = VueJsModal
   /**
    * Sets custom component name (if provided)
    */
-  Vue.component(instance.context.componentName, Modal)
+  Vue.component(VueJsModal.context.componentName, Modal)
   /**
    * Registration of <Dialog/> component
    */
@@ -27,8 +28,8 @@ function plugin(Vue, options = {}) {
 
     Vue.mixin({
       beforeMount() {
-        if (instance.rootInstance === null) {
-          instance.rootInstance = this.$root
+        if (VueJsModal.rootInstance === null) {
+          VueJsModal.rootInstance = this.$root
         }
       }
     })
@@ -37,10 +38,10 @@ function plugin(Vue, options = {}) {
 
 // Install by default if using the script tag
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(plugin)
+  window.Vue.use(install)
 }
-
-export default plugin
+VueJsModal.install = install
+export default VueJsModal
 const version = '__VERSION__'
 // Export all components too
 export { Modal, Dialog, ModalsContainer, VueJsModal, version }

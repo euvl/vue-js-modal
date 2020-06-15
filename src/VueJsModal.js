@@ -8,14 +8,14 @@ import { createDivInBody } from './utils'
 import ModalsContainer from './components/ModalsContainer.vue'
 
 class VueJsModal {
-  constructor(Vue, options, context) {
+  init(Vue, options, context) {
     Object.defineProperty(this, 'context', {
       get: () => {
         return context
       }
     })
     this.options = options
-    this.rootInstance = this.options.root || null
+    this.rootInstance = null
     this.Vue = Vue
     this.event = new this.Vue()
   }
