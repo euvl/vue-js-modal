@@ -299,7 +299,9 @@ export default {
 
       return {
         left: parseInt(inRange(0, maxLeft, left)),
-        top: parseInt(inRange(0, maxTop, top))
+        top: !trueModalHeight && this.isAutoHeight
+          ? undefined
+          : parseInt(inRange(0, maxTop, top))
       }
     },
     /**
