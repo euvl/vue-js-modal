@@ -358,6 +358,16 @@ export default {
       return value
     },
 
+    /**
+     * Returns the height of the modal when in 'auto' mode, making sure the
+     * modal fits the viewport if 'adaptive' is also true
+     */
+    autoHeight() {
+      return this.adaptive && this.modal.renderedHeight >= this.viewportHeight
+        ? Math.max(this.minHeight, this.viewportHeight) + 'px'
+        : 'auto';
+    },
+
     containerClass() {
       return [
         'vm--container',
@@ -387,7 +397,7 @@ export default {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
           width: this.trueModalWidth + 'px',
-          height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
+          height: this.isAutoHeight ? this.autoHeight : this.trueModalHeight + 'px'
         }
       ]
     },
