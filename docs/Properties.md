@@ -1,6 +1,4 @@
----
-sidebarDepth: 0
----
+# Properties
 
 ## Properties
 
@@ -22,9 +20,20 @@ Enable responsive behavior, modal will try to adapt to the screen size when poss
 
 ---
 
-`draggable: Boolean`
+`draggable: Boolean | String`
 
 Allows dragging the modal within the boundaries of the screen.
+
+Draggable property can accept String parameters. With String value, you can specify a CSS selector to **an element which will be used as a "handler" for dragging**.
+
+```html
+<modal name="bar" draggable=".window-header">
+  <div class="window-header">DRAG ME HERE</div>
+  <div>
+     Example
+  </div>
+</modal>
+```
 
 ---
 
@@ -34,7 +43,22 @@ Allows dragging the modal within the boundaries of the screen.
 Enables scroll within the modal when the height of the modal is greater than the screen.
 
 ::: warning
-This feature requires `height` to be equal to `"auto"`
+This feature only works when `height` is set to `"auto"`
+:::
+
+::: details Show me some gifs
+Auto height
+
+<p align="center">
+  <img src="https://media.giphy.com/media/xUPGGpEV00RDDDeiuk/giphy.gif">
+</p>
+
+Scrollable content & auto height
+
+<p align="center">
+  <img src="https://media.giphy.com/media/xUn3CfwfH3ISuf4mxq/giphy.gif">
+</p>
+
 :::
 
 ---
@@ -145,7 +169,7 @@ Vertical position in `%`, default is `0.5` (meaning that modal box will be in th
 
 ---
 
-### Example 
+## Example 
 ```html
 <template>
   <modal name="example"
