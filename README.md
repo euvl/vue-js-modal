@@ -6,9 +6,9 @@
 
 ### If you are using this project please consider sponsorting it's further development & bug fixes :rocket: 
 
-### Links: https://github.com/sponsors/euvl, https://www.buymeacoffee.com/yev
+#### Links: https://github.com/sponsors/euvl, https://www.buymeacoffee.com/yev
 
-### :pray: :pray: :pray: 
+### Thank you! 
 
 # Vue.js modal
 
