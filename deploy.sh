@@ -11,7 +11,7 @@ cd docs/.vuepress/dist
 
 git init
 git add -A
-git commit -m 'deploy docs'
+git commit -m 'Deplying docs'
 
 git push -f git@github.com:euvl/vue-js-modal.git master:gh-pages
 
