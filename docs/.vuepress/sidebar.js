@@ -2,6 +2,6 @@ module.exports = [
   {
     title: 'Guide',
     collapsable: false,
-    children: ['/Installation', '/Usage', '/Properties']
+    children: ['/Installation', '/Usage', '/Properties', '/Events']
   }
 ]
