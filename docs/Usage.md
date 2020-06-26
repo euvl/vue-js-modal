@@ -50,14 +50,14 @@ this.$modal.show(
 )
 ```
 
-* `component_definition` - either inline or imported Vue component definition
+* `component_definition` - inline or imported Vue component definition
 * `component_properties` - any properties that are used within the `component_definition`
 * `modal_properties` -modal component properties (see Properties section)
 * `modal_events` - modal event handlers (see Events section)
 
-Examples:
 
-Using inline component definition:
+
+Example using **inline** component definition:
 
 ```js
 export default {
@@ -81,7 +81,9 @@ export default {
 }
 ```
 
-Using imported component definition:
+---
+
+Example using **imported** component definition:
 
 ```js
 import MyComponent from './MyComponent.vue'
