@@ -79,6 +79,7 @@ class PluginCore {
   }
 
   hideAll() {
+    console.log(this)
     if (this.options.dynamic) {
       this.subscription.$emit('hide-all')
     } else {

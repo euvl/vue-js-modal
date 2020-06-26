@@ -41,6 +41,7 @@
     "docs:build": "vuepress build docs"
   },
   "license": "MIT",
+  "browserslist": "> 0.25%, not dead",
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
@@ -61,7 +62,7 @@
     "sass-loader": "^7.1.0",
     "ts-loader": "^6.2.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "vue": "^2.2.6",
+    "vue": "2.6.11",
     "vue-hot-reload-api": "^2.0.8",
     "vue-jest": "^3.0.1",
     "vue-loader": "^15.0.0",
@@ -70,12 +71,12 @@
     "vue-test-utils": "^1.0.0-beta.11",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "vuepress": "^1.5.2"
   },
   "peerDependencies": {
-    "vue": "^2.2.6"
+    "vue": "2.2.6"
   },
-  "browserslist": "> 0.25%, not dead",
   "dependencies": {
     "resize-observer-polyfill": "^1.5.1"
   }
