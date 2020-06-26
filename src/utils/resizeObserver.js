@@ -1,5 +1,7 @@
 import ResizeObserverPolyfill from 'resize-observer-polyfill'
 
-export default (window && window.ResizeObserver
-  ? ResizeObserver
-  : ResizeObserverPolyfill)
+const observer =
+  typeof window !== 'undefined' && window.ResizeObserver
+    ? ResizeObserver
+    : ResizeObserverPolyfill
+export default observer

@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { generateId } from './utils'
+import { generateId } from '../utils'
 
 const PREFIX = '_dynamic_modal_'
 

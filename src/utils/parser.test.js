@@ -1,3 +1,4 @@
+/* eslint-disable */
 var { parseNumber } = require('./parser')
 
 describe('parser.js', () => {
