@@ -67,6 +67,20 @@ Vue.use(VModal, { componentName: "foo-modal" })
 */
 ```
 
+Or as a Nuxt.js plugin:
+
+```javascript
+import Vue from 'vue'
+import VModal from 'vue-js-modal/dist/ssr.nocss'
+
+Vue.use(VModal)
+
+export default function(ctx, inject) {
+
+  inject('modal', VModal)
+}
+```
+
 Create modal:
 
 ```vue

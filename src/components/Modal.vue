@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="visible"
-    :class="containerClass"
-  >
+  <div v-if="visible" :class="containerClass">
     <transition
       :name="guaranteedOverlayTransition"
       @before-enter="beforeOverlayTransitionEnter"
@@ -18,7 +15,7 @@
         @click.self.stop="onOverlayClick"
       >
         <div class="vm--top-right-slot">
-          <slot name="top-right"/>
+          <slot name="top-right" />
         </div>
       </div>
     </transition>
@@ -38,7 +35,7 @@
         role="dialog"
         aria-modal="true"
       >
-        <slot/>
+        <slot />
         <resizer
           v-if="resizable && !isAutoHeight"
           :min-width="minWidth"
@@ -60,11 +57,11 @@ import {
   blurActiveElement,
   windowWidthWithoutScrollbar,
   stringStylesToObject
-} from './utils'
-import ModalEvent from './ModalEvent'
-import { parseNumber, validateNumber } from './parser'
-import ResizeObserver from './utils/resizeObserver'
-import FocusTrap from './utils/focusTrap'
+} from '../utils'
+import ModalEvent from '../utils/ModalEvent'
+import { parseNumber, validateNumber } from '../utils/parser'
+import ResizeObserver from '../utils/resizeObserver'
+import FocusTrap from '../utils/focusTrap'
 
 const defaultTransition = 'vm-transition--default'
 

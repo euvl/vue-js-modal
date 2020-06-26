@@ -2,7 +2,7 @@
   <div :class="className"></div>
 </template>
 <script>
-import { inRange, windowWidthWithoutScrollbar } from './utils'
+import { inRange, windowWidthWithoutScrollbar } from '../utils'
 
 export default {
   name: 'VueJsModalResizer',
