@@ -180,18 +180,6 @@ To start using this feature you must set `dynamic: true` in plugin configuration
 Vue.use(VModal, { dynamic: true, dynamicDefaults: { clickToClose: false } })
 ```
 
-And include the `<modals-container />` component it in your project:
-
-```vue
-<modals-container />
-```
-
-Alternatively, the modals container can be automatically appended to the document body once the plugin is loaded using `injectModalsContainer: true`:
-
-```js
-Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
-```
-
 Call it (the first argument is the component definition, the second are component properties, the third modal parameters, and the fourth the modal event listeners):
 
 ```javascript
@@ -235,25 +223,6 @@ this.$modal.show({
     </div>
   `
 })
-```
-
-If using the `injectModalsContainer` flag, the first mounted Vue instance without parents will be treated as the application root. This is only important to keep in mind if more than one root Vue instance is being used, which is unlikely. But if that's the case, the root to use can be indicated with the `root` parameter when invoking dynamic modals or modifying this plugin's `rootInstance` attribute:
-
-```javascript
-import App from './App.vue'
-import VModal from 'vue-js-modal'
-
-const app1 = new Vue({
-  el: '#app-1',
-  render: h => h(App)
-})
-
-const app2 = new Vue({
-  el: '#app-2',
-  render: h => h(App)
-})
-
-VModal.rootInstance = app2
 ```
 
 It is possible to set default property values for dynamic modals.
@@ -320,30 +289,29 @@ There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 
 ### Properties
 
-| Name      | Required | Type          | Default     | Description |
-| ---       | ---      | ---           | ---         | ---         |
-| name      | true  | [String, Number] |             | Name of the modal |
-| delay     | false | Number           | 0           | Delay between showing overlay and actual modal box |
-| resizable | false | Boolean          | false       | If true allows resizing the modal window, keeping it in the center of the screen. |
-| adaptive  | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
-| draggable | false | [Boolean, String]| false       | If true, modal box will be draggable. If string, a selector to use as a handle for dragging |
-| scrollable | false | Boolean         | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
-| reset     | false | Boolean          | false       | Resets position and size before showing modal |
-| focus-trap | false | Boolean         | false       | Enable focus trap (plugin uses naive implementation of the focus trap) |
-| clickToClose | false | Boolean       | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
-| transition| false | String           |             | Transition name |
-| overlayTransition| false | String           | 'overlay-fade'| Transition name for the background overlay |
-| classes   | false | [String, Array]  | ''  | Classes that will be applied to the modal box |
-| styles    | false | [String, Array, Object] |      | Style that will be applied to the modal box (currently only supports strings)|
-| width     | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |
-| height    | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") or `"auto"` |
-| minWidth  | false | Number (px)      | 0           | The minimum width to which modal can be resized  |
-| minHeight | false | Number (px)      | 0           | The minimum height to which modal can be resized |
-| maxWidth  | false | Number (px)      | Infinity    | The maximum width of the modal (if the value is greater than window width, window width will be used instead |
-| maxHeight | false | Number (px)      | Infinity    | The maximum height of the modal (if the value is greater than window height, window height will be used instead |
-| pivotX    | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from left) of the window |
-| pivotY    | false | Number (0 - 1.0) | 0.5         | Vertical position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
-| root      | false | Vue instance     | null        | Root instance to obtain modal container from. This property is only necessary when using dynamic modals with more than one root instance, which is uncommon |
+| Name         | Required | Type          | Default     | Description |
+| ---          | ---      | ---           | ---         | ---         |
+| name         | true  | [String, Number] |             | Name of the modal |
+| delay        | false | Number           | 0           | Delay between showing overlay and actual modal box |
+| resizable    | false | Boolean          | false       | If true allows resizing the modal window, keeping it in the center of the screen. |
+| adaptive     | false | Boolean          | false       | If true, modal box will try to adapt to the window size |
+| draggable    | false | [Boolean, String]| false       | If true, modal box will be draggable. If string, a selector to use as a handle for dragging |
+| scrollable   | false | Boolean          | false       | If `height` property is `auto` and the modal height exceeds window height - you will be able to scroll modal |
+| reset        | false | Boolean          | false       | Resets position and size before showing modal |
+| focus-trap   | false | Boolean          | false       | Enable focus trap (plugin uses naive implementation of the focus trap) |
+| clickToClose | false | Boolean          | true        | If set to `false`, it will not be possible to close modal by clicking on the background |
+| transition   | false | String           |             | Transition name |
+| overlayTransition | false | String      | 'overlay-fade'| Transition name for the background overlay |
+| classes      | false | [String, Array]  | ''          | Classes that will be applied to the modal box |
+| styles       | false | [String, Array, Object] |      | Style that will be applied to the modal box (currently only supports strings)|
+| width        | false | [String, Number] | 600         | Width in pixels or percents (e.g. 50 or "50px", "50%") |
+| height       | false | [String, Number] | 300         | Height in pixels or percents (e.g. 50 or "50px", "50%") or `"auto"` |
+| minWidth     | false | Number (px)      | 0           | The minimum width to which modal can be resized  |
+| minHeight    | false | Number (px)      | 0           | The minimum height to which modal can be resized |
+| maxWidth     | false | Number (px)      | Infinity    | The maximum width of the modal (if the value is greater than window width, window width will be used instead |
+| maxHeight    | false | Number (px)      | Infinity    | The maximum height of the modal (if the value is greater than window height, window height will be used instead |
+| pivotX       | false | Number (0 - 1.0) | 0.5         | Horizontal position in %, default is 0.5 (meaning that modal box will be in the middle (50% from left) of the window |
+| pivotY       | false | Number (0 - 1.0) | 0.5         | Vertical position in %, default is 0.5 (meaning that modal box will be in the middle (50% from top) of the window |
 
 ### Events
 

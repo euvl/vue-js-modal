@@ -28,7 +28,7 @@ export default {
     }
   },
   created() {
-    this.$root._dynamicContainer = this
+    this.$root._modalContainer = this
   },
   mounted() {
     this.$modal.subscription.$on('hide-all', () => {

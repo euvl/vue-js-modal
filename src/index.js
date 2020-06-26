@@ -2,7 +2,7 @@ import Plugin from './Plugin'
 
 export { default as Modal } from './components/Modal.vue'
 export { default as Dialog } from './components/Dialog.vue'
-export { default as ModalsContainer } from './components/ModalsContainer.vue'
+// export { default as ModalsContainer } from './components/ModalsContainer.vue'
 
 export const modal = new Plugin()
 export const version = '__VERSION__'

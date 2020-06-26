@@ -1,10 +1,12 @@
 import Modal from './components/Modal.vue'
 import Dialog from './components/Dialog.vue'
-import ModalsContainer from './components/ModalsContainer.vue'
-
 import PluginCore from './PluginCore'
 
 class Plugin extends PluginCore {
+  constructor() {
+    super()
+  }
+
   install(Vue, options = {}) {
     super.install(Vue, options)
 
@@ -23,12 +25,12 @@ class Plugin extends PluginCore {
      * Registration of <ModalsContainer/> component
      */
     if (options.dynamic) {
-      Vue.component('ModalsContainer', ModalsContainer)
+      const plugin = this
 
       Vue.mixin({
         beforeMount() {
-          if (this.rootInstance === null) {
-            this.rootInstance = this.$root
+          if (!plugin.root) {
+            plugin.setDynamicModalContainer(this.$root)
           }
         }
       })

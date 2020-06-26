@@ -1,8 +1,3 @@
-export const UNMOUNTED_ROOT_ERROR_MESSAGE =
-  '[vue-js-modal] ' +
-  'In order to render dynamic modals, a <modals-container> ' +
-  'component must be present on the page.'
-
 export const DYNAMIC_MODAL_DISABLED_ERROR =
   '[vue-js-modal] ' +
   '$modal() received object as a first argument, but dynamic modals are ' +

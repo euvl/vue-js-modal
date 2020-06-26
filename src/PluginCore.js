@@ -1,5 +1,4 @@
 import {
-  UNMOUNTED_ROOT_ERROR_MESSAGE,
   DYNAMIC_MODAL_DISABLED_ERROR,
   UNSUPPORTED_ARGUMENT_ERROR,
   HIDE_ALL_RESTRICTION_ERROR
@@ -34,33 +33,26 @@ class PluginCore {
     this.subscription.$emit('toggle', modal, true, params)
   }
 
-  getModalsContainer(root) {
-    if (!root._dynamicContainer && this.options.injectModalsContainer) {
-      const container = createDivInBody()
+  setDynamicModalContainer(root) {
+    this.root = root
 
-      new this.Vue({
-        parent: root,
-        render: (h) => h(ModalsContainer)
-      }).$mount(container)
-    }
+    const element = createDivInBody()
 
-    return root._dynamicContainer
+    new this.Vue({
+      parent: this.root,
+      render: (h) => h(ModalsContainer)
+    }).$mount(element)
   }
 
   showDynamicModal(modal, props, params, events) {
-    const root = params && params.root ? params.root : this.rootInstance
-    const container = this.getModalsContainer(root)
-    /**
-     * Show dynamic modal
-     */
-    const dynamicDefaults = this.options.dynamicDefaults || {}
+    const { options, root } = this
+
+    const container = root && root._modalContainer
+    const dynamicDefaults = options.dynamicDefaults || {}
 
     if (container) {
       container.add(modal, props, { ...dynamicDefaults, ...params }, events)
-      return
     }
-
-    console.warn(UNMOUNTED_ROOT_ERROR_MESSAGE)
   }
 
   show(modal, ...args) {

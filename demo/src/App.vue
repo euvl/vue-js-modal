@@ -1,36 +1,38 @@
 <template>
-<div id="app">
-  <!-- Modals -->
-  <demo-error-modal/>
-  <demo-login-modal/>
-  <demo-dog-profile-modal />
-  <demo-conditional-modal/>
-  <demo-size-modal/>
-  <demo-adaptive-modal/>
-  <demo-resizable-modal/>
-  <demo-draggable-modal/>
+  <div id="app">
+    <!-- Modals -->
+    <demo-error-modal />
+    <demo-login-modal />
+    <demo-dog-profile-modal />
+    <demo-conditional-modal />
+    <demo-size-modal />
+    <demo-adaptive-modal />
+    <demo-resizable-modal />
+    <demo-draggable-modal />
 
-  <!-- Dialogs -->
-  <modals-container />
+    <v-dialog
+      @before-opened="dialogEvent('before-open')"
+      @before-closed="dialogEvent('before-close')"
+      @opened="dialogEvent('opened')"
+      @closed="dialogEvent('closed')"
+    />
 
-  <v-dialog
-    @before-opened="dialogEvent('before-open')"
-    @before-closed="dialogEvent('before-close')"
-    @opened="dialogEvent('opened')"
-    @closed="dialogEvent('closed')"/>
+    <h2>
+      Vue.js Modal
+      <a
+        href="https://github.com/euvl/vue-js-modal/blob/master/README.md"
+        target="readme"
+      >Readme</a>
+      <a href="https://github.com/euvl/vue-js-modal/issues" target="issues">Issues</a>
+      <a
+        href="https://github.com/euvl/vue-js-modal/tree/master/demo/src/components"
+        target="issues"
+      >Examples</a>
+    </h2>
 
-  <h2>Vue.js Modal
-    <a href="https://github.com/euvl/vue-js-modal/blob/master/README.md"
-       target="readme">Readme</a>
-    <a href="https://github.com/euvl/vue-js-modal/issues"
-       target="issues">Issues</a>
-    <a href="https://github.com/euvl/vue-js-modal/tree/master/demo/src/components"
-       target="issues">Examples</a>
-  </h2>
+    <!-- Other -->
 
-  <!-- Other -->
-
-  <pre style="line-height: 1.5;">
+    <pre style="line-height: 1.5;">
     
     npm install --save vue-js-modal
 
@@ -39,86 +41,36 @@
     Vue.use(VModal)
   </pre>
 
-  <div style="margin-top: 20px; margin-bottom: 15px;">
-    <button
-      class="btn"
-      @click="$modal.show('example-resizable')">
-      Resizable
-    </button>
-    <button
-      class="btn"
-      @click="$modal.show('example-adaptive')">
-      Adaptive
-    </button>
-    <button
-      class="btn"
-      @click="$modal.show('example-draggable')">
-      Draggable
-    </button>
-    <br>
-    <button
-      class="btn green"
-      @click="$modal.show('dog-profile')">
-      Demo: Dog Profile photo 
-    </button>
-    <button
-      class="btn green"
-      @click="$modal.show('error-modal')">
-      Demo: Error handling
-    </button>
-    <button
-      class="btn green"
-      @click="$modal.show('demo-login')">
-      Demo: Login
-    </button>
-    <button
-      class="btn green"
-      @click="$modal.show('size-modal')">
-      Demo: Width: 60%, Height: auto
-    </button>
-    <button
-      :class="canBeShown ? 'btn green' : 'btn red'"
-      @click="conditionalShow">
-      Can <b v-if="!canBeShown">NOT</b> be shown
-    </button>
+    <div style="margin-top: 20px; margin-bottom: 15px;">
+      <button class="btn" @click="$modal.show('example-resizable')">Resizable</button>
+      <button class="btn" @click="$modal.show('example-adaptive')">Adaptive</button>
+      <button class="btn" @click="$modal.show('example-draggable')">Draggable</button>
+      <br />
+      <button class="btn green" @click="$modal.show('dog-profile')">Demo: Dog Profile photo</button>
+      <button class="btn green" @click="$modal.show('error-modal')">Demo: Error handling</button>
+      <button class="btn green" @click="$modal.show('demo-login')">Demo: Login</button>
+      <button class="btn green" @click="$modal.show('size-modal')">Demo: Width: 60%, Height: auto</button>
+      <button :class="canBeShown ? 'btn green' : 'btn red'" @click="conditionalShow">
+        Can
+        <b v-if="!canBeShown">NOT</b> be shown
+      </button>
 
-    <br>
+      <br />
 
-    <button
-      class="btn"
-      @click="showBasicDialog">
-      Dialog: basic
-    </button>
+      <button class="btn" @click="showBasicDialog">Dialog: basic</button>
 
-    <button
-      class="btn"
-      @click="showTitleDialog">
-      Dialog: title
-    </button>
+      <button class="btn" @click="showTitleDialog">Dialog: title</button>
 
-    <button
-      class="btn"
-      @click="showButtonsDialog">
-      Dialog: buttons
-    </button>
-    <br>
-    <button
-      class="btn"
-      @click="showDynamicRuntimeModal">
-      Dynamic: Runtime Modal
-    </button>
-    <button
-      class="btn"
-      @click="showDynamicComponentModal">
-      Dynamic: Component Modal
-    </button>
-    <button
-      class="btn"
-      @click="showDynamicComponentModalWithModalParams">
-      Dynamic: Component Modal with modal params
-    </button>
+      <button class="btn" @click="showButtonsDialog">Dialog: buttons</button>
+      <br />
+      <button class="btn" @click="showDynamicRuntimeModal">Dynamic: Runtime Modal</button>
+      <button class="btn" @click="showDynamicComponentModal">Dynamic: Component Modal</button>
+      <button
+        class="btn"
+        @click="showDynamicComponentModalWithModalParams"
+      >Dynamic: Component Modal with modal params</button>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
