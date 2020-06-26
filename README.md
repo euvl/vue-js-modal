@@ -1,4 +1,10 @@
 <p align="center">
+  
+# Sponsorship 
+
+### :pray: :pray: :pray: If you are using this project please consider sponsorting it's further development & bug fixes :rocket: 
+
+### Link here:  https://github.com/sponsors/euvl
 
 # Vue.js modal
 
