@@ -296,9 +296,10 @@ export default {
 
       return {
         left: parseInt(inRange(0, maxLeft, left)),
-        top: !trueModalHeight && this.isAutoHeight
-          ? undefined
-          : parseInt(inRange(0, maxTop, top))
+        top:
+          !trueModalHeight && this.isAutoHeight
+            ? undefined
+            : parseInt(inRange(0, maxTop, top))
       }
     },
     /**
@@ -362,7 +363,7 @@ export default {
     autoHeight() {
       return this.adaptive && this.modal.renderedHeight >= this.viewportHeight
         ? Math.max(this.minHeight, this.viewportHeight) + 'px'
-        : 'auto';
+        : 'auto'
     },
 
     containerClass() {
@@ -394,7 +395,9 @@ export default {
           top: this.position.top + 'px',
           left: this.position.left + 'px',
           width: this.trueModalWidth + 'px',
-          height: this.isAutoHeight ? this.autoHeight : this.trueModalHeight + 'px'
+          height: this.isAutoHeight
+            ? this.autoHeight
+            : this.trueModalHeight + 'px'
         }
       ]
     },

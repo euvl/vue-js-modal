@@ -1,11 +1,10 @@
 <template>
-  <modal 
+  <modal
     name="size-modal"
     classes="demo-modal-class"
     :min-width="200"
     :min-height="200"
     :pivot-y="0.5"
-    :adaptive="true"
     :scrollable="true"
     :reset="true"
     width="60%"
@@ -16,7 +15,10 @@
     @closed="closed"
   >
     <div class="size-modal-content">
-      <div>A new paragraph will be added every 5 sec to show how <b>height</b> scales.</div>
+      <div>
+        A new paragraph will be added every 5 sec to show how
+        <b>height</b> scales.
+      </div>
       <div v-for="(p, i) in paragraphs" :key="i">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum purus egestas libero ornare venenatis.
         Maecenas pharetra tortor eu tortor imperdiet, a faucibus quam finibus. Nulla id lacinia quam.
