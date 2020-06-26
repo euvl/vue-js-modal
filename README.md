@@ -1,14 +1,12 @@
 <p align="center">
   
-# Sponsorship  & support
+# :pray: Sponsorship  & support
 
-### :pray: :pray: :pray: 
+### :pray: If you are using this project please consider sponsorting it's further development & bug fixes
 
-### If you are using this project please consider sponsorting it's further development & bug fixes :rocket: 
+#### :pray: Links: https://github.com/sponsors/euvl, https://www.buymeacoffee.com/yev
 
-#### Links: https://github.com/sponsors/euvl, https://www.buymeacoffee.com/yev
-
-### Thank you! 
+### :pray: Thank you! 
 
 # Vue.js modal
 
