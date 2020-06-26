@@ -1,12 +1,8 @@
----
-sidebarDepth: 0
----
-
-## Usage
+# Usage
 
 There are 2 types of modals, static and dynamic. **Static** are defined explicitly though the template and **dynamic** are generated based on the configuration passed into the "show modal" function.
 
-### Static modals
+## Static modals
 
 Modals are defined by simply using the `<modal />` component. To control it's visibility - use `$modal.show` / `$modal.hide` functions, for example:
 
@@ -34,7 +30,7 @@ export default {
 } 
 ```
 
-### Dynamic modals
+## Dynamic modals
 
 In order to instantiate modals at runtime (for lazy-loading or de-cluttering templates), it is possible to create modals dynamically.
 
@@ -43,21 +39,39 @@ To show dynamic modal you can use the same `$modal.show` function with extended 
 
 ```js
 this.$modal.show(
-    component_definition, 
+    component, 
     component_properties, 
     modal_properties,
     modal_events
 )
 ```
 
-* `component_definition` - inline or imported Vue component definition
+* `component` - inline or imported Vue component definition
 * `component_properties` - any properties that are used within the `component_definition`
 * `modal_properties` -modal component properties (see Properties section)
 * `modal_events` - modal event handlers (see Events section)
 
 
+Using **imported** component definition:
 
-Example using **inline** component definition:
+```js
+import MyComponent from './MyComponent.vue'
+
+export default {
+    name: 'App',
+    mount () {
+        this.$modal.show(
+            MyComponent, 
+            { text: 'This text is passed as a property' }, 
+            { draggable: true }
+        )
+    }
+}
+```
+
+---
+
+Using **inline** component definition:
 
 ```js
 export default {
@@ -81,21 +95,3 @@ export default {
 }
 ```
 
----
-
-Example using **imported** component definition:
-
-```js
-import MyComponent from './MyComponent.vue'
-
-export default {
-    name: 'App',
-    mount () {
-        this.$modal.show(
-            MyComponent, 
-            { text: 'This text is passed as a property' }, 
-            { draggable: true }
-        )
-    }
-}
-```
