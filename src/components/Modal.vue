@@ -58,7 +58,6 @@ import {
   windowWidthWithoutScrollbar,
   stringStylesToObject
 } from '../utils'
-import ModalEvent from '../utils/ModalEvent'
 import { parseNumber, validateNumber } from '../utils/parser'
 import ResizeObserver from '../utils/resizeObserver'
 import FocusTrap from '../utils/focusTrap'
@@ -529,11 +528,11 @@ export default {
      * Generates event object
      */
     createModalEvent(properties = {}) {
-      return new ModalEvent({
+      return {
         name: this.name,
         ref: this.$refs.modal || null,
         ...properties
-      })
+      }
     },
     /**
      * Event handler which is triggered on modal resize
@@ -547,7 +546,12 @@ export default {
 
       const { size } = this.modal
 
-      this.$emit('resize', this.createModalEvent({ size }))
+      this.$emit(
+        'resize',
+        this.createModalEvent({
+          size
+        })
+      )
     },
 
     open(params) {
