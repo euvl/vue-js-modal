@@ -5,7 +5,7 @@
     height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
     :width="width"
-    :pivot-y="0.3"
+    :shift-y="0.3"
     :adaptive="true"
     :clickToClose="clickToClose"
     :transition="transition"
@@ -40,7 +40,7 @@
         v-html="button.title"
         @click.stop="click(index, $event)"
       >
-        {{button.title}}
+        {{ button.title }}
       </button>
     </div>
     <div v-else class="vue-dialog-buttons-none" />

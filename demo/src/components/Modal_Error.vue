@@ -1,22 +1,24 @@
 <template>
-  <modal name="error-modal"
-         :classes="['error-modal', hasBugs && 'has-bugs']"
-         :pivot-y="0.2"
-         :width="400"
-         :height="300"
-         :adaptive="true"
-         @before-open="beforeOpen"
-         @before-close="beforeClose">
+  <modal
+    name="error-modal"
+    :classes="['error-modal', hasBugs && 'has-bugs']"
+    :width="400"
+    height="auto"
+    :adaptive="true"
+    @before-open="beforeOpen"
+    @before-close="beforeClose"
+  >
     <div class="error-modal-content">
-      <div class="bugs-label">bugs: {{bugCount}}</div>
+      <div class="bugs-label">bugs: {{ bugCount }}</div>
       <button @click="createBug">Create a bug</button>
       <button @click="fixBug">Fix a bug</button>
 
       <div style="padding: 10px;">
-        You will be able to close the window only if you have fixed all the bugs :)
+        You will be able to close the window only if you have fixed all the bugs
+        :)
       </div>
-      <sub :style="{opacity: hasBugs ? 1 : 0}">
-        {{bugCount}} bugs to fix
+      <sub :style="{ opacity: hasBugs ? 1 : 0 }">
+        {{ bugCount }} bugs to fix
       </sub>
     </div>
   </modal>
