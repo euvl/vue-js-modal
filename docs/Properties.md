@@ -42,7 +42,7 @@ Draggable property can accept String parameters. With String value, you can spec
 
 Enables scroll within the modal when the height of the modal is greater than the screen.
 
-::: warning
+::: warning Note
 This feature only works when `height` is set to `"auto"`
 :::
 
@@ -104,7 +104,7 @@ List of class that will be applied to the modal window (not overlay, just the bo
 Style that will be applied to the modal window.
 
 
-::: warning
+::: warning Note
 To be able to support string definition of styles there are some hacks in place. 
 
 Vue.js does not allow merging string css definition with an object/array style definition. There are very few cases where you might need to use this property, but if you do - write tests :)
@@ -118,7 +118,7 @@ Width in pixels or percents (50, "50px", "50%").
 
 Supported string values are `<number>%` and `<number>px`
 
-::: warning
+::: warning Note
 This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal. 
 If you need to use more value types, please consider contributing to the parser [here](https://github.com/euvl/vue-js-modal/blob/master/src/utils/parser.js).
 :::   
@@ -130,6 +130,11 @@ If you need to use more value types, please consider contributing to the parser 
 Height in pixels or percents (50, "50px", "50%") or `"auto"`.                       
  
 Supported string values are `<number>%`, `<number>px` and `auto`. Setting height to `"auto"` makes it automatically change the height when the content size changes (this works well with `scrollable` feature).
+
+::: warning Note
+This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal. 
+If you need to use more value types, please consider contributing to the parser [here](https://github.com/euvl/vue-js-modal/blob/master/src/utils/parser.js).
+:::   
 
 ---
 

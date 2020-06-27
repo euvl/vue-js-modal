@@ -54,7 +54,6 @@ this.$modal.show(
 * `modal_properties` -modal component properties (see Properties section)
 * `modal_events` - modal event handlers (see Events section)
 
-
 Using **imported** component definition:
 
 ```js
@@ -98,11 +97,12 @@ export default {
 }
 ```
 
+
 ## Dialogs
 
-Dialog is a simplified version of the modal which has most parameters set by default and is useful for quick prototyping, showing alerts etc.
+Dialog is a simplified version of the modal which has most parameters set by default and is useful for quick prototyping, alerts, etc.
 
-To start using dialogs you must set dialog: true in plugin configuration:
+To start using dialogs you must set `dialog: true` in plugin configuration:
 
 ```js
 Vue.use(VModal, { dialog: true })

@@ -1,4 +1,4 @@
-# FAQ 
+# Other 
 
 ## Sponsorship
 
