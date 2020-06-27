@@ -156,14 +156,14 @@ export default {
         return value === 'auto' || validateNumber(value)
       }
     },
-    pivotX: {
+    shiftX: {
       type: Number,
       default: 0.5,
       validator(value) {
         return value >= 0 && value <= 1
       }
     },
-    pivotY: {
+    shiftY: {
       type: Number,
       default: 0.5,
       validator(value) {
@@ -282,8 +282,8 @@ export default {
         viewportWidth,
         shiftLeft,
         shiftTop,
-        pivotX,
-        pivotY,
+        shiftX,
+        shiftY,
         trueModalWidth,
         trueModalHeight
       } = this
@@ -291,8 +291,8 @@ export default {
       const maxLeft = viewportWidth - trueModalWidth
       const maxTop = Math.max(viewportHeight - trueModalHeight, 0)
 
-      const left = shiftLeft + pivotX * maxLeft
-      const top = shiftTop + pivotY * maxTop
+      const left = shiftLeft + shiftX * maxLeft
+      const top = shiftTop + shiftY * maxTop
 
       return {
         left: parseInt(inRange(0, maxLeft, left)),
@@ -720,8 +720,8 @@ export default {
         viewportWidth,
         shiftLeft,
         shiftTop,
-        pivotX,
-        pivotY,
+        shiftX,
+        shiftY,
         trueModalWidth,
         trueModalHeight
       } = this
@@ -729,8 +729,8 @@ export default {
       const maxLeft = viewportWidth - trueModalWidth
       const maxTop = Math.max(viewportHeight - trueModalHeight, 0)
 
-      const left = shiftLeft + pivotX * maxLeft
-      const top = shiftTop + pivotY * maxTop
+      const left = shiftLeft + shiftX * maxLeft
+      const top = shiftTop + shiftY * maxTop
 
       this.shiftLeft -= left - inRange(0, maxLeft, left)
       this.shiftTop -= top - inRange(0, maxTop, top)
