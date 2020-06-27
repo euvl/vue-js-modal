@@ -5,6 +5,8 @@ import PluginCore from './PluginCore'
 class Plugin extends PluginCore {
   constructor() {
     super()
+
+    this.install = this.install.bind(this)
   }
 
   install(Vue, options = {}) {

@@ -1,6 +1,9 @@
 # Usage
 
-There are 2 types of modals, static and dynamic. **Static** are defined explicitly though the template and **dynamic** are generated based on the configuration passed into the "show modal" function.
+The library supports 2 types of modals - static and dynamic.
+
+* **Static** are defined explicitly though the template.
+* **Dynamic** are generated based on the configuration passed into the "show modal" function.
 
 ## Static modals
 
@@ -95,3 +98,43 @@ export default {
 }
 ```
 
+## Dialogs
+
+Dialog is a simplified version of the modal which has most parameters set by default and is useful for quick prototyping, showing alerts etc.
+
+To start using dialogs you must set dialog: true in plugin configuration:
+
+```js
+Vue.use(VModal, { dialog: true })
+```
+
+And include this component in your project:
+
+```html
+<v-dialog />
+```
+
+Make a function call (all params except of “text” are optional):
+
+```js
+this.$modal.show('dialog', {
+  title: 'Alert',
+  text: 'This is test alert',
+  buttons: [
+    {
+      title: 'Confirm',
+      handler: () => alert('confirmed')
+    },
+    {
+      title: 'Deny',    // Button title
+      default: true,    // Will be triggered by default if 'Enter' pressed.
+      handler: () => {} // Button click handler
+    },
+    {
+      title: 'Close'
+    }
+ ]
+})
+```
+
+![](https://user-images.githubusercontent.com/1577802/29165216-ec62552c-7db9-11e7-807e-ef341edcc94d.png)
