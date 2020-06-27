@@ -157,13 +157,13 @@ The maximum height of the modal (if the value is greater than window height, win
 
 ---
 
-`pivotX: Number (between 0 and 1.0)` `default: 0.5`
+`shiftX: Number (between 0 and 1.0)` `default: 0.5`
 
 Horizontal position in `%`, default is `0.5` (meaning that modal box will be in the middle (50% from left) of the window
 
 ---
 
-`pivotY: Number (between 0 and 1.0)` `default: 0.5`
+`shiftY: Number (between 0 and 1.0)` `default: 0.5`
 
 Vertical position in `%`, default is `0.5` (meaning that modal box will be in the middle (50% from top) of the window.
 
