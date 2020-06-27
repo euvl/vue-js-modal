@@ -19,7 +19,7 @@
 <script>
 import { generateId } from '../utils'
 
-const PREFIX = '_dynamic_modal_'
+const PREFIX = 'dynamic_modal_'
 
 export default {
   data() {
@@ -28,7 +28,10 @@ export default {
     }
   },
   created() {
-    this.$root._modalContainer = this
+    /**
+     * Register ModalContainer so that it was availiable inside the plugin
+     */
+    this.$root.__modalContainer = this
   },
   mounted() {
     this.$modal.subscription.$on('hide-all', () => {
