@@ -15,12 +15,11 @@
     @opened="$emit('opened', $event)"
     @closed="$emit('closed', $event)"
   >
-    <div class="dialog-content">
-      <div class="dialog-c-title" v-if="params.title" v-html="params.title || ''" />
+    <div class="vue-dialog-content">
+      <div class="vue-dialog-content-title" v-if="params.title" v-html="params.title || ''" />
 
       <component v-if="params.component" v-bind="params.props" :is="params.component" />
-
-      <div class="dialog-c-text" v-else v-html="params.text || ''" />
+      <div v-else v-html="params.text || ''" />
     </div>
     <div class="vue-dialog-buttons" v-if="buttons">
       <button
@@ -50,8 +49,7 @@ export default {
       default: true
     },
     transition: {
-      type: String,
-      default: 'fade'
+      type: String
     }
   },
   data() {
@@ -112,41 +110,39 @@ export default {
 }
 </script>
 <style>
+.vue-dialog {
+  font-size: 14px;
+}
+
 .vue-dialog div {
   box-sizing: border-box;
 }
 
-.vue-dialog .dialog-flex {
-  width: 100%;
-  height: 100%;
-}
-
-.vue-dialog .dialog-content {
+.vue-dialog-content {
   flex: 1 0 auto;
   width: 100%;
-  padding: 15px;
-  font-size: 14px;
+  padding: 14px;
 }
 
-.vue-dialog .dialog-c-title {
+.vue-dialog-content-title {
   font-weight: 600;
-  padding-bottom: 15px;
+  padding-bottom: 14px;
 }
 
-.vue-dialog .vue-dialog-buttons {
+.vue-dialog-buttons {
   display: flex;
   flex: 0 1 auto;
   width: 100%;
   border-top: 1px solid #eee;
 }
 
-.vue-dialog .vue-dialog-buttons-none {
+.vue-dialog-buttons-none {
   width: 100%;
-  padding-bottom: 15px;
+  padding-bottom: 14px;
 }
 
 .vue-dialog-button {
-  font-size: 12px !important;
+  font-size: inherit;
   background: transparent;
   padding: 0;
   margin: 0;
@@ -161,11 +157,11 @@ export default {
 }
 
 .vue-dialog-button:hover {
-  background: rgba(0, 0, 0, 0.01);
+  background: #f9f9f9;
 }
 
 .vue-dialog-button:active {
-  background: rgba(0, 0, 0, 0.025);
+  background: #f3f3f3;
 }
 
 .vue-dialog-button:not(:first-of-type) {
