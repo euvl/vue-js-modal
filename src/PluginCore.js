@@ -1,66 +1,63 @@
 import { UNSUPPORTED_ARGUMENT_ERROR } from './utils/errors'
-import { createDivInBody } from './utils'
+import { createDivInBody, isString } from './utils'
 import ModalsContainer from './components/ModalsContainer.vue'
 
-class PluginCore {
-  constructor(Vue, options = {}) {
-    this.options = options
-    this.Vue = Vue
-    this.root = null
-    this.subscription = new Vue()
+const PluginCore = (Vue, options = {}) => {
+  const subscription = new Vue()
 
-    this.showStaticModal = this.showStaticModal.bind(this)
-    this.showDynamicModal = this.showDynamicModal.bind(this)
-    this.setDynamicModalContainer = this.setDynamicModalContainer.bind(this)
-    this.show = this.show.bind(this)
-    this.hide = this.hide.bind(this)
-    this.hideAll = this.hideAll.bind(this)
-    this.toggle = this.toggle.bind(this)
+  const context = {
+    root: null,
+    componentName: options.componentName || 'Modal'
   }
 
-  get context() {
-    const { componentName } = this.options
-
-    return {
-      componentName: componentName || 'Modal'
-    }
+  const showStaticModal = (name, params) => {
+    subscription.$emit('toggle', name, true, params)
   }
 
-  showStaticModal(modal, params) {
-    this.subscription.$emit('toggle', modal, true, params)
+  const showDynamicModal = (
+    component,
+    componentProps,
+    modalProps = {},
+    modalEvents
+  ) => {
+    const container = context.root?.__modalContainer
+    const defaults = options.dynamicDefaults || {}
+
+    container?.add(
+      component,
+      componentProps,
+      { ...defaults, ...modalProps },
+      modalEvents
+    )
   }
+
   /**
    * Creates a container for modals in the root Vue component.
    *
    * @param {Vue} parent
    */
-  setDynamicModalContainer(parent) {
-    this.root = parent
+  const setDynamicModalContainer = parent => {
+    context.root = parent
 
     const element = createDivInBody()
 
-    new this.Vue({
+    new Vue({
       parent,
       render: h => h(ModalsContainer)
     }).$mount(element)
   }
 
-  showDynamicModal(modal, props, params, events) {
-    const container = this.root?.__modalContainer
-    const dynamicDefaults = this.options.dynamicDefaults || {}
+  const show = (...args) => {
+    const [modal] = args
 
-    container?.add(modal, props, { ...dynamicDefaults, ...params }, events)
-  }
-
-  show(modal, ...args) {
     switch (typeof modal) {
       case 'string':
-        this.showStaticModal(modal, ...args)
+        showStaticModal(...args)
         break
 
       case 'object':
       case 'function':
-        this.showDynamicModal(modal, ...args)
+        showDynamicModal(...args)
         break
 
       default:
@@ -68,16 +65,26 @@ class PluginCore {
     }
   }
 
-  hide(name, params) {
-    this.subscription.$emit('toggle', name, false, params)
+  const hide = (name, params) => {
+    subscription.$emit('toggle', name, false, params)
   }
 
-  hideAll() {
-    this.subscription.$emit('hide-all')
+  const hideAll = () => {
+    subscription.$emit('hide-all')
   }
 
-  toggle(name, params) {
-    this.subscription.$emit('toggle', name, undefined, params)
+  const toggle = (name, params) => {
+    subscription.$emit('toggle', name, undefined, params)
+  }
+
+  return {
+    context,
+    subscription,
+    show,
+    hide,
+    hideAll,
+    toggle,
+    setDynamicModalContainer
   }
 }
 
