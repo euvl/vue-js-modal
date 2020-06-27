@@ -10,7 +10,16 @@ class PluginCore {
   install(Vue, options = {}) {
     this.options = options
     this.Vue = Vue
-    this.rootInstance = null
+    this.root = null
+    this.subscription = new Vue()
+
+    this.showStaticModal = this.showStaticModal.bind(this)
+    this.showDynamicModal = this.showDynamicModal.bind(this)
+    this.setDynamicModalContainer = this.setDynamicModalContainer.bind(this)
+    this.show = this.show.bind(this)
+    this.hide = this.hideAll.bind(this)
+    this.hideAll = this.hideAll.bind(this)
+    this.toggle = this.toggle.bind(this)
   }
 
   get context() {
@@ -19,14 +28,6 @@ class PluginCore {
     return {
       componentName: componentName || 'Modal'
     }
-  }
-
-  get subscription() {
-    if (!this._pubsub) {
-      this._pubsub = new this.Vue()
-    }
-
-    return this._pubsub
   }
 
   showStaticModal(modal, params) {
@@ -40,7 +41,7 @@ class PluginCore {
 
     new this.Vue({
       parent: this.root,
-      render: (h) => h(ModalsContainer)
+      render: h => h(ModalsContainer)
     }).$mount(element)
   }
 
@@ -79,7 +80,6 @@ class PluginCore {
   }
 
   hideAll() {
-    console.log(this)
     if (this.options.dynamic) {
       this.subscription.$emit('hide-all')
     } else {
