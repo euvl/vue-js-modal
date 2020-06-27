@@ -9,10 +9,6 @@ module.exports = {
 
     sidebar,
     nav: [
-      {
-        text: 'Sponsorship',
-        link: 'https://github.com/sponsors/euvl'
-      },
       { text: 'Github', link: 'https://github.com/euvl/vue-js-modal' },
       { text: 'Examples', link: '/examples/' }
     ]

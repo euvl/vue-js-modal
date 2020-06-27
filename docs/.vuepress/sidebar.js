@@ -6,11 +6,11 @@ module.exports = [
       '/Installation',
       '/Usage',
       '/API',
-      '/Configuration',
-      '/Properties',
       '/Events',
+      // '/Configuration',
+      '/Properties',
       '/Slots',
-      '/FAQ'
+      '/Other'
     ]
   }
 ]

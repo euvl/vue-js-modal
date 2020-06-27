@@ -1,12 +1,14 @@
----
-sidebarDepth: 0
----
-
-## Installation
+# Installation
 
 ```bash
 npm install vue-js-modal --save
 ```
+
+```bash
+yarn add vue-js-modal
+```
+
+## Client
 
 Import plugin in your main file:
 
@@ -16,19 +18,35 @@ import VModal from 'vue-js-modal'
 Vue.use(VModal)
 ```
 
-Or as a Nuxt.js plugin:
+## SSR
+
+To use this plugin with Nuxt.js you need to create a plugin file and reference it in the `nuxt.config.js` file.
+
+```js 
+// nuxt.config.js 
+export default {
+  ...
+  /*
+  ** Plugins to load before mounting the App
+  */
+  plugins: [
+    '~plugins/vue-js-modal.js'
+  ],
+}
+```
 
 ```js
+// plugins/vue-js-modal.js
 import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.nocss'
+import Modal from 'vue-js-modal/dist/ssr.nocss'
 
-// import from 'vue-js-modal/dist/styles.css
+import 'vue-js-modal/dist/styles.css'
 
-Vue.use(VModal)
+Vue.use(VModal, { ... })
 
-export default function(_, inject) {
-  inject('modal', VModal)
-}
+// export default function(_, inject) {
+//   inject('modal', VModal)
+// }
 ```
 
 ::: tip Extracted CSS
