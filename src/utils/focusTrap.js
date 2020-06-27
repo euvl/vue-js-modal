@@ -28,6 +28,10 @@ const isFocused = element => {
   return element == document.activeElement
 }
 
+const isNothingFocused = () => {
+  return !document.activeElement
+}
+
 class FocusTrap {
   constructor() {
     this.root = null
@@ -61,7 +65,7 @@ class FocusTrap {
     }
 
     // TAB
-    if (isFocused(this.lastElement())) {
+    if (isNothingFocused() || isFocused(this.lastElement())) {
       this.firstElement().focus()
       event.preventDefault()
       return

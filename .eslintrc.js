@@ -5,10 +5,13 @@ module.exports = {
     node: true
   },
 
+  plugins: ['babel'],
+
   extends: [
+    'plugin:babel',
     'plugin:vue/essential',
     'eslint:recommended',
-    '@vue/prettier',
+    '@vue/prettier'
   ],
 
   parserOptions: {
@@ -17,18 +20,19 @@ module.exports = {
 
   rules: {
     'no-console': 'off',
-    'no-debugger': 'off'
+    'no-debugger': 'off',
+    'babel/camelcase': 1
   },
 
   overrides: [
     {
       files: [
-        '**/*.spec.{j,t}s?(x)',
-      //  '**/tests/unit/**/*.spec.{j,t}s?(x)'
+        '**/*.spec.{j,t}s?(x)'
+        //  '**/tests/unit/**/*.spec.{j,t}s?(x)'
       ],
       env: {
         jest: true
       }
     }
-  ],
+  ]
 }

@@ -1,13 +1,9 @@
-import {
-  DYNAMIC_MODAL_DISABLED_ERROR,
-  UNSUPPORTED_ARGUMENT_ERROR,
-  HIDE_ALL_RESTRICTION_ERROR
-} from './utils/errors'
+import { UNSUPPORTED_ARGUMENT_ERROR } from './utils/errors'
 import { createDivInBody } from './utils'
 import ModalsContainer from './components/ModalsContainer.vue'
 
 class PluginCore {
-  install(Vue, options = {}) {
+  constructor(Vue, options = {}) {
     this.options = options
     this.Vue = Vue
     this.root = null
@@ -17,7 +13,7 @@ class PluginCore {
     this.showDynamicModal = this.showDynamicModal.bind(this)
     this.setDynamicModalContainer = this.setDynamicModalContainer.bind(this)
     this.show = this.show.bind(this)
-    this.hide = this.hideAll.bind(this)
+    this.hide = this.hide.bind(this)
     this.hideAll = this.hideAll.bind(this)
     this.toggle = this.toggle.bind(this)
   }
@@ -33,45 +29,42 @@ class PluginCore {
   showStaticModal(modal, params) {
     this.subscription.$emit('toggle', modal, true, params)
   }
-
-  setDynamicModalContainer(root) {
-    this.root = root
+  /**
+   * Creates a container for modals in the root Vue component.
+   *
+   * @param {Vue} parent
+   */
+  setDynamicModalContainer(parent) {
+    this.root = parent
 
     const element = createDivInBody()
 
     new this.Vue({
-      parent: this.root,
+      parent,
       render: h => h(ModalsContainer)
     }).$mount(element)
   }
 
   showDynamicModal(modal, props, params, events) {
-    const { options, root } = this
+    const container = this.root?.__modalContainer
+    const dynamicDefaults = this.options.dynamicDefaults || {}
 
-    const container = root && root._modalContainer
-    const dynamicDefaults = options.dynamicDefaults || {}
-
-    if (container) {
-      container.add(modal, props, { ...dynamicDefaults, ...params }, events)
-    }
+    container?.add(modal, props, { ...dynamicDefaults, ...params }, events)
   }
 
   show(modal, ...args) {
     switch (typeof modal) {
-      case 'string': {
-        return this.showStaticModal(modal, ...args)
-      }
+      case 'string':
+        this.showStaticModal(modal, ...args)
+        break
 
       case 'object':
-      case 'function': {
-        return this.options.dynamic
-          ? this.showDynamicModal(modal, ...args)
-          : console.warn(DYNAMIC_MODAL_DISABLED_ERROR)
-      }
+      case 'function':
+        this.showDynamicModal(modal, ...args)
+        break
 
-      default: {
+      default:
         console.warn(UNSUPPORTED_ARGUMENT_ERROR, modal)
-      }
     }
   }
 
@@ -80,11 +73,7 @@ class PluginCore {
   }
 
   hideAll() {
-    if (this.options.dynamic) {
-      this.subscription.$emit('hide-all')
-    } else {
-      console.warn(HIDE_ALL_RESTRICTION_ERROR)
-    }
+    this.subscription.$emit('hide-all')
   }
 
   toggle(name, params) {

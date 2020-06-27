@@ -51,6 +51,7 @@
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.1",
     "eslint": "^6.7.2",
+    "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.2.2",
     "file-loader": "^0.9.0",
@@ -69,15 +70,16 @@
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "2.6.11",
     "vue-test-utils": "^1.0.0-beta.11",
+    "vuepress": "^1.5.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-merge": "^4.2.2",
-    "vuepress": "^1.5.2"
+    "webpack-merge": "^4.2.2"
   },
   "peerDependencies": {
     "vue": "2.6.11"
   },
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.3",
     "resize-observer-polyfill": "^1.5.1"
   }
 }

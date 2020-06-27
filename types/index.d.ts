@@ -1,28 +1,31 @@
-import Vue, { PluginObject, ComponentOptions, AsyncComponent } from "vue";
+import Vue, { PluginObject, ComponentOptions, AsyncComponent } from 'vue'
 
 declare const VueJSModal: PluginObject<VueJSModalOptions> & {
-  rootInstance?: Vue
-};
+  // rootInstance?: Vue
+}
 
-export default VueJSModal;
+export default VueJSModal
 
 export declare interface VueJSModalOptions {
-  componentName?: string;
-  dialog?: boolean;
+  componentName?: string
+  dialog?: boolean
 }
 
 declare interface VModal {
-  show(modal: string 
-    | typeof Vue 
-    | ComponentOptions<Vue> 
-    | AsyncComponent, paramsOrProps?: object, params?: object, events?: object): void;
-  hide(name: string, params?: object): void;
-  hideAll(): void;
-  toggle(name: string, params?: object): void;
+  show(name: string, params?: Record<string, any>): void
+  show(
+    component: typeof Vue | ComponentOptions<Vue> | AsyncComponent,
+    componentProps?: object,
+    modalProps?: object,
+    modalEvents?: object
+  ): void
+  hide(name: string, params?: object): void
+  hideAll(): void
+  toggle(name: string, params?: object): void
 }
 
-declare module "vue/types/vue" {
+declare module 'vue/types/vue' {
   interface Vue {
-    $modal: VModal;
+    $modal: VModal
   }
 }

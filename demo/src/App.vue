@@ -132,7 +132,7 @@ export default {
         text: 'You can add an arbitrary number of buttons.',
         buttons: [
           {
-            title: 'Cancel 💩',
+            title: 'Cancel',
             handler: () => {
               this.$modal.hide('dialog')
             }
@@ -141,13 +141,13 @@ export default {
             title: 'Like',
             default: true,
             handler: () => {
-              alert('LIKE LIKE LIKE')
+              alert('Like action')
             }
           },
           {
             title: 'Repost',
             handler: () => {
-              alert('REPOST REPOST REPOST')
+              alert('Repost action')
             }
           }
         ]
@@ -174,7 +174,6 @@ export default {
     },
 
     showDynamicComponentModal() {
-      console.log('Showing one more')
       this.$modal.show(DemoCustomComponent, {
         text: 'This text is passed as a property'
       })
