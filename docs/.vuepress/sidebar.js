@@ -7,7 +7,7 @@ module.exports = [
       '/Usage',
       '/API',
       '/Events',
-      // '/Configuration',
+      '/Configuration',
       '/Properties',
       '/Slots',
       '/Other'

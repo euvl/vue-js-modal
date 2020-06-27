@@ -1,3 +1,6 @@
+export * from './types'
+export * from './numbers'
+
 const INPUT_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
 
 export const generateId = ((index = 0) => () => (index++).toString())()
@@ -9,9 +12,6 @@ export const generateId = ((index = 0) => () => (index++).toString())()
  * @return {Number} Either source value itself or limit value if range limits
  * are exceeded
  */
-export const inRange = (from, to, value) => {
-  return value < from ? from : value > to ? to : value
-}
 
 export const createDivInBody = () => {
   const div = document.createElement('div')

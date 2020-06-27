@@ -18,7 +18,7 @@ const Plugin = {
         if (caller instanceof Vue) {
           const root = caller.$root
 
-          if (!plugin.root) {
+          if (!plugin.context.root) {
             plugin.setDynamicModalContainer(root)
           }
         }
