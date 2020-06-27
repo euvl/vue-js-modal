@@ -73,14 +73,14 @@ export default {
   },
   methods: {
     beforeOpened(event) {
-      window.addEventListener('keyup', this.onKeyUp)
+      // window.addEventListener('keyup', this.onKeyUp)
 
       this.params = event.params || {}
       this.$emit('before-opened', event)
     },
 
     beforeClosed(event) {
-      window.removeEventListener('keyup', this.onKeyUp)
+      // window.removeEventListener('keyup', this.onKeyUp)
 
       this.params = {}
       this.$emit('before-closed', event)
@@ -93,18 +93,6 @@ export default {
       if (typeof handler === 'function') {
         handler(buttonIndex, event, { source })
       }
-    },
-
-    onKeyUp(event) {
-      // if (event.which === 13 && this.buttons.length > 0) {
-      //   const buttonIndex =
-      //     this.buttons.length === 1
-      //       ? 0
-      //       : this.buttons.findIndex(button => button.default)
-      //   if (buttonIndex !== -1) {
-      //     this.click(buttonIndex, event, 'keypress')
-      //   }
-      // }
     }
   }
 }
