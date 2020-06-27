@@ -22,6 +22,9 @@ module.exports = {
         cache: true,
         parallel: true,
         sourceMap: true
+        // compress: {
+        //   pure_funcs: ['console.log']
+        // }
       }),
       new OptimizeCSSAssetsPlugin({
         canPrint: true

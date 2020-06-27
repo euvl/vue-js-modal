@@ -1,18 +1,15 @@
 import Vue, { PluginObject, ComponentOptions, AsyncComponent } from 'vue'
 
-declare const VueJSModal: PluginObject<VueJSModalOptions> & {
-  // rootInstance?: Vue
-}
-
-export default VueJSModal
-
 export declare interface VueJSModalOptions {
   componentName?: string
   dialog?: boolean
+  dynamicDefaults?: object
 }
 
+declare const VueJSModal: PluginObject<VueJSModalOptions>
+
 declare interface VModal {
-  show(name: string, params?: Record<string, any>): void
+  show(name: string, params?: object): void
   show(
     component: typeof Vue | ComponentOptions<Vue> | AsyncComponent,
     componentProps?: object,
@@ -29,3 +26,5 @@ declare module 'vue/types/vue' {
     $modal: VModal
   }
 }
+
+export default VueJSModal
