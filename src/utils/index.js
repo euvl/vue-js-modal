@@ -1,4 +1,3 @@
-export * from './types'
 export * from './numbers'
 
 const INPUT_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
