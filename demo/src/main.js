@@ -4,9 +4,8 @@ import App from './App.vue'
 
 Vue.use(VueJsModal, {
   dialog: true,
-  dynamic: true,
   dynamicDefaults: {
-    foo: 'foo'
+    draggable: true
   }
 })
 

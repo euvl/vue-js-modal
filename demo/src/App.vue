@@ -160,15 +160,17 @@ export default {
         {
           template: `
               <div class="example-modal-content">
-                <h1>This is created inline</h1>
+                <p>Component has been created inline.</p>
                 <p>{{ text }}</p>
-                <p>Default Property: {{ foo }}</p>
+                <p>This component is draggable because of the "dynamicDefault" property.</p>
               </div>
             `,
-          props: ['text', 'height']
+          props: ['text']
         },
         {
-          text: 'This text is passed as a property',
+          text: 'Text has been passed as a property.'
+        },
+        {
           height: 'auto'
         }
       )
@@ -190,17 +192,19 @@ export default {
           counter++
         }
 
-        const name = `dynamic-modal-${Date.now()}`
+        const name = `dynamic-modal-${Math.random()}`
 
         this.$modal.show(
           {
             template: `
               <div class="example-modal-content">
-                <button class="btn" @click="closeByName">Close this using name</button>
-                <button class="btn" @click="closeByEvent">Close this using events</button>
+                <h2>{{ name }}</h2>
+                <button class="btn" @click="closeByName">Close using name</button>
+                <button class="btn" @click="closeByEvent">Close using events</button>
                 <button class="btn" @click="this.$modal.hideAll">Close all dynamic modals</button>
-            </div>
+              </div>
             `,
+            props: ['name'],
             methods: {
               closeByName() {
                 this.$modal.hide(name)
@@ -210,16 +214,10 @@ export default {
               }
             }
           },
-          null,
-          {
-            height: 'auto',
-            name: name,
-            resizable: true,
-            adaptive: true,
-            draggable: true
-          }
+          { name },
+          { name, height: 'auto' }
         )
-      }, 2000)
+      }, 300)
     },
 
     dialogEvent(eventName) {
