@@ -1,5 +1,5 @@
 import { UNSUPPORTED_ARGUMENT_ERROR } from './utils/errors'
-import { createDivInBody, isString } from './utils'
+import { createDivInBody } from './utils'
 import ModalsContainer from './components/ModalsContainer.vue'
 
 const PluginCore = (Vue, options = {}) => {
