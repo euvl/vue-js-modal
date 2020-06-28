@@ -4,11 +4,10 @@ module.exports = [
     collapsable: false,
     children: [
       '/Installation',
+      '/Intro',
       '/Usage',
-      '/API',
-      '/Events',
-      '/Configuration',
       '/Properties',
+      '/Events',
       '/Slots',
       '/Other'
     ]

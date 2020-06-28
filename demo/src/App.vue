@@ -128,8 +128,9 @@ export default {
 
     showButtonsDialog() {
       this.$modal.show('dialog', {
-        title: 'Buttons example',
-        text: 'You can add an arbitrary number of buttons.',
+        title: 'The standard Lorem Ipsum passage',
+        text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         buttons: [
           {
             title: 'Cancel',
