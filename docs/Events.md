@@ -2,25 +2,25 @@
 
 ## Events
 
-`@before-open`
+#### `@before-open`
 
 Emits while modal is still invisible, but was added to the DOM. Further opening of the modal can be blocked from this event listener by calling `event.cancel()` .           
 
 ---
 
-`@opened`
+#### `@opened`
 
 Emits after modal became visible or started transition.
 
 ---
 
-`@before-close`
+#### `@before-close`
 
 Emits before modal is going to be closed. Further closing of the modal can be blocked from this event listener by calling `event.cancel()` .
 
 ---
 
-`@closed` 
+#### `@closed` 
  
 Emits right before modal is destroyed.
 

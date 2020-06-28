@@ -1,30 +1,34 @@
+---
+sidebarDepth: 2
+---
+
 # Properties
 
 ## Properties
 
-`name: String` **required**
+#### `name: String` **required**
 
 Name of the modal, it is required property.
 
 ---
 
-`resizable: Boolean` 
+#### `resizable: Boolean` 
 
 Enables resizing of the modal.
 
 ---
 
-`adaptive: Boolean`
+#### `adaptive: Boolean`
 
 Enable responsive behavior, modal will try to adapt to the screen size when possible. Properties  `maxHeight`, `maxWidth`, `minHeight`, `minWidth` can set the boundaries for the automatic resizing.
 
 ---
 
-`draggable: Boolean | String`
+#### `draggable: Boolean | String`
 
 Allows dragging the modal within the boundaries of the screen.
 
-Draggable property can accept String parameters. With String value, you can specify a CSS selector to **an element which will be used as a "handler" for dragging**.
+Draggable property can accept string parameter - a CSS selector to **an element which will be used as a "handler" for dragging**.
 
 ```html
 <modal name="bar" draggable=".window-header">
@@ -37,8 +41,7 @@ Draggable property can accept String parameters. With String value, you can spec
 
 ---
 
-`scrollable: Boolean`
-
+#### `scrollable: Boolean`
 
 Enables scroll within the modal when the height of the modal is greater than the screen.
 
@@ -63,43 +66,43 @@ Scrollable content & auto height
 
 ---
 
-`focusTrap: Boolean`
+#### `focusTrap: Boolean`
 
 Enables focus trap meaning that only inputs/buttons that are withing the modal window can be focused by pressing Tab (plugin uses very naive implementation of the focus trap)
 
 ---
 
-`reset: Boolean`
+#### `reset: Boolean`
 
 Resets position and size before showing
 
 ---
 
-`clickToClose: Boolean`  `default: true`
+#### `clickToClose: Boolean`  `default: true`
 
 If set to `false`, it will not be possible to close modal by clicking on the background or by pressing Esc key.
 
 ---
 
-`transition: String`
+#### `transition: String`
 
 CSS transition applied to the modal window.
 
 ---
 
-`overlayTransition: String`
+#### `overlayTransition: String`
 
 CSS transition applied to the overlay (background).
 
 ---
 
-`classes: String | Array`
+#### `classes: String | Array`
 
 List of class that will be applied to the modal window (not overlay, just the box).
 
 ---
 
-`styles: String | Array | Object` 
+#### `styles: String | Array | Object` 
 
 Style that will be applied to the modal window.
 
@@ -112,7 +115,7 @@ Vue.js does not allow merging string css definition with an object/array style d
 
 ---
 
-`width: String | Number` `default: 600`     
+#### `width: String | Number` `default: 600`     
 
 Width in pixels or percents (50, "50px", "50%").
 
@@ -125,7 +128,7 @@ If you need to use more value types, please consider contributing to the parser 
 
 ---
 
-`height: String | Number` `default: 300`
+#### `height: String | Number` `default: 300`
 
 Height in pixels or percents (50, "50px", "50%") or `"auto"`.                       
  
@@ -138,37 +141,37 @@ If you need to use more value types, please consider contributing to the parser 
 
 ---
 
-`minWidth: Number (pixels)` `default: 0`
+#### `minWidth: Number (pixels)` `default: 0`
 
 The minimum width to which modal can be resized.
 
 ---
 
-`minHeight: Number (pixels)` `default: 0`
+#### `minHeight: Number (pixels)` `default: 0`
 
 The minimum height to which modal can be resized.
 
 ---
 
-`maxWidth: Number (pixels)` `default: Infinity`
+#### `maxWidth: Number (pixels)` `default: Infinity`
 
 The maximum width of the modal (if the value is greater than window width, window width will be used instead.
 
 ---
 
-`maxHeight: Number (pixels)` `default: Infinity`
+#### `maxHeight: Number (pixels)` `default: Infinity`
 
 The maximum height of the modal (if the value is greater than window height, window height will be used instead.
 
 ---
 
-`shiftX: Number (between 0 and 1.0)` `default: 0.5`
+#### `shiftX: Number (between 0 and 1.0)` `default: 0.5`
 
 Horizontal position in `%`, default is `0.5` (meaning that modal box will be in the middle (50% from left) of the window
 
 ---
 
-`shiftY: Number (between 0 and 1.0)` `default: 0.5`
+#### `shiftY: Number (between 0 and 1.0)` `default: 0.5`
 
 Vertical position in `%`, default is `0.5` (meaning that modal box will be in the middle (50% from top) of the window.
 
