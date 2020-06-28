@@ -210,6 +210,8 @@ export default {
     this.$modal.subscription.$on('toggle', this.onToggle)
 
     window.addEventListener('resize', this.onWindowResize)
+    window.addEventListener('orientationchange', this.onWindowResize)
+
     this.onWindowResize()
     /**
      * Making sure that autoHeight is enabled when using "scrollable"
@@ -243,6 +245,7 @@ export default {
     this.$modal.subscription.$off('toggle', this.onToggle)
 
     window.removeEventListener('resize', this.onWindowResize)
+    window.removeEventListener('orientationchange', this.onWindowResize)
 
     if (this.clickToClose) {
       window.removeEventListener('keyup', this.onEscapeKeyUp)
