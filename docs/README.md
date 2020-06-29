@@ -1,3 +1,1 @@
-# Guide
-
-[[toc]]
+Installation.md
