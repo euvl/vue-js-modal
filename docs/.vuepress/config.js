@@ -13,7 +13,4 @@ module.exports = {
       { text: 'Examples', link: '/examples/' }
     ]
   }
-  // markdown: {
-  //   extractHeaders: ['h2', 'h3', 'h4']
-  // }
 }
