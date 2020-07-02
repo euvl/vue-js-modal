@@ -14,7 +14,7 @@ Version 2.0.0 release candidates will have breaking changes until it is 2.0.1. I
 
 If you notice any bugs or regressings please do not hesitate to report any issues. 
 
-# :pray: Sponsorship  & support
+# Sponsorship  & support
 
 **If you are using this project please consider sponsorting it's further development & bug fixes**
 
