@@ -63,16 +63,22 @@ Vue.use(VModal, { componentName: "foo-modal" })
 
 Or as a Nuxt.js plugin:
 
+##### plugins/vue-js-modal.js
+
 ```javascript
 import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.nocss'
+import VModal from 'vue-js-modal'
 
 Vue.use(VModal)
+```
 
-export default function(ctx, inject) {
+##### nuxt.config.js
 
-  inject('modal', VModal)
-}
+```javascript
+export default {
+  plugins: [
+    {src: '~/plugins/vue-js-modal', mode: 'client'},
+  ]
 ```
 
 Create modal:
@@ -257,29 +263,6 @@ Vue.use(VueJsModal, {
 For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-modal.yev.io).
 
 **Note:** keep in mind that there are some limitations in using dynamic modals. If you need full functionality then use ordinary modal instead.
-
-### SSR
-
-Include plugin in your `nuxt.config.js` file:
-
-```javascript
-module.exports = {
-  plugins: ['~plugins/vue-js-modal']
-}
-```
-
-And your `plugins/vue-js-modal.js` will look like:
-
-```javascript
-import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.index'
-
-Vue.use(VModal)
-```
-
-### Extracted CSS
-
-There is also an SSR build with CSS file extracted. Take a look in /dist folder.
 
 ### Properties
 
