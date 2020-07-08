@@ -15,6 +15,13 @@ Import plugin in your main file:
 ```js
 import VModal from 'vue-js-modal'
 
+OR
+
+import VModal from 'vue-js-modal/dist/index.nocss.js'
+import 'vue-js-modal/dist/styles.css'
+```
+
+```js
 Vue.use(VModal)
 ```
 
