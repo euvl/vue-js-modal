@@ -2,46 +2,31 @@
   
 # Vue.js modal
 
+Simple to use, highly customizable, mobile-friendly Vue.js modal with SSR support.
+
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 [![npm](https://img.shields.io/npm/dt/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 
-  
-# :pray: Sponsorship  & support
+# ⚠️⚠️⚠️ 2.0.0-rc.X version:
+
+Version 2.0.0 release candidates will have breaking changes until it is 2.0.1. If you need a more stable version, please use 1.3.34.
+
+If you notice any bugs or regressings please do not hesitate to report any issues. 
+
+# Sponsorship  & support
 
 **If you are using this project please consider sponsorting it's further development & bug fixes**
 
 Links: https://github.com/sponsors/euvl, https://www.buymeacoffee.com/yev
 
-:pray: Thank you!!!
 
-# ⚠️⚠️⚠️ 2.0.0-rc.3 version:
-
-Version 2.0.0+ potentially has breaking changes. Please take a look at the changelog below:
-
-* Using ResizeObserver instead of MutationObserver
-* Using transition states to coordinate modal & overlay transitions (instead of delays)
-* Using prettier
-* Overlay is not a parent of the modal anymore (now has independent transition)
-* **Renamed** `Event.stop` => `Event.cancel`
-* **Removed** `v--modal-background-click` element
-* **Removed** `v--modal` default class
-* **Removed "delay" property** - component is relying on modal & overlay transition durations
-* Added naive implementation of focus trap
-* Added source-maps
-* Added `hideAll` for dynamic modals
-* Fix: dialogs not working when `componentName` is changed
-* Fix: `ActiveElement` is blurred after `before-open` event is fired (it is possible to cache document.activeElement now)
 
 <p align="right">
   <a href="https://www.buymeacoffee.com/yev" target="_blank">
   <img width="200" alt="screen shot 2018-03-01 at 10 33 39" src="https://user-images.githubusercontent.com/1577802/36840220-21beb89c-1d3c-11e8-98a4-45fc334842cf.png">
   </a>
 </p>
-
-##### Simple to use, highly customizable, mobile-friendly Vue.js 2.0+ modal with SSR support. http://vue-js-modal.yev.io/
-
-[Changelog](https://github.com/euvl/vue-js-modal/releases)
 
 <p align="center">
   <img src="https://media.giphy.com/media/3oKIPco1eNxAA1rD4Q/giphy.gif">
@@ -78,16 +63,22 @@ Vue.use(VModal, { componentName: "foo-modal" })
 
 Or as a Nuxt.js plugin:
 
+##### plugins/vue-js-modal.js
+
 ```javascript
 import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.nocss'
+import VModal from 'vue-js-modal'
 
 Vue.use(VModal)
+```
 
-export default function(ctx, inject) {
+##### nuxt.config.js
 
-  inject('modal', VModal)
-}
+```javascript
+export default {
+  plugins: [
+    {src: '~/plugins/vue-js-modal', mode: 'client'},
+  ]
 ```
 
 Create modal:
@@ -273,29 +264,6 @@ For more examples please take a look at [vue-js-modal.yev.io](http://vue-js-moda
 
 **Note:** keep in mind that there are some limitations in using dynamic modals. If you need full functionality then use ordinary modal instead.
 
-### SSR
-
-Include plugin in your `nuxt.config.js` file:
-
-```javascript
-module.exports = {
-  plugins: ['~plugins/vue-js-modal']
-}
-```
-
-And your `plugins/vue-js-modal.js` will look like:
-
-```javascript
-import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.index'
-
-Vue.use(VModal)
-```
-
-### Extracted CSS
-
-There is also an SSR build with CSS file extracted. Take a look in /dist folder.
-
 ### Properties
 
 | Name         | Required | Type          | Default     | Description |
@@ -479,37 +447,7 @@ Example:
 </modal>
 ```
 
-#### Overlay background color
-
-If you want to change overlay background color, you can easily do it using CSS.
-
-For all modals:
-
-```css
-.vm--overlay {
-  background: red;
-}
-```
-
-For specific modal:
-
-```css
-.vm--overlay[data-modal="my_modal_name"] {
-  background: transparent;
-}
-```
-
-#### Fullscreen
-
-```vue
-<modal name="fs" :adaptive="true" width="100%" height="100%">
-Dont forget about close button :)
-</modal>
-```
-
 #### IE support
-
-This plugin uses arrow functions, resize observer and other features of modern after-2008-financial-crisis world.
 
 To be able to use this plugin in IE you need to make sure that you transpile the code preoperty. Please read this stackoverflow: https://stackoverflow.com/questions/56446904/transpiling-es6-for-ie11-with-babel
 
@@ -557,3 +495,6 @@ import VModal from 'vue-js-modal'
 
 Vue.use(VModal)
 ```
+
+> **This library is contributor-driven**. It is not backed by any company, which means that all contributions are voluntary and done by the people who need them. If you need something improved, added, or fixed, please contribute it yourself. Please keep in mind that maintainers volunteer their free time to work on this project and have no obligation to reply on the issues, tailor library for specific use-cases or perform customer support. 
+
