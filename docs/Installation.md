@@ -22,8 +22,8 @@ Vue.use(VModal)
 
 To use this plugin with Nuxt.js you need to create a plugin file and reference it in the `nuxt.config.js` file.
 
-```js 
-// nuxt.config.js 
+```js
+// nuxt.config.js
 export default {
   ...
   /*
@@ -52,7 +52,9 @@ Vue.use(VModal, { ... })
 ::: tip Extracted CSS
 The `/dist` directory contains a version of the build with extracted CSS files. This is useful for SSR but also can be used with the purely client-side implementation when you need more flexibility in controlling your stylesheets.
 
-* `ssr.index.js` - SSR build with inline CSS
-* `ssr.nocss.js` - SSR build without inline CSS
-* `styles.css` - File with required styles
+- `ssr.index.js` - SSR build with inline CSS
+- `ssr.nocss.js` - SSR build without inline CSS
+- `index.nocss.js` - Client build without inline CSS
+- `styles.css` - Stylesheet
+
 :::
