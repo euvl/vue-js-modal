@@ -12,6 +12,8 @@ Easy to use, highly customizable Vue.js modal library.
 
 ### 🙌 [Looking for maintainers](https://github.com/euvl/vue-js-modal/issues/588)
 
+### 💰 [Sponsorship](https://github.com/sponsors/euvl)
+
 [![npm version](https://badge.fury.io/js/vue-js-modal.svg)](https://badge.fury.io/js/vue-js-modal)
 [![npm](https://img.shields.io/npm/dm/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
 [![npm](https://img.shields.io/npm/dt/vue-js-modal.svg)](https://www.npmjs.com/package/vue-js-modal)
