@@ -8,6 +8,12 @@ sidebarDepth: 2
 
 Configuration options can be passed as a second argument to `Vue.use`. 
 
+```js
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal, { ... })
+```
+
 ####  `dialog: Boolean` 
 
 Enables [dialogs](Intro#dialogs).
