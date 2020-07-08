@@ -17,19 +17,6 @@
       @closed="dialogEvent('closed')"
     />
 
-    <h2>
-      Vue.js Modal
-      <a
-        href="https://github.com/euvl/vue-js-modal/blob/master/README.md"
-        target="readme"
-      >Readme</a>
-      <a href="https://github.com/euvl/vue-js-modal/issues" target="issues">Issues</a>
-      <a
-        href="https://github.com/euvl/vue-js-modal/tree/master/demo/src/components"
-        target="issues"
-      >Examples</a>
-    </h2>
-
     <!-- Other -->
 
     <pre style="line-height: 1.5;">
