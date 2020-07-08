@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.3",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "1.0.0-beta.31",
     "babel-jest": "^23.6.0",
@@ -80,7 +81,6 @@
     "vue": "2.6.11"
   },
   "dependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.10.3",
     "resize-observer-polyfill": "^1.5.1"
   }
 }
