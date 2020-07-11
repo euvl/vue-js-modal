@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Events | Vue.js Modal</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    
+    <meta name="description" content="Simple, flexible, Vue.js modal plugin">
+    <!--before-resource-hints--><!--before-resource-hints--><!--before-resource-hints--><link rel="preload" href="/vue-js-modal/assets/css/0.styles.e3ff5158.css" as="style"><link rel="preload" href="/vue-js-modal/assets/js/app.1dd90d44.js" as="script"><link rel="preload" href="/vue-js-modal/assets/js/3.4cb76e0e.js" as="script"><link rel="preload" href="/vue-js-modal/assets/js/6.e8bb0b02.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/1.39dd32e6.js"><link rel="prefetch" href="/vue-js-modal/assets/js/10.748daa33.js"><link rel="prefetch" href="/vue-js-modal/assets/js/11.755717ef.js"><link rel="prefetch" href="/vue-js-modal/assets/js/12.8f61333d.js"><link rel="prefetch" href="/vue-js-modal/assets/js/4.e563134c.js"><link rel="prefetch" href="/vue-js-modal/assets/js/5.08119c41.js"><link rel="prefetch" href="/vue-js-modal/assets/js/7.98164c92.js"><link rel="prefetch" href="/vue-js-modal/assets/js/8.9145c7af.js"><link rel="prefetch" href="/vue-js-modal/assets/js/9.6c89783b.js"><!--after-resource-hints--><!--after-resource-hints--><!--after-resource-hints-->
+    <link rel="stylesheet" href="/vue-js-modal/assets/css/0.styles.e3ff5158.css">
+  </head>
+  <body>
+    <!--before-vue-ssr-outlet--><div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vue-js-modal/" class="home-link router-link-active"><!----> <span class="site-name">Vue.js Modal</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="https://github.com/euvl/vue-js-modal" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="/vue-js-modal/examples/" class="nav-link">
+  Examples
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="https://github.com/euvl/vue-js-modal" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="/vue-js-modal/examples/" class="nav-link">
+  Examples
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue-js-modal/Installation.html" class="sidebar-link">Installation</a></li><li><a href="/vue-js-modal/Intro.html" class="sidebar-link">Introduction</a></li><li><a href="/vue-js-modal/Usage.html" class="sidebar-link">Usage</a></li><li><a href="/vue-js-modal/Properties.html" class="sidebar-link">Properties</a></li><li><a href="/vue-js-modal/Events.html" aria-current="page" class="active sidebar-link">Events</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue-js-modal/Events.html#events-2" class="sidebar-link">Events</a></li><li class="sidebar-sub-header"><a href="/vue-js-modal/Events.html#event-cancellation" class="sidebar-link">Event cancellation</a></li><li class="sidebar-sub-header"><a href="/vue-js-modal/Events.html#examples" class="sidebar-link">Examples</a></li></ul></li><li><a href="/vue-js-modal/Slots.html" class="sidebar-link">Slots</a></li><li><a href="/vue-js-modal/Other.html" class="sidebar-link">Other</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="events"><a href="#events" class="header-anchor">#</a> Events</h1> <h2 id="events-2"><a href="#events-2" class="header-anchor">#</a> Events</h2> <h4 id="before-open"><a href="#before-open" class="header-anchor">#</a> <code>@before-open</code></h4> <p>Emits while modal is still invisible, but was added to the DOM. Further opening of the modal can be blocked from this event listener by calling <code>event.cancel()</code> .</p> <hr> <h4 id="opened"><a href="#opened" class="header-anchor">#</a> <code>@opened</code></h4> <p>Emits after modal became visible or started transition.</p> <hr> <h4 id="before-close"><a href="#before-close" class="header-anchor">#</a> <code>@before-close</code></h4> <p>Emits before modal is going to be closed. Further closing of the modal can be blocked from this event listener by calling <code>event.cancel()</code> .</p> <hr> <h4 id="closed"><a href="#closed" class="header-anchor">#</a> <code>@closed</code></h4> <p>Emits right before modal is destroyed.</p> <hr> <h2 id="event-cancellation"><a href="#event-cancellation" class="header-anchor">#</a> Event cancellation</h2> <p>Opening and closing can be canceled by calling <code>event.cancel()</code> function in either <code>before-open</code> or <code>before-close</code> event handlers.</p> <h2 id="examples"><a href="#examples" class="header-anchor">#</a> Examples</h2> <p>Static modal:</p> <div class="language-html extra-class"><div class="highlight-lines"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><div class="highlighted"> </div><br><br><br><br><br><br></div><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>modal</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>example<span class="token punctuation">&quot;</span></span>
+         <span class="token attr-name">@before-open</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>beforeOpen<span class="token punctuation">&quot;</span></span>
+         <span class="token attr-name">@before-close</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>beforeClose<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>Hello, {{ name }}!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>modal</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  name<span class="token operator">:</span> <span class="token string">'Example'</span><span class="token punctuation">,</span>
+  <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      name<span class="token operator">:</span> <span class="token string">'Tom'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  methods<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">beforeOpen</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Opening...'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">beforeClose</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Closing...'</span><span class="token punctuation">)</span>
+      <span class="token comment">// What a gamble... 50% chance to cancel closing</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        event<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>Dynamic modal:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  name<span class="token operator">:</span> <span class="token string">'Example'</span><span class="token punctuation">,</span>
+  <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      name<span class="token operator">:</span> <span class="token string">'Tom'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  methods<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">openModal</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$modal<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;span&gt;Hello, {{ name }}!&lt;/span&gt;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+        props<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        name<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        width<span class="token operator">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+        height<span class="token operator">:</span> <span class="token number">300</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token string">'before-open'</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>beforeOpen<span class="token punctuation">,</span>
+        <span class="token string">'before-close'</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>beforeClose
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">beforeOpen</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Opening...'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">beforeClose</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Closing...'</span><span class="token punctuation">)</span>
+      <span class="token comment">// What a gamble... 50% chance to cancel closing</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        event<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue-js-modal/Properties.html" class="prev">
+        Properties
+      </a></span> <span class="next"><a href="/vue-js-modal/Slots.html">
+        Slots
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div><!--after-vue-ssr-outlet-->
+    <!--before-scripts--><!--before-scripts--><!--before-scripts--><script src="/vue-js-modal/assets/js/app.1dd90d44.js" defer></script><script src="/vue-js-modal/assets/js/3.4cb76e0e.js" defer></script><script src="/vue-js-modal/assets/js/6.e8bb0b02.js" defer></script><!--after-scripts--><!--after-scripts--><!--after-scripts-->
+  </body>
+</html>
