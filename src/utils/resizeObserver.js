@@ -4,4 +4,5 @@ const observer =
   typeof window !== 'undefined' && window.ResizeObserver
     ? ResizeObserver
     : ResizeObserverPolyfill
+
 export default observer

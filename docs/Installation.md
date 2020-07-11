@@ -45,15 +45,17 @@ export default {
 ```js
 // plugins/vue-js-modal.js
 import Vue from 'vue'
-import Modal from 'vue-js-modal/dist/ssr.nocss'
+import VModal from 'vue-js-modal/dist/ssr.nocss'
 
 import 'vue-js-modal/dist/styles.css'
 
 Vue.use(VModal, { ... })
 
-// export default function(_, inject) {
-//   inject('modal', VModal)
-// }
+/*
+export default function(_, inject) {
+  inject('modal', VModal)
+}
+*/
 ```
 
 ::: tip Extracted CSS

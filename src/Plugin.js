@@ -4,6 +4,10 @@ import PluginCore from './PluginCore'
 
 const Plugin = {
   install(Vue, options = {}) {
+    if (Vue.prototype.$modal) {
+      return
+    }
+
     const plugin = new PluginCore(Vue, options)
 
     Object.defineProperty(Vue.prototype, '$modal', {
