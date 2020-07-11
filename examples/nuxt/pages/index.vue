@@ -18,13 +18,13 @@ import ExampleModal from '../components/ExampleModal'
 
 export default {
   components: {
-    ExampleModal,
+    ExampleModal
   },
   methods: {
     click() {
       this.$modal.show('example-modal')
-    },
-  },
+    }
+  }
 }
 </script>
 

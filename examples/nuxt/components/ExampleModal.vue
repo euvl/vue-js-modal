@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'ExampleModal',
+  name: 'ExampleModal'
 }
 </script>
 
