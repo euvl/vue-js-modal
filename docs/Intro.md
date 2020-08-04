@@ -27,7 +27,7 @@ export default {
             this.$modal.hide('my-first-modal');
         }
     },
-    mount () {
+    mounted () {
         this.show()
     }
 }
