@@ -87,6 +87,7 @@ export default {
         el.style.width = width + 'px'
         el.style.height = height + 'px'
 
+        //Emit event if True
         if (this.emitEvent) {
           this.$emit('resize', {
             element: el,
