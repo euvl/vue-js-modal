@@ -2,7 +2,7 @@
   
 # Vue.js modal FORK
 
-Easy to use, highly customizable Vue.js modal library. test
+Easy to use, highly customizable Vue.js modal library. test2
 
 ### 😎 [Examples](http://vue-js-modal.yev.io/) 
 
