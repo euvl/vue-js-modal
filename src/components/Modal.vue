@@ -42,7 +42,7 @@
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
-          :emit-event="true"
+          :emit-event="fixedResize"
           @resize="onModalResize"
         />
       </div>
@@ -80,6 +80,10 @@ export default {
       type: String
     },
     resizable: {
+      type: Boolean,
+      default: false
+    },
+    fixedResize: {
       type: Boolean,
       default: false
     },
