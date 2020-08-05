@@ -22,6 +22,10 @@ export default {
     maxHeight: {
       type: Number,
       default: Number.MAX_SAFE_INTEGER
+    },
+    emitEvent: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -83,10 +87,12 @@ export default {
         el.style.width = width + 'px'
         el.style.height = height + 'px'
 
-        this.$emit('resize', {
-          element: el,
-          size: this.size
-        })
+        if (this.emitEvent) {
+          this.$emit('resize', {
+            element: el,
+            size: this.size
+          })
+        }
       }
     }
   }
