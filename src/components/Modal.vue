@@ -35,7 +35,10 @@
         role="dialog"
         aria-modal="true"
       >
-        <slot />
+        <slot /> 
+        <template v-for="el in active">
+            <div v-show="fixedResize" :class="'resizable-'+el" :key="el"></div>
+        </template>
         <resizer
           v-if="resizable && !isAutoHeight"
           :min-width="minWidth"
@@ -69,7 +72,7 @@ const TransitionState = {
   Enter: 'enter',
   Entering: 'entering',
   Leave: 'leave',
-  Leaving: 'leavng'
+  Leaving: 'leaving'
 }
 
 export default {
@@ -78,6 +81,11 @@ export default {
     name: {
       required: true,
       type: String
+    },
+    active: {
+      default: () => ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'],
+      validator: (val) => ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'].filter(value => val.indexOf(value) !== -1).length === val.length,
+      type: Array
     },
     resizable: {
       type: Boolean,
@@ -405,6 +413,7 @@ export default {
           height: this.isAutoHeight
             ? this.autoHeight
             : this.trueModalHeight + 'px'
+          
         }
       ]
     },
@@ -837,4 +846,117 @@ export default {
 .vm-transition--default-leave-active {
   opacity: 0;
 }
+
+     .resizable-r {
+        display: block;
+        position: absolute;
+        z-index: 90;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: e-resize;
+        width: 12px;
+        right: -6px;
+        top: 0;
+        height: 100%;
+    }
+     .resizable-rb {
+        display: block;
+        position: absolute;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: se-resize;
+        width: 12px;
+        height: 12px;
+        right: -6px;
+        bottom: -6px;
+        z-index: 91;
+    }
+     .resizable-b {
+        display: block;
+        position: absolute;
+        z-index: 90;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: s-resize;
+        height: 12px;
+        bottom: -6px;
+        width: 100%;
+        left: 0;
+    }
+     .resizable-lb {
+        display: block;
+        position: absolute;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: sw-resize;
+        width: 12px;
+        height:  12px;
+        left: -6px;
+        bottom: -6px;
+        z-index: 91;
+    }
+     .resizable-l {
+        display: block;
+        position: absolute;
+        z-index: 90;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: w-resize;
+        width: 12px;
+        left: -6px;
+        height: 100%;
+        top: 0;
+    }
+     .resizable-lt {
+        display: block;
+        position: absolute;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: nw-resize;
+        width: 12px;
+        height: 12px;
+        left: -6px;
+        top: -6px;
+        z-index: 91;
+    }
+     .resizable-t {
+        display: block;
+        position: absolute;
+        z-index: 90;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: n-resize;
+        height: 12px;
+        top: -6px;
+        width: 100%;
+        left: 0;
+    }
+    .resizable-rt {
+        display: block;
+        position: absolute;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        cursor: ne-resize;
+        width: 12px;
+        height: 12px;
+        right: -6px;
+        top: -6px;
+        z-index: 91;
+    }
 </style>
