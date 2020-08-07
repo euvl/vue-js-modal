@@ -1,5 +1,45 @@
 
-.vue-modal-resizer {
+.vue-modal-topRight {
+  background-color: lime;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 0;
+  top: 0;
+  z-index: 9999999;
+  /* background: transparent; */
+  cursor: ne-resize;
+}
+.vue-modal-topLeft {
+  background-color: yellow;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  top: 0;
+  z-index: 9999999;
+  /* background: transparent; */
+  cursor: nw-resize;
+}
+.vue-modal-bottomLeft {
+  background-color: red;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999;
+  /* background: transparent; */
+  cursor: sw-resize;
+}
+.vue-modal-bottomRight {
+  background-color: blue;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -8,14 +48,14 @@
   right: 0;
   bottom: 0;
   z-index: 9999999;
-  background: transparent;
+  /* background: transparent; */
   cursor: se-resize;
 }
-.vue-modal-resizer::after {
+.vue-modal-bottomRight::after {
   display: block;
   position: absolute;
   content: '';
-  background: transparent;
+  /* background: transparent; */
   left: 0;
   top: 0;
   width: 0;
@@ -23,8 +63,125 @@
   border-bottom: 10px solid #ddd;
   border-left: 10px solid transparent;
 }
-.vue-modal-resizer.clicked::after {
+.vue-modal-bottomRight.clicked::after {
   border-bottom: 10px solid #369be9;
+}
+
+
+.resizable-component[data-v-05b23975] {
+  position: relative;
+}
+.resizable-component > .resizable-r[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: e-resize;
+  width: 12px;
+  right: -6px;
+  top: 0;
+  height: 100%;
+}
+.resizable-component > .resizable-rb[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-component > .resizable-b[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: s-resize;
+  height: 12px;
+  bottom: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-component > .resizable-lb[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: sw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-component > .resizable-l[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: w-resize;
+  width: 12px;
+  left: -6px;
+  height: 100%;
+  top: 0;
+}
+.resizable-component > .resizable-lt[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: nw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  top: -6px;
+  z-index: 91;
+}
+.resizable-component > .resizable-t[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: n-resize;
+  height: 12px;
+  top: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-component > .resizable-rt[data-v-05b23975] {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: ne-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  top: -6px;
+  z-index: 91;
 }
 
 
@@ -102,116 +259,116 @@
   opacity: 0;
 }
 .resizable-r {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: e-resize;
-        width: 12px;
-        right: -6px;
-        top: 0;
-        height: 100%;
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: e-resize;
+  width: 12px;
+  right: -6px;
+  top: 0;
+  height: 100%;
 }
 .resizable-rb {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: se-resize;
-        width: 12px;
-        height: 12px;
-        right: -6px;
-        bottom: -6px;
-        z-index: 91;
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  bottom: -6px;
+  z-index: 91;
 }
 .resizable-b {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: s-resize;
-        height: 12px;
-        bottom: -6px;
-        width: 100%;
-        left: 0;
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: s-resize;
+  height: 12px;
+  bottom: -6px;
+  width: 100%;
+  left: 0;
 }
 .resizable-lb {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: sw-resize;
-        width: 12px;
-        height: 12px;
-        left: -6px;
-        bottom: -6px;
-        z-index: 91;
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: sw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  bottom: -6px;
+  z-index: 91;
 }
 .resizable-l {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: w-resize;
-        width: 12px;
-        left: -6px;
-        height: 100%;
-        top: 0;
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: w-resize;
+  width: 12px;
+  left: -6px;
+  height: 100%;
+  top: 0;
 }
 .resizable-lt {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: nw-resize;
-        width: 12px;
-        height: 12px;
-        left: -6px;
-        top: -6px;
-        z-index: 91;
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: nw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  top: -6px;
+  z-index: 91;
 }
 .resizable-t {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: n-resize;
-        height: 12px;
-        top: -6px;
-        width: 100%;
-        left: 0;
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: n-resize;
+  height: 12px;
+  top: -6px;
+  width: 100%;
+  left: 0;
 }
 .resizable-rt {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: ne-resize;
-        width: 12px;
-        height: 12px;
-        right: -6px;
-        top: -6px;
-        z-index: 91;
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: ne-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  top: -6px;
+  z-index: 91;
 }
 
 

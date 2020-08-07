@@ -35,25 +35,28 @@
         role="dialog"
         aria-modal="true"
       >
+      <!-- <vue-resizable @resize:move="handleVueResizable"> -->
         <slot /> 
-        <template v-for="el in active">
+        <!-- <template v-for="el in active">
             <div v-show="fixedResize" :class="'resizable-'+el" :key="el"></div>
-        </template>
+        </template> -->
         <resizer
           v-if="resizable && !isAutoHeight"
           :min-width="minWidth"
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
-          :emit-event="fixedResize"
           @resize="onModalResize"
+          :emit-event="true"
         />
+        <!-- </vue-resizable> -->
       </div>
     </transition>
   </div>
 </template>
 <script>
 import Resizer from './Resizer.vue'
+import VueResizable from './VueResizable.vue'
 import {
   isInput,
   inRange,
@@ -84,7 +87,10 @@ export default {
     },
     active: {
       default: () => ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'],
-      validator: (val) => ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'].filter(value => val.indexOf(value) !== -1).length === val.length,
+      validator: val =>
+        ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'].filter(
+          value => val.indexOf(value) !== -1
+        ).length === val.length,
       type: Array
     },
     resizable: {
@@ -93,7 +99,7 @@ export default {
     },
     fixedResize: {
       type: Boolean,
-      default: false
+      default: true
     },
     adaptive: {
       type: Boolean,
@@ -184,7 +190,8 @@ export default {
     }
   },
   components: {
-    Resizer
+    Resizer,
+    VueResizable
   },
   data() {
     return {
@@ -241,7 +248,7 @@ export default {
     }
   },
   mounted() {
-    this.resizeObserver = new ResizeObserver((entries) => {
+    this.resizeObserver = new ResizeObserver(entries => {
       if (entries.length > 0) {
         const [entry] = entries
 
@@ -413,7 +420,6 @@ export default {
           height: this.isAutoHeight
             ? this.autoHeight
             : this.trueModalHeight + 'px'
-          
         }
       ]
     },
@@ -551,6 +557,10 @@ export default {
         ...properties
       }
     },
+    handleVueResizable(event) {
+      console.log('listened to VueResizable')
+      console.log(event)
+    },
     /**
      * Event handler which is triggered on modal resize
      */
@@ -560,6 +570,12 @@ export default {
 
       this.modal.heightType = 'px'
       this.modal.height = event.size.height
+      //Handle Shifting
+      if (this.fixedResize) {
+        this.shiftLeft = this.getResizedShiftLeft(event)
+        this.shiftTop = this.getResizedShiftTop(event)
+      }
+      //this.shiftLeft = this.shiftLeft - 1
 
       const { size } = this.modal
 
@@ -569,6 +585,51 @@ export default {
           size
         })
       )
+    },
+
+    getResizedShiftLeft(event) {
+      const {
+        viewportHeight,
+        viewportWidth,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      let result = this.shiftLeft
+
+      switch (event.direction) {
+        case 'botRight':
+          result = result + 0.5 * event.dimGrowth.width
+          break
+        case 'botLeft':
+          result = result - 0.5 * event.dimGrowth.width
+          break
+        default:
+          console.log('Fail getResizedShiftLeft')
+      }
+
+      return result
+    },
+    getResizedShiftTop(event) {
+      const {
+        viewportHeight,
+        viewportWidth,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      let result = this.shiftTop
+
+      switch (event.direction) {
+        case 'botRight':
+          result = result + 0.5 * event.dimGrowth.height
+          break
+        case 'botLeft':
+          // result = result + 0.5 * event.dimGrowth.height
+          break
+        default:
+          console.log('Fail getResizedShiftTop')
+      }
     },
 
     open(params) {
@@ -687,7 +748,7 @@ export default {
         let initialShiftLeft = 0
         let initialShiftTop = 0
 
-        const handleDraggableMousedown = (event) => {
+        const handleDraggableMousedown = event => {
           let target = event.target
 
           if (isInput(target)) {
@@ -709,7 +770,7 @@ export default {
           initialShiftTop = this.shiftTop
         }
 
-        const handleDraggableMousemove = (event) => {
+        const handleDraggableMousemove = event => {
           let { clientX, clientY } = getTouchEvent(event)
 
           this.shiftLeft = initialShiftLeft + clientX - startX
@@ -718,7 +779,7 @@ export default {
           event.preventDefault()
         }
 
-        const handleDraggableMouseup = (event) => {
+        const handleDraggableMouseup = event => {
           this.ensureShiftInWindowBounds()
 
           document.removeEventListener('mousemove', handleDraggableMousemove)
@@ -847,116 +908,116 @@ export default {
   opacity: 0;
 }
 
-     .resizable-r {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: e-resize;
-        width: 12px;
-        right: -6px;
-        top: 0;
-        height: 100%;
-    }
-     .resizable-rb {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: se-resize;
-        width: 12px;
-        height: 12px;
-        right: -6px;
-        bottom: -6px;
-        z-index: 91;
-    }
-     .resizable-b {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: s-resize;
-        height: 12px;
-        bottom: -6px;
-        width: 100%;
-        left: 0;
-    }
-     .resizable-lb {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: sw-resize;
-        width: 12px;
-        height:  12px;
-        left: -6px;
-        bottom: -6px;
-        z-index: 91;
-    }
-     .resizable-l {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: w-resize;
-        width: 12px;
-        left: -6px;
-        height: 100%;
-        top: 0;
-    }
-     .resizable-lt {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: nw-resize;
-        width: 12px;
-        height: 12px;
-        left: -6px;
-        top: -6px;
-        z-index: 91;
-    }
-     .resizable-t {
-        display: block;
-        position: absolute;
-        z-index: 90;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: n-resize;
-        height: 12px;
-        top: -6px;
-        width: 100%;
-        left: 0;
-    }
-    .resizable-rt {
-        display: block;
-        position: absolute;
-        touch-action: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        cursor: ne-resize;
-        width: 12px;
-        height: 12px;
-        right: -6px;
-        top: -6px;
-        z-index: 91;
-    }
+.resizable-r {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: e-resize;
+  width: 12px;
+  right: -6px;
+  top: 0;
+  height: 100%;
+}
+.resizable-rb {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-b {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: s-resize;
+  height: 12px;
+  bottom: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-lb {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: sw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-l {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: w-resize;
+  width: 12px;
+  left: -6px;
+  height: 100%;
+  top: 0;
+}
+.resizable-lt {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: nw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  top: -6px;
+  z-index: 91;
+}
+.resizable-t {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: n-resize;
+  height: 12px;
+  top: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-rt {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: ne-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  top: -6px;
+  z-index: 91;
+}
 </style>

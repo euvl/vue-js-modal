@@ -1,5 +1,10 @@
 <template>
-  <div :class="className"></div>
+  <div class="test2">
+    <div class="vue-modal-topRight"></div>
+    <div class="vue-modal-topLeft"></div>
+    <div :class="className"></div>
+    <div class="vue-modal-bottomLeft"></div>
+  </div>
 </template>
 <script>
 import { inRange, windowWidthWithoutScrollbar } from '../utils'
@@ -31,6 +36,7 @@ export default {
   data() {
     return {
       clicked: false,
+      targetClass: '',
       size: {}
     }
   },
@@ -40,11 +46,12 @@ export default {
   computed: {
     className() {
       const { clicked } = this
-      return ['vue-modal-resizer', { clicked }]
+      return ['vue-modal-bottomRight', { clicked }]
     }
   },
   methods: {
     start(event) {
+      this.targetClass = event.target.className
       this.clicked = true
 
       window.addEventListener('mousemove', this.mousemove, false)
@@ -53,9 +60,9 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-
     stop() {
       this.clicked = false
+      this.targetClass = ''
 
       window.removeEventListener('mousemove', this.mousemove, false)
       window.removeEventListener('mouseup', this.stop, false)
@@ -67,10 +74,38 @@ export default {
     },
 
     mousemove(event) {
-      this.resize(event)
+      switch (this.targetClass) {
+        case 'vue-modal-bottomRight':
+          this.resize(event, 'botRight')
+          break
+        case 'vue-modal-bottomLeft':
+          this.resize(event, 'botLeft')
+          break
+        case 'vue-modal-topRight':
+          console.log('TopRIGHT TODO')
+          break
+        case 'vue-modal-topLeft':
+          console.log('TopLeft ToDo')
+          break
+        case 'vue-modal-top':
+          console.log('top TODO')
+          break
+        case 'vue-modal-bottom':
+          console.log('bot TODO')
+          break
+        case 'vue-modal-left':
+          console.log('left TODO')
+          break
+        case 'vue-modal-right':
+          console.log('right TODO')
+          break
+        default:
+          console.warn('Could not identify Resize Target Direction')
+      }
     },
 
-    resize(event) {
+    resize(event, dir) {
+      //TODO Handle botLeft cases
       var el = this.$el.parentElement
 
       if (el) {
@@ -84,14 +119,31 @@ export default {
         height = inRange(this.minHeight, maxHeight, height)
 
         this.size = { width, height }
+
+        const dimGrowth = {
+          width: width - parseInt(el.style.width.replace('px', '')),
+          height: height - parseInt(el.style.height.replace('px', ''))
+        }
+
         el.style.width = width + 'px'
         el.style.height = height + 'px'
 
+        // switch (dir) {
+        //   case 'botLeft':
+        //     console.log('Trying to Shift')
+        //     el.style.left = 0
+        //     break
+        //   default:
+        //     break
+        // }
+
         //Emit event if True
-        if (!this.emitEvent) {
+        if (this.emitEvent) {
           this.$emit('resize', {
             element: el,
-            size: this.size
+            size: this.size,
+            direction: dir,
+            dimGrowth: dimGrowth
           })
         }
       }
@@ -100,7 +152,47 @@ export default {
 }
 </script>
 <style>
-.vue-modal-resizer {
+.vue-modal-topRight {
+  background-color: lime;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 0;
+  top: 0;
+  z-index: 9999999;
+  /* background: transparent; */
+  cursor: ne-resize;
+}
+.vue-modal-topLeft {
+  background-color: yellow;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  top: 0;
+  z-index: 9999999;
+  /* background: transparent; */
+  cursor: nw-resize;
+}
+.vue-modal-bottomLeft {
+  background-color: red;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999;
+  /* background: transparent; */
+  cursor: sw-resize;
+}
+.vue-modal-bottomRight {
+  background-color: blue;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -109,15 +201,15 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 9999999;
-  background: transparent;
+  /* background: transparent; */
   cursor: se-resize;
 }
 
-.vue-modal-resizer::after {
+.vue-modal-bottomRight::after {
   display: block;
   position: absolute;
   content: '';
-  background: transparent;
+  /* background: transparent; */
   left: 0;
   top: 0;
   width: 0;
@@ -126,7 +218,7 @@ export default {
   border-left: 10px solid transparent;
 }
 
-.vue-modal-resizer.clicked::after {
+.vue-modal-bottomRight.clicked::after {
   border-bottom: 10px solid #369be9;
 }
 </style>

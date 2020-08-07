@@ -4,6 +4,7 @@
     :min-width="200"
     :min-height="200"
     :resizable="true"
+    :fixed-resize="true"
     styles="font-style: italic;"
   >
     <div class="example-modal-content">
