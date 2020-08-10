@@ -68,7 +68,7 @@ import {
 import { parseNumber, validateNumber } from '../utils/parser'
 import ResizeObserver from '../utils/resizeObserver'
 import FocusTrap from '../utils/focusTrap'
-import vueResizable from 'vue-resizable';
+import vueResizable from 'vue-resizable'
 
 const defaultTransition = 'vm-transition--default'
 
@@ -604,6 +604,12 @@ export default {
         case 'botLeft':
           result = result - 0.5 * event.dimGrowth.width
           break
+        case 'topRight':
+          result = result - 0.5 * event.dimGrowth.width
+          break
+        case 'topLeft':
+          result = result - 0.5 * event.dimGrowth.width
+          break
         default:
           console.log('Fail getResizedShiftLeft')
       }
@@ -756,7 +762,7 @@ export default {
           }
 
           let { clientX, clientY } = getTouchEvent(event)
-        
+
           document.addEventListener('mousemove', handleDraggableMousemove)
           document.addEventListener('touchmove', handleDraggableMousemove)
 

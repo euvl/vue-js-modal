@@ -82,10 +82,10 @@ export default {
           this.resize(event, 'botLeft')
           break
         case 'vue-modal-topRight':
-          console.log('TopRIGHT TODO')
+          this.resize(event, 'topRight')
           break
         case 'vue-modal-topLeft':
-          console.log('TopLeft ToDo')
+          this.resize(event, 'topLeft')
           break
         case 'vue-modal-top':
           console.log('top TODO')
@@ -108,9 +108,29 @@ export default {
       //TODO Handle botLeft cases
       var el = this.$el.parentElement
 
+      var width = event.clientX
+      var height = event.clientY
+      console.log('x: ' + width + ' y: ' + height)
       if (el) {
-        var width = event.clientX - el.offsetLeft
-        var height = event.clientY - el.offsetTop
+        switch (dir) {
+          case 'botRight':
+            width = width - el.offsetLeft
+            height = height - el.offsetTop
+            break
+          case 'botLeft':
+            console.log(el.offsetWidth)
+            width = width + el.offsetWidth / 2
+            height = height - el.offsetTop
+            break
+          case 'topRight':
+            width = width - el.offsetLeft
+            height = height + el.offsetTop
+            break
+          case 'topLeft':
+            width = width + el.offsetLeft
+            height = height + el.offsetTop
+            break
+        }
 
         const maxWidth = Math.min(windowWidthWithoutScrollbar(), this.maxWidth)
         const maxHeight = Math.min(window.innerHeight, this.maxHeight)
