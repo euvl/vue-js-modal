@@ -37,7 +37,8 @@ export default {
     return {
       clicked: false,
       targetClass: '',
-      size: {}
+      size: {},
+      initialX: 0
     }
   },
   mounted() {
@@ -53,6 +54,7 @@ export default {
     start(event) {
       this.targetClass = event.target.className
       this.clicked = true
+      this.initialX = event.clientX
 
       window.addEventListener('mousemove', this.mousemove, false)
       window.addEventListener('mouseup', this.stop, false)
@@ -63,6 +65,7 @@ export default {
     stop() {
       this.clicked = false
       this.targetClass = ''
+      this.initialX = 0
 
       window.removeEventListener('mousemove', this.mousemove, false)
       window.removeEventListener('mouseup', this.stop, false)
@@ -108,6 +111,7 @@ export default {
       //TODO Handle botLeft cases
       var el = this.$el.parentElement
 
+      //! Expects width and hieght inital to be the bottom Right COORD
       var width = event.clientX
       var height = event.clientY
       console.log('x: ' + width + ' y: ' + height)
@@ -118,9 +122,13 @@ export default {
             height = height - el.offsetTop
             break
           case 'botLeft':
-            console.log(el.offsetWidth)
-            width = width + el.offsetWidth / 2
+            console.log(el.style.width)
+            //Save intial X in start x
+            width =
+              parseInt(el.style.width.replace('px', '')) +
+              (this.initialX - event.clientX)
             height = height - el.offsetTop
+            console.log('new x: ' + width + ' new y: ' + height)
             break
           case 'topRight':
             width = width - el.offsetLeft
@@ -134,9 +142,9 @@ export default {
 
         const maxWidth = Math.min(windowWidthWithoutScrollbar(), this.maxWidth)
         const maxHeight = Math.min(window.innerHeight, this.maxHeight)
-
         width = inRange(this.minWidth, maxWidth, width)
         height = inRange(this.minHeight, maxHeight, height)
+        this.initialX = event.clientX
 
         this.size = { width, height }
 

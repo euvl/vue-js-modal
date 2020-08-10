@@ -605,10 +605,10 @@ export default {
           result = result - 0.5 * event.dimGrowth.width
           break
         case 'topRight':
-          result = result - 0.5 * event.dimGrowth.width
+          // result = result - 0.5 * event.dimGrowth.width
           break
         case 'topLeft':
-          result = result - 0.5 * event.dimGrowth.width
+          // result = result - 0.5 * event.dimGrowth.width
           break
         default:
           console.log('Fail getResizedShiftLeft')
