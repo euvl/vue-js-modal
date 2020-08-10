@@ -35,19 +35,17 @@
         role="dialog"
         aria-modal="true"
       >
-      <!-- <vue-resizable @resize:move="handleVueResizable"> -->
         <slot /> 
-        <!-- <template v-for="el in active">
-            <div v-show="fixedResize" :class="'resizable-'+el" :key="el"></div>
-        </template> -->
         <resizer
           v-if="resizable && !isAutoHeight"
           :min-width="minWidth"
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
+          :viewport-height="viewportHeight"
+          :viewport-width="viewportWidth"
+          :resize-indicator="resizeIndicator"
           @resize="onModalResize"
-          :emit-event="true"
         />
         <!-- </vue-resizable> -->
       </div>
@@ -56,7 +54,6 @@
 </template>
 <script>
 import Resizer from './Resizer.vue'
-import VueResizable from './VueResizable.vue'
 import {
   isInput,
   inRange,
@@ -68,7 +65,6 @@ import {
 import { parseNumber, validateNumber } from '../utils/parser'
 import ResizeObserver from '../utils/resizeObserver'
 import FocusTrap from '../utils/focusTrap'
-import vueResizable from 'vue-resizable'
 
 const defaultTransition = 'vm-transition--default'
 
@@ -187,11 +183,14 @@ export default {
       validator(value) {
         return value >= 0 && value <= 1
       }
+    },
+    resizeIndicator: {
+      type: Boolean,
+      default: true
     }
   },
   components: {
-    Resizer,
-    VueResizable
+    Resizer
   },
   data() {
     return {
@@ -544,7 +543,6 @@ export default {
     onWindowResize() {
       this.viewportWidth = windowWidthWithoutScrollbar()
       this.viewportHeight = window.innerHeight
-
       this.ensureShiftInWindowBounds()
     },
     /**
@@ -556,10 +554,6 @@ export default {
         ref: this.$refs.modal || null,
         ...properties
       }
-    },
-    handleVueResizable(event) {
-      console.log('listened to VueResizable')
-      console.log(event)
     },
     /**
      * Event handler which is triggered on modal resize
@@ -598,20 +592,21 @@ export default {
       let result = this.shiftLeft
 
       switch (event.direction) {
-        case 'botRight':
+        case 'vue-modal-topRight':
+        case 'vue-modal-bottomRight':
+        case 'vue-modal-right':
           result = result + 0.5 * event.dimGrowth.width
           break
-        case 'botLeft':
+        case 'vue-modal-bottomLeft':
+        case 'vue-modal-topLeft':
+        case 'vue-modal-left':
           result = result - 0.5 * event.dimGrowth.width
           break
-        case 'topRight':
-          // result = result - 0.5 * event.dimGrowth.width
-          break
-        case 'topLeft':
-          // result = result - 0.5 * event.dimGrowth.width
+        case 'vue-modal-top':
+        case 'vue-modal-bottom':
           break
         default:
-          console.log('Fail getResizedShiftLeft')
+          console.error('Could not Find Resize Direction In ShiftLeft')
       }
 
       return result
@@ -627,15 +622,23 @@ export default {
       let result = this.shiftTop
 
       switch (event.direction) {
-        case 'botRight':
+        case 'vue-modal-bottom':
+        case 'vue-modal-bottomRight':
+        case 'vue-modal-bottomLeft':
           result = result + 0.5 * event.dimGrowth.height
           break
-        case 'botLeft':
-          // result = result + 0.5 * event.dimGrowth.height
+        case 'vue-modal-top':
+        case 'vue-modal-topRight':
+        case 'vue-modal-topLeft':
+          result = result - 0.5 * event.dimGrowth.height
+          break
+        case 'vue-modal-left':
+        case 'vue-modal-right':
           break
         default:
-          console.log('Fail getResizedShiftTop')
+          console.error('Could not Find Resize Direction In ShiftTop')
       }
+      return result
     },
 
     open(params) {

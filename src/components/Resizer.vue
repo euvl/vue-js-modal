@@ -1,8 +1,12 @@
 <template>
   <div class="test2">
+    <div class="vue-modal-top"></div>
+    <div class="vue-modal-bottom"></div>
+    <div class="vue-modal-left"></div>
+    <div class="vue-modal-right"></div>
     <div class="vue-modal-topRight"></div>
     <div class="vue-modal-topLeft"></div>
-    <div :class="className"></div>
+    <div :id="getID" :class="className"></div>
     <div class="vue-modal-bottomLeft"></div>
   </div>
 </template>
@@ -28,7 +32,15 @@ export default {
       type: Number,
       default: Number.MAX_SAFE_INTEGER
     },
-    emitEvent: {
+    viewportWidth: {
+      type: Number,
+      required: true
+    },
+    viewportHeight: {
+      type: Number,
+      required: true
+    },
+    resizeIndicator: {
       type: Boolean,
       default: true
     }
@@ -38,7 +50,8 @@ export default {
       clicked: false,
       targetClass: '',
       size: {},
-      initialX: 0
+      initialX: 0,
+      initialY: 0
     }
   },
   mounted() {
@@ -48,6 +61,10 @@ export default {
     className() {
       const { clicked } = this
       return ['vue-modal-bottomRight', { clicked }]
+    },
+    getID() {
+      if (this.resizeIndicator) return 'vue-modal-triangle'
+      else return ''
     }
   },
   methods: {
@@ -55,6 +72,7 @@ export default {
       this.targetClass = event.target.className
       this.clicked = true
       this.initialX = event.clientX
+      this.initialY = event.clientY
 
       window.addEventListener('mousemove', this.mousemove, false)
       window.addEventListener('mouseup', this.stop, false)
@@ -66,6 +84,7 @@ export default {
       this.clicked = false
       this.targetClass = ''
       this.initialX = 0
+      this.initialY = 0
 
       window.removeEventListener('mousemove', this.mousemove, false)
       window.removeEventListener('mouseup', this.stop, false)
@@ -77,67 +96,66 @@ export default {
     },
 
     mousemove(event) {
-      switch (this.targetClass) {
-        case 'vue-modal-bottomRight':
-          this.resize(event, 'botRight')
-          break
-        case 'vue-modal-bottomLeft':
-          this.resize(event, 'botLeft')
-          break
-        case 'vue-modal-topRight':
-          this.resize(event, 'topRight')
-          break
-        case 'vue-modal-topLeft':
-          this.resize(event, 'topLeft')
-          break
-        case 'vue-modal-top':
-          console.log('top TODO')
-          break
-        case 'vue-modal-bottom':
-          console.log('bot TODO')
-          break
-        case 'vue-modal-left':
-          console.log('left TODO')
-          break
-        case 'vue-modal-right':
-          console.log('right TODO')
-          break
-        default:
-          console.warn('Could not identify Resize Target Direction')
-      }
+      this.resize(event)
     },
 
-    resize(event, dir) {
-      //TODO Handle botLeft cases
+    resize(event) {
       var el = this.$el.parentElement
 
-      //! Expects width and hieght inital to be the bottom Right COORD
       var width = event.clientX
       var height = event.clientY
-      console.log('x: ' + width + ' y: ' + height)
+
+      if (event.clientX > this.viewportWidth || event.clientX < 0) return
+      if (event.clientY > this.viewportHeight || event.clientY < 0) return
+
       if (el) {
-        switch (dir) {
-          case 'botRight':
+        switch (this.targetClass) {
+          case 'vue-modal-right':
+            width = width - el.offsetLeft
+            height = parseInt(el.style.height.replace('px', ''))
+            break
+          case 'vue-modal-left':
+            height = parseInt(el.style.height.replace('px', ''))
+            width =
+              parseInt(el.style.width.replace('px', '')) +
+              (this.initialX - event.clientX)
+            break
+          case 'vue-modal-top':
+            width = parseInt(el.style.width.replace('px', ''))
+            height =
+              parseInt(el.style.height.replace('px', '')) +
+              (this.initialY - event.clientY)
+            break
+          case 'vue-modal-bottom':
+            width = parseInt(el.style.width.replace('px', ''))
+            height = height - el.offsetTop
+            break
+          case 'vue-modal-bottomRight':
             width = width - el.offsetLeft
             height = height - el.offsetTop
             break
-          case 'botLeft':
-            console.log(el.style.width)
-            //Save intial X in start x
+          case 'vue-modal-topRight':
+            width = width - el.offsetLeft
+            height =
+              parseInt(el.style.height.replace('px', '')) +
+              (this.initialY - event.clientY)
+            break
+          case 'vue-modal-bottomLeft':
             width =
               parseInt(el.style.width.replace('px', '')) +
               (this.initialX - event.clientX)
             height = height - el.offsetTop
-            console.log('new x: ' + width + ' new y: ' + height)
             break
-          case 'topRight':
-            width = width - el.offsetLeft
-            height = height + el.offsetTop
+          case 'vue-modal-topLeft':
+            width =
+              parseInt(el.style.width.replace('px', '')) +
+              (this.initialX - event.clientX)
+            height =
+              parseInt(el.style.height.replace('px', '')) +
+              (this.initialY - event.clientY)
             break
-          case 'topLeft':
-            width = width + el.offsetLeft
-            height = height + el.offsetTop
-            break
+          default:
+            console.error('Incorrrect/no resize direction.')
         }
 
         const maxWidth = Math.min(windowWidthWithoutScrollbar(), this.maxWidth)
@@ -145,6 +163,7 @@ export default {
         width = inRange(this.minWidth, maxWidth, width)
         height = inRange(this.minHeight, maxHeight, height)
         this.initialX = event.clientX
+        this.initialY = event.clientY
 
         this.size = { width, height }
 
@@ -156,32 +175,71 @@ export default {
         el.style.width = width + 'px'
         el.style.height = height + 'px'
 
-        // switch (dir) {
-        //   case 'botLeft':
-        //     console.log('Trying to Shift')
-        //     el.style.left = 0
-        //     break
-        //   default:
-        //     break
-        // }
-
-        //Emit event if True
-        if (this.emitEvent) {
-          this.$emit('resize', {
-            element: el,
-            size: this.size,
-            direction: dir,
-            dimGrowth: dimGrowth
-          })
-        }
+        this.$emit('resize', {
+          element: el,
+          size: this.size,
+          direction: this.targetClass,
+          dimGrowth: dimGrowth
+        })
       }
     }
   }
 }
 </script>
 <style>
+.vue-modal-top {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 12px;
+  right: 12;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: n-resize;
+}
+
+.vue-modal-bottom {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 12px;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: s-resize;
+}
+
+.vue-modal-left {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: w-resize;
+}
+
+.vue-modal-right {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: e-resize;
+}
+
 .vue-modal-topRight {
-  background-color: lime;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -190,11 +248,10 @@ export default {
   right: 0;
   top: 0;
   z-index: 9999999;
-  /* background: transparent; */
+  background: transparent;
   cursor: ne-resize;
 }
 .vue-modal-topLeft {
-  background-color: yellow;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -203,11 +260,10 @@ export default {
   left: 0;
   top: 0;
   z-index: 9999999;
-  /* background: transparent; */
+  background: transparent;
   cursor: nw-resize;
 }
 .vue-modal-bottomLeft {
-  background-color: red;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -216,11 +272,10 @@ export default {
   left: 0;
   bottom: 0;
   z-index: 9999999;
-  /* background: transparent; */
+  background: transparent;
   cursor: sw-resize;
 }
 .vue-modal-bottomRight {
-  background-color: blue;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -229,15 +284,15 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 9999999;
-  /* background: transparent; */
+  background: transparent;
   cursor: se-resize;
 }
 
-.vue-modal-bottomRight::after {
+#vue-modal-triangle::after {
   display: block;
   position: absolute;
   content: '';
-  /* background: transparent; */
+  background: transparent;
   left: 0;
   top: 0;
   width: 0;
@@ -246,7 +301,7 @@ export default {
   border-left: 10px solid transparent;
 }
 
-.vue-modal-bottomRight.clicked::after {
+#vue-modal-triangle.clicked::after {
   border-bottom: 10px solid #369be9;
 }
 </style>

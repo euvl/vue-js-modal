@@ -1,7 +1,6 @@
 <template>
   <modal name="example-adaptive" :adaptive="true" :fixed-resize="false">
     <div class="example-modal-content">
-      <h1>TESSST</h1>
       Appropriately exploit professional infrastructures rather than unique
       growth strategies. Assertively build leveraged growth strategies vis-a-vis
       multimedia based vortals. Progressively simplify cross-platform value
