@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" :class="containerClass">
+  <div v-if="visible" :class="containerClass" >
     <transition
       :name="guaranteedOverlayTransition"
       @before-enter="beforeOverlayTransitionEnter"
@@ -68,6 +68,7 @@ import {
 import { parseNumber, validateNumber } from '../utils/parser'
 import ResizeObserver from '../utils/resizeObserver'
 import FocusTrap from '../utils/focusTrap'
+import vueResizable from 'vue-resizable';
 
 const defaultTransition = 'vm-transition--default'
 
@@ -77,7 +78,6 @@ const TransitionState = {
   Leave: 'leave',
   Leaving: 'leaving'
 }
-
 export default {
   name: 'VueJsModal',
   props: {
@@ -756,7 +756,7 @@ export default {
           }
 
           let { clientX, clientY } = getTouchEvent(event)
-
+        
           document.addEventListener('mousemove', handleDraggableMousemove)
           document.addEventListener('touchmove', handleDraggableMousemove)
 
@@ -772,7 +772,6 @@ export default {
 
         const handleDraggableMousemove = event => {
           let { clientX, clientY } = getTouchEvent(event)
-
           this.shiftLeft = initialShiftLeft + clientX - startX
           this.shiftTop = initialShiftTop + clientY - startY
 
