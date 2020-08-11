@@ -1,15 +1,15 @@
 {
-  "name": "vue-js-modal",
+  "name": "fenetre-vue-js-modal",
   "description": "Modal Component for Vue.js",
   "version": "2.0.0-rc.6",
   "author": "euvl <yev.dev@gmail.com>",
   "main": "dist/index.js",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://pkgs.dev.azure.com/FenetreBV/_packaging/Fenetre.SiliconCore.Vue/npm/registry/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/euvl/vue-js-modal.git"
+    "url": "https://github.com/fenetre/vue-js-modal.git"
   },
   "types": "types/index.d.ts",
   "keywords": [
@@ -25,7 +25,7 @@
     "vue-modal"
   ],
   "bugs": {
-    "url": "https://github.com/euvl/vue-js-modal/issues"
+    "url": "https://github.com/fenetre/vue-js-modal/issues"
   },
   "scripts": {
     "build:client": "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
@@ -81,6 +81,7 @@
     "vue": "2.6.11"
   },
   "dependencies": {
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "vue-resizable": "^1.2.2"
   }
 }

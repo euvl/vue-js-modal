@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" :class="containerClass">
+  <div v-if="visible" :class="containerClass" >
     <transition
       :name="guaranteedOverlayTransition"
       @before-enter="beforeOverlayTransitionEnter"
@@ -35,15 +35,20 @@
         role="dialog"
         aria-modal="true"
       >
-        <slot />
+        <slot /> 
         <resizer
           v-if="resizable && !isAutoHeight"
           :min-width="minWidth"
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
+          :viewport-height="viewportHeight"
+          :viewport-width="viewportWidth"
+          :resize-indicator="resizeIndicator"
+          :resize-edges="resizeEdges"
           @resize="onModalResize"
         />
+        <!-- </vue-resizable> -->
       </div>
     </transition>
   </div>
@@ -68,9 +73,8 @@ const TransitionState = {
   Enter: 'enter',
   Entering: 'entering',
   Leave: 'leave',
-  Leaving: 'leavng'
+  Leaving: 'leaving'
 }
-
 export default {
   name: 'VueJsModal',
   props: {
@@ -78,9 +82,21 @@ export default {
       required: true,
       type: String
     },
+    resizeEdges: {
+      default: () => ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'],
+      validator: val =>
+        ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'].filter(
+          value => val.indexOf(value) !== -1
+        ).length === val.length,
+      type: Array
+    },
     resizable: {
       type: Boolean,
       default: false
+    },
+    fixedResize: {
+      type: Boolean,
+      default: true
     },
     adaptive: {
       type: Boolean,
@@ -168,6 +184,10 @@ export default {
       validator(value) {
         return value >= 0 && value <= 1
       }
+    },
+    resizeIndicator: {
+      type: Boolean,
+      default: true
     }
   },
   components: {
@@ -524,7 +544,6 @@ export default {
     onWindowResize() {
       this.viewportWidth = windowWidthWithoutScrollbar()
       this.viewportHeight = window.innerHeight
-
       this.ensureShiftInWindowBounds()
     },
     /**
@@ -546,6 +565,12 @@ export default {
 
       this.modal.heightType = 'px'
       this.modal.height = event.size.height
+      //Handle Shifting
+      if (this.fixedResize) {
+        this.shiftLeft = this.getResizedShiftLeft(event)
+        this.shiftTop = this.getResizedShiftTop(event)
+      }
+      //this.shiftLeft = this.shiftLeft - 1
 
       const { size } = this.modal
 
@@ -555,6 +580,66 @@ export default {
           size
         })
       )
+    },
+
+    getResizedShiftLeft(event) {
+      const {
+        viewportHeight,
+        viewportWidth,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      let result = this.shiftLeft
+
+      switch (event.direction) {
+        case 'vue-modal-topRight':
+        case 'vue-modal-bottomRight':
+        case 'vue-modal-right':
+          result = result + 0.5 * event.dimGrowth.width
+          break
+        case 'vue-modal-bottomLeft':
+        case 'vue-modal-topLeft':
+        case 'vue-modal-left':
+          result = result - 0.5 * event.dimGrowth.width
+          break
+        case 'vue-modal-top':
+        case 'vue-modal-bottom':
+          break
+        default:
+          console.error('Could not Find Resize Direction In ShiftLeft')
+      }
+
+      return result
+    },
+    getResizedShiftTop(event) {
+      const {
+        viewportHeight,
+        viewportWidth,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      let result = this.shiftTop
+
+      switch (event.direction) {
+        case 'vue-modal-bottom':
+        case 'vue-modal-bottomRight':
+        case 'vue-modal-bottomLeft':
+          result = result + 0.5 * event.dimGrowth.height
+          break
+        case 'vue-modal-top':
+        case 'vue-modal-topRight':
+        case 'vue-modal-topLeft':
+          result = result - 0.5 * event.dimGrowth.height
+          break
+        case 'vue-modal-left':
+        case 'vue-modal-right':
+          break
+        default:
+          console.error('Could not Find Resize Direction In ShiftTop')
+      }
+      return result
     },
 
     open(params) {
@@ -697,7 +782,6 @@ export default {
 
         const handleDraggableMousemove = event => {
           let { clientX, clientY } = getTouchEvent(event)
-
           this.shiftLeft = initialShiftLeft + clientX - startX
           this.shiftTop = initialShiftTop + clientY - startY
 
@@ -831,5 +915,118 @@ export default {
 .vm-transition--default-enter,
 .vm-transition--default-leave-active {
   opacity: 0;
+}
+
+.resizable-r {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: e-resize;
+  width: 12px;
+  right: -6px;
+  top: 0;
+  height: 100%;
+}
+.resizable-rb {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-b {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: s-resize;
+  height: 12px;
+  bottom: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-lb {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: sw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-l {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: w-resize;
+  width: 12px;
+  left: -6px;
+  height: 100%;
+  top: 0;
+}
+.resizable-lt {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: nw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  top: -6px;
+  z-index: 91;
+}
+.resizable-t {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: n-resize;
+  height: 12px;
+  top: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-rt {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: ne-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  top: -6px;
+  z-index: 91;
 }
 </style>
