@@ -1,5 +1,5 @@
 <template>
-  <modal name="example-adaptive" :adaptive="true" :fixed-resize="false">
+  <modal name="example-adaptive" :adaptive="true" transition="scale">
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique
       growth strategies. Assertively build leveraged growth strategies vis-a-vis

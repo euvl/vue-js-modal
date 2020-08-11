@@ -45,6 +45,7 @@
           :viewport-height="viewportHeight"
           :viewport-width="viewportWidth"
           :resize-indicator="resizeIndicator"
+          :resize-edges="resizeEdges"
           @resize="onModalResize"
         />
         <!-- </vue-resizable> -->
@@ -81,10 +82,10 @@ export default {
       required: true,
       type: String
     },
-    active: {
-      default: () => ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'],
+    resizeEdges: {
+      default: () => ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'],
       validator: val =>
-        ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'].filter(
+        ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'].filter(
           value => val.indexOf(value) !== -1
         ).length === val.length,
       type: Array

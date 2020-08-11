@@ -1,13 +1,13 @@
 <template>
-  <div class="test2">
-    <div class="vue-modal-top"></div>
-    <div class="vue-modal-bottom"></div>
-    <div class="vue-modal-left"></div>
-    <div class="vue-modal-right"></div>
-    <div class="vue-modal-topRight"></div>
-    <div class="vue-modal-topLeft"></div>
-    <div :id="getID" :class="className"></div>
-    <div class="vue-modal-bottomLeft"></div>
+  <div>
+    <div v-if="this.resizeEdges.includes('t')" class="vue-modal-top"></div>
+    <div v-if="this.resizeEdges.includes('b')" class="vue-modal-bottom"></div>
+    <div v-if="this.resizeEdges.includes('l')" class="vue-modal-left"></div>
+    <div v-if="this.resizeEdges.includes('r')" class="vue-modal-right"></div>
+    <div v-if="this.resizeEdges.includes('tr')" class="vue-modal-topRight"></div>
+    <div v-if="this.resizeEdges.includes('tl')" class="vue-modal-topLeft"></div>
+    <div v-if="this.resizeEdges.includes('br')" :id="getID" :class="className"></div>
+    <div v-if="this.resizeEdges.includes('bl')" class="vue-modal-bottomLeft"></div>
   </div>
 </template>
 <script>
@@ -43,6 +43,10 @@ export default {
     resizeIndicator: {
       type: Boolean,
       default: true
+    },
+    resizeEdges: {
+      type: Array,
+      required: true
     }
   },
   data() {
