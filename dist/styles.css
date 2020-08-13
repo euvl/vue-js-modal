@@ -1,5 +1,89 @@
 
-.vue-modal-resizer {
+.vue-modal-top {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 12px;
+  right: 12;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: n-resize;
+}
+.vue-modal-bottom {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 12px;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: s-resize;
+}
+.vue-modal-left {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: w-resize;
+}
+.vue-modal-right {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: e-resize;
+}
+.vue-modal-topRight {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 0;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: ne-resize;
+}
+.vue-modal-topLeft {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  top: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: nw-resize;
+}
+.vue-modal-bottomLeft {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999;
+  background: transparent;
+  cursor: sw-resize;
+}
+.vue-modal-bottomRight {
   display: block;
   overflow: hidden;
   position: absolute;
@@ -11,7 +95,7 @@
   background: transparent;
   cursor: se-resize;
 }
-.vue-modal-resizer::after {
+#vue-modal-triangle::after {
   display: block;
   position: absolute;
   content: '';
@@ -23,7 +107,7 @@
   border-bottom: 10px solid #ddd;
   border-left: 10px solid transparent;
 }
-.vue-modal-resizer.clicked::after {
+#vue-modal-triangle.clicked::after {
   border-bottom: 10px solid #369be9;
 }
 
@@ -100,6 +184,118 @@
 .vm-transition--default-enter,
 .vm-transition--default-leave-active {
   opacity: 0;
+}
+.resizable-r {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: e-resize;
+  width: 12px;
+  right: -6px;
+  top: 0;
+  height: 100%;
+}
+.resizable-rb {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-b {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: s-resize;
+  height: 12px;
+  bottom: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-lb {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: sw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  bottom: -6px;
+  z-index: 91;
+}
+.resizable-l {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: w-resize;
+  width: 12px;
+  left: -6px;
+  height: 100%;
+  top: 0;
+}
+.resizable-lt {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: nw-resize;
+  width: 12px;
+  height: 12px;
+  left: -6px;
+  top: -6px;
+  z-index: 91;
+}
+.resizable-t {
+  display: block;
+  position: absolute;
+  z-index: 90;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: n-resize;
+  height: 12px;
+  top: -6px;
+  width: 100%;
+  left: 0;
+}
+.resizable-rt {
+  display: block;
+  position: absolute;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: ne-resize;
+  width: 12px;
+  height: 12px;
+  right: -6px;
+  top: -6px;
+  z-index: 91;
 }
 
 

@@ -1,5 +1,13 @@
 <template>
-  <modal name="example-draggable" height="auto" :draggable="true">
+  <modal
+    name="example-draggable"
+    :min-width="200"
+    :min-height="200"
+    :fixed-resize="true"
+    :resizable="true"
+    :draggable="true"
+    :resize-indicator="false"
+  >
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique
       growth strategies. Assertively build leveraged growth strategies vis-a-vis
