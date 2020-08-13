@@ -81,7 +81,6 @@
     "vue": "2.6.11"
   },
   "dependencies": {
-    "resize-observer-polyfill": "^1.5.1",
-    "vue-resizable": "^1.2.2"
+    "resize-observer-polyfill": "^1.5.1"
   }
 }
