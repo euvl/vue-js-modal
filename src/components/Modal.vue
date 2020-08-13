@@ -94,7 +94,7 @@ export default {
       type: Boolean,
       default: false
     },
-    fixedResize: {
+    centerResize: {
       type: Boolean,
       default: true
     },
@@ -566,7 +566,7 @@ export default {
       this.modal.heightType = 'px'
       this.modal.height = event.size.height
       //Handle Shifting
-      if (this.fixedResize) {
+      if (!this.centerResize) {
         this.shiftLeft = this.getResizedShiftLeft(event)
         this.shiftTop = this.getResizedShiftTop(event)
       }
