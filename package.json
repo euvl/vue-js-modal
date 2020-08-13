@@ -1,7 +1,7 @@
 {
   "name": "fenetre-vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "2.0.0-rc.7",
+  "version": "2.0.0-rc.8",
   "author": "euvl <yev.dev@gmail.com>",
   "main": "dist/index.js",
   "publishConfig": {
