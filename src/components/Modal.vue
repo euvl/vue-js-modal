@@ -233,15 +233,6 @@ export default {
     window.addEventListener('orientationchange', this.onWindowResize)
 
     this.onWindowResize()
-    /**
-     * Making sure that autoHeight is enabled when using "scrollable"
-     */
-    if (this.scrollable && !this.isAutoHeight) {
-      console.warn(
-        `Modal "${this.name}" has scrollable flag set to true ` +
-          `but height is not "auto" (${this.height})`
-      )
-    }
 
     if (this.clickToClose) {
       window.addEventListener('keyup', this.onEscapeKeyUp)
