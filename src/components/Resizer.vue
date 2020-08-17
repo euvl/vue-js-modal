@@ -180,7 +180,6 @@ export default {
 
         el.style.width = width + 'px'
         el.style.height = height + 'px'
-
         this.$emit('resize', {
           element: el,
           size: this.size,

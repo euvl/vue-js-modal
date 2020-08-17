@@ -42,6 +42,10 @@
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
+          :viewport-height="viewportHeight"
+          :viewport-width="viewportWidth"
+          :resize-indicator="resizeIndicator"
+          :resize-edges="resizeEdges"
           @resize="onModalResize"
         />
       </div>
@@ -81,6 +85,22 @@ export default {
     resizable: {
       type: Boolean,
       default: false
+    },
+    resizeEdges: {
+      default: () => ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'],
+      validator: (val) =>
+        ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'].filter(
+          (value) => val.indexOf(value) !== -1
+        ).length === val.length,
+      type: Array
+    },
+    centerResize: {
+      type: Boolean,
+      default: true
+    },
+    resizeIndicator: {
+      type: Boolean,
+      default: true
     },
     adaptive: {
       type: Boolean,
@@ -228,7 +248,7 @@ export default {
     }
   },
   mounted() {
-    this.resizeObserver = new ResizeObserver(entries => {
+    this.resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0) {
         const [entry] = entries
 
@@ -546,6 +566,12 @@ export default {
 
       this.modal.heightType = 'px'
       this.modal.height = event.size.height
+      //Handle Shifting
+      if (!this.centerResize) {
+        this.shiftLeft = this.getResizedShiftLeft(event)
+        this.shiftTop = this.getResizedShiftTop(event)
+      }
+      //this.shiftLeft = this.shiftLeft - 1
 
       const { size } = this.modal
 
@@ -556,7 +582,65 @@ export default {
         })
       )
     },
+    getResizedShiftLeft(event) {
+      const {
+        viewportHeight,
+        viewportWidth,
+        trueModalWidth,
+        trueModalHeight
+      } = this
 
+      let result = this.shiftLeft
+
+      switch (event.direction) {
+        case 'vue-modal-topRight':
+        case 'vue-modal-bottomRight':
+        case 'vue-modal-right':
+          result = result + 0.5 * event.dimGrowth.width
+          break
+        case 'vue-modal-bottomLeft':
+        case 'vue-modal-topLeft':
+        case 'vue-modal-left':
+          result = result - 0.5 * event.dimGrowth.width
+          break
+        case 'vue-modal-top':
+        case 'vue-modal-bottom':
+          break
+        default:
+          console.error('Could not Find Resize Direction In ShiftLeft')
+      }
+
+      return result
+    },
+    getResizedShiftTop(event) {
+      const {
+        viewportHeight,
+        viewportWidth,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      let result = this.shiftTop
+
+      switch (event.direction) {
+        case 'vue-modal-bottom':
+        case 'vue-modal-bottomRight':
+        case 'vue-modal-bottomLeft':
+          result = result + 0.5 * event.dimGrowth.height
+          break
+        case 'vue-modal-top':
+        case 'vue-modal-topRight':
+        case 'vue-modal-topLeft':
+          result = result - 0.5 * event.dimGrowth.height
+          break
+        case 'vue-modal-left':
+        case 'vue-modal-right':
+          break
+        default:
+          console.error('Could not Find Resize Direction In ShiftTop')
+      }
+      return result
+    },
     open(params) {
       if (this.reset) {
         this.setInitialSize()
@@ -673,7 +757,7 @@ export default {
         let initialShiftLeft = 0
         let initialShiftTop = 0
 
-        const handleDraggableMousedown = event => {
+        const handleDraggableMousedown = (event) => {
           let target = event.target
 
           if (isInput(target)) {
@@ -695,7 +779,7 @@ export default {
           initialShiftTop = this.shiftTop
         }
 
-        const handleDraggableMousemove = event => {
+        const handleDraggableMousemove = (event) => {
           let { clientX, clientY } = getTouchEvent(event)
 
           this.shiftLeft = initialShiftLeft + clientX - startX
@@ -704,7 +788,7 @@ export default {
           event.preventDefault()
         }
 
-        const handleDraggableMouseup = event => {
+        const handleDraggableMouseup = (event) => {
           this.ensureShiftInWindowBounds()
 
           document.removeEventListener('mousemove', handleDraggableMousemove)
