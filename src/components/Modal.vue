@@ -88,9 +88,9 @@ export default {
     },
     resizeEdges: {
       default: () => ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'],
-      validator: (val) =>
+      validator: val =>
         ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'].filter(
-          (value) => val.indexOf(value) !== -1
+          value => val.indexOf(value) !== -1
         ).length === val.length,
       type: Array
     },
@@ -248,7 +248,7 @@ export default {
     }
   },
   mounted() {
-    this.resizeObserver = new ResizeObserver((entries) => {
+    this.resizeObserver = new ResizeObserver(entries => {
       if (entries.length > 0) {
         const [entry] = entries
 
@@ -571,7 +571,6 @@ export default {
         this.shiftLeft = this.getResizedShiftLeft(event)
         this.shiftTop = this.getResizedShiftTop(event)
       }
-      //this.shiftLeft = this.shiftLeft - 1
 
       const { size } = this.modal
 
@@ -757,7 +756,7 @@ export default {
         let initialShiftLeft = 0
         let initialShiftTop = 0
 
-        const handleDraggableMousedown = (event) => {
+        const handleDraggableMousedown = event => {
           let target = event.target
 
           if (isInput(target)) {
@@ -779,7 +778,7 @@ export default {
           initialShiftTop = this.shiftTop
         }
 
-        const handleDraggableMousemove = (event) => {
+        const handleDraggableMousemove = event => {
           let { clientX, clientY } = getTouchEvent(event)
 
           this.shiftLeft = initialShiftLeft + clientX - startX
@@ -788,7 +787,7 @@ export default {
           event.preventDefault()
         }
 
-        const handleDraggableMouseup = (event) => {
+        const handleDraggableMouseup = event => {
           this.ensureShiftInWindowBounds()
 
           document.removeEventListener('mousemove', handleDraggableMousemove)
