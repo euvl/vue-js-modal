@@ -111,9 +111,11 @@ export default {
       var width = event.clientX
       var height = event.clientY
 
+      //Block Resize if mouse outside visable space.
       if (event.clientX > this.viewportWidth || event.clientX < 0) return
       if (event.clientY > this.viewportHeight || event.clientY < 0) return
 
+      //Calcualte new  Widht/Height based on direction
       if (el) {
         switch (this.targetClass) {
           case 'vue-modal-right':
@@ -173,6 +175,7 @@ export default {
 
         this.size = { width, height }
 
+        //Calculate growth in each dimension to be used when shifting the modal.
         const dimGrowth = {
           width: width - parseInt(el.style.width.replace('px', '')),
           height: height - parseInt(el.style.height.replace('px', ''))
