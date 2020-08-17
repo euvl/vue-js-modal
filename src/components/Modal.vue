@@ -571,7 +571,6 @@ export default {
         this.shiftLeft = this.getResizedShiftLeft(event)
         this.shiftTop = this.getResizedShiftTop(event)
       }
-      //this.shiftLeft = this.shiftLeft - 1
 
       const { size } = this.modal
 
@@ -582,6 +581,11 @@ export default {
         })
       )
     },
+
+    /**
+     * When centerResize is set to false, the modal has to be shifted so the position of the modal stays fixed.
+     * This method shifts the modal in the x direction.
+     */
     getResizedShiftLeft(event) {
       const {
         viewportHeight,
@@ -612,6 +616,10 @@ export default {
 
       return result
     },
+    /**
+     * When centerResize is set to false, the modal has to be shifted so the position of the modal stays fixed.
+     * This method shifts the modal in the y direction.
+     */
     getResizedShiftTop(event) {
       const {
         viewportHeight,

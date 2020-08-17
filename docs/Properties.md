@@ -18,7 +18,7 @@ Enables resizing of the modal.
 
 ---
 
-#### `resizeEdges: Array<String> default: ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr']`
+#### `resizeEdges: Array<String>` `default: ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr']`
 
 Can contain an array with the edges on which you want the modal to be able to resize on.
 | string | corner |
@@ -34,13 +34,13 @@ Can contain an array with the edges on which you want the modal to be able to re
 
 ---
 
-#### `resizeIndicator: Boolean default: true`
+#### `resizeIndicator: Boolean` `default: true`
 
 Enables the resize triangle at the bottom right of a modal when Resizable is enabled.
 
 ---
 
-#### `centerResize: Boolean default: true`
+#### `centerResize: Boolean` `default: true`
 
 Enables automatic centering of the modal when resizing, if disabled modals will resize and remain in a fixed position similar to how Windows applications are resized.
 
