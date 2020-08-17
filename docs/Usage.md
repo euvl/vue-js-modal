@@ -42,7 +42,7 @@ Vue.use(VModal, { componentName: 'Foo' })
 Default properties that are injected into dynamic modals. 
 
 ```js
-Vue.use(VModal, { dynamicDefault: { draggable: true, resizable: true } })
+Vue.use(VModal, { dynamicDefaults: { draggable: true, resizable: true } })
 ```
 
 ## API
