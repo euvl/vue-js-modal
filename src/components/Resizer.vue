@@ -1,13 +1,13 @@
 <template>
   <div>
-      <div v-if="this.resizeEdges.includes('t')" class="vue-modal-top"></div>
-      <div v-if="this.resizeEdges.includes('b')" class="vue-modal-bottom"></div>
-      <div v-if="this.resizeEdges.includes('l')" class="vue-modal-left"></div>
-      <div v-if="this.resizeEdges.includes('r')" class="vue-modal-right"></div>
-      <div v-if="this.resizeEdges.includes('tr')" class="vue-modal-topRight"></div>
-      <div v-if="this.resizeEdges.includes('tl')" class="vue-modal-topLeft"></div>
-      <div v-if="this.resizeEdges.includes('br')" :id="getID" :class="className"></div>
-      <div v-if="this.resizeEdges.includes('bl')" class="vue-modal-bottomLeft"></div>
+    <div v-if="this.resizeEdges.includes('t')" class="vue-modal-top"></div>
+    <div v-if="this.resizeEdges.includes('b')" class="vue-modal-bottom"></div>
+    <div v-if="this.resizeEdges.includes('l')" class="vue-modal-left"></div>
+    <div v-if="this.resizeEdges.includes('r')" class="vue-modal-right"></div>
+    <div v-if="this.resizeEdges.includes('tr')" class="vue-modal-topRight"></div>
+    <div v-if="this.resizeEdges.includes('tl')" class="vue-modal-topLeft"></div>
+    <div v-if="this.resizeEdges.includes('br')" :id="getID" :class="className"></div>
+    <div v-if="this.resizeEdges.includes('bl')" class="vue-modal-bottomLeft"></div>
   </div>
 </template>
 <script>
@@ -184,104 +184,78 @@ export default {
 }
 </script>
 <style>
-.vue-modal-top {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 12px;
-  right: 12;
-  top: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: n-resize;
-}
-
-.vue-modal-bottom {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 12px;
-  left: 0;
-  bottom: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: s-resize;
-}
-
-.vue-modal-left {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 12px;
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: w-resize;
-}
-
-.vue-modal-right {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 12px;
-  height: 100%;
-  right: 0;
-  top: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: e-resize;
-}
-
-.vue-modal-topRight {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  right: 0;
-  top: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: ne-resize;
-}
-.vue-modal-topLeft {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  left: 0;
-  top: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: nw-resize;
-}
-.vue-modal-bottomLeft {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  left: 0;
-  bottom: 0;
-  z-index: 9999999;
-  background: transparent;
-  cursor: sw-resize;
-}
+.vue-modal-top,
+.vue-modal-bottom,
+.vue-modal-left,
+.vue-modal-right,
+.vue-modal-topRight,
+.vue-modal-topLeft,
+.vue-modal-bottomLeft,
 .vue-modal-bottomRight {
   display: block;
   overflow: hidden;
   position: absolute;
+  background: transparent;
+  z-index: 9999999;
+}
+.vue-modal-topRight,
+.vue-modal-topLeft,
+.vue-modal-bottomLeft,
+.vue-modal-bottomRight {
   width: 12px;
   height: 12px;
+}
+.vue-modal-top {
+  right: 12;
+  top: 0;
+  width: 100%;
+  height: 12px;
+  cursor: n-resize;
+}
+
+.vue-modal-bottom {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 12px;
+  cursor: s-resize;
+}
+
+.vue-modal-left {
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 100%;
+  cursor: w-resize;
+}
+
+.vue-modal-right {
+  right: 0;
+  top: 0;
+  width: 12px;
+  height: 100%;
+  cursor: e-resize;
+}
+
+.vue-modal-topRight {
+  right: 0;
+  top: 0;
+  background: transparent;
+  cursor: ne-resize;
+}
+.vue-modal-topLeft {
+  left: 0;
+  top: 0;
+  cursor: nw-resize;
+}
+.vue-modal-bottomLeft {
+  left: 0;
+  bottom: 0;
+  cursor: sw-resize;
+}
+.vue-modal-bottomRight {
   right: 0;
   bottom: 0;
-  z-index: 9999999;
-  background: transparent;
   cursor: se-resize;
 }
 
