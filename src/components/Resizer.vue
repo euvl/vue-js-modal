@@ -104,16 +104,13 @@ export default {
     mousemove(event) {
       this.resize(event)
     },
-    parseDim(el, dim) {
-      if(dim === "w") return parseInt(el.style.width.replace('px', ''))
-      else return parseInt(el.style.height.replace('px', ''))
-    }
-
     resize(event) {
       var el = this.$el.parentElement
 
       var width = event.clientX
       var height = event.clientY
+      var styleWidth = parseInt(el.style.width.replace('px', ''))
+      var styleHeight = parseInt(el.style.height.replace('px', ''))
 
       //Block Resize if mouse outside visable space.
       if (event.clientX > this.viewportWidth || event.clientX < 0) return
@@ -124,22 +121,18 @@ export default {
         switch (this.targetClass) {
           case 'vue-modal-right':
             width = width - el.offsetLeft
-            height = parseDim(el, "h")
+            height = styleHeight
             break
           case 'vue-modal-left':
-            height = parseDim(el, "h")
-            width =
-              parseDim(el, "w") +
-              (this.initialX - event.clientX)
+            height = styleHeight
+            width = styleWidth + (this.initialX - event.clientX)
             break
           case 'vue-modal-top':
-            width = parseDim(el, "w")
-            height =
-              parseDim(el, "h") +
-              (this.initialY - event.clientY)
+            width = styleWidth
+            height = styleHeight + (this.initialY - event.clientY)
             break
           case 'vue-modal-bottom':
-            width = parseDim(el, "w")
+            width = styleWidth
             height = height - el.offsetTop
             break
           case 'vue-modal-bottomRight':
@@ -148,23 +141,15 @@ export default {
             break
           case 'vue-modal-topRight':
             width = width - el.offsetLeft
-            height =
-              parseDim(el, "h") +
-              (this.initialY - event.clientY)
+            height = styleHeight + (this.initialY - event.clientY)
             break
           case 'vue-modal-bottomLeft':
-            width =
-              parseDim(el, "w") +
-              (this.initialX - event.clientX)
+            width = styleWidth + (this.initialX - event.clientX)
             height = height - el.offsetTop
             break
           case 'vue-modal-topLeft':
-            width =
-              parseDim(el, "w") +
-              (this.initialX - event.clientX)
-            height =
-              parseDim(el, "h") +
-              (this.initialY - event.clientY)
+            width = styleWidth + (this.initialX - event.clientX)
+            height = styleHeight + (this.initialY - event.clientY)
             break
           default:
             console.error('Incorrrect/no resize direction.')
@@ -181,8 +166,8 @@ export default {
 
         //Calculate growth in each dimension to be used when shifting the modal.
         const dimGrowth = {
-          width: width - parseDim(el, "w"),
-          height: height - parseDim(el, "h")
+          width: width - styleWidth,
+          height: height - styleHeight
         }
 
         el.style.width = width + 'px'
