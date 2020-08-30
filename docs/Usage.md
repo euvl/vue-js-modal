@@ -82,12 +82,12 @@ export default {
 
 #### `$modal.show(component, componentProps, modalProps, modalEvents)`
 
-Todo
+used to show a dynamic modal at runtime
 
 #### `$modal.hide(name)`
 
-Todo
+hide the modal with the given `name` property
 
 #### `$modal.hideAll()`
 
-Todo
+hide all modals in the application
