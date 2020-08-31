@@ -12,15 +12,43 @@ Name of the modal, it is required property.
 
 ---
 
-#### `resizable: Boolean` 
+#### `resizable: Boolean`
 
 Enables resizing of the modal.
 
 ---
 
+#### `resizeEdges: Array<String>` `default: ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr']`
+
+Can contain an array with the edges on which you want the modal to be able to resize on.
+| string | corner |
+| ------- | ------------- |
+| r | right |
+| br | bottom right |
+| b | bottom |
+| bl | bottom left |
+| l | left |
+| t | top left |
+| t | top |
+| tr | top right |
+
+---
+
+#### `resizeIndicator: Boolean` `default: true`
+
+Enables the resize triangle at the bottom right of a modal when Resizable is enabled.
+
+---
+
+#### `centerResize: Boolean` `default: true`
+
+Enables automatic centering of the modal when resizing, if disabled modals will resize and remain in a fixed position similar to how Windows applications are resized.
+
+---
+
 #### `adaptive: Boolean`
 
-Enable responsive behavior, modal will try to adapt to the screen size when possible. Properties  `maxHeight`, `maxWidth`, `minHeight`, `minWidth` can set the boundaries for the automatic resizing.
+Enable responsive behavior, modal will try to adapt to the screen size when possible. Properties `maxHeight`, `maxWidth`, `minHeight`, `minWidth` can set the boundaries for the automatic resizing.
 
 ---
 
@@ -78,7 +106,7 @@ Resets position and size before showing
 
 ---
 
-#### `clickToClose: Boolean`  `default: true`
+#### `clickToClose: Boolean` `default: true`
 
 If set to `false`, it will not be possible to close modal by clicking on the background or by pressing Esc key.
 
@@ -102,42 +130,41 @@ List of class that will be applied to the modal window (not overlay, just the bo
 
 ---
 
-#### `styles: String | Array | Object` 
+#### `styles: String | Array | Object`
 
 Style that will be applied to the modal window.
 
-
 ::: warning Note
-To be able to support string definition of styles there are some hacks in place. 
+To be able to support string definition of styles there are some hacks in place.
 
 Vue.js does not allow merging string css definition with an object/array style definition. There are very few cases where you might need to use this property, but if you do - write tests :)
 :::
 
 ---
 
-#### `width: String | Number` `default: 600`     
+#### `width: String | Number` `default: 600`
 
 Width in pixels or percents (50, "50px", "50%").
 
 Supported string values are `<number>%` and `<number>px`
 
 ::: warning Note
-This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal. 
+This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal.
 If you need to use more value types, please consider contributing to the parser [here](https://github.com/euvl/vue-js-modal/blob/master/src/utils/parser.js).
-:::   
+:::
 
 ---
 
 #### `height: String | Number` `default: 300`
 
-Height in pixels or percents (50, "50px", "50%") or `"auto"`.                       
- 
+Height in pixels or percents (50, "50px", "50%") or `"auto"`.
+
 Supported string values are `<number>%`, `<number>px` and `auto`. Setting height to `"auto"` makes it automatically change the height when the content size changes (this works well with `scrollable` feature).
 
 ::: warning Note
-This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal. 
+This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal.
 If you need to use more value types, please consider contributing to the parser [here](https://github.com/euvl/vue-js-modal/blob/master/src/utils/parser.js).
-:::   
+:::
 
 ---
 
@@ -177,7 +204,8 @@ Vertical position in `%`, default is `0.5` (meaning that modal box will be in th
 
 ---
 
-## Example 
+## Example
+
 ```html
 <template>
   <modal name="example"
