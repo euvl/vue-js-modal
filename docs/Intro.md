@@ -158,5 +158,6 @@ this.$modal.show('dialog', {
   ]
 })
 ```
+Note that the name should be `'dialog'`!
 
 ![](https://user-images.githubusercontent.com/1577802/85934434-0dac5300-b8da-11ea-9db5-34fa5a0b7fe0.png)
