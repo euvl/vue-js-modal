@@ -242,10 +242,6 @@ export default {
           `but height is not "auto" (${this.height})`
       )
     }
-
-    if (this.clickToClose) {
-      window.addEventListener('keyup', this.onEscapeKeyUp)
-    }
   },
   mounted() {
     this.resizeObserver = new ResizeObserver(entries => {
@@ -266,10 +262,6 @@ export default {
 
     window.removeEventListener('resize', this.onWindowResize)
     window.removeEventListener('orientationchange', this.onWindowResize)
-
-    if (this.clickToClose) {
-      window.removeEventListener('keyup', this.onEscapeKeyUp)
-    }
     /**
      * Removes blocked scroll
      */
@@ -472,6 +464,10 @@ export default {
 
       this.$nextTick(() => {
         this.resizeObserver.observe(this.$refs.modal)
+        if (this.clickToClose) {
+          this.$refs.modal.focus()
+          this.$refs.modal.addEventListener('keyup', this.onEscapeKeyUp)
+        }
       })
     },
 
@@ -497,6 +493,9 @@ export default {
     beforeModalTransitionLeave() {
       this.modalTransitionState = TransitionState.Leaving
       this.resizeObserver.unobserve(this.$refs.modal)
+      if (this.clickToClose) {
+        this.$refs.modal.removeEventListener('keyup', this.onEscapeKeyUp)
+      }
 
       if (this.$focusTrap.enabled()) {
         this.$focusTrap.disable()
@@ -537,6 +536,7 @@ export default {
 
     onEscapeKeyUp(event) {
       if (event.which === 27 && this.visible) {
+        event.stopPropagation()
         this.$modal.hide(this.name)
       }
     },
