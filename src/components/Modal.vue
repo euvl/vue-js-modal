@@ -437,6 +437,12 @@ export default {
       if (isReady) {
         this.visible = false
       }
+    },
+    clickToClose(newValue) {
+      if (!newValue) {
+        // This way the user can not accidentally close the modal if content is filled.
+        window.removeEventListener('keyup', this.onEscapeKeyUp)
+      }
     }
   },
 
