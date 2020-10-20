@@ -244,7 +244,7 @@ export default {
     }
 
     if (this.clickToClose) {
-      window.addEventListener('keyup', this.onEscapeKeyUp)
+      this.addKeyUpListener()
     }
   },
   mounted() {
@@ -268,7 +268,7 @@ export default {
     window.removeEventListener('orientationchange', this.onWindowResize)
 
     if (this.clickToClose) {
-      window.removeEventListener('keyup', this.onEscapeKeyUp)
+      this.removeKeyUpListener()
     }
     /**
      * Removes blocked scroll
@@ -441,7 +441,11 @@ export default {
     clickToClose(newValue) {
       if (!newValue) {
         // This way the user can not accidentally close the modal if content is filled.
-        window.removeEventListener('keyup', this.onEscapeKeyUp)
+        this.removeKeyUpListener()
+      }
+      if (newValue) {
+        // Re add the keyup listener if the value was set to false.
+        this.addKeyUpListener()
       }
     }
   },
@@ -760,6 +764,13 @@ export default {
       if (this.clickToClose) {
         this.toggle(false)
       }
+    },
+
+    addKeyUpListener() {
+      window.addEventListener('keyup', this.onEscapeKeyUp)
+    },
+    removeKeyUpListener() {
+      window.removeEventListener('keyup', this.onEscapeKeyUp)
     },
 
     addDraggableListeners() {
