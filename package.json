@@ -78,7 +78,7 @@
     "webpack-merge": "^4.2.2"
   },
   "peerDependencies": {
-    "vue": "2.6.11"
+    "vue": "^2.6.11"
   },
   "dependencies": {
     "resize-observer-polyfill": "^1.5.1"
