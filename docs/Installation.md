@@ -51,11 +51,9 @@ import 'vue-js-modal/dist/styles.css'
 
 Vue.use(VModal, { ... })
 
-/*
 export default function(_, inject) {
-  inject('modal', VModal)
+  inject('modal', Vue.prototype.$modal)
 }
-*/
 ```
 
 ::: tip Extracted CSS
