@@ -1,5 +1,11 @@
-import Vue from "vue";
-import VueJSModal, { VueJSModalOptions } from "../index";
+import Vue, { CreateElement } from "vue";
+import VueJSModal, { VueJSModalOptions, Modal, Dialog, version } from "../index";
+
+const versionTest: string = version
+
+const createElement: CreateElement = undefined as unknown as CreateElement
+createElement(Modal)
+createElement(Dialog)
 
 Vue.use(VueJSModal);
 Vue.use<VueJSModalOptions>(VueJSModal, {

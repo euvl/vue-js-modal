@@ -1,4 +1,9 @@
-import Vue, { PluginObject, ComponentOptions, AsyncComponent } from 'vue'
+import Vue, { PluginObject, ComponentOptions, AsyncComponent, VueConstructor } from 'vue'
+
+export declare const version: string
+
+export declare const Modal: VueConstructor
+export declare const Dialog: VueConstructor
 
 export declare interface VueJSModalOptions {
   componentName?: string
