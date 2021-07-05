@@ -166,7 +166,9 @@ export default {
     width: {
       type: [Number, String],
       default: 600,
-      validator: validateNumber
+      validator(value) {
+        return value === 'auto' || validateNumber(value)
+      }
     },
     height: {
       type: [Number, String],
