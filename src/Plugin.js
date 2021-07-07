@@ -40,7 +40,8 @@ const Plugin = {
      * Registration of <Dialog/> component
      */
     if (options.dialog) {
-      Vue.component('VDialog', Dialog)
+      const componentName = options.dialogComponentName || 'VDialog';
+      Vue.component(componentName, Dialog);
     }
   }
 }
