@@ -3,6 +3,7 @@ import Vue, { PluginObject, ComponentOptions, AsyncComponent } from 'vue'
 export declare interface VueJSModalOptions {
   componentName?: string
   dialog?: boolean
+  dialogComponentName?: string
   dynamicDefaults?: object
 }
 
