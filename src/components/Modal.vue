@@ -158,6 +158,14 @@ export default {
     maxHeight: {
       type: Number,
       default: Number.MAX_SAFE_INTEGER
+    },    
+    fixedMarginTopBottom: {
+      type: Number,
+      default: 100
+    },
+    fixedMarginLeftRight: {
+      type: Number,
+      default: 200
     },
     width: {
       type: [Number, String],
@@ -782,14 +790,32 @@ export default {
 
         const handleDraggableMousemove = event => {
           let { clientX, clientY } = getTouchEvent(event)
-          this.shiftLeft = initialShiftLeft + clientX - startX
-          this.shiftTop = initialShiftTop + clientY - startY
+            
+          const maxLeft = this.viewportWidth - this.trueModalWidth - this.fixedMarginLeftRight
+          const maxTop = Math.max(this.viewportHeight - this.trueModalHeight - this.fixedMarginTopBottom, 0)
+
+          let shiftL = initialShiftLeft + clientX - startX
+          let shiftT = initialShiftTop + clientY - startY
+
+          const left = shiftL + this.shiftX * maxLeft
+          const top = shiftT + this.shiftY * maxTop
+
+          shiftL -= left - inRange(0, maxLeft, left)
+          shiftT -= top - inRange(0, maxTop, top)
+
+          if (left >= 0 && left <= maxLeft && top >= 0 && top <= maxTop) {
+              this.shiftLeft = shiftL
+              this.shiftTop = shiftT
+          } else if ((left < 0 || left > maxLeft) && top >= 0 && top <= maxTop) {
+              this.shiftTop = shiftT
+          } else if ((top < 0 || top > maxTop) && left >= 0 && left <= maxLeft) {
+              this.shiftLeft = shiftL
+          }
 
           event.preventDefault()
         }
 
         const handleDraggableMouseup = event => {
-          this.ensureShiftInWindowBounds()
 
           document.removeEventListener('mousemove', handleDraggableMousemove)
           document.removeEventListener('touchmove', handleDraggableMousemove)
@@ -817,8 +843,8 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = viewportWidth - trueModalWidth
-      const maxTop = Math.max(viewportHeight - trueModalHeight, 0)
+      const maxLeft = viewportWidth - trueModalWidth - this.fixedMarginLeftRight
+      const maxTop = Math.max(viewportHeight - trueModalHeight - this.fixedMarginTopBottom, 0)
 
       const left = shiftLeft + shiftX * maxLeft
       const top = shiftTop + shiftY * maxTop
