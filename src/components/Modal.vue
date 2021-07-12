@@ -161,11 +161,11 @@ export default {
     },    
     fixedMarginTopBottom: {
       type: Number,
-      default: 100
+      default: 0
     },
     fixedMarginLeftRight: {
       type: Number,
-      default: 200
+      default: 0
     },
     width: {
       type: [Number, String],
