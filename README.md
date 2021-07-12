@@ -1,5 +1,4 @@
 <p align="center">
-  
 # Vue.js modal FORK
 
 Easy to use, highly customizable Vue.js modal library. test2
