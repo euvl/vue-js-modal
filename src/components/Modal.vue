@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" :class="containerClass" >
+  <div v-if="visible" :class="containerClass">
     <transition
       :name="guaranteedOverlayTransition"
       @before-enter="beforeOverlayTransitionEnter"
@@ -35,7 +35,7 @@
         role="dialog"
         aria-modal="true"
       >
-        <slot /> 
+        <slot />
         <resizer
           v-if="resizable && !isAutoHeight"
           :min-width="minWidth"
@@ -48,7 +48,6 @@
           :resize-edges="resizeEdges"
           @resize="onModalResize"
         />
-        <!-- </vue-resizable> -->
       </div>
     </transition>
   </div>
@@ -84,9 +83,9 @@ export default {
     },
     resizeEdges: {
       default: () => ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'],
-      validator: val =>
+      validator: (val) =>
         ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'].filter(
-          value => val.indexOf(value) !== -1
+          (value) => val.indexOf(value) !== -1
         ).length === val.length,
       type: Array
     },
@@ -94,7 +93,7 @@ export default {
       type: Boolean,
       default: false
     },
-    fixedResize: {
+    centerResize: {
       type: Boolean,
       default: true
     },
@@ -241,26 +240,17 @@ export default {
     window.addEventListener('orientationchange', this.onWindowResize)
 
     this.onWindowResize()
-    /**
-     * Making sure that autoHeight is enabled when using "scrollable"
-     */
-    if (this.scrollable && !this.isAutoHeight) {
-      console.warn(
-        `Modal "${this.name}" has scrollable flag set to true ` +
-          `but height is not "auto" (${this.height})`
-      )
-    }
 
     if (this.clickToClose) {
       window.addEventListener('keyup', this.onEscapeKeyUp)
     }
   },
   mounted() {
-    this.resizeObserver = new ResizeObserver(entries => {
+    this.resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0) {
         const [entry] = entries
 
-        this.modal.renderedHeight = entry.contentRect.height
+        this.modal.renderedHeight = Math.ceil(entry.contentRect.height)
       }
     })
 
@@ -574,7 +564,7 @@ export default {
       this.modal.heightType = 'px'
       this.modal.height = event.size.height
       //Handle Shifting
-      if (this.fixedResize) {
+      if (!this.centerResize) {
         this.shiftLeft = this.getResizedShiftLeft(event)
         this.shiftTop = this.getResizedShiftTop(event)
       }
@@ -766,7 +756,7 @@ export default {
         let initialShiftLeft = 0
         let initialShiftTop = 0
 
-        const handleDraggableMousedown = event => {
+        const handleDraggableMousedown = (event) => {
           let target = event.target
 
           if (isInput(target)) {
@@ -788,7 +778,7 @@ export default {
           initialShiftTop = this.shiftTop
         }
 
-        const handleDraggableMousemove = event => {
+        const handleDraggableMousemove = (event) => {
           let { clientX, clientY } = getTouchEvent(event)
             
           const maxLeft = this.viewportWidth - this.trueModalWidth - this.fixedMarginLeftRight
@@ -941,118 +931,5 @@ export default {
 .vm-transition--default-enter,
 .vm-transition--default-leave-active {
   opacity: 0;
-}
-
-.resizable-r {
-  display: block;
-  position: absolute;
-  z-index: 90;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: e-resize;
-  width: 12px;
-  right: -6px;
-  top: 0;
-  height: 100%;
-}
-.resizable-rb {
-  display: block;
-  position: absolute;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: se-resize;
-  width: 12px;
-  height: 12px;
-  right: -6px;
-  bottom: -6px;
-  z-index: 91;
-}
-.resizable-b {
-  display: block;
-  position: absolute;
-  z-index: 90;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: s-resize;
-  height: 12px;
-  bottom: -6px;
-  width: 100%;
-  left: 0;
-}
-.resizable-lb {
-  display: block;
-  position: absolute;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: sw-resize;
-  width: 12px;
-  height: 12px;
-  left: -6px;
-  bottom: -6px;
-  z-index: 91;
-}
-.resizable-l {
-  display: block;
-  position: absolute;
-  z-index: 90;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: w-resize;
-  width: 12px;
-  left: -6px;
-  height: 100%;
-  top: 0;
-}
-.resizable-lt {
-  display: block;
-  position: absolute;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: nw-resize;
-  width: 12px;
-  height: 12px;
-  left: -6px;
-  top: -6px;
-  z-index: 91;
-}
-.resizable-t {
-  display: block;
-  position: absolute;
-  z-index: 90;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: n-resize;
-  height: 12px;
-  top: -6px;
-  width: 100%;
-  left: 0;
-}
-.resizable-rt {
-  display: block;
-  position: absolute;
-  touch-action: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: ne-resize;
-  width: 12px;
-  height: 12px;
-  right: -6px;
-  top: -6px;
-  z-index: 91;
 }
 </style>

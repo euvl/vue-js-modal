@@ -1,11 +1,11 @@
 {
-  "name": "fenetre-vue-js-modal",
+  "name": "@fenetre/silicon-vue-dialog",
   "description": "Modal Component for Vue.js",
-  "version": "2.0.0-rc.6",
+  "version": "2.0.0-rc.10",
   "author": "euvl <yev.dev@gmail.com>",
   "main": "dist/index.js",
   "publishConfig": {
-    "registry": "https://pkgs.dev.azure.com/FenetreBV/_packaging/Fenetre.SiliconCore.Vue/npm/registry/"
+    "registry": "https://pkgs.dev.azure.com/FenetreBV/34ec6cde-b79b-4ced-ae99-4988858e0c1c/_packaging/Fenetre.SiliconCore/npm/registry/"
   },
   "repository": {
     "type": "git",
@@ -81,7 +81,6 @@
     "vue": "2.6.11"
   },
   "dependencies": {
-    "resize-observer-polyfill": "^1.5.1",
-    "vue-resizable": "^1.2.2"
+    "resize-observer-polyfill": "^1.5.1"
   }
 }

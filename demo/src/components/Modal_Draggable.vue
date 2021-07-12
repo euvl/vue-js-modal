@@ -3,7 +3,7 @@
     name="example-draggable"
     :min-width="200"
     :min-height="200"
-    :fixed-resize="true"
+    :center-resize="false"
     :resizable="true"
     :draggable="true"
     :resize-indicator="false"
