@@ -42,6 +42,8 @@
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
+          :fixed-margin-left-right="fixedMarginLeftRight"
+          :fixed-margin-top-bottom="fixedMarginTopBottom"
           :viewport-height="viewportHeight"
           :viewport-width="viewportWidth"
           :resize-indicator="resizeIndicator"
@@ -95,7 +97,7 @@ export default {
     },
     centerResize: {
       type: Boolean,
-      default: true
+      default: false
     },
     adaptive: {
       type: Boolean,
