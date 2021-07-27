@@ -42,6 +42,8 @@
           :min-height="minHeight"
           :max-width="maxWidth"
           :max-height="maxHeight"
+          :fixed-margin-left-right="fixedMarginLeftRight"
+          :fixed-margin-top-bottom="fixedMarginTopBottom"
           :viewport-height="viewportHeight"
           :viewport-width="viewportWidth"
           :resize-indicator="resizeIndicator"
@@ -95,7 +97,7 @@ export default {
     },
     centerResize: {
       type: Boolean,
-      default: true
+      default: false
     },
     adaptive: {
       type: Boolean,
@@ -780,9 +782,9 @@ export default {
 
         const handleDraggableMousemove = (event) => {
           let { clientX, clientY } = getTouchEvent(event)
-            
-          const maxLeft = this.viewportWidth - this.trueModalWidth - this.fixedMarginLeftRight
-          const maxTop = Math.max(this.viewportHeight - this.trueModalHeight - this.fixedMarginTopBottom, 0)
+     
+          const maxLeft = this.viewportWidth - this.trueModalWidth - this.fixedMarginLeftRight * 2
+          const maxTop = Math.max(this.viewportHeight - this.trueModalHeight - this.fixedMarginTopBottom * 2, 0)
 
           let shiftL = initialShiftLeft + clientX - startX
           let shiftT = initialShiftTop + clientY - startY
@@ -805,7 +807,8 @@ export default {
           event.preventDefault()
         }
 
-        const handleDraggableMouseup = event => {
+        const handleDraggableMouseup = (event) => {
+          this.ensureShiftInWindowBounds()
 
           document.removeEventListener('mousemove', handleDraggableMousemove)
           document.removeEventListener('touchmove', handleDraggableMousemove)
@@ -833,8 +836,8 @@ export default {
         trueModalHeight
       } = this
 
-      const maxLeft = viewportWidth - trueModalWidth - this.fixedMarginLeftRight
-      const maxTop = Math.max(viewportHeight - trueModalHeight - this.fixedMarginTopBottom, 0)
+      const maxLeft = viewportWidth - trueModalWidth - this.fixedMarginLeftRight * 2
+      const maxTop = Math.max(viewportHeight - trueModalHeight - this.fixedMarginTopBottom * 2, 0)
 
       const left = shiftLeft + shiftX * maxLeft
       const top = shiftTop + shiftY * maxTop
