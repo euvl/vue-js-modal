@@ -178,9 +178,23 @@ export default {
             break
           case 'vue-modal-topRight':
             width = width - el.offsetLeft
-            height =
-              parseInt(el.style.height.replace('px', '')) +
-              (this.initialY - event.clientY)
+
+            const yTR = this.initialY - event.clientY
+
+            let newHeightTR = parseInt(el.style.height.replace('px', '')) + yTR
+            let shiftTopR = false
+            
+            if ((el.offsetTop - yTR) > this.fixedMarginTopBottom 
+            && el.offsetTop - yTR + height < this.viewportHeight - this.fixedMarginTopBottom 
+            && newHeightTR > this.minHeight
+            && newHeightTR < this.maxHeight ) {
+              height = newHeightTR
+              shiftTopR = true
+            } else {
+              height = parseInt(el.style.height.replace('px', '')) 
+            }
+              
+            if (shiftTopR) el.style.top = parseInt(el.style.top.replace('px', '')) - yTR + "px"
             break
           case 'vue-modal-bottomLeft':
             height = height - el.offsetTop
