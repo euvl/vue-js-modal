@@ -112,7 +112,7 @@ export default {
     },
 
     resize(event) {
-      var el = this.$el.parentElement
+      var el = this.$el.parentElement 
 
       var width = event.clientX
       var height = event.clientY
@@ -120,56 +120,29 @@ export default {
       if (event.clientX > this.viewportWidth || event.clientX < 0) return
       if (event.clientY > this.viewportHeight || event.clientY < 0) return
 
-      if (el) {
+      const styleWidth = parseInt(el.style.width.replace('px', ''))
+      const styleHeight = parseInt(el.style.height.replace('px', ''))
+      const styleLeft = parseInt(el.style.left.replace('px', ''))
+      const styleTop = parseInt(el.style.top.replace('px', ''))
+      
+      const y = this.initialY - event.clientY
+      const x = (this.initialX - event.clientX)
+    if (el) {
           switch (this.targetClass) {
           case 'vue-modal-right':
             width = width - el.offsetLeft
-            height = parseInt(el.style.height.replace('px', ''))
+            height = styleHeight
             break
           case 'vue-modal-left':
-            height = parseInt(el.style.height.replace('px', ''))
-
-            const x = (this.initialX - event.clientX)
-
-            let newWidth = parseInt(el.style.width.replace('px', '')) + x
-            let shiftLeft = false
-
-            if ((el.offsetLeft - x) > this.fixedMarginLeftRight
-            && el.offsetLeft - x + width < this.viewportWidth - this.fixedMarginLeftRight 
-            && newWidth > this.minWidth
-            && newWidth < this.maxWidth) {
-              width = newWidth
-              shiftLeft = true
-            } else { 
-              width = parseInt(el.style.width.replace('px', ''))
-            }
-
-            if (shiftLeft) el.style.left = parseInt(el.style.left.replace('px', '')) - x + "px" 
-            
+            height = styleHeight
+            width = this.setWidth(el, x, width, styleLeft, styleWidth)
             break
           case 'vue-modal-top':
-            width = parseInt(el.style.width.replace('px', ''))
-            
-            const y = this.initialY - event.clientY
-
-            let newHeight = parseInt(el.style.height.replace('px', '')) + y
-            let shiftTop = false
-            
-            if ((el.offsetTop - y) > this.fixedMarginTopBottom 
-            && el.offsetTop - y + height < this.viewportHeight - this.fixedMarginTopBottom 
-            && newHeight > this.minHeight
-            && newHeight < this.maxHeight ) {
-              height = newHeight
-              shiftTop = true
-            } else {
-              height = parseInt(el.style.height.replace('px', '')) 
-            }
-              
-            if (shiftTop ) el.style.top = parseInt(el.style.top.replace('px', '')) - y + "px"
-
+            width = styleWidth
+            height = this.setHeight(el, y, height, styleTop, styleHeight)
             break
           case 'vue-modal-bottom':
-            width = parseInt(el.style.width.replace('px', ''))
+            width = styleWidth
             height = height - el.offsetTop
             break
           case 'vue-modal-bottomRight':
@@ -178,81 +151,15 @@ export default {
             break
           case 'vue-modal-topRight':
             width = width - el.offsetLeft
-
-            const yTR = this.initialY - event.clientY
-
-            let newHeightTR = parseInt(el.style.height.replace('px', '')) + yTR
-            let shiftTopR = false
-            
-            if ((el.offsetTop - yTR) > this.fixedMarginTopBottom 
-            && el.offsetTop - yTR + height < this.viewportHeight - this.fixedMarginTopBottom 
-            && newHeightTR > this.minHeight
-            && newHeightTR < this.maxHeight ) {
-              height = newHeightTR
-              shiftTopR = true
-            } else {
-              height = parseInt(el.style.height.replace('px', '')) 
-            }
-              
-            if (shiftTopR) el.style.top = parseInt(el.style.top.replace('px', '')) - yTR + "px"
+            height = this.setHeight(el, y, height, styleTop, styleHeight)
             break
           case 'vue-modal-bottomLeft':
             height = height - el.offsetTop
-            
-            const xBL = (this.initialX - event.clientX)
-
-            let newWidthBL = parseInt(el.style.width.replace('px', '')) + xBL
-            let shiftBLeft = false
-
-            if ((el.offsetLeft - xBL) > this.fixedMarginLeftRight
-            && el.offsetLeft - xBL + width < this.viewportWidth - this.fixedMarginLeftRight 
-            && newWidthBL > this.minWidth
-            && newWidthBL < this.maxWidth) {
-              width = newWidthBL
-              shiftBLeft = true
-            } else { 
-              width = parseInt(el.style.width.replace('px', ''))
-            }
-
-            if (shiftBLeft) el.style.left = parseInt(el.style.left.replace('px', '')) - xBL + "px" 
-            
+            width = this.setWidth(el, x, width, styleLeft, styleWidth)
             break
           case 'vue-modal-topLeft':
-            // height resize
-            const yTL = this.initialY - event.clientY
-
-            let newHeightTL = parseInt(el.style.height.replace('px', '')) + yTL
-            let shiftTopL = false
-            
-            if ((el.offsetTop - yTL) > this.fixedMarginTopBottom 
-            && el.offsetTop - yTL + height < this.viewportHeight - this.fixedMarginTopBottom 
-            && newHeightTL > this.minHeight
-            && newHeightTL < this.maxHeight ) {
-              height = newHeightTL
-              shiftTopL = true
-            } else {
-              height = parseInt(el.style.height.replace('px', '')) 
-            }
-              
-            if (shiftTopL) el.style.top = parseInt(el.style.top.replace('px', '')) - yTL + "px"
-
-            // width resize
-            const xTL = (this.initialX - event.clientX)
-
-            let newWidthTL = parseInt(el.style.width.replace('px', '')) + xTL
-            let shiftTLeft = false
-
-            if ((el.offsetLeft - xTL) > this.fixedMarginLeftRight
-            && el.offsetLeft - xTL + width < this.viewportWidth - this.fixedMarginLeftRight 
-            && newWidthTL > this.minWidth
-            && newWidthTL < this.maxWidth) {              
-              width = newWidthTL
-              shiftTLeft = true
-            } else { 
-              width = parseInt(el.style.width.replace('px', ''))
-            }
-
-            if (shiftTLeft) el.style.left = parseInt(el.style.left.replace('px', '')) - xTL + "px" 
+            height = this.setHeight(el, y, height, styleTop, styleHeight)
+            width = this.setWidth(el, x, width, styleLeft, styleWidth)
             break
           default:
             console.error('Incorrrect/no resize direction.')
@@ -261,8 +168,8 @@ export default {
         const maxWidth = Math.min(windowWidthWithoutScrollbar(), this.maxWidth)
         const maxHeight = Math.min(window.innerHeight, this.maxHeight)
 
-        width = inRange(this.minWidth, maxWidth, width)
-        height = inRange(this.minHeight, maxHeight, height)
+        width = width == this.minWidth ? width + 1 : width == this.maxWidth ? width - 1 : inRange(this.minWidth, maxWidth, width)
+        height = height == this.minHeight ? height + 1 : height == this.maxHeight ? height - 1 : inRange(this.minHeight, maxHeight, height)
 
         this.initialX = event.clientX
         this.initialY = event.clientY
@@ -270,8 +177,8 @@ export default {
         this.size = { width, height }
 
         const dimGrowth = {
-          width: width - parseInt(el.style.width.replace('px', '')),
-          height: height - parseInt(el.style.height.replace('px', ''))
+          width: width - styleWidth,
+          height: height - styleHeight
         }
  
         if (el.offsetLeft + width < this.viewportWidth - this.fixedMarginLeftRight && el.offsetLeft > this.fixedMarginLeftRight) el.style.width = width + 'px'
@@ -295,6 +202,48 @@ export default {
         }
       }
     },
+    setWidth(el, x, width, styleLeft, styleWidth){
+      let newWidth = styleWidth + x
+
+      if ((el.offsetLeft - x) > this.fixedMarginLeftRight
+          && el.offsetLeft - x + width < this.viewportWidth - this.fixedMarginLeftRight
+          && newWidth > this.minWidth
+          && newWidth < this.maxWidth
+          ) {
+            if (el.offsetLeft - x + width < this.viewportWidth - this.fixedMarginLeftRight 
+            || x > 0) {
+              width = newWidth
+            }
+            el.style.left = styleLeft - x + "px" 
+          } else if (el.offsetLeft - x + width >= this.viewportWidth - this.fixedMarginLeftRight && newWidth > this.minWidth) {
+            width = newWidth
+            el.style.left = styleLeft - x + "px" 
+          } else { 
+            width = styleWidth
+          }
+      return width;
+    },
+    setHeight(el, y, height, styleTop, styleHeight) {
+      let newHeight = styleHeight + y
+
+      if ((el.offsetTop - y) > this.fixedMarginTopBottom 
+      && el.offsetTop - y + height < this.viewportHeight - this.fixedMarginTopBottom 
+      && newHeight > this.minHeight
+      && newHeight < this.maxHeight) {
+        if (el.offsetTop - y + height < this.viewportHeight - this.fixedMarginTopBottom 
+        || y > 0) {
+          height = newHeight
+        }
+        el.style.top = styleTop - y + "px"
+      } else if (el.offsetTop - y + height >= this.viewportHeight - this.fixedMarginTopBottom 
+      && newHeight > this.minHeight) {
+        height = newHeight
+        el.style.top = styleTop - y + "px"
+      } else {
+        height = styleHeight
+      }
+      return height
+    }
   }
 }
 </script>
