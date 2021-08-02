@@ -4,9 +4,9 @@
 
 Easy to use, highly customizable Vue.js modal library.
 
-### 😎 [Examples](http://vue-js-modal.yev.io/) 
+### 😎 [Examples](http://vue-js-modal.yev.io/)
 
-### 🤓 [Documentation](https://euvl.github.io/vue-js-modal/) 
+### 🤓 [Documentation](https://euvl.github.io/vue-js-modal/)
 
 ### 🤖 [Changelog](https://github.com/euvl/vue-js-modal/releases/tag/2.0.0-rc4)
 
@@ -22,8 +22,7 @@ Easy to use, highly customizable Vue.js modal library.
 
 Version 2.0.0 release candidates will have breaking changes until it is 2.0.1. If you need a more stable version, please use 1.3.34.
 
-If you notice any bugs or regressings please do not hesitate to report any issues. 
-
+If you notice any bugs or regressings please do not hesitate to report any issues.
 
 <p align="right">
   <a href="https://www.buymeacoffee.com/yev" target="_blank">
@@ -37,20 +36,21 @@ If you notice any bugs or regressings please do not hesitate to report any issue
 
 ---
 
-# Sponsorship  & support
+# Sponsorship & support
 
-**If you are using this project please consider sponsorting it's further development & bug fixes**
+**If you are using this project please consider sponsoring it's further development & bug fixes**
 
 Links: https://github.com/sponsors/euvl, https://www.buymeacoffee.com/yev
 
 ## This library is contributor-driven
-**This library is contributor-driven**. It is not backed by any company, which means that all contributions are voluntary and done by the people who need them. If you need something improved, added, or fixed, please contribute it yourself. Please keep in mind that maintainers volunteer their free time to work on this project and have no obligation to reply on the issues, tailor library for specific use-cases or perform customer support. 
+
+**This library is contributor-driven**. It is not backed by any company, which means that all contributions are voluntary and done by the people who need them. If you need something improved, added, or fixed, please contribute it yourself. Please keep in mind that maintainers volunteer their free time to work on this project and have no obligation to reply on the issues, tailor library for specific use-cases or perform customer support.
 
 ## Other projects
 
 Check out my other projects:
 
-* https://github.com/euvl/vue-notification
-* https://github.com/euvl/vue-js-toggle-button
-* https://github.com/euvl/vue-js-popover
-* https://github.com/euvl/v-clipboard
+- https://github.com/euvl/vue-notification
+- https://github.com/euvl/vue-js-toggle-button
+- https://github.com/euvl/vue-js-popover
+- https://github.com/euvl/v-clipboard
