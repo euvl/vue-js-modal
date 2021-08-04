@@ -48,6 +48,7 @@
           :viewport-width="viewportWidth"
           :resize-indicator="resizeIndicator"
           :resize-edges="resizeEdges"
+          :center-resize="centerResize"
           @resize="onModalResize"
         />
       </div>
@@ -411,15 +412,23 @@ export default {
      * CSS styles for position and size of the modal
      */
     modalStyle() {
+      // Make sure that the dialog is within the margin.
+      let top = this.position.top < this.fixedMarginTopBottom ? this.fixedMarginTopBottom + 1 : this.position.top 
+      let left = this.position.left < this.fixedMarginLeftRight ? this.fixedMarginLeftRight + 1 : this.position.left
+      let width =  left + this.trueModalWidth < this.viewportWidth - this.fixedMarginLeftRight ? this.trueModalWidth  
+          : this.viewportWidth - this.fixedMarginLeftRight - left - 1
+      let height =  top + this.trueModalHeight < this.viewportHeight - this.fixedMarginTopBottom ? this.trueModalHeight 
+          : this.viewportHeight - this.fixedMarginTopBottom - top  - 1
+
       return [
         this.stylesProp,
         {
-          top: this.position.top + 'px',
-          left: this.position.left + 'px',
-          width: this.trueModalWidth + 'px',
+          top: top + "px",
+          left:  left + "px",
+          width: width + "px",
           height: this.isAutoHeight
             ? this.autoHeight
-            : this.trueModalHeight + 'px'
+            : height + "px",
         }
       ]
     },
@@ -565,12 +574,12 @@ export default {
 
       this.modal.heightType = 'px'
       this.modal.height = event.size.height
+      
       //Handle Shifting
       if (!this.centerResize) {
         this.shiftLeft = this.getResizedShiftLeft(event)
         this.shiftTop = this.getResizedShiftTop(event)
       }
-      //this.shiftLeft = this.shiftLeft - 1
 
       const { size } = this.modal
 

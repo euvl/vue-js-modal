@@ -3,10 +3,7 @@
     name="example-draggable"
     :min-width="200"
     :min-height="200"
-    :center-resize="false"
-    :resizable="true"
     :draggable="true"
-    :resize-indicator="false"
   >
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique
