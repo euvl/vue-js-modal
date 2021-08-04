@@ -55,6 +55,10 @@ export default {
     resizeEdges: {
       type: Array,
       required: true
+    },
+    centerResize: {
+      type: Boolean,
+      required: true,
     }
   },
   data() {
@@ -187,6 +191,11 @@ export default {
         if (el.offsetTop + height < this.viewportHeight - this.fixedMarginTopBottom && el.offsetTop > this.fixedMarginTopBottom) el.style.height = height + 'px'
         else el.style.height = this.viewportHeight - this.fixedMarginTopBottom - el.offsetTop + "px"
 
+        if (this.centerResize) {
+          el.style.top = parseInt(el.style.top.replace("px", "")) - 0.5 * dimGrowth.height + "px"
+          el.style.left = parseInt(el.style.left.replace("px", "")) - 0.5 *  dimGrowth.width + "px"
+        } 
+
         if (el.offsetLeft + el.style.width < this.viewportWidth - this.fixedMarginLeftRight 
           && el.offsetTop + el.style.height < this.viewportHeight - this.fixedMarginTopBottom
           && el.offsetLeft > this.fixedMarginLeftRight
@@ -213,11 +222,15 @@ export default {
             if (el.offsetLeft - x + width < this.viewportWidth - this.fixedMarginLeftRight 
             || x > 0) {
               width = newWidth
+            if (!this.centerResize){
+              el.style.left = parseInt(el.style.left.replace("px", "")) - x + "px"
             }
-            el.style.left = styleLeft - x + "px" 
+            }
           } else if (el.offsetLeft - x + width >= this.viewportWidth - this.fixedMarginLeftRight && newWidth > this.minWidth) {
             width = newWidth
-            el.style.left = styleLeft - x + "px" 
+            if (!this.centerResize){
+              el.style.left = parseInt(el.style.left.replace("px", "")) - x + "px"
+            }
           } else { 
             width = styleWidth
           }
@@ -233,12 +246,16 @@ export default {
         if (el.offsetTop - y + height < this.viewportHeight - this.fixedMarginTopBottom 
         || y > 0) {
           height = newHeight
+          if (!this.centerResize) {
+            el.style.top = styleTop - y + "px"
+          }
         }
-        el.style.top = styleTop - y + "px"
       } else if (el.offsetTop - y + height >= this.viewportHeight - this.fixedMarginTopBottom 
       && newHeight > this.minHeight) {
         height = newHeight
-        el.style.top = styleTop - y + "px"
+        if (!this.centerResize) {
+            el.style.top = styleTop - y + "px"
+        }
       } else {
         height = styleHeight
       }
