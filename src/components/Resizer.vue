@@ -180,20 +180,36 @@ export default {
 
         this.size = { width, height }
 
+ 
+        if (el.offsetLeft + width < this.viewportWidth - this.fixedMarginLeftRight && el.offsetLeft > this.fixedMarginLeftRight) 
+        {
+          el.style.width = width + 'px'
+        }
+        else {
+          el.style.width = this.viewportWidth - this.fixedMarginLeftRight - el.offsetLeft + "px"
+        }
+
+        if (el.offsetTop + height < this.viewportHeight - this.fixedMarginTopBottom && el.offsetTop > this.fixedMarginTopBottom) {
+          el.style.height = height + 'px'
+        }
+        else {
+          el.style.height = this.viewportHeight - this.fixedMarginTopBottom - el.offsetTop + "px"
+        }
+
         const dimGrowth = {
           width: width - styleWidth,
           height: height - styleHeight
         }
- 
-        if (el.offsetLeft + width < this.viewportWidth - this.fixedMarginLeftRight && el.offsetLeft > this.fixedMarginLeftRight) el.style.width = width + 'px'
-        else el.style.width = this.viewportWidth - this.fixedMarginLeftRight - el.offsetLeft + "px"
-
-        if (el.offsetTop + height < this.viewportHeight - this.fixedMarginTopBottom && el.offsetTop > this.fixedMarginTopBottom) el.style.height = height + 'px'
-        else el.style.height = this.viewportHeight - this.fixedMarginTopBottom - el.offsetTop + "px"
 
         if (this.centerResize) {
-          el.style.top = parseInt(el.style.top.replace("px", "")) - 0.5 * dimGrowth.height + "px"
-          el.style.left = parseInt(el.style.left.replace("px", "")) - 0.5 *  dimGrowth.width + "px"
+          let top = parseInt(el.style.top.replace("px", "")) - 0.5 * dimGrowth.height
+          let left = parseInt(el.style.left.replace("px", "")) - 0.5 *  dimGrowth.width 
+          if (top > this.fixedMarginTopBottom) {
+            el.style.top = top + "px"
+          }
+          if (left > this.fixedMarginLeftRight) {
+            el.style.left = left + "px"
+          }
         } 
 
         if (el.offsetLeft + el.style.width < this.viewportWidth - this.fixedMarginLeftRight 
@@ -260,7 +276,7 @@ export default {
         height = styleHeight
       }
       return height
-    }
+    },
   }
 }
 </script>
