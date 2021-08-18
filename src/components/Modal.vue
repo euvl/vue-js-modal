@@ -387,9 +387,17 @@ export default {
      * modal fits the viewport if 'adaptive' is also true
      */
     autoHeight() {
-      return this.adaptive && this.modal.renderedHeight >= this.viewportHeight
-        ? Math.max(this.minHeight, this.viewportHeight) + 'px'
-        : 'auto'
+      let autoHeight = 'auto'
+        // use renderedHeight when height 'auto'
+      if (this.fixedMarginTopBottom * 2 + this.modal.renderedHeight > this.viewportHeight) {
+        autoHeight = this.viewportHeight - this.fixedMarginTopBottom * 2 + "px"
+      } else if (!isNaN(this.trueModalHeight) && this.trueModalHeight != 0) {
+        autoHeight = this.trueModalHeight
+      }
+
+      return this.adaptive && this.modal.renderedHeight >= this.viewportHeight - 2 * this.fixedMarginTopBottom
+        ? Math.max(this.fixedMarginTopBottom, this.viewportHeight -2 * this.fixedMarginTopBottom) + 'px'
+        : autoHeight
     },
 
     containerClass() {
@@ -429,8 +437,9 @@ export default {
           top: top + "px",
           left:  left + "px",
           width: width + "px",
-          height: 
-            height + "px",
+          height: this.isAutoHeight
+            ? this.autoHeight
+            : height + "px",
         }
       ]
     },
