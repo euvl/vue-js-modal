@@ -367,6 +367,9 @@ export default {
 
       if (isAutoHeight) {
         // use renderedHeight when height 'auto'
+        if (this.fixedMarginTopBottom * 2 + this.modal.renderedHeight > this.viewportHeight) {
+          return this.viewportHeight - this.fixedMarginTopBottom * 2 
+        }
         return this.modal.renderedHeight
       }
 
@@ -426,9 +429,8 @@ export default {
           top: top + "px",
           left:  left + "px",
           width: width + "px",
-          height: this.isAutoHeight
-            ? this.autoHeight
-            : height + "px",
+          height: 
+            height + "px",
         }
       ]
     },

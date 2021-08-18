@@ -9,6 +9,7 @@
     <demo-adaptive-modal />
     <demo-resizable-modal />
     <demo-draggable-modal />
+    <demo-fixed-margin-modal />
 
     <v-dialog
       @before-opened="dialogEvent('before-open')"
@@ -32,6 +33,7 @@
       <button class="btn" @click="$modal.show('example-resizable')">Resizable</button>
       <button class="btn" @click="$modal.show('example-adaptive')">Adaptive</button>
       <button class="btn" @click="$modal.show('example-draggable')">Draggable</button>
+      <button class="btn" @click="$modal.show('example-fixedmargin')">Fixed Margin</button>
       <br />
       <button class="btn green" @click="$modal.show('dog-profile')">Demo: Dog Profile photo</button>
       <button class="btn green" @click="$modal.show('error-modal')">Demo: Error handling</button>
@@ -70,6 +72,7 @@ import DemoLoginModal from './components/Modal_Login.vue'
 import DemoDogProfileModal from './components/Modal_Dogge.vue'
 import DemoSizeModal from './components/Modal_Autosize.vue'
 import DemoCustomComponent from './components/Modal_CustomComponent.vue'
+import DemoFixedMarginModal from './components/Modal_FixedMargin.vue'
 
 export default {
   name: 'app',
@@ -81,7 +84,8 @@ export default {
     DemoLoginModal,
     DemoDogProfileModal,
     DemoConditionalModal,
-    DemoSizeModal
+    DemoSizeModal,
+    DemoFixedMarginModal
   },
   data() {
     return {
