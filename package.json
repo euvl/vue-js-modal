@@ -1,7 +1,7 @@
 {
   "name": "@fenetre/silicon-vue-dialog",
   "description": "Modal Component for Vue.js",
-  "version": "2.0.0-rc.12.4.3",
+  "version": "2.0.0-rc.12.4.4",
   "author": "euvl <yev.dev@gmail.com>",
   "main": "dist/index.js",
   "publishConfig": {
