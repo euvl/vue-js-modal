@@ -28,7 +28,7 @@ Emits right before modal is destroyed.
 
 ## Event cancellation
 
-Opening and closing can be canceled by calling `event.cancel()` function in either `before-open` or `before-close` event handlers.
+Opening and closing can be canceled by calling `event.stop()` function in either `before-open` or `before-close` event handlers.
 
 
 ## Examples
@@ -59,7 +59,7 @@ export default {
       console.log('Closing...')
       // What a gamble... 50% chance to cancel closing
       if (Math.random() < 0.5) {
-        event.cancel()
+        event.stop()
       }
     }
   }
@@ -101,7 +101,7 @@ export default {
       console.log('Closing...')
       // What a gamble... 50% chance to cancel closing
       if (Math.random() < 0.5) {
-        event.cancel()
+        event.stop()
       }
     }
   }
