@@ -289,8 +289,8 @@ export default {
       const top = shift.top + pivotY * maxTop
 
       return {
-        left: parseInt(inRange(0, maxLeft, left)),
-        top: parseInt(inRange(0, maxTop, top))
+        left: Math.floor(inRange(0, maxLeft, left)),
+        top: Math.floor(inRange(0, maxTop, top))
       }
     },
     /**
