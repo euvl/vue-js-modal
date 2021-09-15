@@ -316,6 +316,9 @@ export default {
       const left = shiftLeft + shiftX * maxLeft
       const top = shiftTop + shiftY * maxTop
 
+      console.warn("position - left: " + left + " right: " + parseInt(inRange(0, maxTop, top)) + " ," + 
+          !trueModalHeight && this.isAutoHeight)
+
       return {
         left: parseInt(inRange(0, maxLeft, left)),
         top:
@@ -430,9 +433,10 @@ export default {
       if (typeof currHeight === "string" && currHeight.includes("px")) {
         currHeight = parseInt(currHeight.replace("px", ""))
       }
+
       console.warn("currHeight: " + currHeight)
       console.warn("this.position.top: " + this.position.top + " left: " + left + " width: " +width + " height: " + height)
-
+      
       // Make sure that the dialog is within the margin.
       let top = this.position.top < this.fixedMarginTopBottom ? this.fixedMarginTopBottom + 1 : this.position.top 
       let left = this.position.left < this.fixedMarginLeftRight ? this.fixedMarginLeftRight + 1 : this.position.left
