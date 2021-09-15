@@ -434,8 +434,7 @@ export default {
         currHeight = parseInt(currHeight.replace("px", ""))
       }
 
-      console.warn("currHeight: " + currHeight)
-      console.warn("this.position.top: " + this.position.top + " left: " + left + " width: " +width + " height: " + height)
+      console.warn("currHeight: " + currHeight + ", this.position.top: " + this.position.top + ", left: " + left + ", width: " + width + ", height: " + height)
       
       // Make sure that the dialog is within the margin.
       let top = this.position.top < this.fixedMarginTopBottom ? this.fixedMarginTopBottom + 1 : this.position.top 
@@ -445,7 +444,7 @@ export default {
       let height =  top + currHeight < this.viewportHeight - this.fixedMarginTopBottom ? currHeight 
           : this.viewportHeight - this.fixedMarginTopBottom - top  - 1
 
-      console.warn("modalstyle-  top: " + top + " left: " + left + " width: " +width + " height: " + height)
+      console.warn("modalstyle -  top: " + top + ", left: " + left + " width: " +width + " height: " + height)
 
       return [
         this.stylesProp,
