@@ -310,12 +310,13 @@ export default {
         trueModalWidth,
         trueModalHeight
       } = this
-
       const maxLeft = viewportWidth - trueModalWidth
       const maxTop = Math.max(viewportHeight - trueModalHeight, 0)
 
       const left = shiftLeft + shiftX * maxLeft
       const top = shiftTop + shiftY * maxTop
+
+      console.warn("position - left: " + left + " right: " + parseInt(inRange(0, maxTop, top)))
 
       return {
         left: parseInt(inRange(0, maxLeft, left)),
@@ -423,13 +424,24 @@ export default {
      * CSS styles for position and size of the modal
      */
     modalStyle() {
+      let currHeight = this.trueModalHeight;
+      if (this.isAutoHeight) {
+        currHeight = this.autoHeight !== "auto" ? this.autoHeight : currHeight
+        
+      }
+      if (typeof currHeight === "string" && currHeight.includes("px")) {
+        currHeight = parseInt(currHeight.replace("px", ""))
+      }
+
       // Make sure that the dialog is within the margin.
       let top = this.position.top < this.fixedMarginTopBottom ? this.fixedMarginTopBottom + 1 : this.position.top 
       let left = this.position.left < this.fixedMarginLeftRight ? this.fixedMarginLeftRight + 1 : this.position.left
       let width =  left + this.trueModalWidth < this.viewportWidth - this.fixedMarginLeftRight ? this.trueModalWidth  
           : this.viewportWidth - this.fixedMarginLeftRight - left - 1
-      let height =  top + this.trueModalHeight < this.viewportHeight - this.fixedMarginTopBottom ? this.trueModalHeight 
+      let height =  top + currHeight < this.viewportHeight - this.fixedMarginTopBottom ? currHeight 
           : this.viewportHeight - this.fixedMarginTopBottom - top  - 1
+
+      console.warn("modalstyle-  top: " + top + " left: " + left + " width: " +width + " height: " + height)
 
       return [
         this.stylesProp,
@@ -609,7 +621,6 @@ export default {
         trueModalWidth,
         trueModalHeight
       } = this
-
       let result = this.shiftLeft
 
       switch (event.direction) {
@@ -855,7 +866,6 @@ export default {
         trueModalWidth,
         trueModalHeight
       } = this
-
       const maxLeft = viewportWidth - trueModalWidth - this.fixedMarginLeftRight * 2
       const maxTop = Math.max(viewportHeight - trueModalHeight - this.fixedMarginTopBottom * 2, 0)
 
