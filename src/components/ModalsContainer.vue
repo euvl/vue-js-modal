@@ -12,12 +12,17 @@
         v-bind="modal.componentAttrs"
         v-on="$listeners"
         @close="$modal.hide(modal.modalAttrs.name, $event)"
-      />
+      >
+        <template v-for="(slot, key) in modal.componentSlots" #[key]="scope">
+          <VNode :node="slot" :key="key" :scope="scope" />
+        </template>
+      </component>
     </modal>
   </div>
 </template>
 <script>
 import { generateId } from '../utils'
+import VNode from './VNode.vue'
 
 const PREFIX = 'dynamic_modal_'
 
@@ -26,6 +31,9 @@ export default {
     return {
       modals: []
     }
+  },
+  components: {
+    VNode
   },
   created() {
     /**
@@ -39,7 +47,13 @@ export default {
     })
   },
   methods: {
-    add(component, componentAttrs = {}, modalAttrs = {}, modalListeners = {}) {
+    add(
+      component,
+      componentAttrs = {},
+      componentSlots = {},
+      modalAttrs = {},
+      modalListeners = {}
+    ) {
       const id = generateId()
       const name = modalAttrs.name || PREFIX + id
 
@@ -48,7 +62,8 @@ export default {
         modalAttrs: { ...modalAttrs, name },
         modalListeners,
         component,
-        componentAttrs
+        componentAttrs,
+        componentSlots
       })
 
       this.$nextTick(() => {
