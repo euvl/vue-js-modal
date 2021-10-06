@@ -369,7 +369,6 @@ export default {
         if (this.fixedMarginTopBottom * 2 + this.modal.renderedHeight > this.viewportHeight) {
           return this.viewportHeight - this.fixedMarginTopBottom * 2 
         }
-        console.warn("renderedHeight: " + this.modal.renderedHeight)
         return this.modal.renderedHeight
       }
 
