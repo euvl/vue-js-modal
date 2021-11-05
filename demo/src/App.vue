@@ -7,8 +7,8 @@
     <demo-conditional-modal />
     <demo-size-modal />
     <demo-adaptive-modal />
-    <demo-resizable-modal />
-    <demo-draggable-modal />
+    <demo-resizable-modal :scope-element="scopeElement" />
+    <demo-draggable-modal :scope-element="scopeElement" />
     <demo-fixed-margin-modal />
 
     <v-dialog
@@ -58,6 +58,13 @@
         class="btn"
         @click="showDynamicComponentModalWithModalParams"
       >Dynamic: Component Modal with modal params</button>
+      <hr />
+      <p>The following setting makes it so that the "resizable" and "draggable" can't be dragged/resized beyond the boundaries of the scopeElement (set in code). CSS absolute positioning also needs to be added to position the scoped dialogs correctly.</p>
+      <button :class="isScoped ? 'btn green' : 'btn red'" @click="toggleScope">
+        Scope to panel?
+        <b v-if="isScoped">active</b>
+        <b v-else>inactive</b>
+      </button>
     </div>
   </div>
 </template>
@@ -89,7 +96,9 @@ export default {
   },
   data() {
     return {
-      canBeShown: false
+      canBeShown: false,
+      isScoped: false,
+      scopeElement: undefined
     }
   },
   created() {
@@ -213,6 +222,16 @@ export default {
 
     dialogEvent(eventName) {
       console.log('Dialog event: ' + eventName)
+    },
+
+    toggleScope() {
+      this.isScoped = !this.isScoped;
+      if (this.isScoped) {
+        this.scopeElement = document.querySelector("#app");
+      } else {
+        this.scopeElement = undefined;
+      }
+      window.dispatchEvent(new Event("resize"));
     }
   }
 }
@@ -220,7 +239,7 @@ export default {
 
 <style lang="scss">
 *:not(pre) {
-  font-family: 'Montserrat';
+  font-family: 'Nunito';
   box-sizing: border-box;
 }
 
@@ -233,9 +252,9 @@ body {
   width: 100%;
   min-height: 100vh;
 
-  background: #fc00aa;
-  background: -webkit-linear-gradient(to right, #fc00aa, #00dbde);
-  background: linear-gradient(315deg, #fc00aa, #00dbde);
+  background: #00adef;
+  background: -webkit-linear-gradient(to bottom right,#4040bf,#65caf1);
+  background: linear-gradient(to bottom right,#4040bf,#65caf1);
 
   cursor: default;
 }
@@ -256,6 +275,9 @@ pre {
   border-radius: 3px;
 
   box-shadow: 0 4px 36px rgba(50, 50, 93, 0.11), 0 1px 33px rgba(0, 0, 0, 0.08);
+  max-width: 1200px;
+
+  position: relative;
 }
 
 h1,
@@ -281,8 +303,8 @@ button.btn {
 
   color: white;
 
-  box-shadow: 0 4px 8px rgba(#20a0ff, 0.3);
-  background: #4db3ff;
+  //box-shadow: 0 4px 8px rgba(#00adef, 0.3);
+  background: #00adef;
 
   font-weight: 600;
 
@@ -295,24 +317,24 @@ button.btn {
   margin-right: 8px;
 
   &:hover {
-    background: #20a0ff;
+    background: #0091c9;
   }
 
   &.green {
-    box-shadow: 0 4px 8px rgba(#50c9ba, 0.3);
-    background: #50c9ba;
+    //box-shadow: 0 4px 8px rgba(#24b314, 0.3);
+    background: #24b314;
 
     &:hover {
-      background: mix(#50c9ba, black, 95%);
+      background: #1d9110;
     }
   }
 
   &.red {
-    box-shadow: 0 4px 8px rgba(#f21368, 0.3);
-    background: #f21368;
+    //box-shadow: 0 4px 8px rgba(#dc3545, 0.3);
+    background: #dc3545;
 
     &:hover {
-      background: mix(#f21368, black, 95%);
+      background: #c82333;
     }
   }
 }
@@ -329,6 +351,24 @@ button.btn {
 @media (max-width: 600px) {
   body {
     padding: 10px;
+  }
+}
+
+.scoped-modal {
+  &.vm--container {
+      z-index: 2100;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: auto;
+  }
+
+  .vm--overlay {
+      position: absolute;
+      height: 100%;
+      bottom: 0;
   }
 }
 </style>

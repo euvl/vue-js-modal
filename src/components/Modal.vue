@@ -49,6 +49,7 @@
           :resize-indicator="resizeIndicator"
           :resize-edges="resizeEdges"
           :center-resize="centerResize"
+          :scopeElement="scopeElement"
           @resize="onModalResize"
         />
       </div>
@@ -198,6 +199,9 @@ export default {
     resizeIndicator: {
       type: Boolean,
       default: true
+    },
+    scopeElement: {
+      type: HTMLElement
     }
   },
   components: {
@@ -570,8 +574,13 @@ export default {
     },
 
     onWindowResize() {
-      this.viewportWidth = windowWidthWithoutScrollbar()
-      this.viewportHeight = window.innerHeight
+      if (this.scopeElement) {
+        this.viewportWidth = this.scopeElement.offsetWidth;
+        this.viewportHeight = this.scopeElement.offsetHeight;
+      } else {
+        this.viewportWidth = windowWidthWithoutScrollbar();
+        this.viewportHeight = window.innerHeight;
+      }
       this.ensureShiftInWindowBounds()
     },
     /**
@@ -794,6 +803,12 @@ export default {
 
           let { clientX, clientY } = getTouchEvent(event)
 
+          if (this.scopeElement) {
+            const scopeElementOffset = this.scopeElement.getBoundingClientRect();
+            clientX = clientX - scopeElementOffset.left;
+            clientY = clientY - scopeElementOffset.top;
+          }
+
           document.addEventListener('mousemove', handleDraggableMousemove)
           document.addEventListener('touchmove', handleDraggableMousemove)
 
@@ -809,6 +824,12 @@ export default {
 
         const handleDraggableMousemove = (event) => {
           let { clientX, clientY } = getTouchEvent(event)
+
+          if (this.scopeElement) {
+            const scopeElementOffset = this.scopeElement.getBoundingClientRect();
+            clientX = clientX - scopeElementOffset.left;
+            clientY = clientY - scopeElementOffset.top;
+          }
      
           const maxLeft = this.viewportWidth - this.trueModalWidth - this.fixedMarginLeftRight * 2
           const maxTop = Math.max(this.viewportHeight - this.trueModalHeight - this.fixedMarginTopBottom * 2, 0)

@@ -4,6 +4,8 @@
     :min-width="200"
     :min-height="200"
     :draggable="true"
+    :scope-element="scopeElement"
+    :class="{'scoped-modal' : !!scopeElement}"
   >
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique
@@ -25,6 +27,11 @@
 </template>
 <script>
 export default {
-  name: 'Modal_Draggable'
+  name: 'Modal_Draggable',
+  props: {
+    scopeElement: {
+      type: HTMLElement
+    }
+  }
 }
 </script>

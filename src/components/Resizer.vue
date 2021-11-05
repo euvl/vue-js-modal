@@ -59,6 +59,9 @@ export default {
     centerResize: {
       type: Boolean,
       required: true,
+    },
+    scopeElement: {
+      type: HTMLElement
     }
   },
   data() {
@@ -87,8 +90,15 @@ export default {
     start(event) {
       this.targetClass = event.target.className
       this.clicked = true
-      this.initialX = event.clientX
-      this.initialY = event.clientY
+
+      if (this.scopeElement) {
+        const scopeElementOffset = this.scopeElement.getBoundingClientRect();
+        this.initialX = event.clientX - scopeElementOffset.left;
+        this.initialY = event.clientY - scopeElementOffset.top;
+      } else {
+        this.initialX = event.clientX
+        this.initialY = event.clientY
+      }
 
       window.addEventListener('mousemove', this.mousemove, false)
       window.addEventListener('mouseup', this.stop, false)
@@ -118,19 +128,28 @@ export default {
     resize(event) {
       var el = this.$el.parentElement 
 
-      var width = event.clientX
-      var height = event.clientY
+      var eventX = event.clientX
+      var eventY = event.clientY
 
-      if (event.clientX > this.viewportWidth || event.clientX < 0) return
-      if (event.clientY > this.viewportHeight || event.clientY < 0) return
+      if (this.scopeElement) {
+        const scopeElementOffset = this.scopeElement.getBoundingClientRect();
+        eventX = eventX - scopeElementOffset.left;
+        eventY = eventY - scopeElementOffset.top;
+      }
+      
+      var width = eventX
+      var height = eventY
+
+      if (eventX > this.viewportWidth || eventX < 0) return
+      if (eventY > this.viewportHeight || eventY < 0) return
 
       const styleWidth = parseInt(el.style.width.replace('px', ''))
       const styleHeight = parseInt(el.style.height.replace('px', ''))
       const styleLeft = parseInt(el.style.left.replace('px', ''))
       const styleTop = parseInt(el.style.top.replace('px', ''))
       
-      const y = this.initialY - event.clientY
-      const x = (this.initialX - event.clientX)
+      const y = this.initialY - eventY
+      const x = (this.initialX - eventX)
     if (el) {
           switch (this.targetClass) {
           case 'vue-modal-right':
@@ -175,8 +194,8 @@ export default {
         width = width == this.minWidth ? width + 1 : width == this.maxWidth ? width - 1 : inRange(this.minWidth, maxWidth, width)
         height = height == this.minHeight ? height + 1 : height == this.maxHeight ? height - 1 : inRange(this.minHeight, maxHeight, height)
 
-        this.initialX = event.clientX
-        this.initialY = event.clientY
+        this.initialX = eventX
+        this.initialY = eventY
 
         this.size = { width, height }
 

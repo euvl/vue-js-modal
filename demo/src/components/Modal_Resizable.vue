@@ -5,6 +5,8 @@
     :min-height="200"
     :resizable="true"
     styles="font-style: italic;"
+    :scope-element="scopeElement"
+    :class="{'scoped-modal' : !!scopeElement}"
   >
     <div class="example-modal-content">
       Appropriately exploit professional infrastructures rather than unique
@@ -26,6 +28,11 @@
 </template>
 <script>
 export default {
-  name: 'Modal_Resizable'
+  name: 'Modal_Resizable',
+  props: {
+    scopeElement: {
+      type: HTMLElement
+    }
+  },
 }
 </script>
