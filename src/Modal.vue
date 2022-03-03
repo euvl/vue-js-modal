@@ -95,6 +95,10 @@ export default {
       type: Boolean,
       default: true
     },
+    keysToClose: {
+      type: [String, Array],
+      default: ["Escape"]
+    },
     classes: {
       type: [String, Array],
       default: 'v--modal'
@@ -178,6 +182,8 @@ export default {
         height: 0
       },
 
+      closeKeyDown: false, // Whether or not a key used for closing the modal is currently pressed down
+
       mutationObserver: null
     }
   },
@@ -232,20 +238,18 @@ export default {
       }
     }
 
-    if (this.clickToClose) {
-      window.addEventListener('keyup', this.handleEscapeKeyUp)
-    }
+    window.addEventListener('keyup', this.onKeyUpForClose)
+    window.addEventListener('keydown', this.onKeyDownForClose)
   },
   /**
    * Removes global listeners
    */
   beforeDestroy () {
     Modal.event.$off('toggle', this.handleToggleEvent)
+    
     window.removeEventListener('resize', this.handleWindowResize)
-
-    if (this.clickToClose) {
-      window.removeEventListener('keyup', this.handleEscapeKeyUp)
-    }
+    window.removeEventListener('keyup', this.onKeyUpForClose)
+    window.removeEventListener('keydown', this.onKeyDownForClose)
     /**
      * Removes blocked scroll
      */
@@ -413,8 +417,15 @@ export default {
       modal.heightType = height.type
     },
 
-    handleEscapeKeyUp (event) {
-      if (event.which === 27 && this.visible) {
+    onKeyDownForClose(event) {
+      if (this.keysToClose.includes(event.key) && this.visible) {
+        this.closeKeyDown = true
+      }
+    },
+
+    onKeyUpForClose(event) {
+      if (this.keysToClose.includes(event.key) && this.visible && this.closeKeyDown) {
+        this.closeKeyDown = false
         this.$modal.hide(this.name)
       }
     },
