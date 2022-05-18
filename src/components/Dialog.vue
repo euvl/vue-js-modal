@@ -3,7 +3,7 @@
     :is="$modal.context.componentName"
     name="dialog"
     height="auto"
-    :classes="['vue-dialog', this.params.class]"
+    :classes="['vue-dialog', params.class]"
     :width="width"
     :shift-y="0.3"
     :adaptive="true"

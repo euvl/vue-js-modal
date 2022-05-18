@@ -14,6 +14,7 @@ declare interface VModal {
   show(
     component: typeof Vue | ComponentOptions<Vue> | AsyncComponent,
     componentProps?: object,
+    componentSlots?: object,
     modalProps?: object,
     modalEvents?: object
   ): void
