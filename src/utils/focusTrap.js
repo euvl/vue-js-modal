@@ -65,7 +65,7 @@ class FocusTrap {
     }
 
     // TAB
-    if (isNothingFocused() || isFocused(this.lastElement())) {
+    if (isNothingFocused() || (!event.shiftKey && isFocused(this.lastElement()))) {
       this.firstElement().focus()
       event.preventDefault()
       return
