@@ -34,6 +34,7 @@
         :style="modalStyle"
         role="dialog"
         aria-modal="true"
+        v-bind="$attrs"
       >
         <slot />
         <resizer
@@ -77,6 +78,7 @@ const TransitionState = {
 
 export default {
   name: 'VueJsModal',
+  inheritAttrs: false,
   props: {
     name: {
       required: true,
