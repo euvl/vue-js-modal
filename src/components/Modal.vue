@@ -224,6 +224,7 @@ export default {
   },
   created() {
     this.setInitialSize()
+    this.$on('custom-event', event => this.emitCustomEvent(event))
   },
   /**
    * Sets global listeners
@@ -272,6 +273,9 @@ export default {
     if (this.clickToClose) {
       window.removeEventListener('keyup', this.onEscapeKeyUp)
     }
+
+    this.$off('custom-event')
+
     /**
      * Removes blocked scroll
      */
@@ -735,6 +739,13 @@ export default {
       } else {
         this.close(params)
       }
+    },
+
+    emitCustomEvent({ name, params = {} }) {
+      const event = this.createModalEvent({
+        params: params
+      })
+      this.$emit(name, event)
     },
 
     getDraggableElement() {
