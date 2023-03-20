@@ -1,6 +1,6 @@
 export * from './numbers'
 
-const INPUT_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
+const INPUT_OR_CLICKABLE_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT', "BUTTON", "SPAN"]
 
 export const generateId = ((index = 0) => () => (index++).toString())()
 /**
@@ -59,8 +59,8 @@ export const stringStylesToObject = styles => {
   }, {})
 }
 
-export const isInput = element => {
-  return element && INPUT_NODE_NAMES.indexOf(element.nodeName) !== -1
+export const isInputOrClickable = (element, dynamicElement = []) => {
+  return element && (INPUT_OR_CLICKABLE_NODE_NAMES.indexOf(element.nodeName) !== -1 || dynamicElement.indexOf(element.nodeName) !== -1)
 }
 
 export const getTouchEvent = event => {
