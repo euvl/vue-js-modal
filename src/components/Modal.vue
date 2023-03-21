@@ -55,7 +55,7 @@
 <script>
 import Resizer from './Resizer.vue'
 import {
-  isInput,
+  isInputOrClickable,
   inRange,
   getTouchEvent,
   blurActiveElement,
@@ -190,7 +190,11 @@ export default {
       validator(value) {
         return value >= 0 && value <= 1
       }
-    }
+    },
+    undraggableElement: {
+      type: [Array],
+      default: () => []
+    },
   },
   components: {
     Resizer
@@ -770,7 +774,7 @@ export default {
         const handleDraggableMousedown = event => {
           let target = event.target
 
-          if (isInput(target)) {
+          if (isInputOrClickable(target, this.undraggableElement)) {
             return
           }
 
